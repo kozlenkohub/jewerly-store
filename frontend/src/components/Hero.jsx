@@ -32,7 +32,7 @@ const Hero = () => {
             fontSize: '3rem',
             margin: '0.5rem',
             borderBottom: '2px solid white',
-            animation: 'borderExpand 2s forwards',
+            animation: 'borderExpand 2.1s forwards',
           }}>
           The Queen's diamond
         </h1>
