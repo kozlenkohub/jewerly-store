@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShopContext } from '../context/shopContext';
 import Title from './Title';
 import ProductItem from './ProductItem';
+import { ShopContext } from '../context/shopContext';
 
 const LatestCatalog = () => {
   const { products } = React.useContext(ShopContext);

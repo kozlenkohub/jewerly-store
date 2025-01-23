@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShopContext } from '@/context/shopContext.jsx';
 
 import Title from './Title';
+import { ShopContext } from '../context/shopContext';
 
 const Category = () => {
   const { category } = React.useContext(ShopContext);
