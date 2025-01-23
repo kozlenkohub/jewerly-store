@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { category, products } from '../assets/assets';
 
-export const ShopContext = React.createContext();
+const ShopContext = createContext();
 
-const ShopContextProvider = ({ children }) => {
+const ShopProvider = ({ children }) => {
+  const [state, setState] = useState({
+    products: [],
+    cart: [],
+  });
+
   const currency = '$';
   const delivery_fee = 10;
-  const value = {
-    products,
-    category,
-    currency,
-    delivery_fee,
+
+  const addToCart = (product) => {
+    setState((prevState) => ({
+      ...prevState,
+      cart: [...prevState.cart, product],
+    }));
   };
-  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
+
+  const removeFromCart = (productId) => {
+    setState((prevState) => ({
+      ...prevState,
+      cart: prevState.cart.filter((product) => product.id !== productId),
+    }));
+  };
+
+  return (
+    <ShopContext.Provider
+      value={{ state, addToCart, removeFromCart, category, products, currency, delivery_fee }}>
+      {children}
+    </ShopContext.Provider>
+  );
 };
 
-export default ShopContextProvider;
+export { ShopContext, ShopProvider };
