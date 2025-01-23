@@ -1,21 +1,37 @@
-import React from 'react';
-import video from '../assets/promo.mp4';
+import React, { useRef, useEffect } from 'react';
+import video from '../assets/promo.webm';
 
 const Hero = () => {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current && isMobile) {
+      // Пытаемся воспроизвести видео на мобильных устройствах
+      videoRef.current.play().catch((error) => {
+        console.error('Не удалось воспроизвести видео:', error);
+      });
+    }
+  }, [isMobile]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
-      {!isMobile && (
-        <video
-          src={video}
-          autoPlay
-          loop
-          playsInline
-          muted
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      )}
+      <video
+        ref={videoRef}
+        src={video}
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      />
       <div
         style={{
           position: 'absolute',
@@ -41,7 +57,7 @@ const Hero = () => {
           }}>
           The Queen's diamond
         </h1>
-        <p className="font-light poppins " style={{ fontSize: '13px', margin: '0.5rem' }}>
+        <p className="font-light poppins" style={{ fontSize: '13px', margin: '0.5rem' }}>
           Experience the luxury and elegance
         </p>
       </div>
