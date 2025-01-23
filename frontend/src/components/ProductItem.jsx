@@ -15,18 +15,18 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
           </div>
         )}
         <img
-          className="hover:scale-110 transition ease-in-out w-full h-auto"
+          className="mx-auto w-1/6 h-1/6 hover:scale-110 transition ease-in-out"
           src={image[0]}
           alt=""
         />
       </div>
-      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[12px] sm:h-auto">
+      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[12px]">
         <p>{name}</p>
       </div>
-      <p className="text-lg font-medium text-[#6e162d] sm:text-base">
+      <p className="text-lg font-medium text-[#6e162d]">
         {discount ? (
           <>
-            <span className="line-through text-[13px] text-gray-500 mr-2 sm:text-[12px]">
+            <span className="line-through text-[13px] text-gray-500 mr-2">
               {currency} {price}
             </span>
             <span className="">
