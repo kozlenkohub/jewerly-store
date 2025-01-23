@@ -3,7 +3,7 @@ import { assets } from '../assets/assets';
 
 const Footer = () => {
   return (
-    <div className="bg-[#6e162d]">
+    <div className="bg-mainColor">
       <div className="flex py-10 flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 text-sm max-w-[1280px] mx-auto px-4">
         <div className="">
           <img src={assets.logo} alt="logo" className="mb-2 w-32" />

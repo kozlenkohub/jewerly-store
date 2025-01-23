@@ -19,7 +19,7 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
       <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[12px]">
         <p>{name}</p>
       </div>
-      <p className="text-lg font-medium text-[#6e162d]">
+      <p className="text-lg font-medium text-mainColor">
         {discount ? (
           <>
             <span className="line-through text-[13px] text-gray-500 mr-2">

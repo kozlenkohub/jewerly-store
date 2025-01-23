@@ -40,19 +40,19 @@ const Navbar = () => {
             className={`hidden sm:flex gap-5 text-sm transition-colors duration-300 ${textColor}`}>
             <NavLink to="/" className="flex flex-col items-center gap-1">
               <p>Home</p>
-              <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
+              <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
             </NavLink>
             <NavLink to="/catalog" className="flex flex-col items-center gap-1">
               <p>Catalog</p>
-              <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
+              <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
             </NavLink>
             <NavLink to="/about" className="flex flex-col items-center gap-1">
               <p>About</p>
-              <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
+              <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
             </NavLink>
             <NavLink to="/contact" className="flex flex-col items-center gap-1">
               <p>Contact</p>
-              <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
+              <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
             </NavLink>
           </ul>
           <div className="flex items-center gap-6">
@@ -69,7 +69,7 @@ const Navbar = () => {
             </div>
             <Link to="/cart" className="relative sm:block hidden">
               <FaShoppingCart className="w-5 h-5" />
-              <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[12px]">
+              <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px]">
                 10
               </p>
             </Link>
@@ -77,7 +77,7 @@ const Navbar = () => {
             <FaBars
               onClick={() => setVisible(true)}
               className={`w-5 h-5 cursor-pointer sm:hidden transition-colors duration-300 ${
-                scrollY > 150 ? 'text-[#6e162d]' : 'text-white'
+                scrollY > 150 ? 'text-mainColor' : 'text-white'
               }`}
             />
           </div>
