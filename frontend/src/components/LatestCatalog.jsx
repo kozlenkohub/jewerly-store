@@ -30,7 +30,7 @@ const LatestCatalog = () => {
         <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-5 text-center mt-4">
           <a
             href="/cart"
-            className="text-[20px] hover:underline transition duration-300 ease-in-out transform hover:scale-105">
+            className="text-[20px] hover:underline transition duration-300 ease-in-out transform hover:scale-105 text-textColor">
             See more
           </a>
         </div>
