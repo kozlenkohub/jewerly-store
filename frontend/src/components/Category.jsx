@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Title from './Title';
-import { ShopContext } from '../context/shopContext';
+
+import { useSelector } from 'react-redux';
 
 const Category = () => {
-  const { category } = React.useContext(ShopContext);
+  const { category } = useSelector((state) => state.category);
   return (
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center py-8 text-3xl">

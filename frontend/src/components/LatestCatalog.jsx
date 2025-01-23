@@ -1,10 +1,9 @@
 import React from 'react';
 import Title from './Title';
 import ProductItem from './ProductItem';
-import { ShopContext } from '../context/shopContext';
-
+import { useSelector } from 'react-redux';
 const LatestCatalog = () => {
-  const { products } = React.useContext(ShopContext);
+  const { products } = useSelector((state) => state.product);
   const [latestProducts, setLatestProducts] = React.useState([]);
 
   React.useEffect(() => {

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShopContext } from '../context/shopContext';
+import { useSelector } from 'react-redux';
 
 const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
-  const { currency } = useContext(ShopContext);
+  const currency = useSelector((state) => state.currency);
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 
   return (
@@ -16,7 +16,7 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
         )}
         <img className="hover:scale-110 transition ease-in-out" src={image[0]} alt="" />
       </div>
-      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] poppins h-20 sm:text-[12px]">
+      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[12px]">
         <p>{name}</p>
       </div>
       <p className="text-lg font-medium text-[#6e162d]">

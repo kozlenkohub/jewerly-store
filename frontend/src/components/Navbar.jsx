@@ -56,8 +56,8 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex items-center gap-6">
-            <FaSearch className="w-5 h-5 cursor-pointer" />
-            <div className="group relative">
+            <FaSearch className="w-5 h-5 cursor-pointer sm:block hidden" />
+            <div className="group relative sm:block hidden">
               <FaUser className="w-5 h-5 cursor-pointer" />
               <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
                 <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
@@ -67,23 +67,49 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <Link to="/cart" className="relative ">
+            <Link to="/cart" className="relative sm:block hidden">
               <FaShoppingCart className="w-5 h-5" />
               <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[12px]">
                 10
               </p>
             </Link>
 
-            <FaBars onClick={() => setVisible(true)} className="w-5 h-5 cursor-pointer sm:hidden" />
+            <FaBars
+              onClick={() => setVisible(true)}
+              className={`w-5 h-5 cursor-pointer sm:hidden transition-colors duration-300 ${
+                scrollY > 150 ? 'text-[#6e162d]' : 'text-white'
+              }`}
+            />
           </div>
           <div
             className={`fixed top-0 z-50 right-0 bottom-0 overflow-hidden bg-white transition-all ${
               visible ? 'w-full' : 'w-0'
             }`}>
             <div className="flex flex-col">
-              <div onClick={() => setVisible(false)} className="flex items-center gap-1 p-3">
-                <MdOutlineKeyboardArrowLeft className="w-6 h-6" />
-                <p>Back</p>
+              <div className="flex items-center justify-between p-3">
+                <div onClick={() => setVisible(false)} className="flex items-center gap-1">
+                  <MdOutlineKeyboardArrowLeft className="w-6 h-6" />
+                  <p>Back</p>
+                </div>
+                <div className="flex items-center gap-6">
+                  <FaSearch className="w-5 h-5 cursor-pointer" />
+                  <div className="group relative">
+                    <FaUser className="w-5 h-5 cursor-pointer" />
+                    <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
+                      <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+                        <p className="cursor-pointer hover:text-black">My Profile</p>
+                        <p className="cursor-pointer hover:text-black">Orders</p>
+                        <p className="cursor-pointer hover:text-black">LogOut</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Link to="/cart" className="relative">
+                    <FaShoppingCart className="w-5 h-5" />
+                    {/* <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[12px]">
+                      10
+                    </p> */}
+                  </Link>
+                </div>
               </div>
               <NavLink
                 onClick={() => {
