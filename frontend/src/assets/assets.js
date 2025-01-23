@@ -96,7 +96,7 @@ export const assets = {
 
 export const products = [
   {
-    _id: 'aaaaa',
+    _id: '33',
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
@@ -224,7 +224,7 @@ export const products = [
     bestseller: true,
   },
   {
-    _id: 'aaaaa',
+    _id: 'aaaa3a',
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
