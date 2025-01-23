@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShopContext } from '../context/shopContext';
+import { ShopContext } from '@/context/shopContext.jsx';
 
 import Title from './Title';
 
