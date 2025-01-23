@@ -2,15 +2,19 @@ import React from 'react';
 import video from '../assets/promo.mp4';
 
 const Hero = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
-      <video
-        src={video}
-        autoPlay
-        loop
-        muted
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-      />
+      {!isMobile && (
+        <video
+          src={video}
+          autoPlay
+          loop
+          muted
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      )}
       <div
         style={{
           position: 'absolute',
