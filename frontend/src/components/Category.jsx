@@ -23,7 +23,9 @@ const Category = () => {
                 />
                 <div className="absolute inset-0 bg-black opacity-0 hover:opacity-15 transition-opacity duration-300"></div>
               </div>
-              <h3 className="text-lg mt-2 poppins font-light tracking-widest">{category.name}</h3>
+              <h3 className="text-lg text-secondaryColor mt-2 poppins font-light tracking-widest">
+                {category.name}
+              </h3>
             </div>
           ))}
         </div>
