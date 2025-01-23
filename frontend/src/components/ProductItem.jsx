@@ -14,11 +14,7 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
             Bestseller
           </div>
         )}
-        <img
-          className="mx-auto w-1/6 h-1/6 hover:scale-110 transition ease-in-out"
-          src={image[0]}
-          alt=""
-        />
+        <img className="hover:scale-110 transition ease-in-out" src={image[0]} alt="" />
       </div>
       <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[12px]">
         <p>{name}</p>
