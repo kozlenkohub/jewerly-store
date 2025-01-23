@@ -3,11 +3,13 @@ import Hero from '../components/Hero';
 import LatestCatalog from '../components/LatestCatalog';
 import OurPolicy from '../components/OurPolicy';
 import NewsletterBox from '../components/NewsletterBox';
+import Category from '../components/Category';
 
 const Home = () => {
   return (
     <div>
       <Hero />
+      <Category />
       <LatestCatalog />
       <OurPolicy />
       <NewsletterBox />

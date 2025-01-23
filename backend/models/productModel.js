@@ -13,6 +13,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0, // Цена не может быть отрицательной
     },
+    discount: {
+      type: Number,
+      min: 0,
+      max: 100, // Скидка не может быть больше 100%
+    },
     images: {
       type: [String],
       required: true, // Массив путей к изображениям

@@ -9,7 +9,7 @@ const LatestCatalog = () => {
   const [latestProducts, setLatestProducts] = React.useState([]);
 
   React.useEffect(() => {
-    const latest = products.slice(0, 10);
+    const latest = products.slice(0, 5);
     setLatestProducts(latest);
   }, [products]);
 
@@ -27,6 +27,13 @@ const LatestCatalog = () => {
           {latestProducts.map((product) => (
             <ProductItem key={product.id} {...product} />
           ))}
+          <div className="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 text-center mt-4">
+            <a
+              href="/cart"
+              className="text-[20px] hover:underline transition duration-300 ease-in-out transform hover:scale-105">
+              See more
+            </a>
+          </div>
         </div>
       </div>
     </div>

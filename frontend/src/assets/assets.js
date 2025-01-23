@@ -101,20 +101,29 @@ export const products = [
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 100,
-    image: [p_img1],
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+    ],
     category: 'Women',
+    discount: 25,
     subCategory: 'Topwear',
     sizes: ['S', 'M', 'L'],
     date: 1716634345448,
-    bestseller: true,
+    bestseller: false,
   },
+
   {
     _id: 'aaaab',
-    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    name: 'КОЛЬЦО ДЛЯ П «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 200,
-    image: [p_img2_1, p_img2_2, p_img2_3, p_img2_4],
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+      p_img2_2,
+      p_img2_3,
+      p_img2_4,
+    ],
     category: 'Men',
     subCategory: 'Topwear',
     sizes: ['M', 'L', 'XL'],
@@ -127,7 +136,9 @@ export const products = [
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 220,
-    image: [p_img3],
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
     category: 'Kids',
     subCategory: 'Topwear',
     sizes: ['S', 'L', 'XL'],
@@ -140,7 +151,136 @@ export const products = [
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 110,
-    image: [p_img4],
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'XXL'],
+    date: 1716621345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaaa',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 100,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+    ],
+    category: 'Women',
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'L'],
+    date: 1716634345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaab',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 200,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+      p_img2_2,
+      p_img2_3,
+      p_img2_4,
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['M', 'L', 'XL'],
+    date: 1716621345448,
+    bestseller: false,
+  },
+  {
+    _id: 'aaaac',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 220,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Kids',
+    subCategory: 'Topwear',
+    sizes: ['S', 'L', 'XL'],
+    date: 1716234545448,
+    bestseller: false,
+  },
+  {
+    _id: 'aaaad',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 110,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'XXL'],
+    date: 1716621345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaaa',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 100,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+    ],
+    category: 'Women',
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'L'],
+    date: 1716634345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaab',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 200,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+      p_img2_2,
+      p_img2_3,
+      p_img2_4,
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['M', 'L', 'XL'],
+    date: 1716621345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaac',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 220,
+    discount: 10,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Kids',
+    subCategory: 'Topwear',
+    sizes: ['S', 'L', 'XL'],
+    date: 1716234545448,
+    bestseller: false,
+  },
+  {
+    _id: 'aaaad',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 ',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 110,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
     category: 'Men',
     subCategory: 'Topwear',
     sizes: ['S', 'M', 'XXL'],
@@ -770,5 +910,48 @@ export const products = [
     sizes: ['S', 'M', 'L', 'XL'],
     date: 1716668445448,
     bestseller: false,
+  },
+];
+
+export const category = [
+  {
+    _id: 'cat1',
+    name: 'Rings',
+    image: p_img1,
+  },
+  {
+    _id: 'cat2',
+    name: 'Necklaces',
+    image: p_img2_1,
+  },
+  {
+    _id: 'cat3',
+    name: 'Earrings',
+    image: p_img3,
+  },
+  {
+    _id: 'cat4',
+    name: 'Bracelets',
+    image: p_img4,
+  },
+  {
+    _id: 'cat5',
+    name: 'Watches',
+    image: p_img5,
+  },
+  {
+    _id: 'cat6',
+    name: 'Brooches',
+    image: p_img6,
+  },
+  {
+    _id: 'cat7',
+    name: 'Anklets',
+    image: p_img7,
+  },
+  {
+    _id: 'cat8',
+    name: 'Cufflinks',
+    image: p_img8,
   },
 ];

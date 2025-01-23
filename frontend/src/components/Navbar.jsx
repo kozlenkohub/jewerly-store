@@ -33,8 +33,8 @@ const Navbar = () => {
       style={{ backgroundColor: `rgba(255, 255, 255, ${backgroundOpacity})` }}>
       <div className="max-w-[1280px] px-4 mx-auto">
         <div className="flex items-center justify-between py-5 font-medium">
-          <Link to="/">
-            <img src={assets.logo} className="w-36" alt="" />
+          <Link className={textColor} to="/">
+            <p>LOGO</p>
           </Link>
           <ul
             className={`hidden sm:flex gap-5 text-sm transition-colors duration-300 ${textColor}`}>
@@ -69,7 +69,7 @@ const Navbar = () => {
             </div>
             <Link to="/cart" className="relative ">
               <FaShoppingCart className="w-5 h-5" />
-              <p className="absolute right-[-9px] bottom-[-5px] w-4 text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[8px]">
+              <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[12px]">
                 10
               </p>
             </Link>

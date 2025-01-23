@@ -1,10 +1,11 @@
 import React from 'react';
+import video from '../assets/promo.mp4';
 
 const Hero = () => {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
       <video
-        src="https://www.w3schools.com/html/mov_bbb.mp4"
+        src={video}
         autoPlay
         loop
         muted
@@ -25,7 +26,16 @@ const Hero = () => {
           color: 'white',
           textAlign: 'center',
         }}>
-        <h1 style={{ fontSize: '3rem', margin: '0.5rem' }}>Queen Diamond</h1>
+        <h1
+          className="playfair"
+          style={{
+            fontSize: '3rem',
+            margin: '0.5rem',
+            borderBottom: '2px solid white',
+            animation: 'borderExpand 2s forwards',
+          }}>
+          The Queen's diamond
+        </h1>
         <p className="font-light poppins " style={{ fontSize: '13px', margin: '0.5rem' }}>
           Experience the luxury and elegance
         </p>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { products } from '../assets/assets';
+import { category, products } from '../assets/assets';
 
 export const ShopContext = React.createContext();
 
@@ -8,6 +8,7 @@ const ShopContextProvider = ({ children }) => {
   const delivery_fee = 10;
   const value = {
     products,
+    category,
     currency,
     delivery_fee,
   };
