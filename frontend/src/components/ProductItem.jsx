@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
-  const currency = useSelector((state) => state.currency);
+  const { currency } = useSelector((state) => state.product);
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 
   return (
@@ -14,15 +14,19 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
             Bestseller
           </div>
         )}
-        <img className="hover:scale-110 transition ease-in-out" src={image[0]} alt="" />
+        <img
+          className="hover:scale-110 transition ease-in-out w-full h-auto"
+          src={image[0]}
+          alt=""
+        />
       </div>
-      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[12px]">
+      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[12px] sm:h-auto">
         <p>{name}</p>
       </div>
-      <p className="text-lg font-medium text-[#6e162d]">
+      <p className="text-lg font-medium text-[#6e162d] sm:text-base">
         {discount ? (
           <>
-            <span className="line-through text-[13px] text-gray-500 mr-2">
+            <span className="line-through text-[13px] text-gray-500 mr-2 sm:text-[12px]">
               {currency} {price}
             </span>
             <span className="">
