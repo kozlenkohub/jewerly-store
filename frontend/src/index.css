@@ -12,6 +12,10 @@ body {
   text-transform: uppercase;
 }
 
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
 a.active hr {
   display: block;
 }

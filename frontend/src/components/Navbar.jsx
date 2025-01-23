@@ -11,7 +11,7 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 const Navbar = () => {
   const [visible, setVisible] = React.useState(false);
   return (
-    <div className="max-w-[1280px] px-4 mx-auto   ">
+    <div className="max-w-[1280px] px-4 mx-auto">
       <div className="flex items-center justify-between py-5 font-medium">
         <Link to="/">
           <img src={assets.logo} className="w-36" alt="" />
@@ -19,19 +19,19 @@ const Navbar = () => {
         <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
           <NavLink to="/" className="flex flex-col items-center gap-1">
             <p>Home</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+            <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
           </NavLink>
           <NavLink to="/catalog" className="flex flex-col items-center gap-1">
             <p>Catalog</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+            <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
           </NavLink>
           <NavLink to="/about" className="flex flex-col items-center gap-1">
             <p>About</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+            <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
           </NavLink>
           <NavLink to="/contact" className="flex flex-col items-center gap-1">
             <p>Contact</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+            <hr className="w-2/4 border-none h-[1.5px] bg-[#6e162d] hidden" />
           </NavLink>
         </ul>
         <div className="flex items-center gap-6">
