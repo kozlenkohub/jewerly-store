@@ -1,11 +1,10 @@
 import React from 'react';
 import Title from './Title';
 import ProductItem from './ProductItem';
-import { useSelector } from 'react-redux';
+import { products } from '../assets/assets';
 import { Link } from 'react-router-dom';
 
 const LatestCatalog = () => {
-  const { products } = useSelector((state) => state.product);
   const [latestProducts, setLatestProducts] = React.useState([]);
 
   React.useEffect(() => {
