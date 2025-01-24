@@ -10,4 +10,8 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  base: '/', // Важно для корректной работы маршрутов
+  build: {
+    outDir: 'dist', // Папка для сборки
+  },
 });
