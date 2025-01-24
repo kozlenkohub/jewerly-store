@@ -26,6 +26,7 @@ const Navbar = () => {
   const backgroundOpacity = Math.min(scrollY / 300, 1);
   const textColor = scrollY > 150 ? 'text-gray-700' : 'text-white';
   const boxShadow = scrollY > 150 ? 'shadow-md' : '';
+  const iconColor = scrollY > 150 ? 'text-mainColor' : 'text-white';
 
   return (
     <div
@@ -56,9 +57,9 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex items-center gap-6">
-            <FaSearch className="w-5 h-5 cursor-pointer sm:block hidden" />
-            <div className="group relative sm:block hidden">
-              <FaUser className="w-5 h-5 cursor-pointer" />
+            <FaSearch className={`w-5 h-5 cursor-pointer sm:block hidden ${iconColor}`} />
+            <div className={`group relative sm:block hidden ${iconColor}`}>
+              <FaUser className={`w-5 h-5 cursor-pointer ${iconColor}`} />
               <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
                 <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
                   <p className="cursor-pointer hover:text-black">My Profile</p>
@@ -67,8 +68,8 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <Link to="/cart" className="relative sm:block hidden">
-              <FaShoppingCart className="w-5 h-5" />
+            <Link to="/cart" className={`relative sm:block hidden ${iconColor}`}>
+              <FaShoppingCart className={`w-5 h-5 ${iconColor}`} />
               <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px]">
                 10
               </p>
@@ -76,9 +77,7 @@ const Navbar = () => {
 
             <FaBars
               onClick={() => setVisible(true)}
-              className={`w-5 h-5 cursor-pointer sm:hidden transition-colors duration-300 ${
-                scrollY > 150 ? 'text-mainColor' : 'text-white'
-              }`}
+              className={`w-5 h-5 cursor-pointer sm:hidden transition-colors duration-300 ${iconColor}`}
             />
           </div>
           <div
@@ -92,9 +91,9 @@ const Navbar = () => {
                   <p>Back</p>
                 </div>
                 <div className="flex items-center gap-6">
-                  <FaSearch className="w-5 h-5 cursor-pointer" />
-                  <div className="group relative">
-                    <FaUser className="w-5 h-5 cursor-pointer" />
+                  <FaSearch className={`w-5 h-5 cursor-pointer ${iconColor}`} />
+                  <div className={`group relative ${iconColor}`}>
+                    <FaUser className={`w-5 h-5 cursor-pointer ${iconColor}`} />
                     <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
                       <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
                         <p className="cursor-pointer hover:text-black">My Profile</p>
@@ -103,8 +102,8 @@ const Navbar = () => {
                       </div>
                     </div>
                   </div>
-                  <Link to="/cart" className="relative">
-                    <FaShoppingCart className="w-5 h-5" />
+                  <Link to="/cart" className={`relative ${iconColor}`}>
+                    <FaShoppingCart className={`w-5 h-5 ${iconColor}`} />
                     {/* <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-[#923f3f] text-white aspect-square rounded-full text-[12px]">
                       10
                     </p> */}
