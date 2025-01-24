@@ -7,7 +7,6 @@ import Filters from '../components/Filters';
 import { fetchProducts } from '../redux/slices/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setSelectedFilters } from '../redux/slices/filterSlice';
-import { RectangleSkeleton } from '../components/Skeleton';
 import qs from 'qs';
 
 const Catalog = () => {
