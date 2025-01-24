@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { FaChevronDown } from 'react-icons/fa';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
+import Filters from '../components/Filters';
 
 const Catalog = () => {
   const { products } = useSelector((state) => state.product);
@@ -12,6 +13,7 @@ const Catalog = () => {
   React.useEffect(() => {
     setFilterProducts(products);
   });
+
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center">
       <div className="min-w-60">
@@ -22,40 +24,8 @@ const Catalog = () => {
             onClick={() => setShowFilter(!showFilter)}
           />
         </p>
-        {/* category */}
-        <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 ${
-            showFilter ? '' : 'hidden'
-          } sm:block`}>
-          <p className="mb-3 text-sm font-medium">Categories</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'Rings'} /> Rings
-            </p>
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'Earrings'} /> Earrings
-            </p>
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'Pendants'} /> Pendants
-            </p>
-          </div>
-        </div>
-        <div
-          className={`border border-gray-300 pl-5 py-3 my-5 ${
-            showFilter ? '' : 'hidden'
-          } sm:block`}>
-          <p className="mb-3 text-sm font-medium">Metal</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'White Gold'} /> White Gold
-            </p>
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'Yellow Gold'} /> Yellow Gold
-            </p>
-            <p className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4" value={'Red Gold'} /> Red Gold
-            </p>
-          </div>
+        <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
+          <Filters />
         </div>
       </div>
       {/* Right Side */}

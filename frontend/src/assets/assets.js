@@ -160,6 +160,71 @@ export const products = [
     bestseller: true,
   },
   {
+    _id: '33',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 100,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+    ],
+    category: 'Women',
+    discount: 25,
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'L'],
+    date: 1716634345448,
+    bestseller: false,
+  },
+
+  {
+    _id: 'aaaab',
+    name: 'КОЛЬЦО ДЛЯ П «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 200,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+      p_img2_2,
+      p_img2_3,
+      p_img2_4,
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['M', 'L', 'XL'],
+    date: 1716621345448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaac',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 220,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Kids',
+    subCategory: 'Topwear',
+    sizes: ['S', 'L', 'XL'],
+    date: 1716234545448,
+    bestseller: true,
+  },
+  {
+    _id: 'aaaad',
+    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 110,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
+    ],
+    category: 'Men',
+    subCategory: 'Topwear',
+    sizes: ['S', 'M', 'XXL'],
+    date: 1716621345448,
+    bestseller: true,
+  },
+  {
     _id: 'aaaaa',
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
@@ -330,3 +395,22 @@ export const category = [
     image: p_img8,
   },
 ];
+
+export const filters = {
+  categories: {
+    label: 'Categories',
+    options: ['Rings', 'Earrings', 'Pendants'],
+  },
+  metals: {
+    label: 'Metals',
+    options: ['Gold', 'Silver', 'Platinum'],
+  },
+  cutForms: {
+    label: 'Cut Forms',
+    options: ['Round', 'Princess', 'Emerald', 'Oval'],
+  },
+  carats: {
+    label: 'Carats',
+    options: ['0.3 - 0.5', '0.51 - 0.6', '0.61 - 0.7', '0.71 - 3'],
+  },
+};
