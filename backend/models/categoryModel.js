@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import shortid from 'shortid'; // Установите эту библиотеку: npm install shortid
 
 const categorySchema = new mongoose.Schema(
   {
@@ -24,11 +23,18 @@ const categorySchema = new mongoose.Schema(
       type: String, // Путь или имя файла для иконки категории
       default: null,
     },
-    shortId: {
-      type: String, // Укороченный идентификатор
-      unique: true, // Гарантируем уникальность
-      default: shortid.generate, // Генерация идентификатора
-    },
+    filters: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Filter', // Ссылки на фильтры, связанные с категорией
+      },
+    ],
+    // Удаляем поле slug
+    // slug: {
+    //   type: String,
+    //   slug: 'name', // Генерация slug на основе имени
+    //   unique: true, // Гарантируем уникальность
+    // },
   },
   { timestamps: true },
 );

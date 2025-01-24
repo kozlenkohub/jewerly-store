@@ -1,18 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaChevronDown } from 'react-icons/fa';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import Filters from '../components/Filters';
+import { fetchProducts } from '../redux/slices/productSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import qs from 'qs';
 
 const Catalog = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { search: searchParams } = useLocation();
+
+  const search = qs.parse(searchParams, { ignoreQueryPrefix: true });
+  const query = qs.stringify(search);
+
   const { products } = useSelector((state) => state.product);
   const [showFilter, setShowFilter] = React.useState(false);
-  const [filterProducts, setFilterProducts] = React.useState([]);
 
   React.useEffect(() => {
-    setFilterProducts(products);
-  });
+    dispatch(fetchProducts(query));
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center">
@@ -41,7 +51,7 @@ const Catalog = () => {
         </div>
         {/* map product */}
         <div className="grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6">
-          {filterProducts.map((item, index) => (
+          {products.map((item, index) => (
             <ProductItem key={index} {...item} />
           ))}
         </div>

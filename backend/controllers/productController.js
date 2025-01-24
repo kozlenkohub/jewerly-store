@@ -1,24 +1,21 @@
 import { v2 as cloudinary } from 'cloudinary';
+import mongoose from 'mongoose';
 import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { shape, metal, karat, category } = req.query;
+    const { metal, category } = req.query;
     const filter = {};
 
-    if (shape) filter.shape = shape;
     if (metal) filter.metal = metal;
-    if (karat) filter.karat = karat;
     if (category) {
-      const categoryDoc = await Category.findOne({
-        $or: [{ _id: category }, { shortId: category }],
-      });
-      if (categoryDoc) {
-        filter.category = categoryDoc._id;
-      } else {
-        return res.status(404).json({ message: 'Category not found' });
+      if (!mongoose.isValidObjectId(category)) {
+        return res.status(400).json({ message: 'Invalid category ID' });
       }
+      const categoryDoc = await Category.findById(category);
+      if (!categoryDoc) return res.status(404).json({ message: 'Category not found' });
+      filter.category = categoryDoc._id;
     }
 
     const products = await Product.find(filter);
@@ -35,6 +32,9 @@ export const addProduct = async (req, res) => {
       req.body;
 
     // Найти категорию по shortId или _id
+    if (!mongoose.isValidObjectId(category)) {
+      return res.status(400).json({ message: 'Invalid category ID' });
+    }
     const categoryDoc = await Category.findOne({
       $or: [{ _id: category }, { shortId: category }],
     });
