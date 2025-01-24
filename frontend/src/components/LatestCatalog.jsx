@@ -2,6 +2,7 @@ import React from 'react';
 import Title from './Title';
 import ProductItem from './ProductItem';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const LatestCatalog = () => {
   const { products } = useSelector((state) => state.product);
@@ -28,11 +29,11 @@ const LatestCatalog = () => {
           ))}
         </div>
         <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-5 text-center mt-4">
-          <a
-            href="/cart"
+          <Link
+            to="/catalog"
             className="text-[20px] hover:underline transition duration-300 ease-in-out transform hover:scale-105 text-textColor">
             See more
-          </a>
+          </Link>
         </div>
       </div>
     </div>
