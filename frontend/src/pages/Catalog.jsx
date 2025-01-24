@@ -70,7 +70,7 @@ const Catalog = () => {
           </select>
         </div>
         {/* map product */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        <div className="grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6">
           {filterProducts.map((item, index) => (
             <ProductItem key={index} {...item} />
           ))}
