@@ -7,7 +7,7 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller }) => {
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 
   return (
-    <Link className="cursor-pointer text-gray-700" to={`/product/${_id}`}>
+    <Link className="px-4 cursor-pointer text-gray-700" to={`/product/${_id}`}>
       <div className="relative overflow-hidden flex justify-center items-center">
         {bestseller && (
           <div className="absolute top-0 right-0 bg-slate-500/40 text-white text-xs px-2 py-1 z-10">
