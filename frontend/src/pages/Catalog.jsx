@@ -7,6 +7,7 @@ import Filters from '../components/Filters';
 import { fetchProducts } from '../redux/slices/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setSelectedFilters } from '../redux/slices/filterSlice';
+import { RectangleSkeleton } from '../components/Skeleton';
 import qs from 'qs';
 
 const Catalog = () => {
@@ -32,7 +33,7 @@ const Catalog = () => {
 
   const query = qs.stringify(memoizedSearch, { arrayFormat: 'repeat' });
 
-  const { products } = useSelector((state) => state.product);
+  const { products, isLoading } = useSelector((state) => state.product);
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
 
@@ -41,11 +42,6 @@ const Catalog = () => {
   React.useEffect(() => {
     dispatch(setSelectedFilters(memoizedSearch));
   }, [memoizedSearch, dispatch]);
-
-  React.useEffect(() => {
-    // Fetch products on initial render
-    dispatch(fetchProducts(query));
-  }, [dispatch]);
 
   React.useEffect(() => {
     if (debounceRef.current) {
@@ -91,11 +87,18 @@ const Catalog = () => {
             <option value="high-low">High to Low</option>
           </select>
         </div>
-        <div className="grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6">
-          {products.map((item, index) => (
-            <ProductItem key={index} {...item} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="">Loading</div>
+        ) : (
+          <div
+            className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ${
+              isLoading ? 'px-4' : ''
+            }`}>
+            {products.map((item, index) => (
+              <ProductItem key={index} {...item} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,10 +5,15 @@ import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, category } = req.query;
+    const { metal, category, ...unknownFilters } = req.query;
     const filter = {};
 
-    if (metal) filter.metal = metal;
+    // Check for unknown filters
+    if (Object.keys(unknownFilters).length > 0) {
+      return res.json([]); // Return message if unknown filters are present
+    }
+
+    if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
     if (category) {
       if (!mongoose.isValidObjectId(category)) {
         return res.status(400).json({ message: 'Invalid category ID' });

@@ -9,6 +9,7 @@ export const fetchProducts = createAsyncThunk('product/fetchProductsStatus', asy
 const initialState = {
   products: [],
   currency: '$',
+  isLoading: false,
   status: 'idle', // добавим статус по умолчанию
 };
 
@@ -23,13 +24,16 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
+        state.isLoading = true;
         state.status = 'loading';
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.status = 'succeeded';
         state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state) => {
+        state.isLoading = false;
         state.status = 'failed';
       });
   },

@@ -267,6 +267,7 @@ export const products = [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
     ],
     category: 'Kids',
+    metal: 'Gold',
     subCategory: 'Topwear',
     sizes: ['S', 'L', 'XL'],
     date: 1716234545448,
