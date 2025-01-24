@@ -20,7 +20,6 @@ const Catalog = () => {
       arrayFormat: 'repeat',
     });
 
-    // Преобразуем строки в массивы, если они не массивы
     Object.keys(parsed).forEach((key) => {
       if (typeof parsed[key] === 'string') {
         parsed[key] = [parsed[key]];
