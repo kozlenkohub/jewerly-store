@@ -13,7 +13,7 @@ const Catalog = () => {
     setFilterProducts(products);
   });
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center">
       <div className="min-w-60">
         <p className="my-2 text-xl flex items-center cursor-pointer gap-2">
           Filters
