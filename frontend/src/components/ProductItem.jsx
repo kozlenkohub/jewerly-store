@@ -14,7 +14,7 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
             Bestseller
           </div>
         )}
-        <img className="hover:scale-110 transition ease-in-out w-36" src={image[0]} alt="" />
+        <img className="hover:scale-110 transition ease-in-out w-32" src={image[0]} alt="" />
       </div>
       <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[14px] forum mb-2  ">
         <p>{name}</p>
