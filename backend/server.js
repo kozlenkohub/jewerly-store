@@ -27,6 +27,25 @@ app.use('/api/product', productRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/filter', filterRouter);
 
+app.post('/api/filter/create', async (req, res) => {
+  try {
+    const { key, label, type, options } = req.body;
+    const newFilter = new Filter({
+      key,
+      label,
+      type,
+      options: options.map((option) => ({
+        type: option.type,
+        img: option.img || '',
+      })),
+    });
+    const savedFilter = await newFilter.save();
+    res.status(201).json(savedFilter);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 app.get('/', (req, res) => {
   res.status(200).send('Api is running');
 });

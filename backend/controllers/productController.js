@@ -5,7 +5,7 @@ import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, category, ...unknownFilters } = req.query;
+    const { metal, carats, category, ...unknownFilters } = req.query;
     const filter = {};
 
     // Check for unknown filters
@@ -14,6 +14,7 @@ export const getProducts = async (req, res) => {
     }
 
     if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
+    if (carats) filter.carats = { $in: carats }; // Используем $in для массива карат
     if (category) {
       if (!mongoose.isValidObjectId(category)) {
         return res.status(400).json({ message: 'Invalid category ID' });
@@ -33,8 +34,7 @@ export const getProducts = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, price, images, category, shape, metal, karat, sizes, bestseller, description } =
-      req.body;
+    const { name, images, category, metal, carats } = req.body;
 
     // Найти категорию по shortId или _id
     if (!mongoose.isValidObjectId(category)) {
@@ -48,15 +48,10 @@ export const addProduct = async (req, res) => {
     // Создать продукт
     const newProduct = new Product({
       name,
-      price,
       images,
       category: categoryDoc._id, // Сохраняем ObjectId категории
-      shape,
       metal,
-      karat,
-      sizes,
-      bestseller,
-      description,
+      carats,
     });
 
     await newProduct.save();
