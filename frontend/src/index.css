@@ -55,3 +55,8 @@ a.active hr {
 .futura {
   font-family: 'Futura Light', sans-serif;
 }
+
+.futura-normal {
+  font-family: 'Futura', sans-serif;
+  font-weight: normal;
+}
