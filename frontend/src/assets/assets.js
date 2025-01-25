@@ -358,42 +358,50 @@ export const category = [
   {
     _id: 'cat1',
     name: 'Rings',
-    image: p_img1,
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/kolca-262x206.webp',
   },
   {
     _id: 'cat2',
     name: 'Necklaces',
-    image: p_img2_1,
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/kolcadlapomolvki-262x206.webp',
   },
   {
     _id: 'cat3',
     name: 'Earrings',
-    image: p_img3,
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/sbrilliantami-262x206.webp',
   },
   {
     _id: 'cat4',
     name: 'Bracelets',
-    image: p_img4,
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/obruchki-262x206.webp',
   },
   {
     _id: 'cat5',
-    name: 'Watches',
-    image: p_img5,
+    name: 'Rings',
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/podveski-262x206.webp',
   },
   {
     _id: 'cat6',
-    name: 'Brooches',
-    image: p_img6,
+    name: 'Necklaces',
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/specpredlozh-262x206.webp',
   },
   {
     _id: 'cat7',
-    name: 'Anklets',
-    image: p_img7,
+    name: 'Earrings',
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/scvetkamniamy-262x206.webp',
   },
   {
     _id: 'cat8',
-    name: 'Cufflinks',
-    image: p_img8,
+    name: 'Bracelets',
+    image:
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/banners/miniature/sergi-262x206.webp',
   },
 ];
 
