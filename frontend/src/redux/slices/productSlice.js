@@ -9,7 +9,7 @@ export const fetchProducts = createAsyncThunk('product/fetchProductsStatus', asy
 const initialState = {
   products: [],
   currency: '₴',
-  isLoading: false,
+  isLoading: true,
   status: 'idle', // добавим статус по умолчанию
 };
 
@@ -33,7 +33,7 @@ const productSlice = createSlice({
         state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state) => {
-        state.isLoading = false;
+        state.isLoading = true;
         state.status = 'failed';
       });
   },

@@ -8,6 +8,7 @@ import { fetchProducts } from '../redux/slices/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setSelectedFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
+import { DotLoader } from 'react-spinners';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const Catalog = () => {
   }, [selectedFilters, memoizedSearch, query, navigate, dispatch]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center relative">
       <div className="min-w-60">
         <p className="my-2 text-xl flex items-center cursor-pointer gap-2">
           Filters
@@ -75,9 +76,9 @@ const Catalog = () => {
           <Filters />
         </div>
       </div>
-      {/* Right Side */}
+
       <div className="flex-1">
-        <div className="flex justify-between text-base sm:text-2xl mb-4">
+        <div className="flex justify-between text-base sm:text-xl mb-4 relative">
           <Title text1={'All'} text2={'Products'} />
           <select className="border-2 border-gray-300">
             <option value="relevent">Relevent</option>
@@ -85,8 +86,11 @@ const Catalog = () => {
             <option value="high-low">High to Low</option>
           </select>
         </div>
+
         {isLoading ? (
-          <div className="">Loading</div>
+          <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%] ">
+            <DotLoader size={50} color={'#123abc'} loading={isLoading} speedMultiplier={0.5} />
+          </div>
         ) : (
           <div
             className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ${

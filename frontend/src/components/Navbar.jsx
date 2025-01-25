@@ -147,7 +147,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {!isHomePage && <div style={{ marginTop: '80px' }}></div>}
+      {!isHomePage && <div style={{ marginTop: '40px' }}></div>}
     </>
   );
 };
