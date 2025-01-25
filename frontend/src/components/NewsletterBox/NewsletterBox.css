@@ -1,7 +1,58 @@
 .newsletter-box {
-  background-image: url('https://zolotiyvik.ua/media/cmsadvanced/grid/resized/1920/870/1707839078.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   padding: 50px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-box video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px); /* Add blur effect */
+}
+
+.newsletter-box .overlay {
+  position: relative;
+  z-index: 1;
+  background: none; /* Remove darkening effect */
+  padding: 50px 0;
+  color: white; /* Ensure text color is white */
+}
+
+.newsletter-box input {
+  background: rgba(255, 255, 255, 0.7); /* Adjusted background opacity */
+}
+
+@media (max-width: 600px) {
+  .newsletter-box {
+    padding: 20px 0; /* Adjust padding for smaller screens */
+  }
+
+  .newsletter-box .overlay {
+    padding: 20px 0; /* Adjust padding for smaller screens */
+  }
+
+  .newsletter-box input {
+    padding: 10px; /* Adjust input padding for smaller screens */
+  }
+
+  .newsletter-box button {
+    padding: 10px 20px; /* Adjust button padding for smaller screens */
+  }
+
+  .newsletter-box form {
+    width: 90%; /* Ensure form does not overflow */
+    padding: 0 10px; /* Add padding to prevent overflow */
+  }
+
+  .newsletter-box p {
+    font-size: 1rem; /* Adjust text size for smaller screens */
+  }
+
+  .newsletter-box .text-2xl {
+    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+  }
 }
