@@ -23,7 +23,7 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
         )}
         <img className="hover:scale-110 transition ease-in-out w-32" src={image[0]} alt="" />
       </div>
-      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[14px] futura mb-2 tracking-[1px]">
+      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[13px] futura mb-2 tracking-[1px]">
         <p>{name}</p>
       </div>
       <p className="font-medium text-textColor futura-normal sm:text-[18px] text-[17px] tracking-[1px]">
