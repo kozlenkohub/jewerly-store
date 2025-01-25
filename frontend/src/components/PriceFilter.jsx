@@ -38,7 +38,7 @@ const PriceFilter = () => {
           max={1000}
           value={priceRange}
           onChange={handlePriceChange}
-          onAfterChange={handleAfterChange}
+          onChangeComplete={handleAfterChange}
           className="w-full"
           trackStyle={{ backgroundColor: 'gray' }}
           handleStyle={[

@@ -23,13 +23,11 @@ const Catalog = () => {
       ignoreQueryPrefix: true,
       arrayFormat: 'repeat',
     });
-
     Object.keys(parsed).forEach((key) => {
-      if (typeof parsed[key] === 'string') {
+      if (key !== 'price' && typeof parsed[key] === 'string') {
         parsed[key] = [parsed[key]];
       }
     });
-
     return parsed;
   }, [searchParams]);
 
