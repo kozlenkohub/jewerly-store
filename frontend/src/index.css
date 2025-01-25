@@ -20,7 +20,7 @@ body {
   font-family: 'Playfair Display', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #67d7ff;
+  color: #50a5c4;
   text-transform: uppercase;
 }
 
@@ -38,7 +38,7 @@ a.active hr {
 
 @media (max-width: 640px) {
   a.active {
-    background-color: #67d7ff;
+    background-color: #50a5c4;
     color: white;
   }
 }
