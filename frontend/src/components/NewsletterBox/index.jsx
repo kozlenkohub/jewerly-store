@@ -21,7 +21,7 @@ const NewsletterBox = () => {
 
   return (
     <div className="newsletter-box text-center">
-      <video ref={videoRef} autoPlay muted loop>
+      <video ref={videoRef} autoPlay muted loop playsInline webkit-playsinline>
         <source src={video} type="video/webm" />
         Your browser does not support the video tag.
       </video>
