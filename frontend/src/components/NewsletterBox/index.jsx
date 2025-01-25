@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import video from '../../assets/night.webm'; // Импортируем видео
 import './NewsletterBox.css'; // Импортируем файл стилей
 
 const NewsletterBox = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current && isMobile) {
+      // Пытаемся воспроизвести видео на мобильных устройствах
+      videoRef.current.play().catch((error) => {
+        console.error('Не удалось воспроизвести видео:', error);
+      });
+    }
+  }, [isMobile]);
+
   const onSubmit = (e) => {
     e.preventDefault();
   };
+
   return (
     <div className="newsletter-box text-center">
-      <video autoPlay muted loop>
+      <video ref={videoRef} autoPlay muted loop>
         <source src={video} type="video/webm" />
         Your browser does not support the video tag.
       </video>
