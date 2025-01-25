@@ -52,7 +52,7 @@ const NewsletterBox = () => {
           <input
             type="email"
             placeholder="Email"
-            className="w-full sm:flex-1 outline-none bg-white/70 text-black border-mainColor py-2"
+            className="w-full sm:flex-1 outline-none bg-white text-black border-2 border-mainColor/40 py-2"
             required
           />
           <button type="submit" className="bg-mainColor text-white text-xs px-10 py-4">

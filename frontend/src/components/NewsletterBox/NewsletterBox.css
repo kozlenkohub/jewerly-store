@@ -23,7 +23,18 @@
 }
 
 .newsletter-box input {
-  background: rgba(255, 255, 255, 0.7); /* Adjusted background opacity */
+  background: rgba(255, 255, 255, 0.176);
+  color: white; /* Adjusted background opacity */
+}
+
+.newsletter-box input::-webkit-input-placeholder {
+  color: #ccc;
+}
+.newsletter-box input:-ms-input-placeholder {
+  color: #ccc;
+}
+.newsletter-box input::placeholder {
+  color: #ccc;
 }
 
 @media (max-width: 600px) {
