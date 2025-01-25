@@ -33,7 +33,7 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
             <span className="line-through text-[12px] sm:text-[13px] text-gray-500 mr-2 tracking-[1px]">
               {formatPrice(price)} {currency}
             </span>
-            <span className="">
+            <span className="tracking-[0.3px]">
               {formatPrice(discountedPrice.toFixed(2))} {currency}
             </span>
           </>
