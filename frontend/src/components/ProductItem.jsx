@@ -7,6 +7,7 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 
   const formatPrice = (price) => {
+    if (price === undefined || price === null) return '';
     return price
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -26,10 +27,10 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
       <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[13px] futura mb-2 tracking-[1px]">
         <p>{name}</p>
       </div>
-      <p className="font-medium text-textColor futura-normal sm:text-[18px] text-[17px] tracking-[1px]">
+      <p className="font-medium mt-9 sm:mt-3 leading-[30px] text-textColor futura-normal sm:text-[18px] text-[17px] tracking-[1px]">
         {discount ? (
           <>
-            <span className="line-through text-[13px]  text-gray-500 mr-2 tracking-[1px]">
+            <span className="line-through text-[13px] text-gray-500 mr-2 tracking-[1px]">
               {formatPrice(price)} {currency}
             </span>
             <span className="">
