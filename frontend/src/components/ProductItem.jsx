@@ -16,13 +16,13 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
         )}
         <img className="hover:scale-110 transition ease-in-out w-32" src={image[0]} alt="" />
       </div>
-      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f]  h-20 sm:text-[14px] forum mb-2  ">
+      <div className="pt-3 pb-1 text-[14px] leading-4 font-light text-[#170d0f] h-20 sm:text-[14px] futura mb-2 tracking-[1px]">
         <p>{name}</p>
       </div>
-      <p className="text-lg font-medium text-textColor">
+      <p className="text-lg font-medium text-textColor tracking-[1px]">
         {discount ? (
           <>
-            <span className="line-through text-[13px] text-gray-500 mr-2">
+            <span className="line-through text-[13px] text-gray-500 mr-2 tracking-[1px]">
               {currency} {price}
             </span>
             <span className="">

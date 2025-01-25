@@ -5,6 +5,13 @@
 
 @import url(https://fonts.googleapis.com/css?family=Playfair+Display:regular,500,600,700,800,900,italic,500italic,600italic,700italic,800italic,900italic);
 
+@font-face {
+  font-family: 'Futura Light';
+  src: url('./fonts/FuturaLight.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -43,4 +50,8 @@ a.active hr {
 .tinos {
   font-family: 'Tinos', serif;
   font-style: italic;
+}
+
+.futura {
+  font-family: 'Futura Light', sans-serif;
 }
