@@ -68,7 +68,9 @@ const Catalog = () => {
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center relative">
       <div className="min-w-60">
-        <p className="my-2 text-xl flex items-center cursor-pointer gap-2">
+        <p
+          onClick={() => setShowFilter(!showFilter)}
+          className="my-2 text-xl flex items-center cursor-pointer gap-2">
           Filters
           <FaChevronDown
             className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
