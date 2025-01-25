@@ -49,10 +49,12 @@
   }
 
   .newsletter-box p {
-    font-size: 1rem; /* Adjust text size for smaller screens */
+    font-size: 0.85rem; /* Smaller, more elegant text */
+    line-height: 1.25;
   }
 
   .newsletter-box .text-2xl {
-    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+    font-size: 1.2rem; /* Adjust heading size */
+    line-height: 1.2;
   }
 }
