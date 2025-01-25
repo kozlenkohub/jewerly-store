@@ -4,14 +4,19 @@ import Category from '../models/categoryModel.js';
 export const createFilter = async (req, res) => {
   try {
     const { key, label, type, options } = req.body;
-
-    // Create a new filter
-    const newFilter = new Filter({ key, label, type, options });
-    await newFilter.save();
-
-    res.status(201).json(newFilter);
+    const newFilter = new Filter({
+      key,
+      label,
+      type,
+      options: options.map((option) => ({
+        type: option.type,
+        img: option.img || '',
+      })),
+    });
+    const savedFilter = await newFilter.save();
+    res.status(201).json(savedFilter);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating filter', error });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -76,7 +81,15 @@ export const updateFilter = async (req, res) => {
     // Find and update the filter
     const updatedFilter = await Filter.findByIdAndUpdate(
       id,
-      { key, label, type, options },
+      {
+        key,
+        label,
+        type,
+        options: options.map((option) => ({
+          type: option.type,
+          img: option.img || '',
+        })),
+      },
       { new: true },
     );
 
@@ -84,8 +97,8 @@ export const updateFilter = async (req, res) => {
       return res.status(404).json({ message: 'Filter not found' });
     }
 
-    res.json(updatedFilter);
+    res.status(200).json(updatedFilter);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating filter', error });
+    res.status(400).json({ message: error.message });
   }
 };

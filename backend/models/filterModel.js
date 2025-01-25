@@ -16,7 +16,19 @@ const filterSchema = new mongoose.Schema(
       required: true,
     },
     options: {
-      type: [String],
+      type: [
+        {
+          type: {
+            type: String,
+            required: true,
+          },
+          img: {
+            type: String,
+            required: false,
+          },
+        },
+      ],
+      _id: false,
     },
   },
   { timestamps: true },

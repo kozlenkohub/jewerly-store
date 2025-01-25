@@ -9,18 +9,18 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   const navigate = useNavigate();
   const selectedFilters = useSelector((state) => state.filter.selectedFilters);
 
-  const handleCheckboxChange = useCallback(
+  const handleOptionClick = useCallback(
     (option) => {
       const newSelectedFilters = { ...selectedFilters };
       const currentFilter = newSelectedFilters[filterKey] || [];
 
-      if (currentFilter.includes(option)) {
-        newSelectedFilters[filterKey] = currentFilter.filter((item) => item !== option);
+      if (currentFilter.includes(option.type)) {
+        newSelectedFilters[filterKey] = currentFilter.filter((item) => item !== option.type);
       } else {
-        newSelectedFilters[filterKey] = [...currentFilter, option];
+        newSelectedFilters[filterKey] = [...currentFilter, option.type];
       }
 
-      dispatch(toggleFilterOption({ key: filterKey, option }));
+      dispatch(toggleFilterOption({ key: filterKey, option: option.type }));
 
       const queryString = qs.stringify(newSelectedFilters, { arrayFormat: 'repeat' });
       navigate(`?${queryString}`);
@@ -34,25 +34,24 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
       <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
         {type === 'checkbox' &&
           options.map((option) => (
-            <p className="flex items-center gap-2" key={option}>
-              <input
-                type="checkbox"
-                className="w-4 h-4"
-                checked={selectedFilters[filterKey]?.includes(option) || false}
-                onChange={() => handleCheckboxChange(option)}
-              />
-              {option}
-            </p>
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              key={option.type}
+              onClick={() => handleOptionClick(option)}>
+              {option.img && (
+                <img
+                  src={option.img}
+                  alt={option.type}
+                  className={`w-6 h-6 object-contain ${
+                    selectedFilters[filterKey]?.includes(option.type)
+                      ? 'border-[1px] border-mainColor'
+                      : ''
+                  }`}
+                />
+              )}
+              {option.type}
+            </div>
           ))}
-        {type === 'select' && (
-          <select className="w-full border border-gray-300 rounded-md">
-            {options.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        )}
       </div>
     </div>
   );

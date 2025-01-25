@@ -28,10 +28,6 @@ const filterSlice = createSlice({
       } else {
         state.selectedFilters[key].push(option);
       }
-
-      state.selectedFilters[key] = state.selectedFilters[key].map((item) =>
-        typeof item === 'string' ? item : String(item),
-      );
     },
     setSelectedFilters: (state, action) => {
       state.selectedFilters = { ...action.payload };
