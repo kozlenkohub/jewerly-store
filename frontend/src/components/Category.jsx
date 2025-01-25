@@ -10,11 +10,11 @@ const Category = () => {
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center py-8 text-3xl">
         <Title text1={'Our'} text2={'Categories'} />
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-1 gap-y-6 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-0 gap-y-6 mt-6">
           {category.map((category) => (
             <div
               key={category._id}
-              className="p-4 transform transition-transform duration-300 cursor-pointer ">
+              className="p-2 transform transition-transform duration-300 cursor-pointer ">
               <div className="h-40 w-full relative overflow-hidden">
                 <img
                   src={category.image}
