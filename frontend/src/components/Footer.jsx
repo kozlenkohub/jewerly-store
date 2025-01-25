@@ -16,7 +16,7 @@ const Footer = () => {
 
   return (
     <div className="bg-mainColor">
-      <div className="flex py-10 flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-4 my-10 text-sm max-w-[1280px] mx-auto px-4">
+      <div className="flex pt-10 flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-4 my-10 text-sm max-w-[1280px] mx-auto px-4">
         <div className="">
           <p className="text-2xl text-white mb-4">LOGO</p>
           <p className="w-full md:w-2/3 text-slate-300 font-light poppins text-[12px]">
@@ -65,7 +65,7 @@ const Footer = () => {
       </div>
       <div className="">
         <hr />
-        <p className="py-5 text-sm text-center text-white font-light poppins">
+        <p className="py-3 text-sm text-center text-white font-light poppins">
           Copyright 2025@ JEWERLY - All Rights Reserved
         </p>
       </div>
