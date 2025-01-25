@@ -3,17 +3,27 @@ import video from '../../assets/night.webm'; // Импортируем виде�
 import './NewsletterBox.css'; // Импортируем файл стилей
 
 const NewsletterBox = () => {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current && isMobile) {
-      // Пытаемся воспроизвести видео на мобильных устройствах
-      videoRef.current.play().catch((error) => {
-        console.error('Не удалось воспроизвести видео:', error);
-      });
-    }
-  }, [isMobile]);
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+        } catch (error) {
+          console.warn('Не удалось воспроизвести видео:', error);
+          videoRef.current.muted = true; // Принудительное отключение звука для iOS
+          try {
+            await videoRef.current.play();
+          } catch (secondError) {
+            console.error('Видео всё ещё не воспроизводится:', secondError);
+          }
+        }
+      }
+    };
+
+    playVideo();
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +31,15 @@ const NewsletterBox = () => {
 
   return (
     <div className="newsletter-box text-center">
-      <video ref={videoRef} autoPlay muted loop playsInline webkit-playsinline>
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        webkit-playsinline="true"
+        preload="auto"
+        className="video-background">
         <source src={video} type="video/webm" />
         Your browser does not support the video tag.
       </video>
@@ -30,11 +48,11 @@ const NewsletterBox = () => {
         <p className="text-white mt-3">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
         <form
           onSubmit={onSubmit}
-          className="w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6  pl-3">
+          className="w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6 pl-3">
           <input
             type="email"
             placeholder="Email"
-            className="w-full sm:flex-1 outline-none bg-white/70 text-black border-mainColor py-2" // Adjusted background opacity
+            className="w-full sm:flex-1 outline-none bg-white/70 text-black border-mainColor py-2"
             required
           />
           <button type="submit" className="bg-mainColor text-white text-xs px-10 py-4">
