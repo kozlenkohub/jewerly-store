@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        mainColor: '#50A5C4',
-        secondaryColor: '#50A5C4',
+        mainColor: '#27A8E9',
+        secondaryColor: '#27A8E9',
         textColor: '#383838',
       },
     },
