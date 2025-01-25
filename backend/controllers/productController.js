@@ -5,7 +5,7 @@ import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, carats, category, ...unknownFilters } = req.query;
+    const { metal, carats, category, price, ...unknownFilters } = req.query;
     const filter = {};
 
     // Check for unknown filters
@@ -23,6 +23,10 @@ export const getProducts = async (req, res) => {
       if (!categoryDoc) return res.status(404).json({ message: 'Category not found' });
       filter.category = categoryDoc._id;
     }
+    if (price) {
+      const [minPrice, maxPrice] = price.split('-').map(Number);
+      filter.price = { $gte: minPrice, $lte: maxPrice };
+    }
 
     const products = await Product.find(filter);
     res.json(products);
@@ -34,7 +38,7 @@ export const getProducts = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, images, category, metal, carats } = req.body;
+    const { name, images, category, metal, carats, price } = req.body;
 
     // Найти категорию по shortId или _id
     if (!mongoose.isValidObjectId(category)) {
@@ -52,6 +56,7 @@ export const addProduct = async (req, res) => {
       category: categoryDoc._id, // Сохраняем ObjectId категории
       metal,
       carats,
+      price,
     });
 
     await newProduct.save();

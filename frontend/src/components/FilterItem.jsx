@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleFilterOption } from '../redux/slices/filterSlice';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
+import PriceFilter from './PriceFilter';
 
 const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
     },
     [dispatch, filterKey, selectedFilters, navigate],
   );
+
+  if (filterKey === 'price') {
+    return <PriceFilter />;
+  }
 
   return (
     <div className="border border-gray-300 pl-5 py-3 my-5 sm:block">

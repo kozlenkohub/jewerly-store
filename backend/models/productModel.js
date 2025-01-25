@@ -27,6 +27,10 @@ const productSchema = new mongoose.Schema(
       enum: ['0.3 - 0.5', '0.51 - 0.6', '0.61 - 0.7', '0.71 - 3'],
       required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true },
 );

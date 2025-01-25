@@ -9,11 +9,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setSelectedFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
+import useQueryFilters from '../hooks/useQueryFilters';
 
 const Catalog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { search: searchParams } = useLocation();
+
+  useQueryFilters();
 
   const memoizedSearch = React.useMemo(() => {
     const parsed = qs.parse(searchParams, {
@@ -37,10 +40,6 @@ const Catalog = () => {
   const [showFilter, setShowFilter] = React.useState(false);
 
   const debounceRef = React.useRef(null);
-
-  React.useEffect(() => {
-    dispatch(setSelectedFilters(memoizedSearch));
-  }, [memoizedSearch, dispatch]);
 
   React.useEffect(() => {
     if (debounceRef.current) {
