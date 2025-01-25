@@ -8,7 +8,7 @@ export const fetchProducts = createAsyncThunk('product/fetchProductsStatus', asy
 
 const initialState = {
   products: [],
-  currency: '$',
+  currency: '₴',
   isLoading: false,
   status: 'idle', // добавим статус по умолчанию
 };

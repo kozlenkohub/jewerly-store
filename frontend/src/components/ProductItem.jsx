@@ -6,6 +6,13 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
   const { currency } = useSelector((state) => state.product);
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 
+  const formatPrice = (price) => {
+    return price
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+      .replace(/\.00$/, '');
+  };
+
   return (
     <Link className="px-4 cursor-pointer text-gray-700" to={`/product/${_id}`}>
       <div className="relative overflow-hidden flex justify-center items-center">
@@ -23,14 +30,14 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
         {discount ? (
           <>
             <span className="line-through text-[13px]  text-gray-500 mr-2 tracking-[1px]">
-              {currency} {price}
+              {currency} {formatPrice(price)}
             </span>
             <span className="">
-              {currency} {discountedPrice.toFixed(2)}
+              {currency} {formatPrice(discountedPrice.toFixed(2))}
             </span>
           </>
         ) : (
-          `${currency} ${price}`
+          `${currency} ${formatPrice(price)}`
         )}
       </p>
     </Link>

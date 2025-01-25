@@ -99,7 +99,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 100,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
     ],
@@ -116,7 +116,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ П «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 200,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
       p_img2_2,
@@ -134,7 +134,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 220,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
     ],
@@ -149,7 +149,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 110,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/883/2ng95apsen883-1000x1000.webp',
     ],
@@ -164,7 +164,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,37 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 100,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
     ],
@@ -181,7 +181,7 @@ export const products = [
     name: 'КОЛЬЦО ДЛЯ П «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 200,
+    price: 143440,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
       p_img2_2,
