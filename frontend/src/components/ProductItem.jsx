@@ -30,14 +30,14 @@ const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller })
         {discount ? (
           <>
             <span className="line-through text-[13px]  text-gray-500 mr-2 tracking-[1px]">
-              {currency} {formatPrice(price)}
+              {formatPrice(price)} {currency}
             </span>
             <span className="">
-              {currency} {formatPrice(discountedPrice.toFixed(2))}
+              {formatPrice(discountedPrice.toFixed(2))} {currency}
             </span>
           </>
         ) : (
-          `${currency} ${formatPrice(price)}`
+          `${formatPrice(price)} ${currency}`
         )}
       </p>
     </Link>
