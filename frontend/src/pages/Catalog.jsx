@@ -42,6 +42,10 @@ const Catalog = () => {
   const debounceRef = React.useRef(null);
 
   React.useEffect(() => {
+    dispatch(setSelectedFilters(memoizedSearch));
+  }, [memoizedSearch, dispatch]);
+
+  React.useEffect(() => {
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
