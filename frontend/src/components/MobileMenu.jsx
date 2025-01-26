@@ -9,7 +9,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleCategoryClick = (categoryId, hasChildren, event) => {
+  const handleCategoryClick = (categorySlug, hasChildren, event) => {
     // Check if click was on text content
     const isTextClick =
       event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
@@ -17,15 +17,13 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
     if (hasChildren) {
       if (isTextClick) {
         // If clicked on text, navigate
-        navigate(`/catalog?category=${categoryId}`);
+        navigate(`/catalog/${categorySlug}`);
         setVisible(false);
       } else {
-        setActiveCategory(activeCategory === categoryId ? null : categoryId);
-        setDropdownVisible(!isDropdownVisible);
+        setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
       }
     } else {
-      // For categories without children, always navigate
-      navigate(`/catalog?category=${categoryId}`);
+      navigate(`/catalog/${categorySlug}`);
       setVisible(false);
     }
   };
@@ -91,7 +89,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 <div key={category.id} className="flex flex-col">
                   <div
                     onClick={(event) =>
-                      handleCategoryClick(category.id, !!category.childrens, event)
+                      handleCategoryClick(category.slug, !!category.childrens, event)
                     }
                     className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
                     }`}>
@@ -102,20 +100,22 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     {category.childrens && (
                       <FaChevronDown
                         className={`ml-2 transition-transform duration-300 ${
-                          activeCategory === category.id ? '-rotate-180' : ''
+                          activeCategory === category.slug ? '-rotate-180' : ''
                         }`}
                       />
                     )}
                   </div>
-                  {category.childrens && activeCategory === category.id && (
+                  {category.childrens && activeCategory === category.slug && (
                     <div className="pl-8">
                       {category.childrens.map((subCategory) => (
                         <NavLink
                           key={subCategory.id}
-                          to={`/catalog?category=${subCategory.id}`}
+                          to={`/catalog/${category.slug}/${subCategory.slug}`}
                           className={({ isActive }) =>
                             `flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura ${
-                              location.search === `?category=${subCategory.id}` ? 'bg-gray-200' : ''
+                              location.pathname === `/catalog/${category.slug}/${subCategory.slug}`
+                                ? 'bg-gray-200'
+                                : ''
                             }`
                           }
                           onClick={() => setVisible(false)}>
