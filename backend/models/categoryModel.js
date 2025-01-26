@@ -6,35 +6,41 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true, // Уникальное название категории
+      unique: true,
+    },
+    image: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
+    label: {
+      type: String,
+      default: '',
     },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category', // Ссылка на родительскую категорию
+      ref: 'Category',
       default: null, // Верхнеуровневая категория, если null
     },
     children: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category', // Ссылки на дочерние категории
+        ref: 'Category',
       },
     ],
     icon: {
-      type: String, // Путь или имя файла для иконки категории
+      type: String,
       default: null,
     },
     filters: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Filter', // Ссылки на фильтры, связанные с категорией
+        ref: 'Filter',
       },
     ],
-    // Удаляем поле slug
-    // slug: {
-    //   type: String,
-    //   slug: 'name', // Генерация slug на основе имени
-    //   unique: true, // Гарантируем уникальность
-    // },
   },
   { timestamps: true },
 );
