@@ -73,17 +73,18 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
         <div className="flex flex-col">
           <div
             onClick={handleCatalogClick}
-            className={`flex items-center justify-center p-3 cursor-pointer ${
+            className={`relative flex items-center justify-center p-3 cursor-pointer ${
               isCatalogPage ? 'bg-gray-100' : ''
             }`}>
-            <p>Catalog</p>
+            <p className="relative">Catalog</p>
             <FaChevronDown
-              className={`transition-transform duration-300 ${
+              className={`absolute transition-transform duration-300 ${
                 isDropdownVisible ? '-rotate-180' : ''
               }`}
-              style={{ marginLeft: '11px' }}
+              style={{ left: 'calc(60% - 5px)' }}
             />
           </div>
+
           {isDropdownVisible && (
             <div className="pl-8">
               {categories.map((category) => (
