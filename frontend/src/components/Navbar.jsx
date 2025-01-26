@@ -11,11 +11,13 @@ const Navbar = () => {
       {
         id: 1,
         name: 'Category 1',
+        slug: 'category-1',
         icon: 'https://placeholder.pics/svg/48',
         childrens: [
           {
             id: 11,
             icon: 'https://placeholder.pics/svg/48',
+            slug: 'sub-category-1',
             name: 'Sub Category 1',
           },
         ],
@@ -23,28 +25,32 @@ const Navbar = () => {
       {
         id: 2,
         name: 'Category 2',
+        slug: 'category-2',
         icon: 'https://placeholder.pics/svg/48',
         childrens: [
           {
             id: 132,
+            slug: 'category-132',
             icon: 'https://placeholder.pics/svg/48',
             name: 'Sub Category 1',
           },
           {
             id: 133,
+            slug: 'category-133',
             icon: 'https://placeholder.pics/svg/48',
             name: 'Sub Category 1',
           },
           {
             id: 1332,
+            slug: 'category-1332',
             icon: 'https://placeholder.pics/svg/48',
             name: 'Sub Category 1',
           },
         ],
       },
-      { id: 3, name: 'Category 3', icon: 'https://placeholder.pics/svg/48' },
-      { id: 4, name: 'Category 4', icon: 'https://placeholder.pics/svg/48' },
-      { id: 5, name: 'Category 5' },
+      { id: 3, slug: 'category-3', name: 'Category 3', icon: 'https://placeholder.pics/svg/48' },
+      { id: 4, slug: 'category-4', name: 'Category 4', icon: 'https://placeholder.pics/svg/48' },
+      { id: 5, slug: 'category-5', name: 'Category 5' },
     ],
     [],
   );

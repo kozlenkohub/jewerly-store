@@ -21,7 +21,7 @@ const NavbarLinks = ({ textColor, categories }) => {
   }, []);
 
   const handleCategoryClick = useCallback(
-    (categoryId, hasChildren, event) => {
+    (categorySlug, hasChildren, event) => {
       // Check if click was on text content
       const isTextClick =
         event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
@@ -29,16 +29,16 @@ const NavbarLinks = ({ textColor, categories }) => {
       if (hasChildren) {
         if (isTextClick) {
           // If clicked on text, navigate
-          navigate(`/catalog?category=${categoryId}`);
+          navigate(`/catalog/${categorySlug}`);
         } else {
           // If clicked elsewhere, toggle dropdown
-          setActiveCategory(activeCategory === categoryId ? null : categoryId);
+          setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
         }
       } else {
         // For categories without children, always navigate
         setDropdownVisible(false);
         setActiveCategory(null);
-        navigate(`/catalog?category=${categoryId}`);
+        navigate(`/catalog/${categorySlug}`);
       }
     },
     [activeCategory, navigate],
@@ -65,7 +65,7 @@ const NavbarLinks = ({ textColor, categories }) => {
           {categories.map((category) => (
             <div key={category.id} className="flex flex-col">
               <div
-                onClick={(event) => handleCategoryClick(category.id, !!category.childrens, event)}
+                onClick={(event) => handleCategoryClick(category.slug, !!category.childrens, event)}
                 className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura">
                 <div className="flex items-center">
                   <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
@@ -74,17 +74,17 @@ const NavbarLinks = ({ textColor, categories }) => {
                 {category.childrens && (
                   <FaChevronDown
                     className={`ml-2 transition-transform duration-300 ${
-                      activeCategory === category.id ? '-rotate-180' : ''
+                      activeCategory === category.slug ? '-rotate-180' : ''
                     }`}
                   />
                 )}
               </div>
-              {category.childrens && activeCategory === category.id && (
+              {category.childrens && activeCategory === category.slug && (
                 <div className="pl-8">
                   {category.childrens.map((subCategory) => (
                     <NavLink
                       key={subCategory.id}
-                      to={`/catalog?category=${subCategory.id}`}
+                      to={`/catalog/${category.slug}/${subCategory.slug}`}
                       className="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura">
                       <img src={subCategory.icon} alt={subCategory.name} className="w-4 h-4 mr-2" />
                       {subCategory.name}

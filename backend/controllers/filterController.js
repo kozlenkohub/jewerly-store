@@ -26,7 +26,6 @@ export const getAllFilters = async (req, res) => {
 
     if (!categoryId) {
       const filters = await Filter.find();
-      console.log('qqq');
 
       return res.json(filters);
     }

@@ -20,8 +20,8 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
         navigate(`/catalog?category=${categoryId}`);
         setVisible(false);
       } else {
-        // If clicked elsewhere, toggle dropdown
         setActiveCategory(activeCategory === categoryId ? null : categoryId);
+        setDropdownVisible(!isDropdownVisible);
       }
     } else {
       // For categories without children, always navigate
