@@ -10,12 +10,21 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const location = useLocation();
 
   const handleCategoryClick = (categoryId, hasChildren, event) => {
-    if (hasChildren && event.target.tagName !== 'svg' && event.target.tagName !== 'path') {
-      navigate(`/catalog?category=${categoryId}`);
-      setVisible(false);
-    } else if (hasChildren) {
-      setActiveCategory(activeCategory === categoryId ? null : categoryId);
+    // Check if click was on text content
+    const isTextClick =
+      event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
+
+    if (hasChildren) {
+      if (isTextClick) {
+        // If clicked on text, navigate
+        navigate(`/catalog?category=${categoryId}`);
+        setVisible(false);
+      } else {
+        // If clicked elsewhere, toggle dropdown
+        setActiveCategory(activeCategory === categoryId ? null : categoryId);
+      }
     } else {
+      // For categories without children, always navigate
       navigate(`/catalog?category=${categoryId}`);
       setVisible(false);
     }
@@ -88,7 +97,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     }`}>
                     <div className="flex items-center">
                       <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
-                      {category.name}
+                      <span className="category-name">{category.name}</span>
                     </div>
                     {category.childrens && (
                       <FaChevronDown
