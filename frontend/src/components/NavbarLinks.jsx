@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 
@@ -8,29 +8,32 @@ const NavbarLinks = ({ textColor, categories }) => {
   const navigate = useNavigate();
   let timeoutId;
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     clearTimeout(timeoutId);
     setDropdownVisible(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     timeoutId = setTimeout(() => {
       setDropdownVisible(false);
       setActiveCategory(null);
     }, 120);
-  };
+  }, []);
 
-  const handleCategoryClick = (categoryId, hasChildren, event) => {
-    if (hasChildren && event.target.tagName !== 'svg' && event.target.tagName !== 'path') {
-      navigate(`/catalog?category=${categoryId}`);
-    } else if (hasChildren) {
-      setActiveCategory(activeCategory === categoryId ? null : categoryId);
-    } else {
-      setDropdownVisible(false);
-      setActiveCategory(null);
-      navigate(`/catalog?category=${categoryId}`);
-    }
-  };
+  const handleCategoryClick = useCallback(
+    (categoryId, hasChildren, event) => {
+      if (hasChildren && event.target.tagName !== 'svg' && event.target.tagName !== 'path') {
+        navigate(`/catalog?category=${categoryId}`);
+      } else if (hasChildren) {
+        setActiveCategory(activeCategory === categoryId ? null : categoryId);
+      } else {
+        setDropdownVisible(false);
+        setActiveCategory(null);
+        navigate(`/catalog?category=${categoryId}`);
+      }
+    },
+    [activeCategory, navigate],
+  );
 
   return (
     <ul className={`hidden sm:flex gap-5 text-sm transition-colors duration-300 ${textColor}`}>

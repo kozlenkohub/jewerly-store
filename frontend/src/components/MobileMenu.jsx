@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaUser, FaShoppingCart, FaChevronDown } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 
@@ -7,6 +7,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleCategoryClick = (categoryId, hasChildren, event) => {
     if (hasChildren && event.target.tagName !== 'svg' && event.target.tagName !== 'path') {
@@ -23,6 +24,8 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const handleCatalogClick = () => {
     setDropdownVisible(!isDropdownVisible);
   };
+
+  const isCatalogPage = location.pathname.startsWith('/catalog');
 
   return (
     <div
@@ -61,13 +64,15 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
         <div className="flex flex-col">
           <div
             onClick={handleCatalogClick}
-            className="flex items-center justify-center p-3 cursor-pointer relative">
+            className={`flex items-center justify-center p-3 cursor-pointer ${
+              isCatalogPage ? 'bg-gray-100' : ''
+            }`}>
             <p>Catalog</p>
             <FaChevronDown
-              className={`transition-transform duration-300 absolute right-0 ${
+              className={`transition-transform duration-300 ${
                 isDropdownVisible ? '-rotate-180' : ''
               }`}
-              style={{ marginRight: '11px' }}
+              style={{ marginLeft: '11px' }}
             />
           </div>
           {isDropdownVisible && (
@@ -78,7 +83,9 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     onClick={(event) =>
                       handleCategoryClick(category.id, !!category.childrens, event)
                     }
-                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura">
+                    className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura ${
+                      location.search.includes(`category=${category.id}`) ? 'bg-gray-200' : ''
+                    }`}>
                     <div className="flex items-center">
                       <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
                       {category.name}
@@ -97,7 +104,11 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                         <NavLink
                           key={subCategory.id}
                           to={`/catalog?category=${subCategory.id}`}
-                          className="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura"
+                          className={({ isActive }) =>
+                            `flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura ${
+                              location.search === `?category=${subCategory.id}` ? 'bg-gray-200' : ''
+                            }`
+                          }
                           onClick={() => setVisible(false)}>
                           <div className="flex items-center">
                             <img

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import NavbarLinks from './NavbarLinks';
@@ -6,35 +6,48 @@ import NavbarIcons from './NavbarIcons';
 import MobileMenu from './MobileMenu';
 
 const Navbar = () => {
-  const categories = [
-    {
-      id: 1,
-      name: 'Category 1',
-      icon: 'https://placeholder.pics/svg/48',
-      childrens: [
-        {
-          id: 11,
-          icon: 'https://placeholder.pics/svg/48',
-          name: 'Sub Category 1',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Category 2',
-      icon: 'https://placeholder.pics/svg/48',
-      childrens: [
-        {
-          id: 12,
-          icon: 'https://placeholder.pics/svg/48',
-          name: 'Sub Category 1',
-        },
-      ],
-    },
-    { id: 3, name: 'Category 3', icon: 'https://placeholder.pics/svg/48' },
-    { id: 4, name: 'Category 4', icon: 'https://placeholder.pics/svg/48' },
-    { id: 5, name: 'Category 5' },
-  ];
+  const categories = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Category 1',
+        icon: 'https://placeholder.pics/svg/48',
+        childrens: [
+          {
+            id: 11,
+            icon: 'https://placeholder.pics/svg/48',
+            name: 'Sub Category 1',
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: 'Category 2',
+        icon: 'https://placeholder.pics/svg/48',
+        childrens: [
+          {
+            id: 132,
+            icon: 'https://placeholder.pics/svg/48',
+            name: 'Sub Category 1',
+          },
+          {
+            id: 133,
+            icon: 'https://placeholder.pics/svg/48',
+            name: 'Sub Category 1',
+          },
+          {
+            id: 1332,
+            icon: 'https://placeholder.pics/svg/48',
+            name: 'Sub Category 1',
+          },
+        ],
+      },
+      { id: 3, name: 'Category 3', icon: 'https://placeholder.pics/svg/48' },
+      { id: 4, name: 'Category 4', icon: 'https://placeholder.pics/svg/48' },
+      { id: 5, name: 'Category 5' },
+    ],
+    [],
+  );
   const [visible, setVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const location = useLocation();
