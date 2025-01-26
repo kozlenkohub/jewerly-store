@@ -81,7 +81,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               className={`absolute transition-transform duration-300 ${
                 isDropdownVisible ? '-rotate-180' : ''
               }`}
-              style={{ left: 'calc(60% - 5px)' }}
+              style={{ left: 'calc(60%)' }}
             />
           </div>
 
