@@ -22,11 +22,20 @@ const NavbarLinks = ({ textColor, categories }) => {
 
   const handleCategoryClick = useCallback(
     (categoryId, hasChildren, event) => {
-      if (hasChildren && event.target.tagName !== 'svg' && event.target.tagName !== 'path') {
-        navigate(`/catalog?category=${categoryId}`);
-      } else if (hasChildren) {
-        setActiveCategory(activeCategory === categoryId ? null : categoryId);
+      // Check if click was on text content
+      const isTextClick =
+        event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
+
+      if (hasChildren) {
+        if (isTextClick) {
+          // If clicked on text, navigate
+          navigate(`/catalog?category=${categoryId}`);
+        } else {
+          // If clicked elsewhere, toggle dropdown
+          setActiveCategory(activeCategory === categoryId ? null : categoryId);
+        }
       } else {
+        // For categories without children, always navigate
         setDropdownVisible(false);
         setActiveCategory(null);
         navigate(`/catalog?category=${categoryId}`);
@@ -60,7 +69,7 @@ const NavbarLinks = ({ textColor, categories }) => {
                 className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura">
                 <div className="flex items-center">
                   <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
-                  {category.name}
+                  <span className="category-name">{category.name}</span>
                 </div>
                 {category.childrens && (
                   <FaChevronDown
