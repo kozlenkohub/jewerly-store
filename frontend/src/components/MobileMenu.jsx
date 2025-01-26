@@ -74,7 +74,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           <div
             onClick={handleCatalogClick}
             className={`relative flex items-center justify-center p-3 cursor-pointer ${
-              isCatalogPage ? 'bg-gray-100' : ''
+              isCatalogPage ? 'bg-mainColor text-white' : ''
             }`}>
             <p className="relative">Catalog</p>
             <FaChevronDown
@@ -93,8 +93,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     onClick={(event) =>
                       handleCategoryClick(category.id, !!category.childrens, event)
                     }
-                    className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura ${
-                      location.search.includes(`category=${category.id}`) ? 'bg-gray-200' : ''
+                    className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
                     }`}>
                     <div className="flex items-center">
                       <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
