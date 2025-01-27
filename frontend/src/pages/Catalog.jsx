@@ -6,7 +6,7 @@ import ProductItem from '../components/ProductItem';
 import Filters from '../components/Filters';
 import { fetchProducts } from '../redux/slices/productSlice';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { setSelectedFilters } from '../redux/slices/filterSlice';
+import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
 import useQueryFilters from '../hooks/useQueryFilters';
@@ -67,6 +67,10 @@ const Catalog = () => {
     return () => clearTimeout(debounceRef.current);
   }, [selectedFilters, memoizedSearch, query, lastSegment, navigate, dispatch]);
 
+  React.useEffect(() => {
+    dispatch(fetchFilters(lastSegment));
+  }, [lastSegment, dispatch]);
+
   return (
     <div className="max-w-[1280px] mx-auto px-4">
       <div className="mt-24 sm:col-span-2 text-left">
@@ -84,7 +88,7 @@ const Catalog = () => {
             />
           </p>
           <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
-            <Filters />
+            <Filters categoryId={lastSegment} />
           </div>
         </div>
 

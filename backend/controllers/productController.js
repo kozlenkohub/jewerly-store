@@ -61,7 +61,7 @@ export const getProducts = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, image, category, metal, carats, price } = req.body;
+    const { name, image, category, metal, price } = req.body;
 
     // Найти категорию по shortId или _id
     if (!mongoose.isValidObjectId(category)) {
@@ -92,95 +92,18 @@ export const addProduct = async (req, res) => {
 
 const products = [
   {
-    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+    name: 'Серьги с бриллиантами в огранке «Круг» из белого золота',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 160000,
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
     ],
-    category: '67977d8f4abf8f7ec63b2ddd',
+    category: '6797b7419efe656b1d2bbd8e',
     discount: 20,
     bestseller: true,
     metal: 'white gold',
-    carats: '0.51 - 0.6',
     cutForm: 'round',
-  },
-  {
-    name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 125000,
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-    ],
-    category: '67977d8f4abf8f7ec63b2ddd',
-    discount: 15,
-    bestseller: true,
-    metal: 'white gold',
-    carats: '0.3 - 0.5',
-    cutForm: 'princess',
-    bestseller: true,
-  },
-  {
-    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 160000,
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-    ],
-    category: '67977d8f4abf8f7ec63b2ddd',
-    discount: 20,
-    bestseller: true,
-    metal: 'white gold',
-    carats: '0.51 - 0.6',
-    cutForm: 'round',
-  },
-  {
-    name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 125000,
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-    ],
-    category: '67977d8f4abf8f7ec63b2ddd',
-    discount: 15,
-    bestseller: false,
-    metal: 'white gold',
-    carats: '0.3 - 0.5',
-    cutForm: 'princess',
-  },
-  {
-    name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 160000,
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-    ],
-    category: '67977d8f4abf8f7ec63b2ddd',
-    discount: 20,
-    bestseller: true,
-    metal: 'white gold',
-    carats: '0.51 - 0.6',
-    cutForm: 'round',
-  },
-  {
-    name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 125000,
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-    ],
-    category: '67977d8f4abf8f7ec63b2ddd',
-    discount: 15,
-    bestseller: true,
-    metal: 'white gold',
-    carats: '0.3 - 0.5',
-    cutForm: 'princess',
   },
 ];
 

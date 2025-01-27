@@ -6,8 +6,8 @@ const initialState = {
   selectedFilters: {},
 };
 
-export const fetchFilters = createAsyncThunk('filters/fetchFilters', async () => {
-  const response = await axios.get('api/filter');
+export const fetchFilters = createAsyncThunk('filters/fetchFilters', async (categorySlug) => {
+  const response = await axios.get(`api/filter?categorySlug=${categorySlug}`);
   return response.data;
 });
 

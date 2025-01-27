@@ -26,6 +26,11 @@ const filterSchema = new mongoose.Schema(
             type: String,
             required: false,
           },
+          category: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'Category',
+            required: true,
+          },
         },
       ],
       _id: false,
