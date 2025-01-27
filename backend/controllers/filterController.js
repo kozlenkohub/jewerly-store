@@ -20,6 +20,8 @@ export const createFilter = async (req, res) => {
   }
 };
 
+// Example cURL request to create a new filter
+
 export const getAllFilters = async (req, res) => {
   try {
     const { categoryId } = req.query;

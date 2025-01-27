@@ -5,7 +5,7 @@ import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, carats, price, ...unknownFilters } = req.query;
+    const { metal, carats, price, cutForm, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
 
     const filter = {};
@@ -45,6 +45,10 @@ export const getProducts = async (req, res) => {
     if (price) {
       const [minPrice, maxPrice] = price.split('-').map(Number);
       filter.price = { $gte: minPrice, $lte: maxPrice };
+    }
+
+    if (cutForm) {
+      filter.cutForm = { $in: cutForm };
     }
 
     const products = await Product.find(filter);
@@ -100,6 +104,7 @@ const products = [
     bestseller: true,
     metal: 'white gold',
     carats: '0.51 - 0.6',
+    cutForm: 'round',
   },
   {
     name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
@@ -111,9 +116,11 @@ const products = [
     ],
     category: '67977d8f4abf8f7ec63b2ddd',
     discount: 15,
-    bestseller: false,
+    bestseller: true,
     metal: 'white gold',
     carats: '0.3 - 0.5',
+    cutForm: 'princess',
+    bestseller: true,
   },
   {
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
@@ -128,6 +135,7 @@ const products = [
     bestseller: true,
     metal: 'white gold',
     carats: '0.51 - 0.6',
+    cutForm: 'round',
   },
   {
     name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
@@ -142,6 +150,7 @@ const products = [
     bestseller: false,
     metal: 'white gold',
     carats: '0.3 - 0.5',
+    cutForm: 'princess',
   },
   {
     name: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
@@ -156,6 +165,7 @@ const products = [
     bestseller: true,
     metal: 'white gold',
     carats: '0.51 - 0.6',
+    cutForm: 'round',
   },
   {
     name: 'КОЛЬЦО С БРИЛЛИАНТОМ 0,30 CT В ОГРАНКЕ «ПРИНЦЕССА»',
@@ -167,9 +177,10 @@ const products = [
     ],
     category: '67977d8f4abf8f7ec63b2ddd',
     discount: 15,
-    bestseller: false,
+    bestseller: true,
     metal: 'white gold',
     carats: '0.3 - 0.5',
+    cutForm: 'princess',
   },
 ];
 

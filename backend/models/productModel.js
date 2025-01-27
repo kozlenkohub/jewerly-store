@@ -23,6 +23,22 @@ const productSchema = new mongoose.Schema(
       enum: ['white gold', 'yellow gold', 'rose gold'],
       required: true,
     },
+    cutForm: {
+      type: String,
+      enum: [
+        'asher',
+        'pear',
+        'round',
+        'cushion',
+        'marquise',
+        'oval',
+        'princess',
+        'radiant',
+        'heart',
+        'emerald',
+      ],
+      required: true,
+    },
     carats: {
       type: String,
       enum: ['0.3 - 0.5', '0.51 - 0.6', '0.61 - 0.7', '0.71 - 3'],
@@ -35,6 +51,10 @@ const productSchema = new mongoose.Schema(
     discount: {
       type: Number,
       default: 0,
+    },
+    bestseller: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },

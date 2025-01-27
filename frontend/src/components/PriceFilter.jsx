@@ -29,7 +29,7 @@ const PriceFilter = () => {
   };
 
   return (
-    <div className="p-4 my-4 border rounded-md">
+    <div className="p-4 my-4 border border-gray-300">
       <p className="mb-3 text-sm font-medium">Price</p>
       <div className="flex flex-col gap-2 text-sm text-textColor">
         <Slider

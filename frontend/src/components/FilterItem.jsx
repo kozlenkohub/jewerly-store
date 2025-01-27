@@ -4,6 +4,7 @@ import { toggleFilterOption } from '../redux/slices/filterSlice';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 import PriceFilter from './PriceFilter';
+import CutForm from './CutForm';
 
 const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
 
   if (filterKey === 'price') {
     return <PriceFilter />;
+  }
+
+  if (filterKey === 'cutForm') {
+    return <CutForm filterKey={filterKey} label={label} options={options} />;
   }
 
   return (

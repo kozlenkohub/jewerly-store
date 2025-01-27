@@ -1,19 +1,1 @@
-[
-  {
-    "_id": "6795558033e3c8da4e18ff13",
-    "name": "Sample Product",
-    "description": "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
-    "images": ["image1.jpg", "image2.jpg"],
-    "category": "6793f1eff05e184f8c26f3ff",
-    "metal": "white gold",
-    "carats": "0.3 - 0.5",
 
-    "cutForm": "round",
-    "price": 500,
-    "bestseller": false,
-    "discount": 0,
-    "createdAt": "2025-01-25T21:20:00.290Z",
-    "updatedAt": "2025-01-25T21:20:00.290Z",
-    "__v": 0
-  }
-]
