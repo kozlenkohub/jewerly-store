@@ -94,7 +94,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
                     }`}>
                     <div className="flex items-center">
-                      <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
+                      <img src={category.icon} alt={category.name} className="w-6 h-6 mr-2" />
                       <span className="category-name">{category.name}</span>
                     </div>
                     {category.children && (
@@ -123,7 +123,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                             <img
                               src={subCategory.icon}
                               alt={subCategory.name}
-                              className="w-4 h-4 mr-2"
+                              className="w-6 h-6 mr-2"
                             />
                             {subCategory.name}
                           </div>

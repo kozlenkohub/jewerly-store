@@ -30,10 +30,10 @@ const ProductItem = ({ _id = 0, image, name, price, discount, bestseller }) => {
       <p className="font-medium mt-9 sm:mt-3 leading-[30px] text-textColor futura-normal sm:text-[18px] text-[17px] tracking-[1px]">
         {discount ? (
           <>
-            <span className="line-through text-[12px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
+            <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
               {formatPrice(price)} {currency}
             </span>
-            <span className="tracking-[0.3px] sm:tracking-[1px]  ">
+            <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px]  ">
               {formatPrice(discountedPrice.toFixed(2))} {currency}
             </span>
           </>

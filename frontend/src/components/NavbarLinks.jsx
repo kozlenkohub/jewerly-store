@@ -68,7 +68,7 @@ const NavbarLinks = ({ textColor, categories }) => {
                 onClick={(event) => handleCategoryClick(category.slug, !!category.children, event)}
                 className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura">
                 <div className="flex items-center">
-                  <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
+                  <img src={category.icon} alt={category.name} className="w-8 h-8 mr-2" />
                   <span className="category-name">{category.name}</span>
                 </div>
                 {category.children && (
@@ -86,7 +86,7 @@ const NavbarLinks = ({ textColor, categories }) => {
                       key={subCategory.id}
                       to={`/catalog/${category.slug}/${subCategory.slug}`}
                       className="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura">
-                      <img src={subCategory.icon} alt={subCategory.name} className="w-4 h-4 mr-2" />
+                      <img src={subCategory.icon} alt={subCategory.name} className="w-8 h-8 mr-2" />
                       {subCategory.name}
                     </NavLink>
                   ))}
