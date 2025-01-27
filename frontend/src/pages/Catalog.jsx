@@ -17,7 +17,6 @@ const Catalog = () => {
   const navigate = useNavigate();
   const { '*': categoryPath } = useParams();
   const lastSegment = categoryPath ? categoryPath.split('/').pop() : '';
-  console.log(lastSegment);
 
   const { search: searchParams } = useLocation();
 

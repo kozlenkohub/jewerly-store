@@ -9,6 +9,7 @@ const PriceFilter = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selectedFilters = useSelector((state) => state.filter.selectedFilters);
+  const maxPrice = useSelector((state) => state.product.maxPrice);
   const [priceRange, setPriceRange] = useState([0, 1000]);
 
   useEffect(() => {
