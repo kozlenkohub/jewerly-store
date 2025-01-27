@@ -5,8 +5,27 @@ import Category from '../models/categoryModel.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, carats, category, price, ...unknownFilters } = req.query;
+    const { metal, carats, price, ...unknownFilters } = req.query;
+    const { category: paramCategory } = req.params;
+
     const filter = {};
+
+    // Helper to gather all child category IDs recursively
+    async function getAllChildCategoryIds(catId) {
+      const queue = [catId];
+      const allIds = [];
+      while (queue.length) {
+        const currentId = queue.shift();
+        allIds.push(currentId);
+        const currentCat = await Category.findById(currentId).select('children');
+        if (currentCat && currentCat.children) {
+          for (const child of currentCat.children) {
+            queue.push(child);
+          }
+        }
+      }
+      return allIds;
+    }
 
     // Check for unknown filters
     if (Object.keys(unknownFilters).length > 0) {
@@ -15,13 +34,13 @@ export const getProducts = async (req, res) => {
 
     if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
     if (carats) filter.carats = { $in: carats }; // Используем $in для массива карат
-    if (category) {
-      if (!mongoose.isValidObjectId(category)) {
-        return res.status(400).json({ message: 'Invalid category ID' });
+    if (paramCategory) {
+      const categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id');
+      if (!categoryDoc) {
+        return res.status(404).json({ message: 'Category not found' });
       }
-      const categoryDoc = await Category.findById(category);
-      if (!categoryDoc) return res.status(404).json({ message: 'Category not found' });
-      filter.category = categoryDoc._id;
+      const allCategoryIds = await getAllChildCategoryIds(categoryDoc._id);
+      filter.category = { $in: allCategoryIds };
     }
     if (price) {
       const [minPrice, maxPrice] = price.split('-').map(Number);
@@ -31,8 +50,8 @@ export const getProducts = async (req, res) => {
     const products = await Product.find(filter);
     res.json(products);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error' });
+    console.error('Error in getProducts:', error);
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 

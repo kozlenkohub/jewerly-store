@@ -10,6 +10,7 @@ import { setSelectedFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
 import useQueryFilters from '../hooks/useQueryFilters';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -61,53 +62,58 @@ const Catalog = () => {
       if (mergedQuery !== query) {
         navigate(`?${mergedQuery}`);
       }
-      dispatch(fetchProducts(mergedQuery));
+      dispatch(fetchProducts({ slug: lastSegment, query: mergedQuery }));
     }, 200);
 
     return () => clearTimeout(debounceRef.current);
-  }, [selectedFilters, memoizedSearch, query, navigate, dispatch]);
+  }, [selectedFilters, memoizedSearch, query, lastSegment, navigate, dispatch]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t max-w-[1280px] mx-auto px-4 text-center relative">
-      <div className="min-w-60">
-        <p
-          onClick={() => setShowFilter(!showFilter)}
-          className="my-2 text-xl flex items-center cursor-pointer gap-2">
-          Filters
-          <FaChevronDown
-            className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
-            onClick={() => setShowFilter(!showFilter)}
-          />
-        </p>
-        <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
-          <Filters />
-        </div>
+    <div className="max-w-[1280px] mx-auto px-4">
+      <div className="mt-24 sm:col-span-2 text-left">
+        <Breadcrumb categoryPath={categoryPath} />
       </div>
-
-      <div className="flex-1">
-        <div className="flex justify-between text-base sm:text-xl mb-4 relative">
-          <Title text1={'All'} text2={'Products'} />
-          <select className="border-2 border-gray-300">
-            <option value="relevent">Relevent</option>
-            <option value="low-high">Low to High</option>
-            <option value="high-low">High to Low</option>
-          </select>
+      <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t  text-center relative">
+        <div className="min-w-60">
+          <p
+            onClick={() => setShowFilter(!showFilter)}
+            className="my-2 text-xl flex items-center cursor-pointer gap-2">
+            Filters
+            <FaChevronDown
+              className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
+              onClick={() => setShowFilter(!showFilter)}
+            />
+          </p>
+          <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
+            <Filters />
+          </div>
         </div>
 
-        {isLoading ? (
-          <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%] ">
-            <DotLoader size={50} color={'#8c2d60'} loading={isLoading} speedMultiplier={0.5} />
+        <div className="flex-1">
+          <div className="flex justify-between text-base sm:text-xl mb-4 relative">
+            <Title text1={'All'} text2={'Products'} />
+            <select className="border-2 border-gray-300">
+              <option value="relevent">Relevent</option>
+              <option value="low-high">Low to High</option>
+              <option value="high-low">High to Low</option>
+            </select>
           </div>
-        ) : (
-          <div
-            className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ${
-              isLoading ? 'px-4' : ''
-            }`}>
-            {products.map((item, index) => (
-              <ProductItem key={index} {...item} />
-            ))}
-          </div>
-        )}
+
+          {isLoading ? (
+            <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%] ">
+              <DotLoader size={50} color={'#8c2d60'} loading={isLoading} speedMultiplier={0.5} />
+            </div>
+          ) : (
+            <div
+              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ${
+                isLoading ? 'px-4' : ''
+              }`}>
+              {products.map((item, index) => (
+                <ProductItem key={index} {...item} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
