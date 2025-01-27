@@ -36,7 +36,7 @@ const PriceFilter = () => {
         <Slider
           range
           min={0}
-          max={1000}
+          max={1000000}
           value={priceRange}
           onChange={handlePriceChange}
           onChangeComplete={handleAfterChange}
