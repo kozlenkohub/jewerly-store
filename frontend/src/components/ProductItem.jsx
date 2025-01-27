@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const ProductItem = ({ _id = 0, image = '', name, price, discount, bestseller }) => {
+const ProductItem = ({ _id = 0, image, name, price, discount, bestseller }) => {
   const { currency } = useSelector((state) => state.product);
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
 

@@ -8,10 +8,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true, // Убирает лишние пробелы
     },
-    images: {
+    image: {
       type: [String],
       required: true, // Массив путей к изображениям
     },
+
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category', // Связь с категорией
@@ -30,6 +31,10 @@ const productSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+    },
+    discount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true },
