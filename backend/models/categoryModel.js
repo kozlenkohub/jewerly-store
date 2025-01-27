@@ -16,6 +16,11 @@ const categorySchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    slug: {
+      type: String,
+      required: true,
+      default: '',
+    },
     label: {
       type: String,
       default: '',
@@ -31,10 +36,6 @@ const categorySchema = new mongoose.Schema(
         ref: 'Category',
       },
     ],
-    icon: {
-      type: String,
-      default: null,
-    },
     filters: [
       {
         type: mongoose.Schema.Types.ObjectId,

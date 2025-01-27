@@ -1,64 +1,23 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
 import NavbarLinks from './NavbarLinks';
 import NavbarIcons from './NavbarIcons';
 import MobileMenu from './MobileMenu';
+import { fetchCategories } from '../redux/slices/categorySlice';
 
 const Navbar = () => {
-  const categories = useMemo(
-    () => [
-      {
-        id: 1,
-        name: 'Category 1',
-        slug: 'category-1',
-        icon: 'https://placeholder.pics/svg/48',
-        childrens: [
-          {
-            id: 11,
-            icon: 'https://placeholder.pics/svg/48',
-            slug: 'sub-category-1',
-            name: 'Sub Category 1',
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: 'Category 2',
-        slug: 'category-2',
-        icon: 'https://placeholder.pics/svg/48',
-        childrens: [
-          {
-            id: 132,
-            slug: 'category-132',
-            icon: 'https://placeholder.pics/svg/48',
-            name: 'Sub Category 1',
-          },
-          {
-            id: 133,
-            slug: 'category-133',
-            icon: 'https://placeholder.pics/svg/48',
-            name: 'Sub Category 1',
-          },
-          {
-            id: 1332,
-            slug: 'category-1332',
-            icon: 'https://placeholder.pics/svg/48',
-            name: 'Sub Category 1',
-          },
-        ],
-      },
-      { id: 3, slug: 'category-3', name: 'Category 3', icon: 'https://placeholder.pics/svg/48' },
-      { id: 4, slug: 'category-4', name: 'Category 4', icon: 'https://placeholder.pics/svg/48' },
-      { id: 5, slug: 'category-5', name: 'Category 5' },
-    ],
-    [],
-  );
+  const dispatch = useDispatch();
+
+  const categories = useSelector((state) => state.category.category);
+
   const [visible, setVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const location = useLocation();
 
   useEffect(() => {
+    dispatch(fetchCategories());
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };

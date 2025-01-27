@@ -5,7 +5,7 @@ import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import Filters from '../components/Filters';
 import { fetchProducts } from '../redux/slices/productSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { setSelectedFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
@@ -14,6 +14,10 @@ import useQueryFilters from '../hooks/useQueryFilters';
 const Catalog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { '*': categoryPath } = useParams();
+  const lastSegment = categoryPath ? categoryPath.split('/').pop() : '';
+  console.log(lastSegment);
+
   const { search: searchParams } = useLocation();
 
   useQueryFilters();

@@ -2,8 +2,8 @@ import Category from '../models/categoryModel.js';
 
 export const createCategory = async (req, res) => {
   try {
-    const { name, parent, icon } = req.body;
-    const newCategory = new Category({ name, parent, icon });
+    const { name, parent, icon, slug } = req.body; // Include slug
+    const newCategory = new Category({ name, parent, icon, slug }); // Include slug
     await newCategory.save();
     return res.status(201).json(newCategory);
   } catch (error) {
@@ -13,8 +13,28 @@ export const createCategory = async (req, res) => {
 
 export const getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find().populate('children').populate('parent');
-    return res.json(categories);
+    // Получение всех категорий
+    const categories = await Category.find().lean();
+
+    // Создаем объект для быстрого доступа по `_id`
+    const categoriesMap = {};
+    categories.forEach((category) => {
+      categoriesMap[category._id] = { ...category, children: [] };
+    });
+
+    // Формируем иерархическое дерево
+    const rootCategories = [];
+    categories.forEach((category) => {
+      if (category.parent) {
+        // Если есть родитель, добавляем текущую категорию в массив `children` родителя
+        categoriesMap[category.parent]?.children.push(categoriesMap[category._id]);
+      } else {
+        // Если нет родителя, это корневая категория
+        rootCategories.push(categoriesMap[category._id]);
+      }
+    });
+
+    return res.json(rootCategories);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }

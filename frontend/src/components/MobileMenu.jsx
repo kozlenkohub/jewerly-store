@@ -89,7 +89,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 <div key={category.id} className="flex flex-col">
                   <div
                     onClick={(event) =>
-                      handleCategoryClick(category.slug, !!category.childrens, event)
+                      handleCategoryClick(category.slug, !!category.children, event)
                     }
                     className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
                     }`}>
@@ -97,7 +97,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       <img src={category.icon} alt={category.name} className="w-4 h-4 mr-2" />
                       <span className="category-name">{category.name}</span>
                     </div>
-                    {category.childrens && (
+                    {category.children && (
                       <FaChevronDown
                         className={`ml-2 transition-transform duration-300 ${
                           activeCategory === category.slug ? '-rotate-180' : ''
@@ -105,9 +105,9 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       />
                     )}
                   </div>
-                  {category.childrens && activeCategory === category.slug && (
+                  {category.children && activeCategory === category.slug && (
                     <div className="pl-8">
-                      {category.childrens.map((subCategory) => (
+                      {category.children.map((subCategory) => (
                         <NavLink
                           key={subCategory.id}
                           to={`/catalog/${category.slug}/${subCategory.slug}`}
