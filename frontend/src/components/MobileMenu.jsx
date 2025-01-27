@@ -10,19 +10,21 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const location = useLocation();
 
   const handleCategoryClick = (categorySlug, hasChildren, event) => {
-    // Check if click was on text content
+    // Проверка на клик по тексту
     const isTextClick =
       event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
 
     if (hasChildren) {
       if (isTextClick) {
-        // If clicked on text, navigate
+        // Если клик по тексту, переходим на категорию
         navigate(`/catalog/${categorySlug}`);
         setVisible(false);
       } else {
+        // Если клик по другому элементу, открываем/закрываем выпадающий список
         setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
       }
     } else {
+      // Для категорий без дочерних элементов, всегда переходим
       navigate(`/catalog/${categorySlug}`);
       setVisible(false);
     }
@@ -86,10 +88,10 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           {isDropdownVisible && (
             <div className="pl-8">
               {categories.map((category) => (
-                <div key={category.id} className="flex flex-col">
+                <div key={category._id} className="flex flex-col">
                   <div
                     onClick={(event) =>
-                      handleCategoryClick(category.slug, !!category.children, event)
+                      handleCategoryClick(category.slug, category.children.length > 0, event)
                     }
                     className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
                     }`}>
@@ -97,7 +99,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       <img src={category.icon} alt={category.name} className="w-6 h-6 mr-2" />
                       <span className="category-name">{category.name}</span>
                     </div>
-                    {category.children && (
+                    {category.children && category.children.length > 0 && (
                       <FaChevronDown
                         className={`ml-2 transition-transform duration-300 ${
                           activeCategory === category.slug ? '-rotate-180' : ''
@@ -109,7 +111,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                     <div className="pl-8">
                       {category.children.map((subCategory) => (
                         <NavLink
-                          key={subCategory.id}
+                          key={subCategory._id}
                           to={`/catalog/${category.slug}/${subCategory.slug}`}
                           className={({ isActive }) =>
                             `flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura ${
