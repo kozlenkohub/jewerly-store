@@ -41,7 +41,7 @@ const CutForm = ({ filterKey, label, options }) => {
               <img
                 src={option.img}
                 alt={option.type}
-                className={`w-12 h-12 object-contain mb-2 ${
+                className={`w-10 h-10 object-contain mb-2 ${
                   selectedFilters[filterKey]?.includes(option.type)
                     ? 'border-[1px] border-mainColor'
                     : ''
