@@ -74,12 +74,12 @@ const Product = () => {
           <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
           <div className="flex flex-col gap-4 my-8">
             <p>Select Size</p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 overflow-x-auto whitespace-nowrap ">
               {product.size.map((size, index) => (
                 <button
                   onClick={() => setActiveSize(size)}
                   key={index}
-                  className={`w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center ${
+                  className={`w-10 h-10 aspect-square border border-gray-300 rounded-md flex items-center justify-center ${
                     activeSize === size ? 'bg-mainColor text-white' : ''
                   }`}>
                   {size}
