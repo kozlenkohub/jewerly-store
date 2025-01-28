@@ -111,13 +111,13 @@ const Catalog = () => {
         </div>
 
         <div className="flex-1">
-          <div className="flex flex-wrap justify-center sm:justify-between items-center text-base sm:text-xl mb-4 relative sm:flex-row flex-col">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center text-base text-xl mb-4 relative sm:flex-row flex-col">
             <Title text1={activeCategory} text2={'Catalog'} />
             <div className="flex gap-2 flex-wrap sm:gap-4 mt-2 sm:mt-0">
               {sortOptions.map((option) => (
                 <button
                   key={option.value}
-                  className={`border-2 p-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center ${
+                  className={`border-2 p-2 w-10 h-10 flex items-center justify-center ${
                     selectedSort === option.value ? 'border-gray-800' : 'border-gray-300'
                   }`}
                   onClick={() => setSelectedSort(option.value)}>
