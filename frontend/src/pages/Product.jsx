@@ -27,6 +27,8 @@ const Product = () => {
     );
   }
 
+  const discountedPrice = product.price - (product.price * product.discount) / 100;
+
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-8">
       <div className="flex flex-col sm:flex-row gap-8">
@@ -35,7 +37,14 @@ const Product = () => {
         </div>
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
-          <p className="text-xl mb-4">Price: ${product.price}</p>
+          {product.discount > 0 ? (
+            <div className="text-xl mb-4">
+              <span className="line-through text-red-500 mr-2">${product.price}</span>
+              <span>${discountedPrice}</span>
+            </div>
+          ) : (
+            <p className="text-xl mb-4">Price: ${product.price}</p>
+          )}
           {product.discount > 0 && (
             <p className="text-xl mb-4 text-red-500">Discount: {product.discount}%</p>
           )}
