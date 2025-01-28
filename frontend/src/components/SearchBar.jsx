@@ -7,14 +7,14 @@ import { useLocation } from 'react-router-dom';
 import { useRef } from 'react';
 
 const SearchBar = () => {
-  const { isOpenSearch, search } = useSelector((state) => state.product);
+  const { isOpenSearch, search, selectedSort } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const location = useLocation();
   const debounceRef = useRef(null);
 
   const handleClear = () => {
     dispatch(setSearch(''));
-    dispatch(fetchProducts({ slug: '', query: '', sort: '', search: '' }));
+    dispatch(fetchProducts({ slug: '', query: '', sort: selectedSort, search: '' }));
   };
 
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ const SearchBar = () => {
     }
 
     debounceRef.current = setTimeout(() => {
-      dispatch(fetchProducts({ slug: '', query: '', sort: '', search: searchValue }));
+      dispatch(fetchProducts({ slug: '', query: '', sort: selectedSort, search: searchValue }));
     }, 300); // 300ms delay
   };
 

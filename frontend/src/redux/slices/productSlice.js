@@ -4,8 +4,9 @@ import axios from '../../config/axiosInstance';
 export const fetchProducts = createAsyncThunk(
   'product/fetchProductsStatus',
   async ({ slug, query, sort, search }) => {
+    const searchParam = search ? `&search=${search}` : '';
     const { data } = await axios.get(
-      `/api/product/${slug}?${query}&sort=${sort || ''}&search=${search || ''}`,
+      `/api/product/${slug}?${query}&sort=${sort || ''}${searchParam}`,
     );
     return data;
   },

@@ -37,7 +37,7 @@ const Catalog = () => {
 
   const query = qs.stringify(memoizedSearch, { arrayFormat: 'repeat' });
 
-  const { products, isLoading, isOpenSearch } = useSelector((state) => state.product);
+  const { products, isLoading, isOpenSearch, search } = useSelector((state) => state.product);
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
@@ -62,11 +62,22 @@ const Catalog = () => {
       if (mergedQuery !== query) {
         navigate(`?${mergedQuery}`);
       }
-      dispatch(fetchProducts({ slug: lastSegment, query: mergedQuery, sort: selectedSort }));
+      dispatch(
+        fetchProducts({ slug: lastSegment, query: mergedQuery, sort: selectedSort, search }),
+      );
     }, 200);
 
     return () => clearTimeout(debounceRef.current);
-  }, [selectedFilters, memoizedSearch, query, lastSegment, navigate, dispatch, selectedSort]);
+  }, [
+    selectedFilters,
+    memoizedSearch,
+    query,
+    lastSegment,
+    navigate,
+    dispatch,
+    selectedSort,
+    search,
+  ]);
 
   React.useEffect(() => {
     dispatch(fetchFilters(lastSegment));
