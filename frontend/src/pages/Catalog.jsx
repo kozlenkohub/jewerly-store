@@ -37,7 +37,7 @@ const Catalog = () => {
 
   const query = qs.stringify(memoizedSearch, { arrayFormat: 'repeat' });
 
-  const { products, isLoading } = useSelector((state) => state.product);
+  const { products, isLoading, isOpenSearch } = useSelector((state) => state.product);
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
@@ -74,7 +74,7 @@ const Catalog = () => {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4">
-      <div className="mt-24 sm:col-span-2 text-left">
+      <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-24' : ''}`}>
         <Breadcrumb categoryPath={categoryPath} />
       </div>
       <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t  text-center relative">
