@@ -9,7 +9,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
-import useQueryFilters from '../hooks/useQueryFilters';
 import Breadcrumb from '../components/Breadcrumb';
 
 const Catalog = () => {
@@ -19,8 +18,6 @@ const Catalog = () => {
   const lastSegment = categoryPath ? categoryPath.split('/').pop() : '';
 
   const { search: searchParams } = useLocation();
-
-  useQueryFilters();
 
   const memoizedSearch = React.useMemo(() => {
     const parsed = qs.parse(searchParams, {

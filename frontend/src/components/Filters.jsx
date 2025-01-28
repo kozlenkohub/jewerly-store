@@ -1,12 +1,9 @@
 import FilterItem from './FilterItem';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import useQueryFilters from '../hooks/useQueryFilters';
 
 const Filters = React.memo(() => {
   const filters = useSelector((state) => state.filter.filters);
-
-  useQueryFilters();
 
   return (
     <div>
