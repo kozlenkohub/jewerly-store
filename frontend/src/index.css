@@ -43,6 +43,9 @@ a.active hr {
   }
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
 .forum {
   font-family: 'Forum', sans-serif;
 }

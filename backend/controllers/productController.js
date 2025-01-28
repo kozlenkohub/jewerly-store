@@ -100,10 +100,21 @@ const products = [
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 160000,
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam cumque doloribus voluptas assumenda corrupti dignissimos laudantium numquam et. Velit ex recusandae quaerat ducimus officia rerum, neque ratione repudiandae porro. Facere, optio unde velit assumenda quidem numquam. Ipsum voluptatibus ad quasi suscipit sequi consectetur commodi numquam nulla voluptates iste odio ',
     image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webpp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
     ],
     category: '6797b7419efe656b1d2bbd8e',
+    collection: 'Серьги',
+    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
     discount: 20,
     bestseller: true,
     metal: 'white gold',

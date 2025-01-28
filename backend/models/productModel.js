@@ -12,7 +12,6 @@ const productSchema = new mongoose.Schema(
       type: [String],
       required: true, // Массив путей к изображениям
     },
-
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category', // Связь с категорией
@@ -44,6 +43,10 @@ const productSchema = new mongoose.Schema(
       enum: ['0.3 - 0.5', '0.51 - 0.6', '0.61 - 0.7', '0.71 - 3'],
       required: false,
     },
+    collection: {
+      type: String,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,
@@ -58,6 +61,11 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      required: true,
+    },
+    size: {
+      type: [Number],
+      enum: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
       required: true,
     },
     isAvailable: {
