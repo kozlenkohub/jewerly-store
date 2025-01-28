@@ -13,6 +13,7 @@ const NavbarIcons = ({ iconColor }) => {
   const handleSearchClick = () => {
     if (!location.pathname.includes('/catalog')) {
       navigate('/catalog');
+      dispatch(toggleSearch(true));
     } else {
       dispatch(toggleSearch(!isOpenSearch));
     }
