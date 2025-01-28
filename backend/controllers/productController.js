@@ -20,6 +20,7 @@ export const getProducts = async (req, res) => {
     const { category: paramCategory } = req.params;
 
     const filter = {};
+    let categoryDoc = null;
 
     // Check for unknown filters
     if (Object.keys(unknownFilters).length > 0) {
@@ -29,7 +30,7 @@ export const getProducts = async (req, res) => {
     if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
     if (carats) filter.carats = { $in: carats }; // Используем $in для массива карат
     if (paramCategory) {
-      const categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id');
+      categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id name');
       if (!categoryDoc) {
         return res.status(404).json({ message: 'Category not found' });
       }
@@ -55,7 +56,7 @@ export const getProducts = async (req, res) => {
       else if (sort === 'high-low') query = query.sort({ price: -1 });
     }
     const products = await query;
-    res.json(products);
+    res.json({ products, categoryName: categoryDoc ? categoryDoc.name : '' });
   } catch (error) {
     console.error('Error in getProducts:', error);
     res.status(500).json({ message: 'Server Error', error: error.message });

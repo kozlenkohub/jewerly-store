@@ -19,6 +19,7 @@ const initialState = {
   isOpenSearch: false, // Ensure the search bar is initially closed
   isLoading: true,
   status: 'idle', // добавим статус по умолчанию
+  activeCategory: '',
 };
 
 const productSlice = createSlice({
@@ -44,7 +45,8 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.status = 'succeeded';
-        state.products = action.payload;
+        state.products = action.payload.products;
+        state.activeCategory = action.payload.categoryName; // Set the active category name
       })
       .addCase(fetchProducts.rejected, (state) => {
         state.isLoading = true;

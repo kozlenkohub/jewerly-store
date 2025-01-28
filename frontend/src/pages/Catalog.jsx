@@ -37,7 +37,9 @@ const Catalog = () => {
 
   const query = qs.stringify(memoizedSearch, { arrayFormat: 'repeat' });
 
-  const { products, isLoading, isOpenSearch, search } = useSelector((state) => state.product);
+  const { products, isLoading, isOpenSearch, search, activeCategory } = useSelector(
+    (state) => state.product,
+  );
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
@@ -106,7 +108,7 @@ const Catalog = () => {
 
         <div className="flex-1">
           <div className="flex justify-between text-base sm:text-xl mb-4 relative">
-            <Title text1={'All'} text2={'Products'} />
+            <Title text1={activeCategory} text2={'Catalog'} />
             <select
               className="border-2 border-gray-300"
               onChange={(e) => setSelectedSort(e.target.value)}
