@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosInstance';
 import { useParams } from 'react-router-dom';
+import { DotLoader } from 'react-spinners';
 
 const Product = () => {
   const params = useParams();
@@ -19,7 +20,11 @@ const Product = () => {
   }, [params.productId]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <DotLoader size={50} color={'#8c2d60'} loading={!product} speedMultiplier={0.5} />
+      </div>
+    );
   }
 
   return (
