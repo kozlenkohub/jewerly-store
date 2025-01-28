@@ -40,6 +40,7 @@ const Catalog = () => {
   const { products, isLoading } = useSelector((state) => state.product);
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
+  const [selectedSort, setSelectedSort] = React.useState('relevent');
 
   const debounceRef = React.useRef(null);
 
@@ -61,11 +62,11 @@ const Catalog = () => {
       if (mergedQuery !== query) {
         navigate(`?${mergedQuery}`);
       }
-      dispatch(fetchProducts({ slug: lastSegment, query: mergedQuery }));
+      dispatch(fetchProducts({ slug: lastSegment, query: mergedQuery, sort: selectedSort }));
     }, 200);
 
     return () => clearTimeout(debounceRef.current);
-  }, [selectedFilters, memoizedSearch, query, lastSegment, navigate, dispatch]);
+  }, [selectedFilters, memoizedSearch, query, lastSegment, navigate, dispatch, selectedSort]);
 
   React.useEffect(() => {
     dispatch(fetchFilters(lastSegment));
@@ -95,7 +96,10 @@ const Catalog = () => {
         <div className="flex-1">
           <div className="flex justify-between text-base sm:text-xl mb-4 relative">
             <Title text1={'All'} text2={'Products'} />
-            <select className="border-2 border-gray-300">
+            <select
+              className="border-2 border-gray-300"
+              onChange={(e) => setSelectedSort(e.target.value)}
+              value={selectedSort}>
               <option value="relevent">Relevent</option>
               <option value="low-high">Low to High</option>
               <option value="high-low">High to Low</option>

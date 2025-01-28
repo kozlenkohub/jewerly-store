@@ -3,29 +3,23 @@ import mongoose from 'mongoose';
 import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
 
+async function getAllChildCategoryIds(catId, collected = []) {
+  collected.push(catId);
+  const currentCat = await Category.findById(catId).select('children');
+  if (currentCat && currentCat.children) {
+    for (const child of currentCat.children) {
+      await getAllChildCategoryIds(child, collected);
+    }
+  }
+  return collected;
+}
+
 export const getProducts = async (req, res) => {
   try {
-    const { metal, carats, price, cutForm, ...unknownFilters } = req.query;
+    const { metal, carats, price, cutForm, sort, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
 
     const filter = {};
-
-    // Helper to gather all child category IDs recursively
-    async function getAllChildCategoryIds(catId) {
-      const queue = [catId];
-      const allIds = [];
-      while (queue.length) {
-        const currentId = queue.shift();
-        allIds.push(currentId);
-        const currentCat = await Category.findById(currentId).select('children');
-        if (currentCat && currentCat.children) {
-          for (const child of currentCat.children) {
-            queue.push(child);
-          }
-        }
-      }
-      return allIds;
-    }
 
     // Check for unknown filters
     if (Object.keys(unknownFilters).length > 0) {
@@ -51,7 +45,12 @@ export const getProducts = async (req, res) => {
       filter.cutForm = { $in: cutForm };
     }
 
-    const products = await Product.find(filter);
+    let query = Product.find(filter);
+    if (sort) {
+      if (sort === 'low-high') query = query.sort({ price: 1 });
+      else if (sort === 'high-low') query = query.sort({ price: -1 });
+    }
+    const products = await query;
     res.json(products);
   } catch (error) {
     console.error('Error in getProducts:', error);
@@ -97,7 +96,7 @@ const products = [
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 160000,
     image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webpp',
     ],
     category: '6797b7419efe656b1d2bbd8e',
     discount: 20,

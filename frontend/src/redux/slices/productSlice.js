@@ -3,8 +3,8 @@ import axios from '../../config/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchProductsStatus',
-  async ({ slug, query }) => {
-    const { data } = await axios.get(`/api/product/${slug}?${query}`);
+  async ({ slug, query, sort }) => {
+    const { data } = await axios.get(`/api/product/${slug}?${query}&sort=${sort || ''}`);
     return data;
   },
 );
