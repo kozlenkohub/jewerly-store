@@ -41,7 +41,7 @@ const Product = () => {
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
           <div className="w-full relative">
             {/* Главное изображение */}
-            <img className="w-full h-[500px] object-contain" src={image} alt="" />
+            <img className="w-full max-h-[500px] object-contain" src={image} alt="" />
           </div>
 
           <div className="absolute bottom-0 left-0 flex overflow-x-auto max-w-full justify-start w-full bg-white bg-opacity-75 gap-2 p-2">
