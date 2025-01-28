@@ -15,7 +15,7 @@ const initialState = {
   products: [],
   currency: '₴',
   search: '',
-  isOpenSearch: false,
+  isOpenSearch: false, // Ensure the search bar is initially closed
   isLoading: true,
   status: 'idle', // добавим статус по умолчанию
 };

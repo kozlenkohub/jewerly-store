@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaUser, FaShoppingCart, FaChevronDown } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { toggleSearch } from '../redux/slices/productSlice';
 
 const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleCategoryClick = (categorySlug, hasChildren, event) => {
     // Проверка на клик по тексту
@@ -34,6 +37,11 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
     setDropdownVisible(!isDropdownVisible);
   };
 
+  const handleSearchClick = () => {
+    setVisible(false);
+    dispatch(toggleSearch());
+  };
+
   const isCatalogPage = location.pathname.startsWith('/catalog');
 
   return (
@@ -48,7 +56,10 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             <p className="text-mainColor">Back</p>
           </div>
           <div className="flex items-center gap-6">
-            <FaSearch className="w-5 h-5 cursor-pointer text-mainColor" />
+            <FaSearch
+              className="w-5 h-5 cursor-pointer text-mainColor"
+              onClick={handleSearchClick}
+            />
             <div className="group relative text-mainColor">
               <FaUser className="w-5 h-5 cursor-pointer text-mainColor" />
               <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
