@@ -45,7 +45,6 @@ const Catalog = () => {
 
   React.useEffect(() => {
     dispatch(setSelectedFilters(memoizedSearch));
-    console.log('memoizedSearch', memoizedSearch);
   }, [memoizedSearch, dispatch]);
 
   React.useEffect(() => {
