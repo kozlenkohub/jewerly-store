@@ -111,9 +111,9 @@ const Catalog = () => {
         </div>
 
         <div className="flex-1">
-          <div className="flex flex-wrap justify-center sm:justify-between items-center text-base  sm:text-xl mb-4 relative">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center text-base sm:text-xl mb-4 relative sm:flex-row flex-col">
             <Title text1={activeCategory} text2={'Catalog'} />
-            <div className="flex gap-2 flex-wrap sm:gap-4">
+            <div className="flex gap-2 flex-wrap sm:gap-4 mt-2 sm:mt-0">
               {sortOptions.map((option) => (
                 <button
                   key={option.value}
