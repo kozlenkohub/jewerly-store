@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosInstance';
 import { useParams } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
 
 const Product = () => {
   const params = useParams();
   const [product, setProduct] = useState(null);
+
+  const { currency } = useSelector((state) => state.product);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -39,11 +42,20 @@ const Product = () => {
           <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
           {product.discount > 0 ? (
             <div className="text-xl mb-4">
-              <span className="line-through text-red-500 mr-2">${product.price}</span>
-              <span>${discountedPrice}</span>
+              <span className="line-through text-red-500 mr-2">
+                {currency}
+                {product.price}
+              </span>
+              <span>
+                {currency}
+                {discountedPrice}
+              </span>
             </div>
           ) : (
-            <p className="text-xl mb-4">Price: ${product.price}</p>
+            <p className="text-xl mb-4">
+              Price: {currency}
+              {product.price}
+            </p>
           )}
           {product.discount > 0 && (
             <p className="text-xl mb-4 text-red-500">Discount: {product.discount}%</p>
