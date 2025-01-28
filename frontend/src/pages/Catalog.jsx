@@ -83,6 +83,12 @@ const Catalog = () => {
     dispatch(fetchFilters(lastSegment));
   }, [lastSegment, dispatch]);
 
+  const sortOptions = [
+    { value: 'relevent', icon: <FaStar />, label: 'Relevent' },
+    { value: 'low-high', icon: <FaSortAmountUp />, label: 'Low to High' },
+    { value: 'high-low', icon: <FaSortAmountDown />, label: 'High to Low' },
+  ];
+
   return (
     <div className="max-w-[1280px] mx-auto px-4">
       <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-20' : ''}`}>
@@ -105,30 +111,19 @@ const Catalog = () => {
         </div>
 
         <div className="flex-1">
-          <div className="flex justify-between text-base sm:text-xl mb-4 relative">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center text-base  sm:text-xl mb-4 relative">
             <Title text1={activeCategory} text2={'Catalog'} />
-            <div className="flex gap-2">
-              <button
-                className={`border-2 p-2 ${
-                  selectedSort === 'relevent' ? 'border-gray-800' : 'border-gray-300'
-                }`}
-                onClick={() => setSelectedSort('relevent')}>
-                <FaStar />
-              </button>
-              <button
-                className={`border-2 p-2 ${
-                  selectedSort === 'low-high' ? 'border-gray-800' : 'border-gray-300'
-                }`}
-                onClick={() => setSelectedSort('low-high')}>
-                <FaSortAmountUp />
-              </button>
-              <button
-                className={`border-2 p-2 ${
-                  selectedSort === 'high-low' ? 'border-gray-800' : 'border-gray-300'
-                }`}
-                onClick={() => setSelectedSort('high-low')}>
-                <FaSortAmountDown />
-              </button>
+            <div className="flex gap-2 flex-wrap sm:gap-4">
+              {sortOptions.map((option) => (
+                <button
+                  key={option.value}
+                  className={`border-2 p-2 w-8 sm:w-10 ${
+                    selectedSort === option.value ? 'border-gray-800' : 'border-gray-300'
+                  }`}
+                  onClick={() => setSelectedSort(option.value)}>
+                  {option.icon}
+                </button>
+              ))}
             </div>
           </div>
 
