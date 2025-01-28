@@ -16,7 +16,7 @@ async function getAllChildCategoryIds(catId, collected = []) {
 
 export const getProducts = async (req, res) => {
   try {
-    const { metal, carats, price, cutForm, sort, ...unknownFilters } = req.query;
+    const { metal, carats, price, cutForm, sort, search, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
 
     const filter = {};
@@ -43,6 +43,10 @@ export const getProducts = async (req, res) => {
 
     if (cutForm) {
       filter.cutForm = { $in: cutForm };
+    }
+
+    if (search) {
+      filter.name = { $regex: search, $options: 'i' };
     }
 
     let query = Product.find(filter);

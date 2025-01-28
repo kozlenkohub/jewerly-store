@@ -3,8 +3,10 @@ import axios from '../../config/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchProductsStatus',
-  async ({ slug, query, sort }) => {
-    const { data } = await axios.get(`/api/product/${slug}?${query}&sort=${sort || ''}`);
+  async ({ slug, query, sort, search }) => {
+    const { data } = await axios.get(
+      `/api/product/${slug}?${query}&sort=${sort || ''}&search=${search || ''}`,
+    );
     return data;
   },
 );
@@ -12,6 +14,8 @@ export const fetchProducts = createAsyncThunk(
 const initialState = {
   products: [],
   currency: '₴',
+  search: '',
+  isOpenSearch: false,
   isLoading: true,
   status: 'idle', // добавим статус по умолчанию
 };
@@ -22,6 +26,12 @@ const productSlice = createSlice({
   reducers: {
     setItems: (state, action) => {
       state.products = action.payload;
+    },
+    toggleSearch: (state) => {
+      state.isOpenSearch = !state.isOpenSearch;
+    },
+    setSearch: (state, action) => {
+      state.search = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -42,6 +52,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { setItems } = productSlice.actions;
+export const { setItems, toggleSearch, setSearch } = productSlice.actions;
 
 export default productSlice.reducer;

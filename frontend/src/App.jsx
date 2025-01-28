@@ -5,11 +5,13 @@ import Product from './pages/Product';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Catalog from './pages/Catalog';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
   return (
     <div className="max-w-[1920px] mx-auto">
       <Navbar />
+      <SearchBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog/*" element={<Catalog />} />
