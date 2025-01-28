@@ -41,6 +41,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
     setVisible(false);
     if (!location.pathname.includes('/catalog')) {
       navigate('/catalog');
+      dispatch(toggleSearch());
     }
     dispatch(toggleSearch());
   };
