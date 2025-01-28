@@ -117,7 +117,7 @@ const Catalog = () => {
               {sortOptions.map((option) => (
                 <button
                   key={option.value}
-                  className={`border-2 p-2 w-8 sm:w-10 ${
+                  className={`border-2 p-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center ${
                     selectedSort === option.value ? 'border-gray-800' : 'border-gray-300'
                   }`}
                   onClick={() => setSelectedSort(option.value)}>
