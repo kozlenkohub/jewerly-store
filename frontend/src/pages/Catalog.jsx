@@ -90,7 +90,7 @@ const Catalog = () => {
       <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-20' : ''}`}>
         <Breadcrumb categoryPath={categoryPath} />
       </div>
-      <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t  text-center relative">
+      <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-2 sm:pt-5 border-t  text-center relative">
         <div className="min-w-60">
           <p
             onClick={() => setShowFilter(!showFilter)}
