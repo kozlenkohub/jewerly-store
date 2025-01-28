@@ -39,25 +39,30 @@ const Product = () => {
     <div className="border-t-2 pt-8 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
-          <div className="w-full sm:w-[80%]">
-            <img className="w-full h-auto" src={image} alt="" />
+          <div className="w-full relative">
+            {/* Главное изображение */}
+            <img className="w-full h-[500px] object-contain" src={image} alt="" />
           </div>
-          <div className="absolute bottom-0 left-0 flex overflow-scroll max-w-[100%] justify-between w-full bg-white bg-opacity-75">
+
+          <div className="absolute bottom-0 left-0 flex overflow-x-auto max-w-full justify-start w-full bg-white bg-opacity-75 gap-2 p-2">
             {product.image.map((img, index) => (
               <div
                 key={index}
-                className={`relative w-[24%] sm:w-[24%] sm:mb-3 flex-shrink-0 cursor-pointer`}
+                className="relative w-[120px] h-[100px] flex-shrink-0 cursor-pointer"
                 onClick={() => setImage(img)}>
                 <img
                   src={img}
                   alt={product.name}
-                  className={`w-full h-auto object-cover ${image !== img ? 'opacity-50' : ''}`}
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    image !== img ? 'opacity-50' : ''
+                  }`}
                 />
                 {image !== img && <div className="absolute inset-0 bg-black opacity-50"></div>}
               </div>
             ))}
           </div>
         </div>
+
         <div className="flex-1 futura">
           <h1 className="font-medium text-2xl mt-2 forum">{product.name}</h1>
           <div className="flex items-center gap-1 mt-2 ">
