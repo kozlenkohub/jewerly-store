@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown, FaSortAmountDown, FaSortAmountUp, FaStar } from 'react-icons/fa';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import Filters from '../components/Filters';
@@ -45,6 +45,7 @@ const Catalog = () => {
 
   React.useEffect(() => {
     dispatch(setSelectedFilters(memoizedSearch));
+    console.log('memoizedSearch', memoizedSearch);
   }, [memoizedSearch, dispatch]);
 
   React.useEffect(() => {
@@ -106,14 +107,29 @@ const Catalog = () => {
         <div className="flex-1">
           <div className="flex justify-between text-base sm:text-xl mb-4 relative">
             <Title text1={activeCategory} text2={'Catalog'} />
-            <select
-              className="border-2 border-gray-300"
-              onChange={(e) => setSelectedSort(e.target.value)}
-              value={selectedSort}>
-              <option value="relevent">Relevent</option>
-              <option value="low-high">Low to High</option>
-              <option value="high-low">High to Low</option>
-            </select>
+            <div className="flex gap-2">
+              <button
+                className={`border-2 p-2 ${
+                  selectedSort === 'relevent' ? 'border-gray-800' : 'border-gray-300'
+                }`}
+                onClick={() => setSelectedSort('relevent')}>
+                <FaStar />
+              </button>
+              <button
+                className={`border-2 p-2 ${
+                  selectedSort === 'low-high' ? 'border-gray-800' : 'border-gray-300'
+                }`}
+                onClick={() => setSelectedSort('low-high')}>
+                <FaSortAmountUp />
+              </button>
+              <button
+                className={`border-2 p-2 ${
+                  selectedSort === 'high-low' ? 'border-gray-800' : 'border-gray-300'
+                }`}
+                onClick={() => setSelectedSort('high-low')}>
+                <FaSortAmountDown />
+              </button>
+            </div>
           </div>
 
           {isLoading ? (
