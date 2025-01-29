@@ -68,9 +68,12 @@ const Cart = () => {
             );
           })}
         </div>
-        <div className="flex justify-end my-20">
+        <div className="flex justify-end my-8">
           <div className="w-full sm:w-[450px]">
             <CartTotal />
+            <div className="w-full text-center">
+              <button className="bg-mainColor text-white text-sm my-8 px-8 py-3">CHECKOUT</button>
+            </div>
           </div>
         </div>
       </div>
