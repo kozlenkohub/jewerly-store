@@ -103,16 +103,14 @@ const products = [
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam cumque doloribus voluptas assumenda corrupti dignissimos laudantium numquam et. Velit ex recusandae quaerat ducimus officia rerum, neque ratione repudiandae porro. Facere, optio unde velit assumenda quidem numquam. Ipsum voluptatibus ad quasi suscipit sequi consectetur commodi numquam nulla voluptates iste odio ',
     image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1017/new_photo/1_607-1000x1000.webp',
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1565/1ng95apsen1565-1000x1000.webp',
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/947/2ng95apsen947-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
     ],
     category: '6797b7419efe656b1d2bbd8e',
-    collection: 'Серьги',
+    collection: 'kiev',
     size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
     discount: 20,
     bestseller: true,
-    metal: 'white gold',
+    metal: 'yellow gold',
     cutForm: 'round',
   },
 ];
@@ -129,10 +127,10 @@ export const insertProducts = async (req, res) => {
 };
 
 // by id
-
 export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -141,7 +139,13 @@ export const getProductById = async (req, res) => {
       category: product.category,
       _id: { $ne: product._id },
     }).limit(5);
-    res.json({ product, relatedProducts });
+
+    const anotherVariation = await Product.find({
+      collection: product.collection,
+      _id: { $ne: product._id },
+    }).select('_id metal');
+
+    res.json({ product, relatedProducts, anotherVariation });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

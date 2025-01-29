@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosInstance';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { FaStar, FaRegStar, FaCheckCircle, FaTruck, FaUndo } from 'react-icons/fa';
@@ -16,11 +16,14 @@ import { addToCart } from '../redux/slices/cartSlice';
 const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
+  const [anotherVariantion, setAnotherVariantion] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
   const [image, setImage] = useState(0);
+  const [activeMetal, setActiveMetal] = useState(null);
   const { currency } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -29,7 +32,9 @@ const Product = () => {
         const { data } = await axios.get(`/api/product/get/${params.productId}`);
         setProduct(data['product']);
         setRelated(data['relatedProducts']);
+        setAnotherVariantion(data['anotherVariation']);
         setImage(data['product'].image[0]);
+        setActiveMetal(data['product'].metal || data['anotherVariation'][0]?.metal || null);
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -52,6 +57,25 @@ const Product = () => {
     { icon: FaTruck, text: 'Cash on delivery is available on this product.' },
     { icon: FaUndo, text: 'Easy return policy within 7 days.' },
   ];
+
+  const metalDetails = [
+    {
+      label: 'yellow gold',
+      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/zheltoe-zoloto.png',
+    },
+    {
+      label: 'rose gold',
+      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krasnoe-zoloto.png',
+    },
+    {
+      label: 'white gold',
+      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/beloe-zoloto.png',
+    },
+  ];
+
+  const handleMetalChange = (metalId) => {
+    navigate(`/product/${metalId}`);
+  };
 
   return (
     <div className="border-t-2 pt-2 sm:pt-8 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
@@ -114,6 +138,30 @@ const Product = () => {
           </p>
           <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
           <div className="flex flex-col gap-4 my-8">
+            {anotherVariantion.length > 0 && (
+              <>
+                <p>Select Metal</p>
+                <div className="flex gap-2 overflow-x-auto whitespace-nowrap">
+                  {[{ _id: params.productId, metal: product.metal }, ...anotherVariantion].map(
+                    (variation, index) => (
+                      <button
+                        onClick={() => handleMetalChange(variation._id)}
+                        key={index}
+                        className={`w-10 h-10 aspect-square  border-gray-300 rounded-md flex items-center justify-center ${
+                          activeMetal === variation.metal
+                            ? 'border-mainColor border-[2px] box-border'
+                            : ''
+                        }`}>
+                        <img
+                          src={metalDetails.find((metal) => metal.label === variation.metal)?.icon}
+                          alt={variation.metal}
+                        />
+                      </button>
+                    ),
+                  )}
+                </div>
+              </>
+            )}
             <p>Select Size</p>
             <div className="flex gap-2 overflow-x-auto whitespace-nowrap ">
               {product.size.map((size, index) => (
@@ -130,7 +178,7 @@ const Product = () => {
           </div>
           <button
             onClick={() => {
-              dispatch(addToCart({ ...product, size: activeSize }));
+              dispatch(addToCart({ ...product, size: activeSize, metal: activeMetal }));
             }}
             className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
             ADD TO CART
