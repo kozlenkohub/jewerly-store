@@ -3,12 +3,13 @@ import axios from '../config/axiosInstance';
 import { useParams } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaCheckCircle, FaTruck, FaUndo } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { Navigation, Autoplay } from 'swiper/modules';
+import RelatedProducts from '../components/RelatedProducts';
 
 const Product = () => {
   const params = useParams();
@@ -40,12 +41,18 @@ const Product = () => {
 
   const discountedPrice = product.price - (product.price * product.discount) / 100;
 
+  const productDetails = [
+    { icon: FaCheckCircle, text: '100% original project' },
+    { icon: FaTruck, text: 'Cash on delivery is available on this product.' },
+    { icon: FaUndo, text: 'Easy return policy within 7 days.' },
+  ];
+
   return (
     <div className="border-t-2 pt-2 sm:pt-8 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
           {/* Main Image */}
-          <div className="w-full border-b relative">
+          <div className="w-full  relative">
             <img
               className="w-full max-h-[500px] sm:max-h-[500px] object-cover"
               src={image}
@@ -53,7 +60,6 @@ const Product = () => {
             />
           </div>
 
-          {/* Image Slider */}
           <Swiper
             spaceBetween={10}
             slidesPerView={4}
@@ -106,8 +112,39 @@ const Product = () => {
               ))}
             </div>
           </div>
+          <button className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
+            ADD TO CART
+          </button>
+          <hr className="mt-8 sm:w-4/5" />
+          <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
+            {productDetails.map((detail, index) => (
+              <p key={index} className="flex items-center gap-2">
+                <detail.icon className="inline" />
+                {detail.text}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
+      {/* Product Details */}
+      <div className="mt-20">
+        <div className="flex ">
+          <b className="border px-5 py-3 text-sm">Description</b>
+          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
+        </div>
+        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500 futura">
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem quo repudiandae
+            cupiditate! Perferendis unde dicta ad minima, rerum nobis necessitatibus. Lorem ipsum
+            dolor, sit amet consectetur adipisicing elit. Repellat nostrum consequatur perspiciatis,
+            doloribus ipsa quibusdam est harum veniam illum, nulla totam deleniti asperiores. Nulla,
+            facere inventore et ipsum dolorum dolorem!
+          </p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem</p>
+        </div>
+      </div>
+      <RelatedProducts />
+      {/* Display related prodcut */}
     </div>
   );
 };
