@@ -135,7 +135,12 @@ export const getProductById = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    res.json(product);
+
+    const relatedProducts = await Product.find({
+      category: product.category,
+      _id: { $ne: product._id },
+    }).limit(5);
+    res.json({ product, relatedProducts });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

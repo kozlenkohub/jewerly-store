@@ -14,6 +14,7 @@ import RelatedProducts from '../components/RelatedProducts';
 const Product = () => {
   const params = useParams();
   const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
   const [image, setImage] = useState(0);
   const { currency } = useSelector((state) => state.product);
@@ -22,8 +23,9 @@ const Product = () => {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(`/api/product/get/${params.productId}`);
-        setProduct(data);
-        setImage(data.image[0]);
+        setProduct(data['product']);
+        setRelated(data['relatedProducts']);
+        setImage(data['product'].image[0]);
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -143,8 +145,7 @@ const Product = () => {
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem</p>
         </div>
       </div>
-      <RelatedProducts />
-      {/* Display related prodcut */}
+      <RelatedProducts related={related} />
     </div>
   );
 };
