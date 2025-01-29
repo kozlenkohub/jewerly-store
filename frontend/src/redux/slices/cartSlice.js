@@ -5,6 +5,15 @@ import toast from 'react-hot-toast';
 const initialState = {
   cartItems: [],
   counter: 0,
+  totalPrice: 0,
+  delivery_fee: 50,
+};
+
+const calculateTotalPrice = (cartItems) => {
+  return cartItems.reduce((total, item) => {
+    const discountPrice = item.price * (1 - (item.discount || 0) / 100);
+    return total + discountPrice * item.quantity;
+  }, 0);
 };
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
@@ -37,6 +46,7 @@ const cartSlice = createSlice({
         state.cartItems = [...state.cartItems, { ...data, quantity: 1 }];
       }
       state.counter += 1;
+      state.totalPrice = calculateTotalPrice(state.cartItems);
       toast.success('Product has been added to your cart');
     },
     removeFromCart: (state, action) => {
@@ -49,16 +59,27 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (x) => x.product !== action.payload.product || x.size !== action.payload.size,
       );
+      state.totalPrice = calculateTotalPrice(state.cartItems);
+    },
+    updateQuantity: (state, action) => {
+      const { product, size, quantity } = action.payload;
+      const item = state.cartItems.find((x) => x.product === product && x.size === size);
+      if (item) {
+        item.quantity = quantity;
+        state.counter = state.cartItems.reduce((total, item) => total + item.quantity, 0);
+        state.totalPrice = calculateTotalPrice(state.cartItems);
+      }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
       state.cartItems = action.payload;
       state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
+      state.totalPrice = calculateTotalPrice(state.cartItems);
     });
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;

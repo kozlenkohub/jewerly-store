@@ -1,11 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Title from '../components/Title';
+import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
+import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
+import CartTotal from '../components/CartTotal';
 
 const Cart = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.product);
-  console.log(cartItems);
+
+  const handleIncrement = (item) => {
+    dispatch(
+      updateQuantity({ product: item.product, size: item.size, quantity: item.quantity + 1 }),
+    );
+  };
+
+  const handleDecrement = (item) => {
+    if (item.quantity > 1) {
+      dispatch(
+        updateQuantity({ product: item.product, size: item.size, quantity: item.quantity - 1 }),
+      );
+    }
+  };
 
   return (
     <div className="border-t pt-14 max-w-[1280px] mx-auto px-4">
@@ -30,9 +47,31 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-2">
+                  <FaMinus
+                    className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
+                    onClick={() => handleDecrement(item)}
+                  />
+                  <span>{item.quantity}</span>
+                  <FaPlus
+                    className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
+                    onClick={() => handleIncrement(item)}
+                  />
+                </div>
+                <FaTrashAlt
+                  className="w-4 h-4 sm:w-5 cursor-pointer"
+                  onClick={() => {
+                    dispatch(removeFromCart(item));
+                  }}
+                />
               </div>
             );
           })}
+        </div>
+        <div className="flex justify-end my-20">
+          <div className="w-full sm:w-[450px]">
+            <CartTotal />
+          </div>
         </div>
       </div>
     </div>
