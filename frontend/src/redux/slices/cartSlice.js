@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 const initialState = {
   cartItems: [],
+  counter: 0,
 };
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
@@ -35,8 +36,16 @@ const cartSlice = createSlice({
       } else {
         state.cartItems = [...state.cartItems, { ...data, quantity: 1 }];
       }
+      state.counter += 1;
+      toast.success('Product has been added to your cart');
     },
     removeFromCart: (state, action) => {
+      const itemToRemove = state.cartItems.find(
+        (x) => x.product === action.payload.product && x.size === action.payload.size,
+      );
+      if (itemToRemove) {
+        state.counter -= itemToRemove.quantity;
+      }
       state.cartItems = state.cartItems.filter(
         (x) => x.product !== action.payload.product || x.size !== action.payload.size,
       );
@@ -45,6 +54,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
       state.cartItems = action.payload;
+      state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
     });
   },
 });

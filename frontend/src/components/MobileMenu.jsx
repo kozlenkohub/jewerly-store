@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaUser, FaShoppingCart, FaChevronDown } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearch } from '../redux/slices/productSlice';
 
 const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const { counter } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -77,6 +78,11 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             </div>
             <Link to="/cart" className="relative text-mainColor">
               <FaShoppingCart className="w-5 h-5 text-mainColor" />
+              {counter > 0 && (
+                <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px]">
+                  {counter}
+                </p>
+              )}
             </Link>
           </div>
         </div>
