@@ -99,8 +99,18 @@ const Product = () => {
             <p className="pl-2">(122)</p>
           </div>
           <p className="mt-5 text-3xl font-medium">
-            {currency}
-            {product.price}
+            {product.discount ? (
+              <>
+                <span className="line-through text-gray-500 text-base mr-2">
+                  {product.price} {currency}
+                </span>
+                {discountedPrice} {currency}
+              </>
+            ) : (
+              <>
+                {product.price} {currency}
+              </>
+            )}
           </p>
           <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
           <div className="flex flex-col gap-4 my-8">

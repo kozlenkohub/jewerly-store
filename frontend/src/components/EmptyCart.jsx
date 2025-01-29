@@ -31,7 +31,6 @@ const EmptyCart = () => {
         className="bg-mainColor text-white text-sm px-6 py-2 mt-4">
         Go to Catalog
       </button>
-      {/* ...existing code... */}
     </div>
   );
 };
