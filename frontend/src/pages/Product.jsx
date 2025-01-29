@@ -44,7 +44,7 @@ const Product = () => {
             <img className="w-full max- sm:h-[500px] object-cover" src={image} alt="" />
           </div>
 
-          <div className="absolute bottom-0 left-0 flex overflow-x-auto max-w-full justify-start w-full bg-white bg-opacity-75 gap-2 p-2">
+          <div className=" flex overflow-x-auto max-w-full justify-start w-full bg-white/30  gap-2 p-2">
             {product.image.map((img, index) => (
               <div
                 key={index}
@@ -53,11 +53,10 @@ const Product = () => {
                 <img
                   src={img}
                   alt={product.name}
-                  className={`w-full h-full object-cover transition-opacity duration-300 ${
-                    image !== img ? 'opacity-50' : ''
-                  }`}
+                  className={`w-full h-full object-cover ${
+                    image === img ? 'opacity-90' : 'opacity-20'
+                  } hover:opacity-80 transition-opacity duration-300`}
                 />
-                {image !== img && <div className="absolute inset-0 bg-black opacity-50"></div>}
               </div>
             ))}
           </div>
@@ -82,7 +81,7 @@ const Product = () => {
             <div className="flex gap-2 overflow-x-auto whitespace-nowrap ">
               {product.size.map((size, index) => (
                 <button
-                  onClick={() => setActiveSize(size)}
+                  onClick={() => (activeSize === size ? setActiveSize(null) : setActiveSize(size))}
                   key={index}
                   className={`w-10 h-10 aspect-square border border-gray-300 rounded-md flex items-center justify-center ${
                     activeSize === size ? 'bg-mainColor text-white' : ''
