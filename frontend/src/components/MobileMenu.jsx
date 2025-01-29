@@ -79,7 +79,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             <Link to="/cart" className="relative text-mainColor">
               <FaShoppingCart className="w-5 h-5 text-mainColor" />
               {counter > 0 && (
-                <p className="absolute right-[-12px] bottom-[-9px] w-[16px] h-[16px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px]">
+                <p className="absolute right-[-7px] bottom-[-5px] w-[16px] h-[16px] text-center leading-3 bg-secondaryColor text-white aspect-square rounded-full text-[13px]">
                   {counter}
                 </p>
               )}
