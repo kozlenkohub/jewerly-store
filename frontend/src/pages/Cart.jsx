@@ -59,7 +59,7 @@ const Cart = () => {
                   </div>
                   <div className="">
                     <p className="text-sm sm:text-lg font-medium">{item.name}</p>
-                    <div className="flex items-center gap-5 mt-2">
+                    <div className="flex items-center mt-2">
                       {item.discount ? (
                         <>
                           <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
