@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
+import toast from 'react-hot-toast';
 
 const initialState = {
   cartItems: [],
@@ -16,6 +17,11 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const data = action.payload;
+
+      if (!data.size) {
+        toast.error('Please select a size');
+        return;
+      }
 
       const existItem = state.cartItems.find(
         (x) => x.product === data.product && x.size === data.size,
