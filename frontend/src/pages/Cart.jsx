@@ -23,7 +23,17 @@ const Cart = () => {
       dispatch(
         updateQuantity({ product: item.product, size: item.size, quantity: item.quantity - 1 }),
       );
+    } else {
+      dispatch(removeFromCart(item));
     }
+  };
+
+  const formatPrice = (price) => {
+    if (price === undefined || price === null) return '';
+    return price
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+      .replace(/\.00$/, '');
   };
 
   return (
@@ -32,20 +42,38 @@ const Cart = () => {
         <Title text1={'Your'} text2={'Cart'} />
         <div className="futura">
           {cartItems.map((item, index) => {
+            const discountedPrice = item.discount
+              ? item.price - (item.price * item.discount) / 100
+              : item.price;
+
             return (
               <div
                 key={index}
                 className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ">
                 <div className="flex items-start gap-6">
-                  <img className="w-16 sm:w-20" src={item.image[0]} alt="" />
+                  <div className="relative w-36 sm:w-20">
+                    <img className="object-cover " src={item.image[0]} alt="" />
+                    <div className="absolute bottom-0  left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-1 py-1 whitespace-nowrap text-[13px] ">
+                      Size: {item.size}
+                    </div>
+                  </div>
                   <div className="">
                     <p className="text-sm sm:text-lg font-medium">{item.name}</p>
                     <div className="flex items-center gap-5 mt-2">
-                      <p>
-                        {currency}
-                        {item.price}
-                      </p>
-                      <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">{item.size}</p>
+                      {item.discount ? (
+                        <>
+                          <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
+                            {formatPrice(item.price)} {currency}
+                          </span>
+                          <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px]">
+                            {formatPrice(discountedPrice.toFixed(2))} {currency}
+                          </span>
+                        </>
+                      ) : (
+                        <span>
+                          {formatPrice(item.price)} {currency}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -61,7 +89,7 @@ const Cart = () => {
                   />
                 </div>
                 <FaTrashAlt
-                  className="w-4 h-4 sm:w-5 cursor-pointer"
+                  className="w-4 h-4 sm:w-5 cursor-pointer hidden sm:block"
                   onClick={() => {
                     dispatch(removeFromCart(item));
                   }}
