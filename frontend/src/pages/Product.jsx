@@ -4,6 +4,11 @@ import { useParams } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/autoplay';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 const Product = () => {
   const params = useParams();
@@ -39,27 +44,37 @@ const Product = () => {
     <div className="border-t-2 pt-8 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
-          <div className="w-full relative">
-            {/* Главное изображение */}
-            <img className="w-full max- sm:h-[500px] object-cover" src={image} alt="" />
+          {/* Main Image */}
+          <div className="w-full border-b relative">
+            <img
+              className="w-full max-h-[500px] sm:max-h-[500px] object-cover"
+              src={image}
+              alt={product.name}
+            />
           </div>
 
-          <div className=" flex overflow-x-auto max-w-full justify-start w-full bg-white/30  gap-2 p-2">
+          {/* Image Slider */}
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={4}
+            navigation
+            autoplay={{ delay: 3000 }}
+            modules={[Navigation, Autoplay]}
+            onSlideChange={(swiper) => setImage(product.image[swiper.activeIndex])}
+            className="w-full p-2 bg-white/30">
             {product.image.map((img, index) => (
-              <div
-                key={index}
-                className="relative w-[120px] h-[100px] flex-shrink-0 cursor-pointer"
-                onClick={() => setImage(img)}>
+              <SwiperSlide key={index} className="cursor-pointer">
                 <img
                   src={img}
                   alt={product.name}
-                  className={`w-full h-full object-cover ${
-                    image === img ? 'opacity-90' : 'opacity-20'
-                  } hover:opacity-80 transition-opacity duration-300`}
+                  className={`w-full sm:max-h-[100px] object-cover rounded-lg transition-opacity duration-300 ${
+                    image === img ? 'opacity-90' : 'opacity-60'
+                  } hover:opacity-80`}
+                  onClick={() => setImage(img)}
                 />
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
 
         <div className="flex-1 futura">
