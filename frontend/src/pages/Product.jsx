@@ -103,7 +103,7 @@ const Product = () => {
                 <img
                   src={img}
                   alt={product.name}
-                  className={`w-full sm:max-h-[100px] object-cover rounded-lg transition-opacity duration-300 ${
+                  className={`w-full sm:max-h-full object-cover rounded-lg transition-opacity duration-300 ${
                     image === img ? 'opacity-90' : 'opacity-60'
                   } hover:opacity-80`}
                   onClick={() => setImage(img)}
