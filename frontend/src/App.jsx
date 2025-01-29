@@ -7,10 +7,21 @@ import Footer from './components/Footer';
 import Catalog from './pages/Catalog';
 import SearchBar from './components/SearchBar';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   return (
     <div className="max-w-[1920px] mx-auto">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          className: '',
+          style: {
+            fontFamily: 'Futura Light, sans-serif',
+          },
+        }}
+      />
       <ScrollToTop />
       <Navbar />
       <SearchBar />

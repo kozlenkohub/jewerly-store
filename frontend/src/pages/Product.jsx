@@ -10,9 +10,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { Navigation, Autoplay } from 'swiper/modules';
 import RelatedProducts from '../components/RelatedProducts';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/slices/cartSlice';
+import toast from 'react-hot-toast';
 
 const Product = () => {
   const params = useParams();
+  const dispatch = useDispatch();
+
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
@@ -114,7 +119,17 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
+          <button
+            onClick={() => {
+              if (activeSize) {
+                console.log('Item ID:', product._id);
+                console.log('Size:', activeSize);
+                dispatch(addToCart({ product: product._id, size: activeSize }));
+              } else {
+                toast.error('Please select a size.');
+              }
+            }}
+            className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
