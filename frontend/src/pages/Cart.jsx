@@ -4,10 +4,12 @@ import Title from '../components/Title';
 import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
 import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
 import CartTotal from '../components/CartTotal';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const { cartItems } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.product);
 
   const handleIncrement = (item) => {
@@ -26,9 +28,9 @@ const Cart = () => {
 
   return (
     <div className="border-t pt-14 max-w-[1280px] mx-auto px-4">
-      <div className="text-2xl mb-3 futura">
+      <div className="text-2xl mb-3 ">
         <Title text1={'Your'} text2={'Cart'} />
-        <div className="">
+        <div className="futura">
           {cartItems.map((item, index) => {
             return (
               <div
@@ -71,8 +73,12 @@ const Cart = () => {
         <div className="flex justify-end my-8">
           <div className="w-full sm:w-[450px]">
             <CartTotal />
-            <div className="w-full text-center">
-              <button className="bg-mainColor text-white text-sm my-8 px-8 py-3">CHECKOUT</button>
+            <div className="w-full text-center futura">
+              <button
+                onClick={() => navigate('/checkout')}
+                className="bg-mainColor text-white text-sm my-8 px-8 py-3">
+                CHECKOUT
+              </button>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const CartTotal = () => {
         <Title text1={'Cart'} text2={'Total'} />
       </div>
 
-      <div className="flex flex-col gap-2 mt-2 text-sm ">
+      <div className="flex flex-col gap-2 mt-2 text-sm futura ">
         <div className="flex justify-between">
           <p>Subtotal</p>
           <p>
