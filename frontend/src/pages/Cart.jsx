@@ -65,12 +65,12 @@ const Cart = () => {
                           <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
                             {formatPrice(item.price)} {currency}
                           </span>
-                          <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px]">
+                          <span className="tracking-[0.3px] futura-normal  sm:tracking-[1px] text-[16px] sm:text-[17px]">
                             {formatPrice(discountedPrice.toFixed(2))} {currency}
                           </span>
                         </>
                       ) : (
-                        <span>
+                        <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px]">
                           {formatPrice(item.price)} {currency}
                         </span>
                       )}
