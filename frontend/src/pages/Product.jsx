@@ -126,7 +126,7 @@ const Product = () => {
                 console.log('Size:', activeSize);
                 dispatch(addToCart({ product: product._id, size: activeSize }));
               } else {
-                toast.error('Please select a size.');
+                toast.error('Please select a size');
               }
             }}
             className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
