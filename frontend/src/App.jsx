@@ -6,10 +6,12 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Catalog from './pages/Catalog';
 import SearchBar from './components/SearchBar';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 const App = () => {
   return (
     <div className="max-w-[1920px] mx-auto">
+      <ScrollToTop />
       <Navbar />
       <SearchBar />
       <Routes>
