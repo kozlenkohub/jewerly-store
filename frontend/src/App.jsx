@@ -8,6 +8,7 @@ import Catalog from './pages/Catalog';
 import SearchBar from './components/SearchBar';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import { Toaster } from 'react-hot-toast';
+import Cart from './pages/Cart.jsx';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/catalog/*" element={<Catalog />} />
         <Route path="/product/:productId" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </div>
