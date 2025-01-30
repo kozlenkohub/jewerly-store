@@ -45,7 +45,7 @@ const Product = () => {
   if (!product) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <DotLoader size={50} color={'#820a52'} loading={!product} speedMultiplier={0.5} />
+        <DotLoader size={50} color={'#320C30'} loading={!product} speedMultiplier={0.5} />
       </div>
     );
   }
@@ -145,7 +145,12 @@ const Product = () => {
                   {[{ _id: params.productId, metal: product.metal }, ...anotherVariantion].map(
                     (variation, index) => (
                       <button
-                        onClick={() => handleMetalChange(variation._id)}
+                        onClick={() => {
+                          if (variation._id !== params.productId) {
+                            handleMetalChange(variation._id);
+                            setProduct(null);
+                          }
+                        }}
                         key={index}
                         className={`w-10 h-10 aspect-square  border-gray-300 rounded-md flex items-center justify-center ${
                           activeMetal === variation.metal
