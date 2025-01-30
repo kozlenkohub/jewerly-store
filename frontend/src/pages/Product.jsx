@@ -40,7 +40,7 @@ const Product = () => {
   if (!product) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <DotLoader size={50} color={'#4a0c4a'} loading={!product} speedMultiplier={0.5} />
+        <DotLoader size={50} color={'#490d47'} loading={!product} speedMultiplier={0.5} />
       </div>
     );
   }
