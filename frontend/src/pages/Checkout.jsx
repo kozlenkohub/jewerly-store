@@ -67,7 +67,7 @@ const Checkout = () => {
           />
         </div>
         <input
-          type="phone"
+          type="telephone"
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           placeholder="Phone"
         />
