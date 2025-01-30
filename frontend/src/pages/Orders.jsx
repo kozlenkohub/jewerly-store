@@ -74,7 +74,6 @@ const Orders = () => {
           );
         })}
       </div>
-      )}
     </div>
   );
 };
