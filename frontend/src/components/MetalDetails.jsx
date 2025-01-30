@@ -41,7 +41,7 @@ const MetalDetails = ({
             activeMetal === variation.metal ? 'border-mainColor border-[3px] box-border' : ''
           }`}>
           <img
-            className="rounded-md"
+            className="rounded"
             src={metalDetails.find((metal) => metal.label === variation.metal)?.icon}
             alt={variation.metal}
           />
