@@ -149,10 +149,11 @@ const Product = () => {
                         key={index}
                         className={`w-10 h-10 aspect-square  border-gray-300 rounded-md flex items-center justify-center ${
                           activeMetal === variation.metal
-                            ? 'border-mainColor border-[2px] box-border'
+                            ? 'border-mainColor border-[3px] box-border'
                             : ''
                         }`}>
                         <img
+                          className="rounded-md"
                           src={metalDetails.find((metal) => metal.label === variation.metal)?.icon}
                           alt={variation.metal}
                         />
