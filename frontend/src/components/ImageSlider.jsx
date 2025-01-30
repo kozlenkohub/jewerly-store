@@ -16,7 +16,7 @@ const ImageSlider = ({ images, productName }) => {
       <Slider {...settings}>
         {images.map((img, index) => (
           <div key={index}>
-            <img className=" object-contain" src={img} alt={productName} />
+            <img className="w-full object-contain" src={img} alt={productName} />
           </div>
         ))}
       </Slider>
