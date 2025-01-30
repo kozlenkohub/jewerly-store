@@ -4,7 +4,7 @@ import ProductItem from '../components/ProductItem';
 
 const RelatedProducts = ({ related }) => {
   return (
-    <div className="my-24">
+    <div className="mt-8">
       <div className="text-center text-3xl py-2">
         <Title text1={'Related'} text2={'Products'} />
       </div>
