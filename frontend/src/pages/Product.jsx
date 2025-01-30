@@ -179,7 +179,7 @@ const Product = () => {
           </div>
           <button
             onClick={() => {
-              dispatch(addToCart({ ...product, size: activeSize, metal: activeMetal }));
+              dispatch(addToCart({ ...product, size: activeSize }));
             }}
             className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
             ADD TO CART
