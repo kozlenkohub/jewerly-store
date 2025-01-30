@@ -8,23 +8,15 @@ import { toggleSearch } from '../redux/slices/productSlice';
 const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false); // Состояние для меню профиля
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
   const { counter } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleCategoryClick = (categorySlug, hasChildren, event) => {
-    const isTextClick =
-      event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
-
+  const handleCategoryClick = (categorySlug, hasChildren) => {
     if (hasChildren) {
-      if (isTextClick) {
-        navigate(`/catalog/${categorySlug}`);
-        setVisible(false);
-      } else {
-        setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
-      }
+      setActiveCategory((prev) => (prev === categorySlug ? null : categorySlug));
     } else {
       navigate(`/catalog/${categorySlug}`);
       setVisible(false);
@@ -74,7 +66,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             <div className="relative text-mainColor z-50">
               <FaUser
                 className="w-5 h-5 cursor-pointer text-mainColor"
-                onClick={handleProfileClick} // Открываем/закрываем дропдаун
+                onClick={handleProfileClick}
               />
               {isProfileMenuOpen && (
                 <div className="absolute right-0 bg-mainColor text-white w-36 rounded shadow-lg z-50">
@@ -83,7 +75,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       className="cursor-pointer hover:text-gray-300"
                       onClick={() => {
                         setVisible(false);
-                        closeProfileMenu;
+                        closeProfileMenu();
                       }}>
                       My Profile
                     </p>
@@ -100,8 +92,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       className="cursor-pointer hover:text-gray-300"
                       onClick={() => {
                         setVisible(false);
-
-                        closeProfileMenu;
+                        closeProfileMenu();
                       }}>
                       LogOut
                     </p>
@@ -141,14 +132,12 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           </div>
 
           {isDropdownVisible && (
-            <div className="pl-8 z-40 bg-white shadow-md">
+            <div className="pl-8 z-40 bg-white shadow-lg">
               {categories.map((category) => (
-                <div key={category._id} className="flex flex-col">
+                <div key={category._id} className="flex flex-col futura">
                   <div
-                    onClick={(event) =>
-                      handleCategoryClick(category.slug, category.children.length > 0, event)
-                    }
-                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    onClick={() => handleCategoryClick(category.slug, category.children.length > 0)}
+                    className="flex items-center justify-between px-6 py-4 text-gray-700 hover:bg-gray-100 cursor-pointer">
                     <div className="flex items-center">
                       <img src={category.icon} alt={category.name} className="w-6 h-6 mr-2" />
                       <span className="category-name">{category.name}</span>
@@ -161,6 +150,32 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       />
                     )}
                   </div>
+                  {category.children && activeCategory === category.slug && (
+                    <div className="pl-8">
+                      {category.children.map((subCategory) => (
+                        <NavLink
+                          key={subCategory._id}
+                          to={`/catalog/${category.slug}/${subCategory.slug}`}
+                          className={({ isActive }) =>
+                            `flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100  ${
+                              location.pathname === `/catalog/${category.slug}/${subCategory.slug}`
+                                ? 'bg-gray-200'
+                                : ''
+                            }`
+                          }
+                          onClick={() => setVisible(false)}>
+                          <div className="flex items-center">
+                            <img
+                              src={subCategory.icon}
+                              alt={subCategory.name}
+                              className="w-6 h-6 mr-2"
+                            />
+                            {subCategory.name}
+                          </div>
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
