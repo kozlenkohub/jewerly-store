@@ -11,6 +11,7 @@ import Description from '../components/Description';
 import MetalDetails from '../components/MetalDetails';
 import SelectSize from '../components/SelectSize';
 import ProductDetails from '../components/ProductDetails';
+import ImageSlider from '../components/ImageSlider';
 
 const Product = () => {
   const params = useParams();
@@ -59,28 +60,7 @@ const Product = () => {
     <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
-          {/* Main Image */}
-          <div className="w-full relative">
-            <img
-              className="w-full  sm:max-h-[500px] object-contain"
-              src={image}
-              alt={product.name}
-            />
-          </div>
-          {/* Image Thumbnails */}
-          {/* <div className="flex gap-2 mt-2 overflow-x-auto">
-            {product.image.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={product.name}
-                className={`w-20 h-20 object-cover rounded-lg cursor-pointer transition-opacity duration-300 ${
-                  image === img ? 'opacity-90' : 'opacity-60'
-                } hover:opacity-80`}
-                onClick={() => setImage(img)}
-              />
-            ))}
-          </div> */}
+          <ImageSlider images={product.image} productName={product.name} />
         </div>
 
         <div className="flex-1 futura">
