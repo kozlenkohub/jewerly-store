@@ -128,7 +128,7 @@ const Catalog = () => {
 
           {isLoading ? (
             <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%]  ">
-              <DotLoader size={50} color={'#6a176a'} loading={isLoading} speedMultiplier={0.5} />
+              <DotLoader size={50} color={'#1F3A63'} loading={isLoading} speedMultiplier={0.5} />
             </div>
           ) : (
             <div
