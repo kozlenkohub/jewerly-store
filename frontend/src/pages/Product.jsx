@@ -62,7 +62,7 @@ const Product = () => {
           {/* Main Image */}
           <div className="w-full relative">
             <img
-              className="w-full min-h-[500px] sm:max-h-[500px] object-contain"
+              className="w-full  sm:max-h-[500px] object-contain"
               src={image}
               alt={product.name}
             />
