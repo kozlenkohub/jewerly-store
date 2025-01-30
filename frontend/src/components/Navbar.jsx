@@ -30,9 +30,11 @@ const Navbar = () => {
 
   const isHomePage = location.pathname === '/';
   const backgroundOpacity = isHomePage ? Math.min(scrollY / 300, 1) : 1;
-  const textColor = isHomePage && scrollY <= 150 ? 'text-white' : 'text-gray-700';
+  const textColor = isHomePage && scrollY <= 150 ? 'text-white' : 'text-mainColor';
   const boxShadow = scrollY > 150 ? 'shadow-md' : '';
   const iconColor = isHomePage && scrollY <= 150 ? 'text-white' : 'text-mainColor';
+  const bgColor = isHomePage && scrollY <= 150 ? 'bg-white' : 'bg-mainColor';
+  const textColor2 = isHomePage && scrollY <= 150 ? 'text-mainColor' : 'text-white';
 
   return (
     <>
@@ -46,7 +48,7 @@ const Navbar = () => {
             </Link>
             <NavbarLinks textColor={textColor} categories={categories} />
             <div className="flex items-center gap-6">
-              <NavbarIcons iconColor={iconColor} />
+              <NavbarIcons iconColor={iconColor} bgColor={bgColor} textColor2={textColor2} />
               <FaBars
                 onClick={() => setVisible(true)}
                 className={`w-5 h-5 cursor-pointer sm:hidden transition-colors duration-300 ${iconColor}`}
