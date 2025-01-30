@@ -71,7 +71,14 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
                 <div className="flex flex-col z-50 gap-2 w-36 py-3 px-5 bg-mainColor text-white rounded">
                   <p className="cursor-pointer hover:text-black">My Profile</p>
-                  <p className="cursor-pointer hover:text-black">Orders</p>
+                  <p
+                    onClick={() => {
+                      navigate('/orders');
+                      setVisible(false);
+                    }}
+                    className="cursor-pointer hover:text-black">
+                    Orders
+                  </p>
                   <p className="cursor-pointer hover:text-black">LogOut</p>
                 </div>
               </div>
