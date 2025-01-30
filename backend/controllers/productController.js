@@ -28,7 +28,13 @@ export const getProducts = async (req, res) => {
     }
 
     if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
-    if (carats) filter.carats = { $in: carats }; // Используем $in для массива карат
+    if (carats) {
+      const caratsRanges = Array.isArray(carats) ? carats : [carats];
+      filter.$or = caratsRanges.map((range) => {
+        const [minCarats, maxCarats] = range.split('-').map(Number);
+        return { carats: { $gte: minCarats, $lte: maxCarats } };
+      });
+    }
     if (paramCategory) {
       categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id name');
       if (!categoryDoc) {
