@@ -61,7 +61,7 @@ const Checkout = () => {
             placeholder="City"
           />
           <input
-            type="number"
+            type="text"
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             placeholder="Zip code"
           />
