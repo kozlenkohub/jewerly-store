@@ -4,11 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { FaStar, FaRegStar, FaCheckCircle, FaTruck, FaUndo } from 'react-icons/fa';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/autoplay';
-import { Navigation, Autoplay } from 'swiper/modules';
 import RelatedProducts from '../components/RelatedProducts';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/slices/cartSlice';
@@ -82,35 +77,27 @@ const Product = () => {
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
           {/* Main Image */}
-          <div className="w-full  relative">
+          <div className="w-full relative">
             <img
               className="w-full max-h-[500px] sm:max-h-[500px] object-cover"
               src={image}
               alt={product.name}
             />
           </div>
-
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={4}
-            navigation
-            autoplay={{ delay: 3000 }}
-            modules={[Navigation, Autoplay]}
-            onSlideChange={(swiper) => setImage(product.image[swiper.activeIndex])}
-            className="w-full p-2 bg-white/30">
+          {/* Image Thumbnails */}
+          <div className="flex gap-2 mt-2 overflow-x-auto">
             {product.image.map((img, index) => (
-              <SwiperSlide key={index} className="cursor-pointer">
-                <img
-                  src={img}
-                  alt={product.name}
-                  className={`w-full sm:max-h-full object-cover rounded-lg transition-opacity duration-300 ${
-                    image === img ? 'opacity-90' : 'opacity-60'
-                  } hover:opacity-80`}
-                  onClick={() => setImage(img)}
-                />
-              </SwiperSlide>
+              <img
+                key={index}
+                src={img}
+                alt={product.name}
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer transition-opacity duration-300 ${
+                  image === img ? 'opacity-90' : 'opacity-60'
+                } hover:opacity-80`}
+                onClick={() => setImage(img)}
+              />
             ))}
-          </Swiper>
+          </div>
         </div>
 
         <div className="flex-1 futura">
@@ -136,7 +123,7 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
+          {/* <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p> */}
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>
@@ -217,6 +204,7 @@ const Product = () => {
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem</p>
         </div>
       </div>
+      <p className="mt-5 text-gray-500 md:w-4/5 futura">{product.description}</p>
       <RelatedProducts related={related} />
     </div>
   );
