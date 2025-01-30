@@ -8,27 +8,24 @@ import { toggleSearch } from '../redux/slices/productSlice';
 const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false); // Состояние для меню профиля
   const { counter } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
   const handleCategoryClick = (categorySlug, hasChildren, event) => {
-    // Проверка на клик по тексту
     const isTextClick =
       event.target.tagName === 'DIV' && event.target.classList.contains('category-name');
 
     if (hasChildren) {
       if (isTextClick) {
-        // Если клик по тексту, переходим на категорию
         navigate(`/catalog/${categorySlug}`);
         setVisible(false);
       } else {
-        // Если клик по другому элементу, открываем/закрываем выпадающий список
         setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
       }
     } else {
-      // Для категорий без дочерних элементов, всегда переходим
       navigate(`/catalog/${categorySlug}`);
       setVisible(false);
     }
@@ -36,6 +33,14 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
 
   const handleCatalogClick = () => {
     setDropdownVisible(!isDropdownVisible);
+  };
+
+  const handleProfileClick = () => {
+    setProfileMenuOpen(!isProfileMenuOpen);
+  };
+
+  const closeProfileMenu = () => {
+    setProfileMenuOpen(false);
   };
 
   const handleSearchClick = () => {
@@ -66,22 +71,32 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               className="w-5 h-5 cursor-pointer text-mainColor"
               onClick={handleSearchClick}
             />
-            <div className="group relative text-mainColor">
-              <FaUser className="w-5 h-5 cursor-pointer text-mainColor" />
-              <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-2">
-                <div className="flex flex-col z-50 gap-2 w-36 py-3 px-5 bg-mainColor text-white rounded">
-                  <p className="cursor-pointer hover:text-black">My Profile</p>
-                  <p
-                    onClick={() => {
-                      navigate('/orders');
-                      setVisible(false);
-                    }}
-                    className="cursor-pointer hover:text-black">
-                    Orders
-                  </p>
-                  <p className="cursor-pointer hover:text-black">LogOut</p>
+            <div className="relative text-mainColor z-50">
+              <FaUser
+                className="w-5 h-5 cursor-pointer text-mainColor"
+                onClick={handleProfileClick} // Открываем/закрываем дропдаун
+              />
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 bg-mainColor text-white w-36 rounded shadow-lg z-50">
+                  <div className="flex flex-col gap-2 py-3 px-5">
+                    <p className="cursor-pointer hover:text-black" onClick={closeProfileMenu}>
+                      My Profile
+                    </p>
+                    <p
+                      onClick={() => {
+                        navigate('/orders');
+                        setVisible(false);
+                        closeProfileMenu();
+                      }}
+                      className="cursor-pointer hover:text-black">
+                      Orders
+                    </p>
+                    <p className="cursor-pointer hover:text-black" onClick={closeProfileMenu}>
+                      LogOut
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <Link to="/cart" onClick={() => setVisible(false)} className="relative text-mainColor">
               <FaShoppingCart className="w-5 h-5 text-mainColor" />
@@ -102,7 +117,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
         <div className="flex flex-col">
           <div
             onClick={handleCatalogClick}
-            className={`relative flex items-center justify-center p-3 cursor-pointer ${
+            className={`relative flex items-center justify-center p-3 cursor-pointer z-40 ${
               isCatalogPage ? 'bg-mainColor text-white' : ''
             }`}>
             <p className="relative">Catalog</p>
@@ -115,15 +130,14 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           </div>
 
           {isDropdownVisible && (
-            <div className="pl-8">
+            <div className="pl-8 z-40 bg-white shadow-md">
               {categories.map((category) => (
                 <div key={category._id} className="flex flex-col">
                   <div
                     onClick={(event) =>
                       handleCategoryClick(category.slug, category.children.length > 0, event)
                     }
-                    className={`flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer futura
-                    }`}>
+                    className="flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-gray-100 cursor-pointer">
                     <div className="flex items-center">
                       <img src={category.icon} alt={category.name} className="w-6 h-6 mr-2" />
                       <span className="category-name">{category.name}</span>
@@ -136,32 +150,6 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       />
                     )}
                   </div>
-                  {category.children && activeCategory === category.slug && (
-                    <div className="pl-8">
-                      {category.children.map((subCategory) => (
-                        <NavLink
-                          key={subCategory._id}
-                          to={`/catalog/${category.slug}/${subCategory.slug}`}
-                          className={({ isActive }) =>
-                            `flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 futura ${
-                              location.pathname === `/catalog/${category.slug}/${subCategory.slug}`
-                                ? 'bg-gray-200'
-                                : ''
-                            }`
-                          }
-                          onClick={() => setVisible(false)}>
-                          <div className="flex items-center">
-                            <img
-                              src={subCategory.icon}
-                              alt={subCategory.name}
-                              className="w-6 h-6 mr-2"
-                            />
-                            {subCategory.name}
-                          </div>
-                        </NavLink>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
