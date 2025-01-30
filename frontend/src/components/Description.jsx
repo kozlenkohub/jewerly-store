@@ -1,29 +1,17 @@
 import React from 'react';
 
-const Description = () => {
-  const productDetails = {
-    id: '329',
-    carats: 0.57,
-    clarity: 'SI1',
-    purity: 750,
-    color: 'H',
-    weight: 2.3,
-    metal: 'White Gold',
-    cutForm: 'Princess',
-    style: 'Solitaire',
-  };
-
+const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weight, carats }) => {
   const detailsArray = [
-    { label: 'ID', value: productDetails.id },
-    { label: 'Ring Style', value: productDetails.style },
-    { label: 'Cut Form', value: productDetails.cutForm },
-    { label: 'Metal', value: productDetails.metal },
-    { label: 'Color', value: productDetails.color },
-    { label: 'Purity', value: productDetails.purity },
-    { label: 'Clarity', value: productDetails.clarity },
-    { label: 'Weight', value: productDetails.weight },
-    { label: 'Diamond', value: `${productDetails.carats} ct` },
-  ];
+    { label: 'ID', value: _id.slice(-6) },
+    { label: 'Ring Style', value: style },
+    { label: 'Cut Form', value: cutForm },
+    { label: 'Metal', value: metal },
+    { label: 'Color', value: color },
+    { label: 'Purity', value: purity },
+    { label: 'Clarity', value: clarity },
+    { label: 'Weight', value: weight },
+    { label: 'Diamond', value: carats ? `${carats} ct` : undefined },
+  ].filter((detail) => detail.value !== undefined);
 
   return (
     <div className="flex flex-col gap-4 border px-6 text-sm text-gray-500 futura">

@@ -96,7 +96,7 @@ export const addProduct = async (req, res) => {
 
 const products = [
   {
-    name: 'Серьги с бриллиантами в огранке «Круг» из белого золота',
+    name: 'Серьги с бриллиантами в огранке «Круг» из желтого золота',
     description:
       'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
     price: 160000,
@@ -110,8 +110,38 @@ const products = [
     size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
     discount: 20,
     bestseller: true,
+    metal: 'yellow gold',
+    cutForm: 'round',
+    style: 'solitaire',
+    clarity: 'SI1',
+    purity: 750,
+    color: 'H',
+    carats: 0.57,
+    weight: 2.3,
+  },
+  {
+    name: 'Серьги с бриллиантами в огранке «Круг» из красного золота',
+    description:
+      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    price: 160000,
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam cumque doloribus voluptas assumenda corrupti dignissimos laudantium numquam et. Velit ex recusandae quaerat ducimus officia rerum, neque ratione repudiandae porro. Facere, optio unde velit assumenda quidem numquam. Ipsum voluptatibus ad quasi suscipit sequi consectetur commodi numquam nulla voluptates iste odio ',
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/2ng95apsen1348-1000x1000.webp',
+    ],
+    category: '6797b7419efe656b1d2bbd8e',
+    collection: 'kiev',
+    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
+    discount: 20,
+    bestseller: true,
     metal: 'rose gold',
     cutForm: 'round',
+    style: 'solitaire',
+    clarity: 'SI1',
+    purity: 750,
+    color: 'H',
+    carats: 0.57,
+    weight: 2.3,
   },
 ];
 
