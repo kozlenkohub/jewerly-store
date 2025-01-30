@@ -89,7 +89,7 @@ const Catalog = () => {
   ];
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4">
+    <div className="max-w-[1280px] mx-auto px-4 ">
       <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-20' : ''}`}>
         <Breadcrumb categoryPath={categoryPath} />
       </div>
@@ -127,12 +127,12 @@ const Catalog = () => {
           </div>
 
           {isLoading ? (
-            <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%] ">
+            <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%]  ">
               <DotLoader size={50} color={'#320C30'} loading={isLoading} speedMultiplier={0.5} />
             </div>
           ) : (
             <div
-              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ${
+              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${
                 isLoading ? 'px-4' : ''
               }`}>
               {products.map((item, index) => (
