@@ -73,7 +73,7 @@ const Product = () => {
   };
 
   return (
-    <div className="border-t-2 pt-2 sm:pt-8 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
+    <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
         <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
           {/* Main Image */}
