@@ -7,6 +7,7 @@ import { FaStar, FaRegStar, FaCheckCircle, FaTruck, FaUndo } from 'react-icons/f
 import RelatedProducts from '../components/RelatedProducts';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/slices/cartSlice';
+import Description from '../components/Description';
 
 const Product = () => {
   const params = useParams();
@@ -193,16 +194,7 @@ const Product = () => {
           <b className="border px-5 py-3 text-sm">Description</b>
           <p className="border px-5 py-3 text-sm">Reviews (122)</p>
         </div>
-        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500 futura">
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem quo repudiandae
-            cupiditate! Perferendis unde dicta ad minima, rerum nobis necessitatibus. Lorem ipsum
-            dolor, sit amet consectetur adipisicing elit. Repellat nostrum consequatur perspiciatis,
-            doloribus ipsa quibusdam est harum veniam illum, nulla totam deleniti asperiores. Nulla,
-            facere inventore et ipsum dolorum dolorem!
-          </p>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem</p>
-        </div>
+        <Description />
       </div>
       <RelatedProducts related={related} />
     </div>

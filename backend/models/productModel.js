@@ -38,9 +38,27 @@ const productSchema = new mongoose.Schema(
       ],
       required: true,
     },
-    carats: {
+    color: {
       type: String,
-      enum: ['0.3 - 0.5', '0.51 - 0.6', '0.61 - 0.7', '0.71 - 3'],
+      required: false,
+    },
+    weight: {
+      type: Number,
+      required: true,
+    },
+    carats: {
+      type: Number,
+
+      required: false,
+    },
+    clarity: {
+      type: String,
+      enum: ['IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2', 'I1', 'I2', 'I3'],
+      required: false,
+    },
+    purity: {
+      type: Number,
+      enum: [750, 585, 375, 916, 999],
       required: false,
     },
     collection: {
