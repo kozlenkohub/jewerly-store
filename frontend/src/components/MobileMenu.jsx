@@ -79,7 +79,12 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               {isProfileMenuOpen && (
                 <div className="absolute right-0 bg-mainColor text-white w-36 rounded shadow-lg z-50">
                   <div className="flex flex-col gap-2 py-3 px-5">
-                    <p className="cursor-pointer hover:text-black" onClick={closeProfileMenu}>
+                    <p
+                      className="cursor-pointer hover:text-gray-300"
+                      onClick={() => {
+                        setVisible(false);
+                        closeProfileMenu;
+                      }}>
                       My Profile
                     </p>
                     <p
@@ -88,10 +93,16 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                         setVisible(false);
                         closeProfileMenu();
                       }}
-                      className="cursor-pointer hover:text-black">
+                      className="cursor-pointer hover:text-gray-300">
                       Orders
                     </p>
-                    <p className="cursor-pointer hover:text-black" onClick={closeProfileMenu}>
+                    <p
+                      className="cursor-pointer hover:text-gray-300"
+                      onClick={() => {
+                        setVisible(false);
+
+                        closeProfileMenu;
+                      }}>
                       LogOut
                     </p>
                   </div>
