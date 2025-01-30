@@ -3,11 +3,14 @@ import axios from '../config/axiosInstance';
 import { useParams, useNavigate } from 'react-router-dom';
 import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
-import { FaStar, FaRegStar, FaCheckCircle, FaTruck, FaUndo } from 'react-icons/fa';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 import RelatedProducts from '../components/RelatedProducts';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/slices/cartSlice';
 import Description from '../components/Description';
+import MetalDetails from '../components/MetalDetails';
+import SelectSize from '../components/SelectSize';
+import ProductDetails from '../components/ProductDetails';
 
 const Product = () => {
   const params = useParams();
@@ -48,27 +51,6 @@ const Product = () => {
 
   const discountedPrice = product.price - (product.price * product.discount) / 100;
 
-  const productDetails = [
-    { icon: FaCheckCircle, text: '100% original project' },
-    { icon: FaTruck, text: 'Cash on delivery is available on this product.' },
-    { icon: FaUndo, text: 'Easy return policy within 7 days.' },
-  ];
-
-  const metalDetails = [
-    {
-      label: 'yellow gold',
-      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/zheltoe-zoloto.png',
-    },
-    {
-      label: 'rose gold',
-      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krasnoe-zoloto.png',
-    },
-    {
-      label: 'white gold',
-      icon: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/beloe-zoloto.png',
-    },
-  ];
-
   const handleMetalChange = (metalId) => {
     navigate(`/product/${metalId}`);
   };
@@ -80,13 +62,13 @@ const Product = () => {
           {/* Main Image */}
           <div className="w-full relative">
             <img
-              className="w-full max-h-[500px] sm:max-h-[500px] object-cover"
+              className="w-full min-h-[500px] sm:max-h-[500px] object-contain"
               src={image}
               alt={product.name}
             />
           </div>
           {/* Image Thumbnails */}
-          <div className="flex gap-2 mt-2 overflow-x-auto">
+          {/* <div className="flex gap-2 mt-2 overflow-x-auto">
             {product.image.map((img, index) => (
               <img
                 key={index}
@@ -98,7 +80,7 @@ const Product = () => {
                 onClick={() => setImage(img)}
               />
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="flex-1 futura">
@@ -129,46 +111,22 @@ const Product = () => {
             {anotherVariantion.length > 0 && (
               <>
                 <p>Select Metal</p>
-                <div className="flex gap-2 overflow-x-auto whitespace-nowrap">
-                  {[{ _id: params.productId, metal: product.metal }, ...anotherVariantion].map(
-                    (variation, index) => (
-                      <button
-                        onClick={() => {
-                          if (variation._id !== params.productId) {
-                            handleMetalChange(variation._id);
-                            setProduct(null);
-                          }
-                        }}
-                        key={index}
-                        className={`w-10 h-10 aspect-square  border-gray-300 rounded-md flex items-center justify-center ${
-                          activeMetal === variation.metal
-                            ? 'border-mainColor border-[3px] box-border'
-                            : ''
-                        }`}>
-                        <img
-                          className="rounded-md"
-                          src={metalDetails.find((metal) => metal.label === variation.metal)?.icon}
-                          alt={variation.metal}
-                        />
-                      </button>
-                    ),
-                  )}
-                </div>
+                <MetalDetails
+                  productId={params.productId}
+                  product={product}
+                  anotherVariantion={anotherVariantion}
+                  activeMetal={activeMetal}
+                  handleMetalChange={handleMetalChange}
+                  setProduct={setProduct}
+                />
               </>
             )}
             <p>Select Size</p>
-            <div className="flex gap-2 overflow-x-auto whitespace-nowrap ">
-              {product.size.map((size, index) => (
-                <button
-                  onClick={() => (activeSize === size ? setActiveSize(null) : setActiveSize(size))}
-                  key={index}
-                  className={`w-10 h-10 aspect-square border border-gray-300 rounded-md flex items-center justify-center ${
-                    activeSize === size ? 'bg-mainColor text-white' : ''
-                  }`}>
-                  {size}
-                </button>
-              ))}
-            </div>
+            <SelectSize
+              sizes={product.size}
+              activeSize={activeSize}
+              setActiveSize={setActiveSize}
+            />
           </div>
           <button
             onClick={() => {
@@ -179,12 +137,7 @@ const Product = () => {
           </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            {productDetails.map((detail, index) => (
-              <p key={index} className="flex items-center gap-2">
-                <detail.icon className="inline" />
-                {detail.text}
-              </p>
-            ))}
+            <ProductDetails />
           </div>
         </div>
       </div>
