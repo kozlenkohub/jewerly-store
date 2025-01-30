@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [paymentMethod, setPaymentMethod] = useState('cash');
 
   const paymentMethods = [
     {
