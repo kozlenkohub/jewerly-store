@@ -123,7 +123,7 @@ const Product = () => {
               </>
             )}
           </p>
-          {/* <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p> */}
+          <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>
@@ -204,7 +204,6 @@ const Product = () => {
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem</p>
         </div>
       </div>
-      <p className="mt-5 text-gray-500 md:w-4/5 futura">{product.description}</p>
       <RelatedProducts related={related} />
     </div>
   );
