@@ -22,8 +22,8 @@ const Product = () => {
   const [related, setRelated] = useState([]);
   const [anotherVariantion, setAnotherVariantion] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
-  const [image, setImage] = useState(0);
   const [activeMetal, setActiveMetal] = useState(null);
+  const [mainImage, setMainImage] = useState(null);
   const { currency } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Product = () => {
         setProduct(data['product']);
         setRelated(data['relatedProducts']);
         setAnotherVariantion(data['anotherVariation']);
-        setImage(data['product'].image[0]);
+        setMainImage(data['product'].image[0]);
         setActiveMetal(data['product'].metal || data['anotherVariation'][0]?.metal || null);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -59,8 +59,28 @@ const Product = () => {
   return (
     <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
       <div className="flex gap-12 flex-col sm:flex-row">
-        <div className="flex-1 flex flex-col gap-3 sm:flex-col relative">
+        <div className="flex-1 flex flex-col gap-3 relative sm:hidden">
           <ImageSlider images={product.image} productName={product.name} />
+        </div>
+        <div className="hidden sm:flex flex-1 flex-col gap-3 ">
+          <div className="relative">
+            <img src={mainImage} alt={product.name} className="w-full h-auto object-cover" />
+            <div className="absolute  left-[25%]  p-2 flex w-[20%] gap-2 bg-opacity-50">
+              {product.image.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`${product.name} ${index + 1}`}
+                  className={`w-[50%] object-cover cursor-pointer border-2 transition-all duration-300 ${
+                    mainImage === img
+                      ? 'border-mainColor/40 scale-110' // добавление выделения для активного изображения
+                      : 'opacity-50 hover:opacity-75 hover:scale-105'
+                  }`}
+                  onClick={() => setMainImage(img)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="flex-1 futura">
