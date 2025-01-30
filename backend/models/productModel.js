@@ -38,6 +38,11 @@ const productSchema = new mongoose.Schema(
       ],
       required: true,
     },
+    style: {
+      type: String,
+      enum: ['solitaire', 'halo', 'three-stone', 'vintage', 'cluster', 'sidestone'],
+      required: false,
+    },
     color: {
       type: String,
       required: false,
