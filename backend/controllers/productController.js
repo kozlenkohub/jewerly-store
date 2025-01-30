@@ -110,7 +110,7 @@ const products = [
     size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
     discount: 20,
     bestseller: true,
-    metal: 'yellow gold',
+    metal: 'rose gold',
     cutForm: 'round',
   },
 ];
