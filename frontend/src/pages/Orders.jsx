@@ -1,6 +1,7 @@
 import React from 'react';
 import Title from '../components/Title';
 import { useSelector } from 'react-redux';
+import EmptyOrders from '../components/EmptyOrders';
 
 const Orders = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -14,7 +15,9 @@ const Orders = () => {
       .replace(/\.00$/, '');
   };
 
-  return (
+  return cartItems.length === 0 ? (
+    <EmptyOrders />
+  ) : (
     <div className="border-t pt-16 max-w-[1280px] mx-auto px-4">
       <div className="text-2xl">
         <Title text1="Your" text2="Orders" />
@@ -71,6 +74,7 @@ const Orders = () => {
           );
         })}
       </div>
+      )}
     </div>
   );
 };
