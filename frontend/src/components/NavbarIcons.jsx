@@ -30,7 +30,9 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         <FaUser className={`w-5 h-5 cursor-pointer ${iconColor}`} />
         <div className="group-hover:block hidden absolute dropdown-menu z-50 right-0 pt-2">
           <div className={`flex flex-col gap-2 w-36 py-3 px-5 ${bgColor} ${textColor2} rounded`}>
-            <p className="cursor-pointer hover:text-gray-500 ">My Profile</p>
+            <Link to="/login" className="cursor-pointer hover:text-gray-500 ">
+              My Profile
+            </Link>
             <p
               onClick={() => {
                 navigate('/orders');

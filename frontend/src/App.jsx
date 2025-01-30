@@ -8,9 +8,11 @@ import Catalog from './pages/Catalog';
 import SearchBar from './components/SearchBar';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import { Toaster } from 'react-hot-toast';
-import Cart from './pages/Cart.jsx';
-import Checkout from './pages/Checkout.jsx';
-import Orders from './pages/Orders.jsx';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
+import Login from './pages/Login';
+import About from './pages/About';
 
 const App = () => {
   return (
@@ -34,7 +36,19 @@ const App = () => {
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/about" element={<About />} />
         <Route path="/orders" element={<Orders />} />
+        {/* login */}
+        <Route path="/login" element={<Login />} />
+        {/* register */}
+        {/* forgot-password */}
+        {/* reset-password */}
+        {/* profile */}
+        {/* contact */}
+        {/* about */}
+        {/* terms */}
+        {/* privacy */}
+        {/* 404 */}
       </Routes>
       <Footer />
     </div>
