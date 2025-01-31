@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FaBoxOpen } from 'react-icons/fa';
 import Title from '../components/Title';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
@@ -9,6 +10,7 @@ const Orders = () => {
   const dispatch = useDispatch();
   const { orders, isLoadingOrder, status } = useSelector((state) => state.order);
   const { currency } = useSelector((state) => state.product);
+  const [openOrderIndex, setOpenOrderIndex] = useState(null);
 
   useEffect(() => {
     dispatch(fetchOrders());
@@ -20,6 +22,10 @@ const Orders = () => {
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
       .replace(/\.00$/, '');
+  };
+
+  const toggleOrder = (index) => {
+    setOpenOrderIndex(openOrderIndex === index ? null : index);
   };
 
   if (isLoadingOrder || status === 'loading') {
@@ -39,67 +45,77 @@ const Orders = () => {
         {orders.map((order, index) => (
           <div className="border-b-4" key={index}>
             <div
-              className={`text-xl ${index !== 0 ? 'mt-4' : ''} text-center font-bold mb-4 forum`}>
+              className={`text-xl ${
+                index !== 0 ? 'mt-4' : ''
+              } text-center font-bold mb-4 forum flex items-center justify-center cursor-pointer`}
+              onClick={() => toggleOrder(index)}>
+              <FaBoxOpen className="mr-2" />
               Order {order._id.slice(-4)}
+              <div className="flex items-center gap-2 ml-4 futura">
+                <div className="w-2 h-2 rounded-full bg-mainColor"></div>
+                <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
+              </div>
             </div>
 
-            {order.orderItems &&
-              order.orderItems.map((item, itemIndex) => {
-                const discountedPrice = item.discount
-                  ? item.price - (item.price * item.discount) / 100
-                  : item.price;
+            {openOrderIndex === index && (
+              <div>
+                {order.orderItems &&
+                  order.orderItems.map((item, itemIndex) => {
+                    const discountedPrice = item.discount
+                      ? item.price - (item.price * item.discount) / 100
+                      : item.price;
 
-                return (
-                  <div
-                    key={itemIndex}
-                    className="py-4 border-t text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_1fr] items-center gap-4 futura text-sm sm:text-base">
-                    <div className="flex flex-col sm:flex-row items-start gap-4 ">
-                      <div className="relative w-32 sm:w-20">
-                        <img
-                          className="object-cover w-full h-auto rounded"
-                          src={item.image[0]}
-                          alt=""
-                        />
-                        <div className="absolute bottom-0 w-full text-center bg-black bg-opacity-50 text-white text-xs px-1 py-1 truncate">
-                          Size: {item.size}
+                    return (
+                      <div
+                        key={itemIndex}
+                        className="py-4 border-t text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_1fr] items-center gap-4 futura text-sm sm:text-base">
+                        <div className="flex flex-col sm:flex-row items-start gap-4 ">
+                          <div className="relative w-32 sm:w-20">
+                            <img
+                              className="object-cover w-full h-auto rounded"
+                              src={item.image[0]}
+                              alt=""
+                            />
+                            <div className="absolute bottom-0 w-full text-center bg-black bg-opacity-50 text-white text-xs px-1 py-1 truncate">
+                              Size: {item.size}
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-sm sm:text-lg font-medium break-words">
+                              {item.name}
+                            </p>
+                            <div className="flex items-center mt-2">
+                              {item.discount ? (
+                                <>
+                                  <span className="line-through text-xs sm:text-sm text-gray-500 mr-2">
+                                    {formatPrice(item.price)} {currency}
+                                  </span>
+                                  <span className="text-mainColor text-sm sm:text-base">
+                                    {formatPrice(discountedPrice.toFixed(2))} {currency}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-sm sm:text-base">
+                                  {formatPrice(item.price)} {currency}
+                                </span>
+                              )}
+                            </div>
+                            <p className="mt-2 text-gray-400">
+                              Date: {new Date(order.dateOrdered).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <span>Quantity: {item.quantity}</span>
                         </div>
                       </div>
-                      <div>
-                        <p className="text-sm sm:text-lg font-medium break-words">{item.name}</p>
-                        <div className="flex items-center mt-2">
-                          {item.discount ? (
-                            <>
-                              <span className="line-through text-xs sm:text-sm text-gray-500 mr-2">
-                                {formatPrice(item.price)} {currency}
-                              </span>
-                              <span className="text-mainColor text-sm sm:text-base">
-                                {formatPrice(discountedPrice.toFixed(2))} {currency}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-sm sm:text-base">
-                              {formatPrice(item.price)} {currency}
-                            </span>
-                          )}
-                        </div>
-                        <p className="mt-2 text-gray-400">
-                          Date: {new Date(order.dateOrdered).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <span>Quantity: {item.quantity}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-mainColor"></div>
-                      <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            <div className="mt-4 text-center futura text-xl font-medium">
-              Total Price: {formatPrice(order.totalPrice)} {currency}
-            </div>
+                    );
+                  })}
+                <div className="mt-4 text-center futura text-xl py-4  font-medium">
+                  Total Price: {formatPrice(order.totalPrice)} {currency}
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
