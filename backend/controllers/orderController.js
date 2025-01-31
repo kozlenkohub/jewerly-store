@@ -28,14 +28,16 @@ const validateOrderData = (data) => {
   return errors;
 };
 
-const calculateTotalPrice = async (orderItems) => {
+const calculateTotalPrice = async (orderItems, shippingFee) => {
   let totalPrice = 0;
   for (const item of orderItems) {
     const product = await Product.findById(item._id);
     if (product) {
       const discount = product.discount || 0;
       const price = product.price || 0;
+
       totalPrice += (price - (price * discount) / 100) * item.quantity;
+      totalPrice += shippingFee;
     }
   }
   return totalPrice;
@@ -43,7 +45,8 @@ const calculateTotalPrice = async (orderItems) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const { orderItems, shippingFields, paymentMethod, payment, status, userId } = req.body;
+    const { orderItems, shippingFields, shippingFee, paymentMethod, payment, status, userId } =
+      req.body;
     console.log(orderItems);
 
     const errors = validateOrderData(req.body);
@@ -51,7 +54,7 @@ export const placeOrder = async (req, res) => {
       return res.status(400).json({ message: 'Please enter all fields', errors });
     }
 
-    const totalPrice = await calculateTotalPrice(orderItems);
+    const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
 
     const order = new Order({
       orderItems,

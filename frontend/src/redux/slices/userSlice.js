@@ -82,7 +82,6 @@ export const updatePassword = createAsyncThunk(
   async ({ password, newPassword }, { rejectWithValue }) => {
     try {
       if (newPassword.length < 8) {
-        toast.error('New password must be at least 8 characters');
         return rejectWithValue({ message: 'New password must be at least 8 characters' });
       }
       console.log('Sending request to update password:', { password, newPassword }); // Log the request data

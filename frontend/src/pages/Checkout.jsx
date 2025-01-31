@@ -14,6 +14,7 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const orderItems = useSelector((state) => state.cart.cartItems);
+  const { delivery_fee: shippingFee } = useSelector((state) => state.cart);
   const { isLoadingOrder } = useSelector((state) => state.order);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [formData, setFormData] = useState({
@@ -37,7 +38,7 @@ const Checkout = () => {
       toast.error('Payment method is required');
       return;
     }
-    dispatch(checkout({ shippingFields: formData, orderItems, paymentMethod }))
+    dispatch(checkout({ shippingFields: formData, shippingFee, orderItems, paymentMethod }))
       .unwrap()
       .then(() => {
         navigate('/orders');

@@ -26,7 +26,7 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
 export const checkout = createAsyncThunk(
   'order/checkout',
   async (
-    { shippingFields, orderItems, paymentMethod, payment = true },
+    { shippingFields, shippingFee, orderItems, paymentMethod, payment = true },
     { rejectWithValue, dispatch },
   ) => {
     try {
@@ -35,6 +35,7 @@ export const checkout = createAsyncThunk(
         orderItems,
         paymentMethod,
         payment,
+        shippingFee,
       });
       dispatch(fetchCartItems());
       return response.data;

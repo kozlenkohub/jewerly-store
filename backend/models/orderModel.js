@@ -33,6 +33,11 @@ const orderSchema = new mongoose.Schema(
       apartament: { type: String, required: true },
       phone: { type: String, required: true },
     },
+    shippingFee: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     paymentMethod: {
       type: String,
       required: true,
