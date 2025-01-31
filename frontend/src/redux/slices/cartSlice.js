@@ -171,7 +171,7 @@ const cartSlice = createSlice({
         state.cartItems = action.payload;
         state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
         state.totalPrice = calculateTotalPrice(state.cartItems);
-        state.isLoadingCart = true;
+        state.isLoadingCart = false;
       })
       .addCase(fetchCartItems.rejected, (state) => {
         state.isLoadingCart = false;
