@@ -5,7 +5,6 @@ import { debounce } from 'lodash';
 
 const initialState = {
   isLoadingCart: true,
-  isAddingInCart: false,
   cartItems: [],
   counter: 0,
   totalPrice: 0,
@@ -20,7 +19,7 @@ const calculateTotalPrice = (cartItems) => {
 };
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
-  async (data, { rejectWithValue, dispatch }) => {
+  async (data, { rejectWithValue, dispatch, getState }) => {
     const token = localStorage.getItem('token');
 
     // Если пользователь не залогинен, сохраняем в localStorage
@@ -48,9 +47,24 @@ export const addToCart = createAsyncThunk(
 
     // Логика для залогированных пользователей
     try {
+      // Optimistically update the UI before the request
+      const state = getState();
+      const previousCartItems = [...state.cart.cartItems];
+      const existingItemIndex = previousCartItems.findIndex(
+        (item) => item._id === data._id && item.size === data.size,
+      );
+
+      if (existingItemIndex !== -1) {
+        previousCartItems[existingItemIndex].quantity += data.quantity || 1;
+      } else {
+        previousCartItems.push({ ...data, quantity: data.quantity || 1 });
+      }
+      dispatch(setCartItems(previousCartItems));
+
       await axios.post('api/cart/add', data);
       dispatch(fetchCartItems());
     } catch (error) {
+      dispatch(fetchCartItems());
       return rejectWithValue(error.response.data);
     }
   },
@@ -131,7 +145,7 @@ export const updateQuantity = createAsyncThunk(
 
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
-  async (data, { rejectWithValue, dispatch }) => {
+  async (data, { rejectWithValue, dispatch, getState }) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -145,12 +159,21 @@ export const removeFromCart = createAsyncThunk(
     }
 
     try {
+      // Optimistically update the UI before the request
+      const state = getState();
+      const previousCartItems = [...state.cart.cartItems];
+      const updatedCartItems = previousCartItems.filter(
+        (item) => !(item._id === data.itemId && item.size === data.size),
+      );
+      dispatch(setCartItems(updatedCartItems));
+
       const response = await axios.delete(`api/cart/remove/${data.itemId}-${data.size}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       dispatch(fetchCartItems());
       return response.data;
     } catch (error) {
+      dispatch(fetchCartItems());
       return rejectWithValue(error.response.data);
     }
   },
@@ -160,9 +183,6 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    setIsAddingInCart: (state, action) => {
-      state.isAddingInCart = action.payload;
-    },
     setCartItems: (state, action) => {
       state.cartItems = action.payload;
       state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
@@ -183,15 +203,11 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCartItems.pending, (state) => {
-        state.isAddingInCart = true;
-      })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.cartItems = action.payload;
         state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
         state.totalPrice = calculateTotalPrice(state.cartItems);
         state.isLoadingCart = false;
-        state.isAddingInCart = false;
       })
       .addCase(fetchCartItems.rejected, (state) => {
         state.isLoadingCart = false;
@@ -234,6 +250,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setCartItems, setIsAddingInCart } = cartSlice.actions;
+export const { setCartItems } = cartSlice.actions;
 
 export default cartSlice.reducer;
