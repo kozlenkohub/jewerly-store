@@ -60,6 +60,7 @@ export const getProducts = async (req, res) => {
     if (sort) {
       if (sort === 'low-high') query = query.sort({ price: 1 });
       else if (sort === 'high-low') query = query.sort({ price: -1 });
+      else if (sort === 'relevent') query = query.sort({ sales: -1 });
     }
     const products = await query;
     res.json({ products, categoryName: categoryDoc ? categoryDoc.name : '' });

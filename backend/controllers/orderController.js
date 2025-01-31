@@ -44,6 +44,7 @@ const calculateTotalPrice = async (orderItems) => {
 export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, paymentMethod, payment, status, userId } = req.body;
+    console.log(orderItems);
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
@@ -63,6 +64,10 @@ export const placeOrder = async (req, res) => {
     });
 
     await order.save();
+    for (const item of orderItems) {
+      await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
+    }
+
     await User.findByIdAndUpdate(userId, { cartData: {} });
 
     await res.status(201).json({ message: 'Order Created' });
@@ -93,6 +98,9 @@ export const placeOrderStripe = async (req, res) => {
     });
 
     const createdOrder = await order.save();
+    for (const item of orderItems) {
+      await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
+    }
 
     res.status(201).json(createdOrder);
   } catch (error) {
