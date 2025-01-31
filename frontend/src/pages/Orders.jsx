@@ -37,7 +37,7 @@ const Orders = () => {
       </div>
       <div>
         {orders.map((order, index) => (
-          <div key={index}>
+          <div className="border-b-4" key={index}>
             {order.orderItems &&
               order.orderItems.map((item, itemIndex) => {
                 const discountedPrice = item.discount
@@ -48,7 +48,7 @@ const Orders = () => {
                   <div
                     key={itemIndex}
                     className="py-4 border-t text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_1fr] items-center gap-4 futura text-sm sm:text-base">
-                    <div className="flex flex-col sm:flex-row items-start gap-4">
+                    <div className="flex flex-col sm:flex-row items-start gap-4 ">
                       <div className="relative w-32 sm:w-20">
                         <img
                           className="object-cover w-full h-auto rounded"
@@ -92,7 +92,7 @@ const Orders = () => {
                   </div>
                 );
               })}
-            <div className="mt-4 text-center border-b shadow-lg futura text-xl font-medium">
+            <div className="mt-4 text-center futura text-xl font-medium">
               Total Price: {formatPrice(order.totalPrice)} {currency}
             </div>
           </div>
