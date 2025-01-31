@@ -32,7 +32,7 @@ const Orders = () => {
     );
   }
 
-  if (!orders || orders.length === 0) {
+  if (status === 'failed') {
     return <EmptyOrders />;
   }
 
