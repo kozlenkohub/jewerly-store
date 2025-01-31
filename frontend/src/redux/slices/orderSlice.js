@@ -12,9 +12,12 @@ const initialState = {
 
 export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get('/api/orders/myorders');
-    const orders = Object.values(response.data); // Convert object to array
-    return orders;
+    const token = localStorage.getItem('token');
+    if (token) {
+      const response = await axios.get('/api/orders/myorders');
+      const orders = Object.values(response.data); // Convert object to array
+      return orders;
+    }
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
