@@ -95,7 +95,7 @@ const Orders = () => {
                   </div>
                 );
               })}
-            <div className="mt-4 text-right border-b shadow-lg text-xl font-medium">
+            <div className="mt-4 text-center border-b shadow-lg futura text-xl font-medium">
               Total Price: {formatPrice(order.totalPrice)} {currency}
             </div>
           </div>
