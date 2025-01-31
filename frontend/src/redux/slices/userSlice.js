@@ -1,16 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
+import { fetchCartItems } from './cartSlice';
 
-export const register = createAsyncThunk('user/register', async (userData) => {
-  const { data } = await axios.post('/api/user/register', userData);
-  return data;
+export const register = createAsyncThunk('user/register', async (userData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/api/user/register', userData);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-export const login = createAsyncThunk('user/login', async (userData) => {
-  const { data } = await axios.post('/api/user/login', userData);
-  return data;
-});
+export const login = createAsyncThunk(
+  'user/login',
+  async (userData, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.post('/api/user/login', userData);
+      localStorage.setItem('token', data.token);
+      dispatch(fetchCartItems());
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const initialState = {
   token: localStorage.getItem('token') || null,
@@ -44,8 +58,8 @@ const userSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-        toast.error('Registration failed!');
+        state.error = action.payload.message;
+        toast.error(action.payload.message || 'Registration failed!');
       })
       .addCase(login.pending, (state) => {
         state.loading = true;
@@ -59,8 +73,8 @@ const userSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-        toast.error('Login failed!');
+        state.error = action.payload.message;
+        toast.error(action.payload.message || 'Login failed!');
       });
   },
 });

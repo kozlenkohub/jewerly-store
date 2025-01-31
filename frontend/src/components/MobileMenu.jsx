@@ -34,6 +34,8 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
     setProfileMenuOpen(!isProfileMenuOpen);
     if (!token) {
       navigate('/login');
+      setProfileMenuOpen(false);
+
       setVisible(false);
     }
   };
@@ -100,7 +102,8 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       onClick={() => {
                         setVisible(false);
                         closeProfileMenu();
-                        dispatch(logout(), setCartItems([]));
+                        dispatch(logout());
+                        dispatch(setCartItems([]));
                       }}>
                       LogOut
                     </p>

@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toggleSearch } from '../redux/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/userSlice';
+import { setCartItems } from '../redux/slices/cartSlice';
 
 const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
               <p
                 onClick={() => {
                   dispatch(logout());
-                  dispatch({ cartItems: [] });
+                  dispatch(setCartItems([]));
                 }}
                 className="cursor-pointer hover:text-gray-500 ">
                 LogOut

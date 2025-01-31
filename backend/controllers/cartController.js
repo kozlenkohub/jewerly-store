@@ -8,6 +8,9 @@ export const addToCart = async (req, res) => {
     if (!itemId) {
       return res.status(400).json({ message: 'Item ID is required' });
     }
+    if (!size) {
+      return res.status(400).json({ message: 'Size is required to add item to cart' });
+    }
 
     const userData = await User.findById(userId);
     if (!userData) {

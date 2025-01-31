@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-
 import sendEmail from '../utils/emailServices.js';
 import { createResetPasswordMessage } from '../utils/messageServices.js';
 
@@ -19,11 +18,11 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'User not found' });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid password' });
     }
     const token = createToken(user._id);
     res.json({ token });
