@@ -4,7 +4,7 @@ import axios from '../../config/axiosInstance';
 import { fetchCartItems } from './cartSlice';
 
 const initialState = {
-  orders: null,
+  orders: [],
   isLoadingOrder: false,
   status: 'idle',
   error: null,

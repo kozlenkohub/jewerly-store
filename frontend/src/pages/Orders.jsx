@@ -22,10 +22,9 @@ const Orders = () => {
       .replace(/\.00$/, '');
   };
 
-  if (orders == null) {
+  if (isLoadingOrder) {
     return (
       <div className="min-h-[100vh] relative">
-        {' '}
         <div className="flex justify-center items-center absolute top-1/3 left-1/2">
           <DotLoader size={50} color={'#1F3A63'} loading={isLoadingOrder} speedMultiplier={0.5} />
         </div>
