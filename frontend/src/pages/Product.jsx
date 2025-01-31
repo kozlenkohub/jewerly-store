@@ -25,7 +25,7 @@ const Product = () => {
   const [activeMetal, setActiveMetal] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const { currency } = useSelector((state) => state.product);
-  const { isLoadingCart } = useSelector((state) => state.cart);
+  const { isAddingInCart } = useSelector((state) => state.cart);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -139,11 +139,11 @@ const Product = () => {
           </div>
           <button
             onClick={handleAddToCart}
-            disabled={isLoadingCart}
+            disabled={isAddingInCart}
             className={`bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90 ${
-              isLoadingCart ? 'opacity-50 cursor-not-allowed' : ''
+              isAddingInCart ? 'opacity-50 cursor-not-allowed' : ''
             }`}>
-            {isLoadingCart ? 'ADDING...' : 'ADD TO CART'}
+            {isAddingInCart ? 'ADDING...' : 'ADD TO CART'}
           </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">

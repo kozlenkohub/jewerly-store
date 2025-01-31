@@ -5,6 +5,7 @@ import { debounce } from 'lodash';
 
 const initialState = {
   isLoadingCart: true,
+  isAddingInCart: false,
   cartItems: [],
   counter: 0,
   totalPrice: 0,
@@ -180,13 +181,14 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartItems.pending, (state) => {
-        state.isLoadingCart = true;
+        state.isAddingInCart = true;
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.cartItems = action.payload;
         state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
         state.totalPrice = calculateTotalPrice(state.cartItems);
         state.isLoadingCart = false;
+        state.isAddingInCart = false;
       })
       .addCase(fetchCartItems.rejected, (state) => {
         state.isLoadingCart = false;
