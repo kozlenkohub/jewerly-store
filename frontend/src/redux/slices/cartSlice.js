@@ -205,6 +205,9 @@ const cartSlice = createSlice({
       toast.error(action.payload.message || 'Failed to add product to cart');
     });
     builder.addCase(updateQuantity.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
+      }
       const { item } = action.payload;
       if (item) {
         state.cartItems = state.cartItems.map((x) =>
