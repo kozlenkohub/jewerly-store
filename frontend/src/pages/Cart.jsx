@@ -6,7 +6,7 @@ import { removeFromCart, updateQuantity, fetchCartItems } from '../redux/slices/
 import CartTotal from '../components/CartTotal';
 import { useNavigate } from 'react-router-dom';
 import EmptyCart from '../components/EmptyCart';
-import { DotLoader } from 'react-spinners';
+import Loader from '../components/Loader';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -42,11 +42,7 @@ const Cart = () => {
     <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[84vh] relative flex flex-col justify-between">
       <div className="text-2xl mb-3  ">
         {isLoadingCart ? (
-          <div className="min-h-[100vh] relative">
-            <div className="text-mainColor absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <DotLoader color={'#1F3A63'} className="text-mainColor" />
-            </div>
-          </div>
+          <Loader />
         ) : cartItems.length === 0 ? (
           <EmptyCart />
         ) : (

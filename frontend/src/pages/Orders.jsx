@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
 import EmptyOrders from '../components/EmptyOrders';
 import { DotLoader } from 'react-spinners';
+import Loader from '../components/Loader';
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,7 @@ const Orders = () => {
   };
 
   if (isLoadingOrder || status === 'loading') {
-    return (
-      <div className="min-h-[100vh] relative">
-        <div className="text-mainColor absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <DotLoader color={'#1F3A63'} className="text-mainColor" />
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (status === 'failed') {

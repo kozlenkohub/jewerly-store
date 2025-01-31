@@ -10,6 +10,7 @@ import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { DotLoader } from 'react-spinners';
 import Breadcrumb from '../components/Breadcrumb';
+import Loader from '../components/Loader';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -127,9 +128,7 @@ const Catalog = () => {
           </div>
 
           {isLoading ? (
-            <div className="flex justify-center items-center sm:absolute top-1/2 right-[44%]  ">
-              <DotLoader size={50} color={'#1F3A63'} loading={isLoading} speedMultiplier={0.5} />
-            </div>
+            <Loader />
           ) : (
             <div
               className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosInstance';
 import { useParams, useNavigate } from 'react-router-dom';
-import { DotLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import RelatedProducts from '../components/RelatedProducts';
@@ -12,6 +11,7 @@ import MetalDetails from '../components/MetalDetails';
 import SelectSize from '../components/SelectSize';
 import ProductDetails from '../components/ProductDetails';
 import ImageSlider from '../components/ImageSlider';
+import Loader from '../components/Loader';
 
 const Product = () => {
   const params = useParams();
@@ -43,11 +43,7 @@ const Product = () => {
   }, [params.productId]);
 
   if (!product) {
-    return (
-      <div className="flex justify-center items-center min-h-screen pb-36">
-        <DotLoader size={50} color={'#1F3A63'} loading={!product} speedMultiplier={0.5} />
-      </div>
-    );
+    return <Loader />;
   }
 
   const discountedPrice = product.price - (product.price * product.discount) / 100;
