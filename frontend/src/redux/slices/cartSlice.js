@@ -164,9 +164,6 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCartItems.pending, (state) => {
-        state.isLoadingCart = true;
-      })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.cartItems = action.payload;
         state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
