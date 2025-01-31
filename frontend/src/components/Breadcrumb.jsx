@@ -10,7 +10,7 @@ const Breadcrumb = ({ categoryPath }) => {
 
   if (!categoryPath) {
     return (
-      <nav className="text-sm my-2 futura" style={breadcrumbStyle}>
+      <nav className="text-sm mb-2 futura" style={breadcrumbStyle}>
         <Link to="/catalog">Catalog</Link>
       </nav>
     );
@@ -22,7 +22,7 @@ const Breadcrumb = ({ categoryPath }) => {
     .map((segment) => segment.replace(/-/g, ' ')); // remove empty strings and replace hyphens with spaces
 
   return (
-    <nav className="text-sm my-2 futura" style={breadcrumbStyle}>
+    <nav className="text-sm mb-2 futura" style={breadcrumbStyle}>
       <Link to="/catalog">Catalog</Link>
       {segments.map((segment, idx) => {
         const pathUrl = `/catalog/${categoryPath

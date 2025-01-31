@@ -90,12 +90,12 @@ const Catalog = () => {
   ];
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 min-h-[91vh] ">
+    <div className="max-w-[1280px] mx-auto px-4 min-h-[93vh] ">
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-20' : ''}`}>
+          <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-16' : ''}`}>
             <Breadcrumb categoryPath={categoryPath} />
           </div>
           <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-2 sm:pt-5 border-t  text-center relative">
