@@ -32,7 +32,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[91vh] flex justify-center items-center">
+    <div className="min-h-[91vh] flex justify-center items-center transform translate-y-[-50px]">
       <form onSubmit={onSubmit} className="flex flex-col items-center w-[90%] sm:max-w-96 gap-4">
         <div className="inline-flex items-center gap-2 mb-2 text-3xl">
           <Title text1={currentState} text2={'Page'} />
