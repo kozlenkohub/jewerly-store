@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
+import { debounce } from 'lodash';
 
 const initialState = {
   isLoadingCart: true,
@@ -75,9 +77,21 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
   }));
 });
 
+const debouncedUpdate = debounce(async (data, token, dispatch, rejectWithValue) => {
+  try {
+    const response = await axios.post('api/cart/updateQuantity', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    dispatch(fetchCartItems());
+    return rejectWithValue(error.response?.data || { message: 'Failed to update quantity' });
+  }
+}, 300); // 500ms delay
+
 export const updateQuantity = createAsyncThunk(
   'cart/updateQuantity',
-  async (data, { rejectWithValue, dispatch }) => {
+  async (data, { rejectWithValue, dispatch, getState }) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -91,24 +105,36 @@ export const updateQuantity = createAsyncThunk(
       }
 
       cart[itemIndex].quantity = data.quantity;
+      localStorage.setItem('guestCart', JSON.stringify(cart));
+      dispatch(fetchCartItems());
+      return { cartItems: cart };
+    }
 
-      if (cart[itemIndex].quantity < 1) {
-        cart.splice(itemIndex, 1);
+    try {
+      // Optimistically update the UI before the request
+      const state = getState();
+      const itemIndex = state.cart.cartItems.findIndex(
+        (item) => item._id === data.itemId && item.size === data.size,
+      );
+
+      if (itemIndex === -1) {
+        return rejectWithValue({ message: 'Item not found in cart' });
       }
 
-      localStorage.setItem('guestCart', JSON.stringify(cart));
+      // Save the current cart state to revert if needed
+      const previousCartItems = [...state.cart.cartItems];
+      const updatedCartItems = previousCartItems.map((item) =>
+        item._id === data.itemId && item.size === data.size
+          ? { ...item, quantity: data.quantity }
+          : item,
+      );
+      dispatch(setCartItems(updatedCartItems));
 
-      dispatch(fetchCartItems());
-      return { cartItems: cart }; // Возвращаем объект с правильной структурой
-    }
-    try {
-      const response = await axios.post('api/cart/updateQuantity', data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      dispatch(fetchCartItems());
-      return response.data;
+      // Debounced server request
+      debouncedUpdate(data, token, dispatch, rejectWithValue);
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      dispatch(fetchCartItems());
+      return rejectWithValue(error.response?.data || { message: 'Failed to update quantity' });
     }
   },
 );
