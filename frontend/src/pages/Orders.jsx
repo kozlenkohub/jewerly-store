@@ -27,6 +27,12 @@ const Orders = () => {
 
   const toggleOrder = (index) => {
     setOpenOrderIndex(openOrderIndex === index ? null : index);
+    if (openOrderIndex !== index) {
+      const orderElement = document.getElementById(`order-${index}`);
+      if (orderElement) {
+        orderElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   if (isLoadingOrder || status === 'loading') {
@@ -44,7 +50,7 @@ const Orders = () => {
       </div>
       <div>
         {orders.map((order, index) => (
-          <div className="border-b-4" key={index}>
+          <div className="border-b-4" key={index} id={`order-${index}`}>
             <div
               className={`text-xl ${
                 index !== 0 ? 'mt-4' : ''
