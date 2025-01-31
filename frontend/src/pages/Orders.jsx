@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaBoxOpen } from 'react-icons/fa';
+import Sparkle from 'react-sparkle';
 import Title from '../components/Title';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
@@ -47,7 +48,7 @@ const Orders = () => {
             <div
               className={`text-xl ${
                 index !== 0 ? 'mt-4' : ''
-              } text-center font-bold mb-4 forum flex items-center justify-center cursor-pointer`}
+              } text-center font-bold mb-4 forum flex items-center justify-center cursor-pointer relative`}
               onClick={() => toggleOrder(index)}>
               <FaBoxOpen className="mr-2" />
               Order {order._id.slice(-4)}
@@ -55,6 +56,7 @@ const Orders = () => {
                 <div className="w-2 h-2 rounded-full bg-mainColor"></div>
                 <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
               </div>
+              <Sparkle overflowPx={2} color="#1F3A63" count={8} fadeOutSpeed={3} flicker={false} />
             </div>
 
             {openOrderIndex === index && (
