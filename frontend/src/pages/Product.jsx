@@ -65,7 +65,7 @@ const Product = () => {
   };
 
   return (
-    <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4">
+    <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4 pb-16">
       <div className="flex gap-12 flex-col md:flex-row">
         <div className="flex-1 flex flex-col gap-3 relative px-3 mt-5 md:hidden">
           <ImageSlider images={product.image} productName={product.name} />
