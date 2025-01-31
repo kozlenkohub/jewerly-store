@@ -3,6 +3,7 @@ import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
 
 const initialState = {
+  isLoadingCart: true,
   cartItems: [],
   counter: 0,
   totalPrice: 0,
@@ -162,11 +163,19 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCartItems.fulfilled, (state, action) => {
-      state.cartItems = action.payload;
-      state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
-      state.totalPrice = calculateTotalPrice(state.cartItems);
-    });
+    builder
+      .addCase(fetchCartItems.pending, (state) => {
+        state.isLoadingCart = true;
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.cartItems = action.payload;
+        state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
+        state.totalPrice = calculateTotalPrice(state.cartItems);
+        state.isLoadingCart = true;
+      })
+      .addCase(fetchCartItems.rejected, (state) => {
+        state.isLoadingCart = false;
+      });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       toast.success('Product has been added to your cart');
     });

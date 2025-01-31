@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Title from '../components/Title';
 import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
-import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
+import { removeFromCart, updateQuantity, fetchCartItems } from '../redux/slices/cartSlice';
 import CartTotal from '../components/CartTotal';
 import { useNavigate } from 'react-router-dom';
 import EmptyCart from '../components/EmptyCart';
+import { DotLoader } from 'react-spinners';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, isLoadingCart } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   const handleIncrement = (item) => {
     dispatch(updateQuantity({ itemId: item._id, size: item.size, quantity: item.quantity + 1 }));
@@ -34,10 +39,12 @@ const Cart = () => {
   };
 
   return (
-    <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 sm:min-h-[64vh]">
-      <div className="text-2xl mb-3 ">
-        {cartItems.length === 0 ? (
-          <EmptyCart />
+    <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[64vh] relative">
+      <div className="text-2xl mb-3  ">
+        {isLoadingCart ? (
+          <div className="flex justify-center items-center absolute top-1/2 left-1/2   ">
+            <DotLoader size={50} color={'#1F3A63'} loading={isLoadingCart} speedMultiplier={0.5} />
+          </div>
         ) : (
           <>
             <Title text1={'Your'} text2={'Cart'} />
@@ -100,7 +107,9 @@ const Cart = () => {
           </>
         )}
       </div>
-      {cartItems.length > 0 && (
+      {isLoadingCart ? (
+        ''
+      ) : (
         <div className="flex justify-end my-8">
           <div className="w-full sm:w-[450px]">
             <CartTotal />
