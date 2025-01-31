@@ -3,11 +3,14 @@ import { useParams } from 'react-router-dom';
 import Title from '../components/Title';
 import { toast } from 'react-hot-toast';
 import axios from '../config/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const { token } = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  console.log(token);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +22,7 @@ const ResetPassword = () => {
       .post(`/api/user/reset-password/${token}`, { password })
       .then(() => {
         toast.success('Password reset successfully');
+        navigate('/login');
       })
       .catch((err) => {
         toast.error(err.response.data.message);
