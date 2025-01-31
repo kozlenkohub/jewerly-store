@@ -65,7 +65,7 @@ const Orders = () => {
                 <div className="w-2 h-2 rounded-full bg-mainColor"></div>
                 <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
               </div>
-              <Sparkle overflowPx={2} color="#1F3A63" count={8} fadeOutSpeed={3} flicker={false} />
+              <Sparkle overflowPx={2} color="#320C30" count={8} fadeOutSpeed={3} flicker={false} />
             </div>
 
             {openOrderIndex === index && (
