@@ -22,7 +22,7 @@ const Orders = () => {
       .replace(/\.00$/, '');
   };
 
-  if (isLoadingOrder) {
+  if (orders == null) {
     return (
       <div className="min-h-[100vh] relative">
         {' '}
