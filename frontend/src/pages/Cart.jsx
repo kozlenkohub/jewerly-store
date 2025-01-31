@@ -114,7 +114,7 @@ const Cart = () => {
       {isLoadingCart || cartItems.length === 0 ? (
         ''
       ) : (
-        <div className="flex justify-end my-8">
+        <div className="flex justify-end ">
           <div className="w-full sm:w-[450px]">
             <CartTotal />
             <div className="w-full text-center futura">
