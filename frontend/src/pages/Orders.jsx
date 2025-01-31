@@ -38,6 +38,11 @@ const Orders = () => {
       <div>
         {orders.map((order, index) => (
           <div className="border-b-4" key={index}>
+            <div
+              className={`text-xl ${index !== 0 ? 'mt-4' : ''} text-center font-bold mb-4 forum`}>
+              Order {order._id.slice(-4)}
+            </div>
+
             {order.orderItems &&
               order.orderItems.map((item, itemIndex) => {
                 const discountedPrice = item.discount
