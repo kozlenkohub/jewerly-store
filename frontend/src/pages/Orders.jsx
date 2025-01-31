@@ -60,7 +60,7 @@ const Orders = () => {
               } text-center font-bold mb-4 forum flex items-center justify-center cursor-pointer relative`}
               onClick={() => toggleOrder(index)}>
               <FaBoxOpen className="mr-2" />
-              Order {order._id.slice(-4)}
+              {order._id ? `Order ${order._id.slice(-4)}` : 'Order'}
               <div className="flex items-center gap-2 ml-4 futura">
                 <div className="w-2 h-2 rounded-full bg-mainColor"></div>
                 <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
