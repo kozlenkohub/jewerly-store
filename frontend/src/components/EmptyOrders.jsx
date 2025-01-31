@@ -17,7 +17,7 @@ const EmptyOrders = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[92vh] -translate-y-12 text-center futura">
+    <div className="flex flex-col items-center justify-center min-h-[95vh] -translate-y-12 text-center futura">
       <h2 className="text-2xl font-bold mb-4">You have no orders</h2>
       <div ref={ringRef} className="mb-6">
         <FaShoppingCart className="text-6xl text-mainColor" />
