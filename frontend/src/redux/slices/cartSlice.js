@@ -19,7 +19,7 @@ const calculateTotalPrice = (cartItems) => {
 };
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
-  async (data, { rejectWithValue, dispatch, getState }) => {
+  async (data, { rejectWithValue, dispatch }) => {
     const token = localStorage.getItem('token');
 
     // Если пользователь не залогинен, сохраняем в localStorage
@@ -47,24 +47,9 @@ export const addToCart = createAsyncThunk(
 
     // Логика для залогированных пользователей
     try {
-      // Optimistically update the UI before the request
-      const state = getState();
-      const previousCartItems = [...state.cart.cartItems];
-      const existingItemIndex = previousCartItems.findIndex(
-        (item) => item._id === data._id && item.size === data.size,
-      );
-
-      if (existingItemIndex !== -1) {
-        previousCartItems[existingItemIndex].quantity += data.quantity || 1;
-      } else {
-        previousCartItems.push({ ...data, quantity: data.quantity || 1 });
-      }
-      dispatch(setCartItems(previousCartItems));
-
       await axios.post('api/cart/add', data);
       dispatch(fetchCartItems());
     } catch (error) {
-      dispatch(fetchCartItems());
       return rejectWithValue(error.response.data);
     }
   },
