@@ -85,13 +85,12 @@ const orderSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.status = 'loading';
+        state.status = 'succeeded';
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
-        toast.error('Failed to fetch orders');
       });
   },
 });
