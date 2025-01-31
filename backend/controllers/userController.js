@@ -1,5 +1,4 @@
 import User from '../models/userModel.js';
-
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
@@ -13,6 +12,21 @@ const createToken = (id) => {
   });
 };
 
+const findUserById = async (userId) => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user;
+};
+
+const validatePassword = async (password, userPassword) => {
+  const isMatch = await bcrypt.compare(password, userPassword);
+  if (!isMatch) {
+    throw new Error('Invalid password');
+  }
+};
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -20,16 +34,14 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid password' });
-    }
+    await validatePassword(password, user.password);
     const token = createToken(user._id);
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };
+
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -52,9 +64,10 @@ export const registerUser = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };
+
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -74,14 +87,14 @@ export const forgotPassword = async (req, res) => {
     });
     res.json({ message: 'Email sent' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };
+
 export const resetPassword = async (req, res) => {
   try {
     const { resetToken } = req.params;
     const { password } = req.body;
-    console.log(resetToken, password);
 
     const user = await User.findOne({
       resetPasswordToken: resetToken,
@@ -97,8 +110,64 @@ export const resetPassword = async (req, res) => {
 
     res.json({ message: 'Password updated' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };
 
-export const adminLogin = async (req, res) => {};
+export const getProfile = async (req, res) => {
+  try {
+    const user = await findUserById(req.body.userId);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+};
+
+export const updateName = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const user = await findUserById(req.body.userId);
+    user.name = name || user.name;
+    await user.save();
+    res.json({ message: 'Name updated', name: user.name });
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+};
+
+export const updateEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await findUserById(req.body.userId);
+
+    const emailExists = await User.findOne({ email });
+    if (emailExists && emailExists._id.toString() !== user._id.toString()) {
+      return res.status(400).json({ message: 'Email already in use' });
+    }
+
+    user.email = email || user.email;
+    await user.save();
+    res.json({ message: 'Email updated', email: user.email });
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+    const user = await findUserById(req.body.userId);
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ message: 'New password must be at least 8 characters' });
+    }
+
+    await validatePassword(password, user.password);
+    const salt = await bcrypt.genSalt(12);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+    res.json({ message: 'Password updated' });
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+};

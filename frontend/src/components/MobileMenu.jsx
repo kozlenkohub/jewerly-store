@@ -85,6 +85,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       onClick={() => {
                         setVisible(false);
                         closeProfileMenu();
+                        navigate('/profile');
                       }}>
                       My Profile
                     </p>

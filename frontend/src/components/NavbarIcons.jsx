@@ -33,7 +33,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         <FaUser
           onClick={() => {
             if (token) {
-              // navigate('/orders');
+              //
             } else {
               navigate('/login');
             }
@@ -43,7 +43,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         {token && (
           <div className="group-hover:block hidden absolute dropdown-menu z-50 right-0 pt-2">
             <div className={`flex flex-col gap-2 w-36 py-3 px-5 ${bgColor} ${textColor2} rounded`}>
-              <Link to="/login" className="cursor-pointer hover:text-gray-500 ">
+              <Link to="/profile" className="cursor-pointer hover:text-gray-500 ">
                 My Profile
               </Link>
               <p
@@ -57,6 +57,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                 onClick={() => {
                   dispatch(logout());
                   dispatch(setCartItems([]));
+                  navigate('/');
                 }}
                 className="cursor-pointer hover:text-gray-500 ">
                 LogOut
