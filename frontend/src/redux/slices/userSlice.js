@@ -29,7 +29,7 @@ export const login = createAsyncThunk(
 const initialState = {
   token: localStorage.getItem('token') || null,
   user: null,
-  isUserLoading: false,
+  isUserisUserLoading: false,
   error: null,
 };
 
@@ -47,32 +47,32 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
-        state.loading = true;
+        state.isUserLoading = true;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isUserLoading = false;
         state.token = action.payload.token;
         state.user = action.payload.user;
         localStorage.setItem('token', action.payload.token);
         toast.success('Registration successful!');
       })
       .addCase(register.rejected, (state, action) => {
-        state.loading = false;
+        state.isUserLoading = false;
         state.error = action.payload.message;
         toast.error(action.payload.message || 'Registration failed!');
       })
       .addCase(login.pending, (state) => {
-        state.loading = true;
+        state.isUserLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isUserLoading = false;
         state.token = action.payload.token;
         state.user = action.payload.user;
         localStorage.setItem('token', action.payload.token);
         toast.success('Login successful!');
       })
       .addCase(login.rejected, (state, action) => {
-        state.loading = false;
+        state.isUserLoading = false;
         state.error = action.payload.message;
         toast.error(action.payload.message || 'Login failed!');
       });
