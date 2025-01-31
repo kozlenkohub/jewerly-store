@@ -12,15 +12,15 @@ const validateOrderData = (data) => {
       if (!item._id) errors[`orderItems.${index}._id`] = 'Product ID is required';
     });
   }
-  if (!data.shippingAddress) {
-    errors.shippingAddress = 'Shipping address is required';
+  if (!data.shippingFields) {
+    errors.shippingFields = 'Shipping address is required';
   } else {
-    if (!data.shippingAddress.apartament)
-      errors['shippingAddress.apartament'] = 'Apartment is required';
-    if (!data.shippingAddress.country) errors['shippingAddress.country'] = 'Country is required';
-    if (!data.shippingAddress.zipCode) errors['shippingAddress.zipCode'] = 'Zip Code is required';
-    if (!data.shippingAddress.city) errors['shippingAddress.city'] = 'City is required';
-    if (!data.shippingAddress.street) errors['shippingAddress.street'] = 'Street is required';
+    if (!data.shippingFields.apartament)
+      errors['shippingFields.apartament'] = 'Apartment is required';
+    if (!data.shippingFields.country) errors['shippingFields.country'] = 'Country is required';
+    if (!data.shippingFields.zipCode) errors['shippingFields.zipCode'] = 'Zip Code is required';
+    if (!data.shippingFields.city) errors['shippingFields.city'] = 'City is required';
+    if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
   }
   if (!data.paymentMethod) errors.paymentMethod = 'Payment method is required';
   if (!data.payment) errors.payment = 'Payment is required';
@@ -43,7 +43,7 @@ const calculateTotalPrice = async (orderItems) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const { orderItems, shippingAddress, paymentMethod, payment, status, userId } = req.body;
+    const { orderItems, shippingFields, paymentMethod, payment, status, userId } = req.body;
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
@@ -55,7 +55,7 @@ export const placeOrder = async (req, res) => {
     const order = new Order({
       orderItems,
       user: userId,
-      shippingAddress,
+      shippingFields,
       paymentMethod,
       payment,
       totalPrice,
@@ -73,7 +73,7 @@ export const placeOrder = async (req, res) => {
 
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { orderItems, shippingAddress, paymentMethod, payment, status, userId } = req.body;
+    const { orderItems, shippingFields, paymentMethod, payment, status, userId } = req.body;
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
@@ -85,7 +85,7 @@ export const placeOrderStripe = async (req, res) => {
     const order = new Order({
       orderItems,
       user: userId,
-      shippingAddress,
+      shippingFields,
       paymentMethod,
       payment,
       totalPrice,
@@ -104,6 +104,15 @@ export const userOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.body.userId });
     res.json({ ...orders });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getLastOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({ user: req.body.userId }).sort({ createdAt: -1 });
+    res.json({ ...order.shippingFields });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

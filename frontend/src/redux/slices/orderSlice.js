@@ -23,12 +23,12 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
 export const checkout = createAsyncThunk(
   'order/checkout',
   async (
-    { shippingAddress, orderItems, paymentMethod, payment = true },
+    { shippingFields, orderItems, paymentMethod, payment = true },
     { rejectWithValue, dispatch },
   ) => {
     try {
       const response = await axios.post('/api/orders', {
-        shippingAddress,
+        shippingFields,
         orderItems,
         paymentMethod,
         payment,
