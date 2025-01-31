@@ -37,7 +37,6 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
             } else {
               navigate('/login');
             }
-            set;
           }}
           className={`w-5 h-5 cursor-pointer ${iconColor}`}
         />

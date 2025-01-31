@@ -47,7 +47,7 @@ export const placeOrder = async (req, res) => {
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
-      return res.status(400).json({ message: 'Validation failed', errors });
+      return res.status(400).json({ message: 'Please enter all fields', errors });
     }
 
     const totalPrice = await calculateTotalPrice(orderItems);

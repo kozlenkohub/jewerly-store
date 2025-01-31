@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
 import axios from '../../config/axiosInstance';
+import { fetchCartItems } from './cartSlice';
 
 const initialState = {
   orders: [],
@@ -10,13 +11,18 @@ const initialState = {
 
 export const checkout = createAsyncThunk(
   'order/checkout',
-  async ({ shippingAddress, orderItems, paymentMethod }, { rejectWithValue }) => {
+  async (
+    { shippingAddress, orderItems, paymentMethod, payment = true },
+    { rejectWithValue, dispatch },
+  ) => {
     try {
       const response = await axios.post('/api/orders', {
         shippingAddress,
         orderItems,
         paymentMethod,
+        payment,
       });
+      dispatch(fetchCartItems());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -51,7 +57,9 @@ const orderSlice = createSlice({
       .addCase(checkout.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
-        toast.error(`Order failed: ${action.payload}`);
+
+        const errorMessages = Object.values(action.payload.errors).join(', ');
+        toast.error(`Order failed: ${errorMessages}`);
       });
   },
 });
