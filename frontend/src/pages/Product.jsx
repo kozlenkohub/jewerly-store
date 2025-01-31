@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import RelatedProducts from '../components/RelatedProducts';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/slices/cartSlice';
+import { addToCart, setIsAddingInCart } from '../redux/slices/cartSlice';
 import Description from '../components/Description';
 import MetalDetails from '../components/MetalDetails';
 import SelectSize from '../components/SelectSize';
@@ -59,6 +59,7 @@ const Product = () => {
 
   const handleAddToCart = async () => {
     try {
+      dispatch(setIsAddingInCart(true));
       await dispatch(addToCart({ ...product, size: activeSize }));
     } catch (error) {
       console.error('Error adding to cart:', error);
