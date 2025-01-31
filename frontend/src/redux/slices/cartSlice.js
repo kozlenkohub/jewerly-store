@@ -48,9 +48,7 @@ export const addToCart = createAsyncThunk(
 
     // Логика для залогированных пользователей
     try {
-      await axios.post('api/cart/add', data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post('api/cart/add', data);
       dispatch(fetchCartItems());
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -66,18 +64,14 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
     return guestCart;
   }
 
-  const response = await axios.get('api/cart/get', {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get('api/cart/get');
 
   return response.data;
 });
 
 const debouncedUpdate = debounce(async (data, token, dispatch, rejectWithValue) => {
   try {
-    const response = await axios.post('api/cart/updateQuantity', data, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post('api/cart/updateQuantity', data);
     return response.data;
   } catch (error) {
     dispatch(fetchCartItems());
