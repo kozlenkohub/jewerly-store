@@ -16,7 +16,7 @@ const ResetPassword = () => {
       return;
     }
     axios
-      .post('/api/user/reset-password', { token, password })
+      .post(`/api/user/reset-password/${token}`, { password })
       .then(() => {
         toast.success('Password reset successfully');
       })
