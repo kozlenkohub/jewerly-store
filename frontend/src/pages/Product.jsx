@@ -140,7 +140,7 @@ const Product = () => {
           <button
             onClick={handleAddToCart}
             disabled={isAddingInCart}
-            className={`bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90 ${
+            className={`bg-mainColor text-white px-8 py-3 min-w-[145px] text-sm active:bg-mainColor/90 ${
               isAddingInCart ? 'opacity-50 cursor-not-allowed' : ''
             }`}>
             {isAddingInCart ? 'ADDING...' : 'ADD TO CART'}
