@@ -51,7 +51,7 @@ const Orders = () => {
       <div className="text-2xl ">
         <Title text1="Your" text2="Orders" />
       </div>
-      <div>
+      <div className="mt-4">
         {orders.map((order, index) => (
           <div className="border-b-4" key={index} id={`order-${index}`}>
             <div
