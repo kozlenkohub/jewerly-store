@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const { token } = useSelector((state) => state.user);
+  const { token, isUserLoading } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (token) {
@@ -79,8 +79,10 @@ const Login = () => {
             </p>
           )}
         </div>
-        <button className="w-full p-2 bg-mainColor text-white futura font-medium text-xl">
-          {currentState}
+        <button
+          className="w-full p-2 bg-mainColor text-white futura font-medium text-xl"
+          disabled={isUserLoading}>
+          {isUserLoading ? 'Loading...' : currentState}
         </button>
       </form>
     </div>

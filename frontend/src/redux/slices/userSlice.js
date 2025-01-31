@@ -29,7 +29,7 @@ export const login = createAsyncThunk(
 const initialState = {
   token: localStorage.getItem('token') || null,
   user: null,
-  loading: false,
+  isUserLoading: false,
   error: null,
 };
 
