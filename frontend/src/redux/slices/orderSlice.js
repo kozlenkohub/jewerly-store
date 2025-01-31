@@ -5,7 +5,7 @@ import { fetchCartItems } from './cartSlice';
 
 const initialState = {
   orders: [],
-  isLoadingOrder: false,
+  isLoadingOrder: true,
   status: 'idle',
   error: null,
 };

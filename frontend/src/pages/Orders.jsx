@@ -3,10 +3,11 @@ import Title from '../components/Title';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
 import EmptyOrders from '../components/EmptyOrders';
+import { DotLoader } from 'react-spinners';
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.order);
+  const { orders, isLoadingOrder } = useSelector((state) => state.order);
   const { currency } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -21,13 +22,22 @@ const Orders = () => {
       .replace(/\.00$/, '');
   };
 
-  if (!orders) {
+  if (isLoadingOrder) {
+    return (
+      <div className="min-h-[100vh] relative">
+        {' '}
+        <div className="flex justify-center items-center absolute top-1/3 left-1/2">
+          <DotLoader size={50} color={'#1F3A63'} loading={isLoadingOrder} speedMultiplier={0.5} />
+        </div>
+      </div>
+    );
+  }
+
+  if (!orders || orders.length === 0) {
     return <EmptyOrders />;
   }
 
-  return orders.length === 0 ? (
-    <EmptyOrders />
-  ) : (
+  return (
     <div className="border-t pt-4 max-w-[1280px] mx-auto px-4">
       <div className="text-2xl">
         <Title text1="Your" text2="Orders" />
