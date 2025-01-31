@@ -2,11 +2,43 @@ import React, { useState } from 'react';
 import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { FaStripe } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { checkout } from '../redux/slices/orderSlice';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const Checkout = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const orderItems = useSelector((state) => state.cart.cartItems);
   const [paymentMethod, setPaymentMethod] = useState('cash');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    street: '',
+    country: '',
+    apartament: '',
+    city: '',
+    zipCode: '',
+    phone: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCheckout = () => {
+    if (orderItems.length === 0) {
+      toast.error('No order items');
+      return;
+    }
+    if (!paymentMethod) {
+      toast.error('Payment method is required');
+      return;
+    }
+    dispatch(checkout({ shippingAddress: formData, orderItems, paymentMethod }));
+  };
 
   const paymentMethods = [
     {
@@ -28,46 +60,78 @@ const Checkout = () => {
         <div className="flex gap-3 ">
           <input
             type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             placeholder="First name"
           />
           <input
             type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             placeholder="Last name"
           />
         </div>
         <input
           type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           placeholder="Email"
         />
+        <div className="flex gap-3">
+          <input
+            type="text"
+            name="street"
+            value={formData.street}
+            onChange={handleInputChange}
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            placeholder="Street"
+          />
+          <input
+            type="text"
+            name="apartament"
+            value={formData.apartament}
+            onChange={handleInputChange}
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            placeholder="Apartament"
+          />
+        </div>
         <input
           type="text"
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="Street"
-        />
-
-        <input
-          type="text"
+          name="country"
+          value={formData.country}
+          onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           placeholder="Country"
         />
-
         <div className="flex gap-3 ">
           <input
             type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             placeholder="City"
           />
           <input
             type="text"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleInputChange}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             placeholder="Zip code"
           />
         </div>
         <input
           type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           placeholder="Phone"
@@ -96,9 +160,7 @@ const Checkout = () => {
             ))}
           </div>
           <div className="w-full text-center mt-8">
-            <button
-              onClick={() => navigate('/orders')}
-              className="bg-mainColor text-white px-16 py-3 text-sm">
+            <button onClick={handleCheckout} className="bg-mainColor text-white px-16 py-3 text-sm">
               PLACE ORDER
             </button>
           </div>
