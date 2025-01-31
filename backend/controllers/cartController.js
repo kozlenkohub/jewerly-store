@@ -102,3 +102,48 @@ export const updateQuantity = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+export const syncCart = async (req, res) => {
+  try {
+    const { userId, guestCart } = req.body;
+    console.log(guestCart);
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    // Получение текущей корзины пользователя с сервера
+    const userData = await User.findById(userId);
+    if (!userData) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    let cartData = userData.cartData || {};
+
+    // Объединение корзин
+    guestCart.forEach((guestItem) => {
+      const itemKey = `${guestItem._id}-${guestItem.size}`;
+
+      if (cartData[itemKey]) {
+        // Если товар уже есть — обновляем количество
+        cartData[itemKey].quantity += guestItem.quantity;
+      } else {
+        // Если товара нет — добавляем
+        cartData[itemKey] = {
+          itemId: guestItem.itemId,
+          size: guestItem.size,
+          quantity: guestItem.quantity,
+        };
+      }
+    });
+
+    // Сохранение обновленной корзины
+    await User.findByIdAndUpdate(userId, { cartData });
+
+    res.json({
+      message: 'success',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};

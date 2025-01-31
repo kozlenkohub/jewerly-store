@@ -17,7 +17,22 @@ export const login = createAsyncThunk(
   async (userData, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.post('/api/user/login', userData);
-      localStorage.setItem('token', data.token);
+      const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+      await axios
+        .post(
+          '/api/cart/sync',
+          {
+            userId: data.token,
+
+            guestCart,
+          },
+          {
+            headers: { Authorization: `Bearer ${data.token}` },
+          },
+        )
+        .then(() => {
+          localStorage.removeItem('guestCart');
+        });
       dispatch(fetchCartItems());
       return data;
     } catch (error) {
