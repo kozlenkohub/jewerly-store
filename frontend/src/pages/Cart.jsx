@@ -84,7 +84,7 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 ">
                     <FaMinus
                       className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
                       onClick={() => handleDecrement(item)}
@@ -95,12 +95,14 @@ const Cart = () => {
                       onClick={() => handleIncrement(item)}
                     />
                   </div>
-                  <FaTrashAlt
-                    className="w-4 h-4 sm:w-5 cursor-pointer hidden sm:block"
-                    onClick={() => {
-                      dispatch(removeFromCart({ itemId: item._id, size: item.size }));
-                    }}
-                  />
+                  <div className="text-red-800">
+                    <FaTrashAlt
+                      className="w-4 h-4 sm:w-5 cursor-pointer hidden sm:block "
+                      onClick={() => {
+                        dispatch(removeFromCart({ itemId: item._id, size: item.size }));
+                      }}
+                    />
+                  </div>
                 </div>
               );
             })}

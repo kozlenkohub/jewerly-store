@@ -201,7 +201,7 @@ const cartSlice = createSlice({
         }
         state.cartItems = state.cartItems.filter((x) => x._id !== itemId);
         state.totalPrice = calculateTotalPrice(state.cartItems);
-        toast.success('Product has been removed from your cart');
+        toast.success('Product has been removed');
       }
     });
     builder.addCase(removeFromCart.rejected, (state, action) => {
