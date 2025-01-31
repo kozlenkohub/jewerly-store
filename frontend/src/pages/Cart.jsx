@@ -42,8 +42,10 @@ const Cart = () => {
     <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[84vh] relative flex flex-col justify-between">
       <div className="text-2xl mb-3  ">
         {isLoadingCart ? (
-          <div className="flex justify-center items-center absolute top-1/3 left-1/2   ">
-            <DotLoader size={50} color={'#1F3A63'} loading={isLoadingCart} speedMultiplier={0.5} />
+          <div className="min-h-[100vh] relative">
+            <div className="text-mainColor absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <DotLoader color={'#1F3A63'} className="text-mainColor" />
+            </div>
           </div>
         ) : cartItems.length === 0 ? (
           <EmptyCart />
