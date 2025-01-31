@@ -26,12 +26,15 @@ const Orders = () => {
   };
 
   const toggleOrder = (index) => {
+    const previousOpenOrderIndex = openOrderIndex;
     setOpenOrderIndex(openOrderIndex === index ? null : index);
-    if (openOrderIndex !== index) {
-      const orderElement = document.getElementById(`order-${index}`);
-      if (orderElement) {
-        orderElement.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (previousOpenOrderIndex !== index) {
+      setTimeout(() => {
+        const orderElement = document.getElementById(`order-${index}`);
+        if (orderElement) {
+          orderElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 0);
     }
   };
 
