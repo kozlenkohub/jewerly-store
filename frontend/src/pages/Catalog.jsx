@@ -8,9 +8,9 @@ import { fetchProducts } from '../redux/slices/productSlice';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
-import { DotLoader } from 'react-spinners';
 import Breadcrumb from '../components/Breadcrumb';
 import Loader from '../components/Loader';
+import _ from 'lodash';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -42,42 +42,33 @@ const Catalog = () => {
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
 
-  const debounceRef = React.useRef(null);
+  // Debounced fetch function
+  const fetchWithDebounce = React.useMemo(
+    () =>
+      _.debounce((filters) => {
+        const mergedQuery = qs.stringify(
+          { ...memoizedSearch, ...filters },
+          { arrayFormat: 'repeat' },
+        );
+
+        if (mergedQuery !== query) {
+          navigate(`?${mergedQuery}`);
+        }
+        dispatch(
+          fetchProducts({ slug: lastSegment, query: mergedQuery, sort: selectedSort, search }),
+        );
+      }, 500),
+    [memoizedSearch, query, lastSegment, navigate, dispatch, selectedSort, search],
+  );
 
   React.useEffect(() => {
     dispatch(setSelectedFilters(memoizedSearch));
   }, [memoizedSearch, dispatch]);
 
   React.useEffect(() => {
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
-
-    debounceRef.current = setTimeout(() => {
-      const mergedQuery = qs.stringify(
-        { ...memoizedSearch, ...selectedFilters },
-        { arrayFormat: 'repeat' },
-      );
-
-      if (mergedQuery !== query) {
-        navigate(`?${mergedQuery}`);
-      }
-      dispatch(
-        fetchProducts({ slug: lastSegment, query: mergedQuery, sort: selectedSort, search }),
-      );
-    }, 200);
-
-    return () => clearTimeout(debounceRef.current);
-  }, [
-    selectedFilters,
-    memoizedSearch,
-    query,
-    lastSegment,
-    navigate,
-    dispatch,
-    selectedSort,
-    search,
-  ]);
+    fetchWithDebounce(selectedFilters);
+    return fetchWithDebounce.cancel;
+  }, [selectedFilters, fetchWithDebounce]);
 
   React.useEffect(() => {
     dispatch(fetchFilters(lastSegment));
