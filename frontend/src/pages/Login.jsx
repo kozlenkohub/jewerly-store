@@ -3,6 +3,7 @@ import Title from '../components/Title';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, register } from '../redux/slices/userSlice';
+import { fetchCartItems } from '../redux/slices/cartSlice';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Login = () => {
   useEffect(() => {
     if (token) {
       navigate('/');
+      dispatch(fetchCartItems());
     }
   }, [token, dispatch, navigate]);
 
@@ -64,7 +66,7 @@ const Login = () => {
         <div className="w-full flex justify-between text-sm mt-[-8px]">
           <p
             onClick={() => {
-              navigate('/reset-password');
+              navigate('/forgot-password');
             }}
             className="cursor-pointer futura">
             Forgot your password?

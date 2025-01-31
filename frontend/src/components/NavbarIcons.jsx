@@ -13,7 +13,6 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
   const { isOpenSearch } = useSelector((state) => state.product);
   const { counter } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.user);
-  const { cartItems } = useSelector((state) => state.cart);
 
   const handleSearchClick = () => {
     if (!location.pathname.includes('/catalog')) {
@@ -34,10 +33,11 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         <FaUser
           onClick={() => {
             if (token) {
-              navigate('/orders');
+              // navigate('/orders');
             } else {
               navigate('/login');
             }
+            set;
           }}
           className={`w-5 h-5 cursor-pointer ${iconColor}`}
         />

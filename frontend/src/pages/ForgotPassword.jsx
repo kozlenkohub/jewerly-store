@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Title from '../components/Title';
 import { toast } from 'react-hot-toast';
 import axios from '../config/axiosInstance';
 
-const ResetPassword = () => {
-  const { token } = useParams();
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
     axios
-      .post('/api/user/reset-password', { token, password })
+      .post('/api/user/forgot-password', { email })
       .then(() => {
-        toast.success('Password reset successfully');
+        toast.success('Reset link sent to your email');
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -32,27 +25,19 @@ const ResetPassword = () => {
           <Title text1="Reset" text2="Password" />
         </div>
         <input
-          type="password"
-          placeholder="New Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border border-gray-800 focus:outline-none"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full p-2 border border-gray-800 focus:outline-none"
           required
         />
         <button className="w-full p-2 bg-mainColor text-white futura font-medium text-xl">
-          Reset Password
+          Send Reset Link
         </button>
       </form>
     </div>
   );
 };
 
-export default ResetPassword;
+export default ForgotPassword;

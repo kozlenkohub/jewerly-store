@@ -15,8 +15,9 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import ResetPassword from './pages/ResetPassword';
 import { fetchCartItems } from './redux/slices/cartSlice';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import ResetPassword from './pages/ResetPassword.jsx';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,8 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
       <Footer />
     </div>

@@ -128,7 +128,7 @@ export const removeFromCart = createAsyncThunk(
     }
 
     try {
-      const response = await axios.delete(`api/cart/remove/${data.itemId}`, {
+      const response = await axios.delete(`api/cart/remove/${data.itemId}-${data.size}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       dispatch(fetchCartItems());

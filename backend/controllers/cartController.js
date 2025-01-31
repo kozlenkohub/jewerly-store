@@ -130,7 +130,7 @@ export const syncCart = async (req, res) => {
       } else {
         // Если товара нет — добавляем
         cartData[itemKey] = {
-          itemId: guestItem.itemId,
+          itemId: guestItem._id,
           size: guestItem.size,
           quantity: guestItem.quantity,
         };
