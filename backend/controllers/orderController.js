@@ -103,7 +103,7 @@ export const placeOrderStripe = async (req, res) => {
 export const userOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.body.userId });
-    res.json(orders);
+    res.json({ ...orders });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -5,11 +5,14 @@ import { FaStripe } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { checkout } from '../redux/slices/orderSlice';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const orderItems = useSelector((state) => state.cart.cartItems);
+  const { isLoadingOrder } = useSelector((state) => state.order);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [formData, setFormData] = useState({
     firstName: '',
@@ -30,14 +33,19 @@ const Checkout = () => {
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
-      toast.error('No order items');
+      toast.error('Cart is empty');
       return;
     }
     if (!paymentMethod) {
       toast.error('Payment method is required');
       return;
     }
-    dispatch(checkout({ shippingAddress: formData, orderItems, paymentMethod }));
+    dispatch(checkout({ shippingAddress: formData, orderItems, paymentMethod }))
+      .unwrap()
+      .then(() => {
+        navigate('/orders');
+        toast.success('Order placed successfully');
+      });
   };
 
   const paymentMethods = [
@@ -160,8 +168,13 @@ const Checkout = () => {
             ))}
           </div>
           <div className="w-full text-center mt-8">
-            <button onClick={handleCheckout} className="bg-mainColor text-white px-16 py-3 text-sm">
-              PLACE ORDER
+            <button
+              onClick={handleCheckout}
+              className={`bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm ${
+                isLoadingOrder ? 'text-gray-500 bg-gray-800' : ''
+              }`}
+              disabled={isLoadingOrder}>
+              {isLoadingOrder ? 'PLACING...' : 'PLACE ORDER'}
             </button>
           </div>
         </div>
