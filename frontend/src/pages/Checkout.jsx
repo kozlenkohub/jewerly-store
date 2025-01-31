@@ -40,7 +40,6 @@ const Checkout = () => {
     dispatch(checkout({ shippingFields: formData, orderItems, paymentMethod }))
       .unwrap()
       .then(() => {
-        dispatch(fetchOrders());
         navigate('/orders');
       });
   };
