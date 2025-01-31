@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Title from '../components/Title';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, register } from '../redux/slices/userSlice';
 
 const Login = () => {
-  const [currentState, setCurrentState] = useState('Sign Up');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [currentState, setCurrentState] = useState('Login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const { token } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token, dispatch, navigate]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('submitted');
+    if (currentState === 'Sign Up') {
+      dispatch(register({ name, email, password }));
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
 
   return (
@@ -20,6 +40,8 @@ const Login = () => {
             type="text"
             placeholder="Name"
             className="w-full p-2 border border-gray-800  focus:outline-none  "
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         )}
@@ -27,16 +49,26 @@ const Login = () => {
           type="email"
           placeholder="Email"
           className="w-full p-2 border border-gray-800  focus:outline-none "
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Password"
           className="w-full p-2 border border-gray-800  focus:outline-none "
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <div className="w-full flex justify-between text-sm mt-[-8px]">
-          <p className="cursor-pointer futura">Forgot your password?</p>
+          <p
+            onClick={() => {
+              navigate('/reset-password');
+            }}
+            className="cursor-pointer futura">
+            Forgot your password?
+          </p>
           {currentState === 'Sign Up' ? (
             <p className="cursor-pointer futura" onClick={() => setCurrentState('Login')}>
               Login here

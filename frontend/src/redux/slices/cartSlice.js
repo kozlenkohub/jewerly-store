@@ -17,37 +17,67 @@ const calculateTotalPrice = (cartItems) => {
 };
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
-  const response = await axios.get('api/cart/get');
-  return response.data;
+  const response = await axios.get('api/cart/get', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return response.data.map((item) => ({
+    ...item.product,
+    size: item.size,
+    quantity: item.quantity,
+  }));
 });
+
+export const addToCart = createAsyncThunk(
+  'cart/addToCart',
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.post('api/cart/add', data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      dispatch(fetchCartItems());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const updateQuantity = createAsyncThunk(
+  'cart/updateQuantity',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('api/cart/updateQuantity', data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const removeFromCart = createAsyncThunk(
+  'cart/removeFromCart',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`api/cart/remove/${data.itemId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      const data = action.payload;
-
-      if (!data.size) {
-        toast.error('Please select a size');
-        return;
-      }
-
-      const existItem = state.cartItems.find(
-        (x) => x.product === data.product && x.size === data.size,
-      );
-      if (existItem) {
-        state.cartItems = state.cartItems.map((x) =>
-          x.product === existItem.product && x.size === existItem.size
-            ? { ...x, quantity: x.quantity + 1 }
-            : x,
-        );
-      } else {
-        state.cartItems = [...state.cartItems, { ...data, quantity: 1 }];
-      }
-      state.counter += 1;
+    setCartItems: (state, action) => {
+      state.cartItems = action.payload;
+      state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
       state.totalPrice = calculateTotalPrice(state.cartItems);
-      toast.success('Product has been added to your cart');
     },
     removeFromCart: (state, action) => {
       const itemToRemove = state.cartItems.find(
@@ -61,15 +91,6 @@ const cartSlice = createSlice({
       );
       state.totalPrice = calculateTotalPrice(state.cartItems);
     },
-    updateQuantity: (state, action) => {
-      const { product, size, quantity } = action.payload;
-      const item = state.cartItems.find((x) => x.product === product && x.size === size);
-      if (item) {
-        item.quantity = quantity;
-        state.counter = state.cartItems.reduce((total, item) => total + item.quantity, 0);
-        state.totalPrice = calculateTotalPrice(state.cartItems);
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
@@ -77,9 +98,36 @@ const cartSlice = createSlice({
       state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
       state.totalPrice = calculateTotalPrice(state.cartItems);
     });
+    builder.addCase(addToCart.fulfilled, (state, action) => {
+      toast.success('Product has been added to your cart');
+    });
+    builder.addCase(addToCart.rejected, (state, action) => {
+      toast.error(action.payload.message || 'Failed to add product to cart');
+    });
+    builder.addCase(updateQuantity.fulfilled, (state, action) => {
+      const { item } = action.payload;
+      state.cartItems = state.cartItems.map((x) =>
+        x._id === item.itemId && x.size === item.size ? { ...x, quantity: item.quantity } : x,
+      );
+      state.counter = state.cartItems.reduce((total, item) => total + item.quantity, 0);
+      state.totalPrice = calculateTotalPrice(state.cartItems);
+    });
+    builder.addCase(updateQuantity.rejected, (state, action) => {
+      toast.error(action.payload.message || 'Failed to update item quantity');
+    });
+    builder.addCase(removeFromCart.fulfilled, (state, action) => {
+      const { itemId } = action.payload;
+      state.cartItems = state.cartItems.filter((x) => x._id !== itemId);
+      state.counter = state.cartItems.reduce((total, item) => total + item.quantity, 0);
+      state.totalPrice = calculateTotalPrice(state.cartItems);
+      toast.success('Product has been removed from your cart');
+    });
+    builder.addCase(removeFromCart.rejected, (state, action) => {
+      toast.error(action.payload.message || 'Failed to remove product from cart');
+    });
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
+export const { setCartItems } = cartSlice.actions;
 
 export default cartSlice.reducer;

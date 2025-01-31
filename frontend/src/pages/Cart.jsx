@@ -14,18 +14,14 @@ const Cart = () => {
   const { currency } = useSelector((state) => state.product);
 
   const handleIncrement = (item) => {
-    dispatch(
-      updateQuantity({ product: item.product, size: item.size, quantity: item.quantity + 1 }),
-    );
+    dispatch(updateQuantity({ itemId: item._id, size: item.size, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
-      dispatch(
-        updateQuantity({ product: item.product, size: item.size, quantity: item.quantity - 1 }),
-      );
+      dispatch(updateQuantity({ itemId: item._id, size: item.size, quantity: item.quantity - 1 }));
     } else {
-      dispatch(removeFromCart(item));
+      dispatch(removeFromCart({ itemId: item._id }));
     }
   };
 
@@ -95,7 +91,7 @@ const Cart = () => {
                   <FaTrashAlt
                     className="w-4 h-4 sm:w-5 cursor-pointer hidden sm:block"
                     onClick={() => {
-                      dispatch(removeFromCart(item));
+                      dispatch(removeFromCart({ itemId: item._id }));
                     }}
                   />
                 </div>

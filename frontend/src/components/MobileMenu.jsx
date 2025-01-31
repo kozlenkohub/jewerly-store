@@ -4,6 +4,8 @@ import { FaSearch, FaUser, FaShoppingCart, FaChevronDown } from 'react-icons/fa'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearch } from '../redux/slices/productSlice';
+import { logout } from '../redux/slices/userSlice';
+import { setCartItems } from '../redux/slices/cartSlice';
 
 const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -13,6 +15,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.user);
 
   const handleCategoryClick = (categorySlug, hasChildren) => {
     if (hasChildren) {
@@ -29,6 +32,10 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
 
   const handleProfileClick = () => {
     setProfileMenuOpen(!isProfileMenuOpen);
+    if (!token) {
+      navigate('/login');
+      setVisible(false);
+    }
   };
 
   const closeProfileMenu = () => {
@@ -68,7 +75,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 className="w-5 h-5 cursor-pointer text-mainColor"
                 onClick={handleProfileClick}
               />
-              {isProfileMenuOpen && (
+              {isProfileMenuOpen && token && (
                 <div className="absolute right-0 bg-mainColor text-white w-36 rounded shadow-lg z-50">
                   <div className="flex flex-col gap-2 py-3 px-5">
                     <p
@@ -93,6 +100,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                       onClick={() => {
                         setVisible(false);
                         closeProfileMenu();
+                        dispatch(logout(), setCartItems([]));
                       }}>
                       LogOut
                     </p>

@@ -7,6 +7,7 @@ import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import categoryRouter from './routes/categoryRoute.js';
 import filterRouter from './routes/filterRoute.js';
+import cartRouter from './routes/cartRoute.js';
 
 // app config
 
@@ -26,6 +27,7 @@ app.use('/api/user', userRouter);
 app.use('/api/product', productRouter); // Ensure this line is present
 app.use('/api/category', categoryRouter);
 app.use('/api/filter', filterRouter);
+app.use('/api/cart', cartRouter); // Ensure this line is present
 
 app.get('/', (req, res) => {
   res.status(200).send('Api is running');

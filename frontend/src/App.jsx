@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Product from './pages/Product';
@@ -13,8 +14,17 @@ import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
 import About from './pages/About';
+import Contact from './pages/Contact';
+import ResetPassword from './pages/ResetPassword';
+import { fetchCartItems } from './redux/slices/cartSlice';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
+
   return (
     <div className="max-w-[1920px] mx-auto">
       <Toaster
@@ -23,6 +33,7 @@ const App = () => {
         toastOptions={{
           className: '',
           style: {
+            marginTop: '40px',
             fontFamily: 'Futura Light, sans-serif',
           },
         }}
@@ -38,17 +49,9 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/about" element={<About />} />
         <Route path="/orders" element={<Orders />} />
-        {/* login */}
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-        {/* register */}
-        {/* forgot-password */}
-        {/* reset-password */}
-        {/* profile */}
-        {/* contact */}
-        {/* about */}
-        {/* terms */}
-        {/* privacy */}
-        {/* 404 */}
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
       <Footer />
     </div>
