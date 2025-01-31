@@ -30,7 +30,7 @@ const NewsletterBox = () => {
   };
 
   return (
-    <div className="newsletter-box text-center">
+    <div className="newsletter-box text-center mb-16">
       <video
         ref={videoRef}
         autoPlay

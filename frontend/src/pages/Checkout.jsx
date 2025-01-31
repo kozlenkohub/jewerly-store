@@ -78,14 +78,14 @@ const Checkout = () => {
   }, []);
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[95.5vh]">
+    <div className="max-w-[1280px] mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[95.5vh] pb-16">
       <CheckoutForm formData={formData} setFormData={setFormData} />
       {/* right */}
       <div className="mt-2">
         <div className="mt-2 min-w-80">
           <CartTotal />
         </div>
-        <div className="mt-12">
+        <div className="mt-8">
           <Title text1={'Payment'} text2={'Method'} />
           <div className="flex gap-3 justify-between flex-col ">
             {paymentMethods.map((method) => (
