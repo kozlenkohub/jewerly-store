@@ -7,7 +7,7 @@ import { DotLoader } from 'react-spinners';
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { orders, isLoadingOrder } = useSelector((state) => state.order);
+  const { orders, isLoadingOrder, status } = useSelector((state) => state.order);
   const { currency } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Orders = () => {
       .replace(/\.00$/, '');
   };
 
-  if (isLoadingOrder) {
+  if (isLoadingOrder || status === 'loading') {
     return (
       <div className="min-h-[100vh] relative">
         <div className="flex justify-center items-center absolute top-1/3 left-1/2">
