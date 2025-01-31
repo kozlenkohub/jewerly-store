@@ -3,7 +3,7 @@ import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { FaStripe } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { checkout } from '../redux/slices/orderSlice';
+import { checkout, fetchOrders } from '../redux/slices/orderSlice';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -40,6 +40,7 @@ const Checkout = () => {
     dispatch(checkout({ shippingFields: formData, orderItems, paymentMethod }))
       .unwrap()
       .then(() => {
+        dispatch(fetchOrders());
         navigate('/orders');
       });
   };
