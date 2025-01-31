@@ -25,6 +25,7 @@ const Product = () => {
   const [activeMetal, setActiveMetal] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const { currency } = useSelector((state) => state.product);
+  const { isLoadingCart } = useSelector((state) => state.cart);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,6 +55,14 @@ const Product = () => {
 
   const handleMetalChange = (metalId) => {
     navigate(`/product/${metalId}`);
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      await dispatch(addToCart({ ...product, size: activeSize }));
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
   };
 
   return (
@@ -129,11 +138,12 @@ const Product = () => {
             />
           </div>
           <button
-            onClick={() => {
-              dispatch(addToCart({ ...product, size: activeSize }));
-            }}
-            className="bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90">
-            ADD TO CART
+            onClick={handleAddToCart}
+            disabled={isLoadingCart}
+            className={`bg-mainColor text-white px-8 py-3 text-sm active:bg-mainColor/90 ${
+              isLoadingCart ? 'opacity-50 cursor-not-allowed' : ''
+            }`}>
+            {isLoadingCart ? 'ADDING...' : 'ADD TO CART'}
           </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
