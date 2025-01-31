@@ -45,6 +45,8 @@ const Cart = () => {
           <div className="flex justify-center items-center absolute top-1/2 left-1/2   ">
             <DotLoader size={50} color={'#1F3A63'} loading={isLoadingCart} speedMultiplier={0.5} />
           </div>
+        ) : cartItems.length === 0 ? (
+          <EmptyCart />
         ) : (
           <>
             <Title text1={'Your'} text2={'Cart'} />
@@ -109,7 +111,7 @@ const Cart = () => {
           </>
         )}
       </div>
-      {isLoadingCart ? (
+      {isLoadingCart || cartItems.length === 0 ? (
         ''
       ) : (
         <div className="flex justify-end my-8">
