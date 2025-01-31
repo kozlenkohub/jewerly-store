@@ -15,7 +15,7 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
     const token = localStorage.getItem('token');
     if (token) {
       const response = await axios.get('/api/orders/myorders');
-      const orders = Object.values(response.data); // Convert object to array
+      const orders = Object.values(response.data);
       return orders;
     }
   } catch (error) {

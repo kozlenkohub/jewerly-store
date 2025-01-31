@@ -3,7 +3,6 @@ import Title from '../components/Title';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
 import EmptyOrders from '../components/EmptyOrders';
-import { DotLoader } from 'react-spinners';
 import Loader from '../components/Loader';
 
 const Orders = () => {
@@ -32,8 +31,8 @@ const Orders = () => {
   }
 
   return (
-    <div className="border-t pt-4 max-w-[1280px] mx-auto px-4 min-h-[95.5vh]">
-      <div className="text-2xl">
+    <div className="border-t pt-4 max-w-[1280px] mx-auto px-4 min-h-[95.5vh] mb-12">
+      <div className="text-2xl ">
         <Title text1="Your" text2="Orders" />
       </div>
       <div>
@@ -48,7 +47,7 @@ const Orders = () => {
                 return (
                   <div
                     key={itemIndex}
-                    className="py-4 border-t border-b text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_1fr] items-center gap-4 futura text-sm sm:text-base">
+                    className="py-4 border-t text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_1fr] items-center gap-4 futura text-sm sm:text-base">
                     <div className="flex flex-col sm:flex-row items-start gap-4">
                       <div className="relative w-32 sm:w-20">
                         <img
@@ -96,6 +95,9 @@ const Orders = () => {
                   </div>
                 );
               })}
+            <div className="mt-4 text-right border-b shadow-lg text-xl font-medium">
+              Total Price: {formatPrice(order.totalPrice)} {currency}
+            </div>
           </div>
         ))}
       </div>

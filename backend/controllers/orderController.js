@@ -113,11 +113,11 @@ export const placeOrderStripe = async (req, res) => {
 
 export const userOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.body.userId });
+    const orders = await Order.find({ user: req.body.userId }).sort({ createdAt: -1 });
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
     }
-    res.json({ ...orders });
+    res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
