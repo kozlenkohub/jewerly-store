@@ -39,7 +39,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[84vh] relative flex flex-col justify-between">
+    <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[95.5vh] relative flex flex-col justify-between">
       <div className="text-2xl mb-3  ">
         {isLoadingCart ? (
           <Loader />
