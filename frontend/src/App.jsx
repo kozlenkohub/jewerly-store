@@ -29,7 +29,7 @@ const App = () => {
   return (
     <div className="max-w-[1920px] mx-auto">
       <Toaster
-        position="top"
+        position="top-center"
         reverseOrder={false}
         toastOptions={{
           className: '',
