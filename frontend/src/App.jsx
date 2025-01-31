@@ -29,17 +29,12 @@ const App = () => {
   return (
     <div className="max-w-[1920px] mx-auto">
       <Toaster
-        gutter={-24}
-        containerStyle={{
-          position: 'relative',
-        }}
-        position="top-center"
+        position="top"
         reverseOrder={false}
         toastOptions={{
           className: '',
           style: {
             fontFamily: 'Futura Light, sans-serif',
-            marginTop: '30px',
             padding: '16px',
           },
         }}
