@@ -78,7 +78,7 @@ const Checkout = () => {
   }, []);
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[95.5vh] pb-16">
+    <div className="max-w-[1280px] mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[95.5vh] pb-10">
       <CheckoutForm formData={formData} setFormData={setFormData} />
       {/* right */}
       <div className="mt-2">
