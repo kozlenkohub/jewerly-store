@@ -25,8 +25,8 @@ const Orders = () => {
   if (isLoadingOrder || status === 'loading') {
     return (
       <div className="min-h-[100vh] relative">
-        <div className="flex justify-center items-center absolute top-1/3 left-1/2">
-          <DotLoader size={50} color={'#1F3A63'} loading={isLoadingOrder} speedMultiplier={0.5} />
+        <div className="text-mainColor absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <DotLoader color={'#1F3A63'} className="text-mainColor" />
         </div>
       </div>
     );

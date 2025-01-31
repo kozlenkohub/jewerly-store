@@ -85,7 +85,7 @@ const orderSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'loading';
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {

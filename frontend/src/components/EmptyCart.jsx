@@ -17,7 +17,7 @@ const EmptyCart = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[88.7vh] -translate-y-12 text-center futura">
+    <div className="flex flex-col items-center justify-center min-h-[95vh] -translate-y-12 text-center futura">
       <h2 className="text-2xl font-bold mb-4">Your Cart is Empty</h2>
       <div ref={ringRef} className="mb-6">
         <FaGem className="text-6xl text-mainColor" />
