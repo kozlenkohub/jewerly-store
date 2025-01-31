@@ -179,6 +179,9 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchCartItems.pending, (state) => {
+        state.isLoadingCart = true;
+      })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.cartItems = action.payload;
         state.counter = action.payload.reduce((total, item) => total + item.quantity, 0);
@@ -188,6 +191,7 @@ const cartSlice = createSlice({
       .addCase(fetchCartItems.rejected, (state) => {
         state.isLoadingCart = false;
       });
+
     builder.addCase(addToCart.fulfilled, (state, action) => {
       toast.success('Product has been added to your cart');
     });
