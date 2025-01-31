@@ -70,11 +70,7 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data.map((item) => ({
-    ...item.product,
-    size: item.size,
-    quantity: item.quantity,
-  }));
+  return response.data;
 });
 
 const debouncedUpdate = debounce(async (data, token, dispatch, rejectWithValue) => {
@@ -87,7 +83,7 @@ const debouncedUpdate = debounce(async (data, token, dispatch, rejectWithValue) 
     dispatch(fetchCartItems());
     return rejectWithValue(error.response?.data || { message: 'Failed to update quantity' });
   }
-}, 300); // 500ms delay
+}, 300);
 
 export const updateQuantity = createAsyncThunk(
   'cart/updateQuantity',

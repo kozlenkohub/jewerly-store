@@ -42,8 +42,13 @@ export const getCartItems = async (req, res) => {
       Object.values(userData.cartData).map(async (cartItem) => {
         const product = await Product.findById(cartItem.itemId);
         return {
-          ...cartItem,
-          product,
+          _id: cartItem.itemId,
+          size: cartItem.size,
+          quantity: cartItem.quantity,
+          image: product.image,
+          name: product.name,
+          price: product.price,
+          discount: product.discount,
         };
       }),
     );
