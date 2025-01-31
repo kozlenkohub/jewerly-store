@@ -89,7 +89,7 @@ const Catalog = () => {
   ];
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 ">
+    <div className="max-w-[1280px] mx-auto px-4 min-h-[87vh] ">
       <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-20' : ''}`}>
         <Breadcrumb categoryPath={categoryPath} />
       </div>

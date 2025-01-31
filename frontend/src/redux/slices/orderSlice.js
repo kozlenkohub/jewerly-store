@@ -72,8 +72,14 @@ const orderSlice = createSlice({
         state.error = action.payload;
         state.isLoadingOrder = false;
 
-        const errorMessages = Object.values(action.payload.errors).join(', ');
-        toast.error(`Order failed: ${errorMessages}`);
+        if (action.payload.errors) {
+          const errorMessages = Object.values(action.payload.errors).join(', ');
+          toast.error(`Order failed: ${errorMessages}`);
+        }
+
+        if (action.payload.msg === 'You must be authenticated') {
+          toast.error('You must be authenticated');
+        }
       })
       .addCase(fetchOrders.pending, (state) => {
         state.status = 'loading';

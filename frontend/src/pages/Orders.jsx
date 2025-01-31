@@ -38,7 +38,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="border-t pt-4 max-w-[1280px] mx-auto px-4">
+    <div className="border-t pt-4 max-w-[1280px] mx-auto px-4 min-h-[91vh]">
       <div className="text-2xl">
         <Title text1="Your" text2="Orders" />
       </div>
