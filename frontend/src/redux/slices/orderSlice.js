@@ -5,7 +5,7 @@ import { fetchCartItems } from './cartSlice';
 
 const initialState = {
   orders: [],
-  isLoadingOrder: false,
+  isLoadingOrder: true,
   status: 'idle',
   error: null,
 };
@@ -67,13 +67,13 @@ const orderSlice = createSlice({
       .addCase(checkout.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.orders.push(action.payload);
-        state.isLoadingOrder = false;
+        state.isLoadingOrder = true;
         toast.success('Order placed successfully!');
       })
       .addCase(checkout.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
-        state.isLoadingOrder = false;
+        state.isLoadingOrder = true;
 
         if (action.payload.errors) {
           const errorMessages = Object.values(action.payload.errors).join(', ');

@@ -4,7 +4,7 @@ import { DotLoader } from 'react-spinners';
 const Loader = () => {
   return (
     <div className="min-h-[100vh] relative">
-      <div className="text-mainColor absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className="text-mainColor absolute top-1/3 sm:top-[38%] left-[45%] sm:left-[48%]">
         <DotLoader color={'#1F3A63'} className="text-mainColor" />
       </div>
     </div>
