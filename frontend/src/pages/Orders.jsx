@@ -89,9 +89,6 @@ const Orders = () => {
                       <div className="w-2 h-2 rounded-full bg-mainColor"></div>
                       <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
                     </div>
-                    <button className="border bg-mainColor text-white px-3 py-2 text-xs sm:text-sm font-medium rounded">
-                      Track Order
-                    </button>
                   </div>
                 );
               })}
