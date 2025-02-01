@@ -81,7 +81,7 @@ const Catalog = () => {
   ];
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 min-h-[93vh] ">
+    <div className="max-w-[1280px] mx-auto px-4 min-h-[95.5vh] ">
       {isLoading ? (
         <Loader />
       ) : (
