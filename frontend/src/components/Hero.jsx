@@ -2,17 +2,33 @@ import React, { useRef, useEffect } from 'react';
 import video from '../assets/promo.webm';
 
 const Hero = () => {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current && isMobile) {
-      // Пытаемся воспроизвести видео на мобильных устройствах
-      videoRef.current.play().catch((error) => {
-        console.error('Не удалось воспроизвести видео:', error);
-      });
+    const videoElement = videoRef.current;
+
+    if (videoElement) {
+      // Попытка воспроизведения видео
+      const handleVideoPlayback = async () => {
+        try {
+          await videoElement.play();
+        } catch (error) {
+          console.error('Не удалось воспроизвести видео:', error);
+        }
+      };
+
+      // Обработчик события загрузки видео
+      const handleCanPlay = () => {
+        handleVideoPlayback();
+      };
+
+      videoElement.addEventListener('canplaythrough', handleCanPlay);
+
+      return () => {
+        videoElement.removeEventListener('canplaythrough', handleCanPlay);
+      };
     }
-  }, [isMobile]);
+  }, []);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
@@ -30,8 +46,10 @@ const Hero = () => {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-        }}
-      />
+        }}>
+        <source src={video} type="video/webm" />
+        Ваш браузер не поддерживает воспроизведение видео.
+      </video>
       <div
         style={{
           position: 'absolute',
