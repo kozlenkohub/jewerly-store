@@ -51,19 +51,26 @@ const ImageSlider = ({ media, productName, isVideo, renderMedia }) => {
   };
 
   const handleTouchStart = (e) => {
+    e.preventDefault();
     setIsDragging(true);
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchMove = (e) => {
+    e.preventDefault();
     if (!touchStartX.current || !isDragging) return;
 
     const currentX = e.touches[0].clientX;
     const diff = touchStartX.current - currentX;
-    setSlidePosition(-diff);
+
+    // Prevent vertical scrolling while swiping
+    if (Math.abs(diff) > 5) {
+      setSlidePosition(-diff);
+    }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e) => {
+    e.preventDefault();
     if (!isDragging) return;
 
     setIsDragging(false);
@@ -83,7 +90,7 @@ const ImageSlider = ({ media, productName, isVideo, renderMedia }) => {
   return (
     <div className="relative w-full">
       <div
-        className="aspect-square overflow-hidden"
+        className="aspect-square overflow-hidden touch-none"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}>
