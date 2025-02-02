@@ -7,7 +7,15 @@ const ProductGallery = ({ product, mainImage, setMainImage }) => {
   const renderMedia = (mediaUrl, className) => {
     const url = mediaUrl.split('#')[0]; // Remove the type marker
     if (isVideo(mediaUrl)) {
-      return <video src={url} className={className} controls preload="metadata" playsInline />;
+      return <video 
+        src={url} 
+        className={className} 
+        preload="metadata" 
+        playsInline 
+        autoPlay 
+        muted 
+        loop 
+      />;
     }
     return <img src={url} alt="" className={className} />;
   };

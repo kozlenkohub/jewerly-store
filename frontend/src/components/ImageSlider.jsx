@@ -66,8 +66,7 @@ const ImageSlider = ({ media, productName, isVideo }) => {
             autoPlay
             preload="auto"
             onLoadStart={() => setIsLoading(true)}
-            onLoadedData={() => setIsLoading(false)}
-            onClick={(e) => (e.target.paused ? e.target.play() : e.target.pause())}>
+            onLoadedData={() => setIsLoading(false)}>
             <source src={url.split('#')[0]} type="video/mp4" />
           </video>
         </div>
