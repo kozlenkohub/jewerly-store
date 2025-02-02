@@ -67,6 +67,18 @@ const ImageSlider = ({ media, productName, isVideo }) => {
         <ul className="flex justify-center gap-2"> {dots} </ul>
       </div>
     ),
+    touchThreshold: 10,
+    swipeToSlide: true,
+    touchMove: true,
+    useCSS: true,
+    waitForAnimate: false,
+    onSwipe: (direction) => {
+      // Предотвращаем скролл страницы при свайпе
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.body.style.overflow = 'auto';
+      }, 300);
+    },
   };
 
   const LoadingSpinner = () => (
@@ -114,10 +126,16 @@ const ImageSlider = ({ media, productName, isVideo }) => {
   };
 
   return (
-    <div className="relative w-full aspect-square">
-      <Slider ref={sliderRef} {...settings}>
+    <div
+      className="relative w-full aspect-square select-none touch-pan-y"
+      onTouchStart={(e) => e.preventDefault()}
+      onTouchMove={(e) => e.preventDefault()}>
+      <Slider ref={sliderRef} {...settings} className="overflow-hidden touch-pan-y">
         {media.map((url, index) => (
-          <div key={index} className="aspect-square">
+          <div
+            key={index}
+            className="aspect-square select-none"
+            onTouchStart={(e) => e.preventDefault()}>
             {renderMedia(url)}
           </div>
         ))}
