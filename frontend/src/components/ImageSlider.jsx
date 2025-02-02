@@ -34,6 +34,8 @@ const ImageSlider = ({ media, productName, isVideo, renderMedia }) => {
           loop
           muted
           playsInline
+          poster={url.replace('.mp4', '.jpg')} // Add poster image
+          preload="auto" // Preload the video
           onClick={(e) => {
             if (e.target.paused) {
               e.target.play();
