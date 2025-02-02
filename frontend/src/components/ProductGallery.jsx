@@ -7,22 +7,16 @@ const ProductGallery = ({ product, mainImage, setMainImage }) => {
   const renderMedia = (mediaUrl, className) => {
     const url = mediaUrl.split('#')[0]; // Remove the type marker
     if (isVideo(mediaUrl)) {
-      return <video 
-        src={url} 
-        className={className} 
-        preload="metadata" 
-        playsInline 
-        autoPlay 
-        muted 
-        loop 
-      />;
+      return (
+        <video src={url} className={className} preload="metadata" playsInline autoPlay muted loop />
+      );
     }
     return <img src={url} alt="" className={className} />;
   };
 
   return (
     <>
-      <div className="flex-1 flex flex-col gap-3 relative px-3 mt-5 md:hidden">
+      <div className="flex-1 flex flex-col gap-3 relative mt-5 md:hidden">
         <ImageSlider
           media={product.image}
           productName={product.name}

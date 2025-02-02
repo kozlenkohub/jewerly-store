@@ -38,10 +38,14 @@ export const getCartItems = async (req, res) => {
       return res.status(400).json({ message: 'User not found' });
     }
 
-    const cartItems = await Promise.all(
-      Object.values(userData.cartData).map(async (cartItem) => {
-        const product = await Product.findById(cartItem.itemId);
-        return {
+    const cartData = { ...userData.cartData };
+    const validCartItems = [];
+    let hasInvalidItems = false;
+
+    for (const [key, cartItem] of Object.entries(cartData)) {
+      const product = await Product.findById(cartItem.itemId);
+      if (product) {
+        validCartItems.push({
           _id: cartItem.itemId,
           size: cartItem.size,
           quantity: cartItem.quantity,
@@ -49,11 +53,19 @@ export const getCartItems = async (req, res) => {
           name: product.name,
           price: product.price,
           discount: product.discount,
-        };
-      }),
-    );
+        });
+      } else {
+        delete cartData[key];
+        hasInvalidItems = true;
+      }
+    }
 
-    res.json(cartItems);
+    // Update user's cart if invalid items were found
+    if (hasInvalidItems) {
+      await User.findByIdAndUpdate(userId, { cartData });
+    }
+
+    res.json(validCartItems);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
