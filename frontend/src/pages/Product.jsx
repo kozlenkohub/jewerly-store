@@ -12,6 +12,7 @@ import SelectSize from '../components/SelectSize';
 import ProductDetails from '../components/ProductDetails';
 import ImageSlider from '../components/ImageSlider';
 import Loader from '../components/Loader';
+import Reviews from '../components/Reviews.jsx';
 
 const Product = () => {
   const params = useParams();
@@ -25,6 +26,7 @@ const Product = () => {
   const [activeMetal, setActiveMetal] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const { currency } = useSelector((state) => state.product);
+  const [activeTab, setActiveTab] = useState('description'); // Add this new state
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -145,11 +147,27 @@ const Product = () => {
       </div>
       {/* Product Details */}
       <div className="mt-8">
-        <div className="flex ">
-          <b className="border px-5 py-3 text-sm">Description</b>
-          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
+        <div className="flex">
+          <button
+            onClick={() => setActiveTab('description')}
+            className={`border px-5 py-3 text-sm ${
+              activeTab === 'description' ? 'font-bold bg-gray-50' : ''
+            }`}>
+            Description
+          </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`border px-5 py-3 text-sm ${
+              activeTab === 'reviews' ? 'font-bold bg-gray-50' : ''
+            }`}>
+            Reviews (122)
+          </button>
         </div>
-        <Description {...product} />
+        {activeTab === 'description' ? (
+          <Description {...product} />
+        ) : (
+          <Reviews reviews={product.reviews} productId={product._id} />
+        )}
       </div>
       <RelatedProducts related={related} />
     </div>

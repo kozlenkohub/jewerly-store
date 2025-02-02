@@ -2,6 +2,8 @@ import { v2 as cloudinary } from 'cloudinary';
 import mongoose from 'mongoose';
 import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
+import Review from '../models/reviewModel.js';
+import User from '../models/userModel.js';
 
 async function getAllChildCategoryIds(catId, collected = []) {
   collected.push(catId);
@@ -171,7 +173,7 @@ export const insertProducts = async (req, res) => {
 // by id
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('reviews');
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -190,5 +192,39 @@ export const getProductById = async (req, res) => {
     res.json({ product, relatedProducts, anotherVariation });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const createReview = async (req, res) => {
+  try {
+    const { productId, rating, comment, userId } = req.body;
+
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const { name } = user;
+
+    const review = new Review({
+      user: userId,
+      name,
+      rating,
+      comment,
+    });
+
+    await review.save();
+
+    product.reviews.push(review._id);
+    await product.save();
+
+    res.status(201).json({ message: 'Review added', review });
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };

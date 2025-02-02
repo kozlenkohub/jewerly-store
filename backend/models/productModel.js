@@ -95,6 +95,12 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+      },
+    ],
     sales: {
       type: Number,
       default: 0,
