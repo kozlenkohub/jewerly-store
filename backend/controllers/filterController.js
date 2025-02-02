@@ -95,6 +95,11 @@ export const updateFilter = async (req, res) => {
     const { id } = req.params;
     const { key, label, type, options } = req.body;
 
+    // Validate required fields
+    if (!key || !label || !type || !options) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
     // Find and update the filter
     const updatedFilter = await Filter.findByIdAndUpdate(
       id,
@@ -105,9 +110,10 @@ export const updateFilter = async (req, res) => {
         options: options.map((option) => ({
           type: option.type,
           img: option.img || '',
+          category: option.category || [],
         })),
       },
-      { new: true },
+      { new: true, runValidators: true },
     );
 
     if (!updatedFilter) {
@@ -116,7 +122,10 @@ export const updateFilter = async (req, res) => {
 
     res.status(200).json(updatedFilter);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      message: 'Error updating filter',
+      error: error.message,
+    });
   }
 };
 
