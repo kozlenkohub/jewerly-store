@@ -1,5 +1,3 @@
-import { v2 as cloudinary } from 'cloudinary';
-import mongoose from 'mongoose';
 import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
 import Review from '../models/reviewModel.js';

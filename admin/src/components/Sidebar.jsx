@@ -13,7 +13,7 @@ const Sidebar = () => {
           }`
         }>
         <FaPlus />
-        <span>Add Items</span>
+        <span>Add Page</span>
       </NavLink>
       {/* Add more navigation links here */}
     </div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import axios from '../config/axiosInstance';
-import ProductForm from '../components/ProductForm';
+import axios from '../../config/axiosInstance';
+import ProductForm from '../../components/ProductForm';
+import BackButton from '../../components/BackButton';
 
-const Add = () => {
+const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -64,10 +65,11 @@ const Add = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <BackButton />
       <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
       <ProductForm onSubmit={handleSubmit} categories={categories} />
     </div>
   );
 };
 
-export default Add;
+export default AddNewProduct;
