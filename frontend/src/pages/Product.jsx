@@ -21,12 +21,20 @@ const Product = () => {
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [anotherVariantion, setAnotherVariantion] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
   const [activeMetal, setActiveMetal] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const { currency } = useSelector((state) => state.product);
   const [activeTab, setActiveTab] = useState('description'); // Add this new state
+
+  const updateReviews = (newReview) => {
+    setProduct(prev => ({
+      ...prev,
+      reviews: [newReview, ...(prev.reviews || [])]
+    }));
+  };
 
   const calculateAverageRating = (reviews) => {
     if (!reviews || reviews.length === 0) return 0;
@@ -182,7 +190,11 @@ const Product = () => {
         {activeTab === 'description' ? (
           <Description {...product} />
         ) : (
-          <Reviews reviews={product.reviews} productId={product._id} />
+          <Reviews 
+            reviews={product.reviews} 
+            productId={product._id}
+            onReviewAdded={updateReviews}
+          />
         )}
       </div>
       <RelatedProducts related={related} />

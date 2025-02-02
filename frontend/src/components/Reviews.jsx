@@ -65,7 +65,7 @@ const ReviewForm = ({ onSubmit, onCancel, isLoading }) => {
   );
 };
 
-const Reviews = ({ reviews = [], productId }) => {
+const Reviews = ({ reviews = [], productId, onReviewAdded }) => {
   const [localReviews, setLocalReviews] = useState(reviews);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +85,7 @@ const Reviews = ({ reviews = [], productId }) => {
 
       const newReview = response.data.review;
       setLocalReviews([newReview, ...localReviews]);
+      onReviewAdded(newReview); // Add this line
       setShowReviewForm(false);
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to submit review');
