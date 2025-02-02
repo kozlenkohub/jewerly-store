@@ -10,9 +10,9 @@ import Description from '../components/Description';
 import MetalDetails from '../components/MetalDetails';
 import SelectSize from '../components/SelectSize';
 import ProductDetails from '../components/ProductDetails';
-import ImageSlider from '../components/ImageSlider';
 import Loader from '../components/Loader';
 import Reviews from '../components/Reviews.jsx';
+import ProductGallery from '../components/ProductGallery';
 
 const Product = () => {
   const params = useParams();
@@ -21,7 +21,6 @@ const Product = () => {
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
-  const [reviews, setReviews] = useState([]);
   const [anotherVariantion, setAnotherVariantion] = useState([]);
   const [activeSize, setActiveSize] = useState(null);
   const [activeMetal, setActiveMetal] = useState(null);
@@ -30,9 +29,9 @@ const Product = () => {
   const [activeTab, setActiveTab] = useState('description'); // Add this new state
 
   const updateReviews = (newReview) => {
-    setProduct(prev => ({
+    setProduct((prev) => ({
       ...prev,
-      reviews: [newReview, ...(prev.reviews || [])]
+      reviews: [newReview, ...(prev.reviews || [])],
     }));
   };
 
@@ -53,6 +52,32 @@ const Product = () => {
         )}
       </span>
     ));
+  };
+
+  const isVideo = (url) => url.endsWith('.mp4');
+
+  const renderMedia = (url, className) => {
+    if (isVideo(url)) {
+      return (
+        <video
+          className={`${className} cursor-pointer`}
+          loop
+          muted
+          playsInline
+          autoPlay={mainImage === url}
+          onClick={(e) => {
+            if (e.target.paused) {
+              e.target.play();
+            } else {
+              e.target.pause();
+            }
+          }}>
+          <source src={url} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+    return <img src={url} alt={product.name} className={className} />;
   };
 
   useEffect(() => {
@@ -92,29 +117,13 @@ const Product = () => {
   return (
     <div className="border-t-2 pt-2 sm:pt-12 transition-opacity ease-in duration-500 opacity-100 max-w-[1280px] mx-auto px-4 pb-16">
       <div className="flex gap-12 flex-col md:flex-row">
-        <div className="flex-1 flex flex-col gap-3 relative px-3 mt-5 md:hidden">
-          <ImageSlider images={product.image} productName={product.name} />
-        </div>
-        <div className="hidden md:flex flex-1 flex-col gap-3 ">
-          <div className="relative">
-            <img src={mainImage} alt={product.name} className="w-full h-auto object-cover" />
-            <div className="absolute  left-[10%] bottom-0  p-2 flex w-[40%] gap-2 bg-opacity-50">
-              {product.image.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`${product.name} ${index + 1}`}
-                  className={`w-[50%] object-cover cursor-pointer border-2 transition-all duration-300 ${
-                    mainImage === img
-                      ? 'border-mainColor/40 scale-110' // добавление выделения для активного изображения
-                      : 'opacity-50 hover:opacity-75 hover:scale-105'
-                  }`}
-                  onClick={() => setMainImage(img)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <ProductGallery
+          product={product}
+          mainImage={mainImage}
+          setMainImage={setMainImage}
+          isVideo={isVideo}
+          renderMedia={renderMedia}
+        />
 
         <div className="flex-1 futura">
           <h1 className="font-medium text-2xl mt-2 forum">{product.name}</h1>
@@ -190,8 +199,8 @@ const Product = () => {
         {activeTab === 'description' ? (
           <Description {...product} />
         ) : (
-          <Reviews 
-            reviews={product.reviews} 
+          <Reviews
+            reviews={product.reviews}
             productId={product._id}
             onReviewAdded={updateReviews}
           />
