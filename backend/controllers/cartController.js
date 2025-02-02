@@ -111,7 +111,6 @@ export const updateQuantity = async (req, res) => {
 export const syncCart = async (req, res) => {
   try {
     const { userId, guestCart } = req.body;
-    console.log(guestCart);
 
     if (!userId) {
       return res.status(400).json({ message: 'User ID is required' });
