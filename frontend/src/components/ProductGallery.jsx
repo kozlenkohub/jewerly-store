@@ -1,7 +1,17 @@
 import React from 'react';
 import ImageSlider from './ImageSlider';
 
-const ProductGallery = ({ product, mainImage, setMainImage, isVideo, renderMedia }) => {
+const ProductGallery = ({ product, mainImage, setMainImage }) => {
+  const isVideo = (url) => url.includes('#video');
+
+  const renderMedia = (mediaUrl, className) => {
+    const url = mediaUrl.split('#')[0]; // Remove the type marker
+    if (isVideo(mediaUrl)) {
+      return <video src={url} className={className} controls preload="metadata" playsInline />;
+    }
+    return <img src={url} alt="" className={className} />;
+  };
+
   return (
     <>
       <div className="flex-1 flex flex-col gap-3 relative px-3 mt-5 md:hidden">

@@ -4,6 +4,7 @@ import Product from '../models/productModel.js';
 import Category from '../models/categoryModel.js';
 import Review from '../models/reviewModel.js';
 import User from '../models/userModel.js';
+import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinaryUpload.js';
 
 async function getAllChildCategoryIds(catId, collected = []) {
   collected.push(catId);
@@ -74,32 +75,117 @@ export const getProducts = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, image, category, metal, price } = req.body;
+    const {
+      name,
+      description,
+      price,
+      category,
+      collection,
+      size,
+      discount,
+      bestseller,
+      metal,
+      cutForm,
+      style,
+      clarity,
+      purity,
+      color,
+      carats,
+      weight,
+    } = req.body;
 
-    // Найти категорию по shortId или _id
-    if (!mongoose.isValidObjectId(category)) {
-      return res.status(400).json({ message: 'Invalid category ID' });
+    console.log('Starting product addition with files:', {
+      fileCount: req.files?.length,
+      files: req.files?.map((f) => ({
+        name: f.originalname,
+        type: f.mimetype,
+        size: f.size,
+      })),
+    });
+
+    const mediaUrls = [];
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const isVideo = file.mimetype.startsWith('video/');
+        console.log(`Processing ${isVideo ? 'video' : 'image'} file:`, {
+          name: file.originalname,
+          size: file.size,
+          type: file.mimetype,
+        });
+
+        try {
+          if (isVideo && file.size > 50 * 1024 * 1024) {
+            console.log('Video file too large:', file.size);
+            return res.status(400).json({ message: 'Video file size must be less than 50MB' });
+          }
+
+          console.log('Starting media upload...');
+          const result = await uploadToCloudinary(file.buffer, isVideo ? 'video' : 'image').catch(
+            (error) => {
+              console.error('Upload error caught:', error);
+              throw error;
+            },
+          );
+
+          console.log('Upload completed successfully');
+          mediaUrls.push(`${result.secure_url}${isVideo ? '#video' : '#image'}`);
+        } catch (uploadError) {
+          console.error('Detailed upload error:', uploadError);
+          return res.status(500).json({
+            message: 'Error uploading media',
+            error: uploadError.message,
+            details: uploadError,
+            file: file.originalname,
+          });
+        }
+      }
     }
+
+    // Validate required fields
+    if (!name || !price || !category || !metal) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Find category
     const categoryDoc = await Category.findOne({
       $or: [{ _id: category }, { shortId: category }],
     });
-    if (!categoryDoc) return res.status(404).json({ message: 'Category not found' });
+    if (!categoryDoc) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
 
-    // Создать продукт
+    // Create new product with null checks for numeric fields
     const newProduct = new Product({
       name,
-      image,
-      category: categoryDoc._id, // Сохраняем ObjectId категории
+      description,
+      price: Number(price) || 0,
+      image: mediaUrls,
+      category: categoryDoc._id,
+      collection,
+      size: Array.isArray(size) ? size : size ? [size] : [],
+      discount: Number(discount) || 0,
+      bestseller: Boolean(bestseller),
       metal,
-      carats,
-      price,
+      cutForm,
+      style,
+      clarity,
+      purity: purity ? Number(purity) : undefined,
+      color,
+      carats: carats ? Number(carats) : undefined,
+      weight: Number(weight) || 0,
+      reviews: [],
     });
 
     await newProduct.save();
-    res.json({ message: 'Product added' });
+    res.status(201).json({ message: 'Product added successfully', product: newProduct });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error' });
+    console.error('Error in addProduct:', error);
+    res.status(500).json({
+      message: 'Server Error',
+      error: error.message,
+      details: error.errors,
+    });
   }
 };
 
@@ -226,5 +312,25 @@ export const createReview = async (req, res) => {
     res.status(201).json({ message: 'Review added', review });
   } catch (error) {
     res.status(500).json({ message: error.message || 'Server error' });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Delete images from Cloudinary
+    for (const imageUrl of product.image) {
+      const publicId = imageUrl.split('/').pop().split('.')[0];
+      await deleteFromCloudinary(publicId);
+    }
+
+    await product.remove();
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

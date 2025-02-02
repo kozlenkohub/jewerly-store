@@ -4,14 +4,18 @@ import { FaPlus } from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
-    <div>
-      <div className="">
-        <NavLink to="/add">
-          <p>Add Items</p>
-        </NavLink>
-
+    <div className="w-64 min-h-screen bg-gray-800 text-white p-4">
+      <NavLink
+        to="/add"
+        className={({ isActive }) =>
+          `flex items-center space-x-2 p-2 rounded ${
+            isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+          }`
+        }>
         <FaPlus />
-      </div>
+        <span>Add Items</span>
+      </NavLink>
+      {/* Add more navigation links here */}
     </div>
   );
 };

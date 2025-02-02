@@ -5,16 +5,23 @@ import {
   insertProducts,
   getProductById,
   createReview,
+  deleteProduct,
 } from '../controllers/productController.js';
-import auth from '../middleware/auth.js';
+import upload from '../middleware/multerMiddleware.js';
 
 const productRouter = express.Router();
 
-productRouter.post('/add', addProduct);
+// Public routes
 productRouter.get('/', getProducts);
 productRouter.get('/:category', getProducts);
-productRouter.post('/insert', insertProducts); // Route to insert products
-productRouter.get('/get/:id', getProductById); // Route to get product by ID
-productRouter.post('/review', auth, createReview);
+productRouter.get('/get/:id', getProductById);
+
+// Protected routes - require authentication
+productRouter.post('/add', upload.array('images', 5), addProduct);
+productRouter.delete('/delete/:id', deleteProduct);
+productRouter.post('/review', createReview);
+
+// Admin only routes
+productRouter.post('/insert', insertProducts);
 
 export default productRouter;

@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema(
     },
     image: {
       type: [String],
-      required: true, // Массив путей к изображениям
+      required: true, // Будет содержать все медиафайлы (фото и видео)
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

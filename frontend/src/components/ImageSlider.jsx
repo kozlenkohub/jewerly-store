@@ -1,34 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ImageSlider = ({ media, productName, isVideo }) => {
-  const sliderRef = useRef(null);
   const videoRef = useRef(null);
-  const [isVideoReady, setIsVideoReady] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (isVideo(media[currentSlide]) && videoRef.current) {
-      const video = videoRef.current;
-      video.load(); // Принудительная перезагрузка видео
-
-      const playVideo = async () => {
-        try {
-          await video.play();
-        } catch (err) {
-          console.error('Video playback failed:', err);
-        }
-      };
-
-      if (isVideoReady) {
-        playVideo();
-      }
-    }
-  }, [currentSlide, isVideoReady, media]);
 
   const CustomArrow = ({ direction, onClick }) => (
     <button
@@ -44,6 +23,12 @@ const ImageSlider = ({ media, productName, isVideo }) => {
     </button>
   );
 
+  const LoadingSpinner = () => (
+    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+
   const settings = {
     dots: true,
     infinite: true,
@@ -53,39 +38,19 @@ const ImageSlider = ({ media, productName, isVideo }) => {
     arrows: true,
     prevArrow: <CustomArrow direction="prev" />,
     nextArrow: <CustomArrow direction="next" />,
-    beforeChange: (oldIndex, newIndex) => {
+    beforeChange: (oldIndex) => {
       if (isVideo(media[oldIndex]) && videoRef.current) {
         videoRef.current.pause();
       }
     },
-    afterChange: (index) => {
-      setCurrentSlide(index);
-    },
-    customPaging: (i) => <button className={`w-2 h-2 rounded-full bg-white/50 hover:bg-white`} />,
+    afterChange: setCurrentSlide,
+    customPaging: () => <button className="w-2 h-2 rounded-full bg-white/50 hover:bg-white" />,
     appendDots: (dots) => (
       <div style={{ position: 'absolute', bottom: '16px', width: '100%' }}>
-        <ul className="flex justify-center gap-2"> {dots} </ul>
+        <ul className="flex justify-center gap-2">{dots}</ul>
       </div>
     ),
-    touchThreshold: 10,
-    swipeToSlide: true,
-    touchMove: true,
-    useCSS: true,
-    waitForAnimate: false,
-    onSwipe: (direction) => {
-      // Предотвращаем скролл страницы при свайпе
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => {
-        document.body.style.overflow = 'auto';
-      }, 300);
-    },
   };
-
-  const LoadingSpinner = () => (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  );
 
   const renderMedia = (url) => {
     if (isVideo(url)) {
@@ -99,25 +64,11 @@ const ImageSlider = ({ media, productName, isVideo }) => {
             muted
             playsInline
             autoPlay
-            poster={url.replace('.mp4', '.jpg')}
             preload="auto"
             onLoadStart={() => setIsLoading(true)}
             onLoadedData={() => setIsLoading(false)}
-            onLoadedMetadata={() => setIsVideoReady(true)}
-            onError={(e) => {
-              console.error('Video error:', e);
-              setIsVideoReady(false);
-              setIsLoading(false);
-            }}
-            onClick={(e) => {
-              if (e.target.paused) {
-                e.target.play().catch(console.error);
-              } else {
-                e.target.pause();
-              }
-            }}>
-            <source src={url} type="video/mp4" />
-            Your browser does not support the video tag.
+            onClick={(e) => (e.target.paused ? e.target.play() : e.target.pause())}>
+            <source src={url.split('#')[0]} type="video/mp4" />
           </video>
         </div>
       );
@@ -126,16 +77,10 @@ const ImageSlider = ({ media, productName, isVideo }) => {
   };
 
   return (
-    <div
-      className="relative w-full aspect-square select-none touch-pan-y"
-      onTouchStart={(e) => e.preventDefault()}
-      onTouchMove={(e) => e.preventDefault()}>
-      <Slider ref={sliderRef} {...settings} className="overflow-hidden touch-pan-y">
+    <div className="relative w-full aspect-square">
+      <Slider {...settings}>
         {media.map((url, index) => (
-          <div
-            key={index}
-            className="aspect-square select-none"
-            onTouchStart={(e) => e.preventDefault()}>
+          <div key={index} className="aspect-square">
             {renderMedia(url)}
           </div>
         ))}
