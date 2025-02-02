@@ -13,8 +13,8 @@ const ImageSlider = ({ media, productName, isVideo }) => {
     <button
       onClick={onClick}
       className={`absolute ${
-        direction === 'prev' ? 'left-2' : 'right-2'
-      } top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 z-10`}>
+        direction === 'prev' ? '-left-2' : '-right-2'
+      } top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 z-10 shadow-md hover:bg-white`}>
       {direction === 'prev' ? (
         <FaChevronLeft className="w-4 h-4" />
       ) : (

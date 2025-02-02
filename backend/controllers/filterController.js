@@ -35,6 +35,7 @@ export const getAllFilters = async (req, res) => {
     }
 
     const filters = await Filter.find();
+    const priceFilter = filters.find((filter) => filter.key === 'price');
 
     const filteredFilters = filters
       .map((filter) => ({
@@ -43,11 +44,11 @@ export const getAllFilters = async (req, res) => {
           option.category.includes(category._id.toString()),
         ),
       }))
-      .filter((filter) => filter.options.length > 0);
+      .filter((filter) => filter.key === 'price' || filter.options.length > 0);
 
-    // If no filters found for the category, return all filters
-    if (filteredFilters.length === 0) {
-      return res.json(filters);
+    // If no filters found for the category (except price), return all filters
+    if (filteredFilters.length === 0 && priceFilter) {
+      return res.json([priceFilter, ...filters]);
     }
 
     res.json(filteredFilters);
