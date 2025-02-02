@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -8,13 +8,19 @@ import AddNewCategory from './pages/Add/AddNewCategory';
 import Edit from './pages/Edit';
 
 const App = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <>
-        <Navbar />
+        <Navbar toggleSidebar={toggleSidebar} />
         <hr />
         <div className="flex w-full">
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <div className="flex-1">
             <Routes>
               <Route path="/add" element={<Add />} />
