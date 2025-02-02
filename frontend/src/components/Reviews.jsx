@@ -71,6 +71,9 @@ const Reviews = ({ reviews = [], productId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const token = localStorage.getItem('token');
+  const isAuthenticated = !!token;
+
   const handleNewReview = async (reviewData) => {
     setIsLoading(true);
     setError(null);
@@ -125,7 +128,16 @@ const Reviews = ({ reviews = [], productId }) => {
       </div>
 
       <div className="mt-8">
-        {!showReviewForm ? (
+        {!isAuthenticated ? (
+          <div className="text-center">
+            <p className="text-gray-600 mb-2 futura">Please sign in to write a review</p>
+            <a
+              href="/login"
+              className="bg-mainColor text-white px-4 py-2 hover:bg-mainColor/90 inline-block">
+              Sign In
+            </a>
+          </div>
+        ) : !showReviewForm ? (
           <button
             onClick={() => setShowReviewForm(true)}
             className="bg-mainColor text-white px-4 py-2 hover:bg-mainColor/90 w-full md:w-auto">

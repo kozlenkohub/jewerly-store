@@ -28,6 +28,25 @@ const Product = () => {
   const { currency } = useSelector((state) => state.product);
   const [activeTab, setActiveTab] = useState('description'); // Add this new state
 
+  const calculateAverageRating = (reviews) => {
+    if (!reviews || reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return sum / reviews.length;
+  };
+
+  const renderStars = (rating) => {
+    const roundedRating = Math.round(rating);
+    return [...Array(5)].map((_, index) => (
+      <span key={index}>
+        {index < roundedRating ? (
+          <FaStar className="text-yellow-500 w-3.5 h-3.5" />
+        ) : (
+          <FaRegStar className="text-yellow-500 w-3.5 h-3.5" />
+        )}
+      </span>
+    ));
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -91,12 +110,9 @@ const Product = () => {
 
         <div className="flex-1 futura">
           <h1 className="font-medium text-2xl mt-2 forum">{product.name}</h1>
-          <div className="flex items-center gap-1 mt-2 ">
-            {[...Array(4)].map((_, index) => (
-              <FaStar key={index} className="text-yellow-500 w-3 5" />
-            ))}
-            <FaRegStar className="text-yellow-500 w-3 5" />
-            <p className="pl-2">(122)</p>
+          <div className="flex items-center gap-1 mt-2">
+            {renderStars(calculateAverageRating(product.reviews))}
+            <p className="pl-2">({product.reviews?.length || 0})</p>
           </div>
           <p className="mt-5 text-3xl font-medium">
             {product.discount ? (
@@ -160,7 +176,7 @@ const Product = () => {
             className={`border px-5 py-3 text-sm ${
               activeTab === 'reviews' ? 'font-bold bg-gray-50' : ''
             }`}>
-            Reviews (122)
+            Reviews ({product.reviews?.length || 0})
           </button>
         </div>
         {activeTab === 'description' ? (
