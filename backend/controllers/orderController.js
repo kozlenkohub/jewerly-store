@@ -30,6 +30,7 @@ const validateOrderData = (data) => {
 
 const calculateTotalPrice = async (orderItems, shippingFee) => {
   let totalPrice = 0;
+  if (shippingFee) totalPrice += shippingFee;
   for (const item of orderItems) {
     const product = await Product.findById(item._id);
     if (product) {
@@ -37,7 +38,6 @@ const calculateTotalPrice = async (orderItems, shippingFee) => {
       const price = product.price || 0;
 
       totalPrice += (price - (price * discount) / 100) * item.quantity;
-      totalPrice += shippingFee;
     }
   }
   return totalPrice;
