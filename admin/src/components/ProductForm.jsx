@@ -3,7 +3,14 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 
-import { METAL_TYPES, CUT_FORMS, STYLES, CLARITY_TYPES, PURITY_TYPES } from '../utils/modelEnums';
+import {
+  METAL_TYPES,
+  CUT_FORMS,
+  STYLES,
+  CLARITY_TYPES,
+  PURITY_TYPES,
+  ringSizer,
+} from '../utils/modelEnums';
 import MediaUpload from './MediaUpload';
 import CategorySelect from './CategorySelect';
 
@@ -22,6 +29,7 @@ const validationSchema = Yup.object({
     .min(0, 'Must be 0 or greater')
     .max(100, 'Must be 100 or less')
     .transform((value) => (isNaN(value) ? undefined : value)),
+  size: Yup.array().of(Yup.number()),
 });
 
 const createSelectOptions = (items) => {
@@ -63,6 +71,7 @@ const ProductForm = ({ onSubmit, categories }) => {
         carats: '',
         bestseller: false,
         discount: '',
+        size: [],
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}>
@@ -167,6 +176,39 @@ const ProductForm = ({ onSubmit, categories }) => {
               {errors.collection && touched.collection && (
                 <div className="text-red-500 text-sm">{errors.collection}</div>
               )}
+            </div>
+
+            {/* Size field - add before the Media Upload section */}
+            <div className="col-span-2">
+              <label className="block mb-2">Sizes</label>
+              <div className="mb-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFieldValue('size', values.size.length === ringSizer.length ? [] : ringSizer)
+                  }
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-3 rounded text-sm">
+                  {values.size.length === ringSizer.length ? 'Unselect All' : 'Select All'}
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {ringSizer.map((size) => (
+                  <label key={size} className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={values.size.includes(size)}
+                      onChange={(e) => {
+                        const newSizes = e.target.checked
+                          ? [...values.size, size]
+                          : values.size.filter((s) => s !== size);
+                        setFieldValue('size', newSizes);
+                      }}
+                      className="form-checkbox h-4 w-4 text-blue-600"
+                    />
+                    <span className="ml-2">{size}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* Media Upload */}

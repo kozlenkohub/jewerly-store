@@ -14,3 +14,4 @@ export const CUT_FORMS = [
 export const STYLES = ['solitaire', 'halo', 'three-stone', 'vintage', 'cluster', 'sidestone'];
 export const CLARITY_TYPES = ['IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2', 'I1', 'I2', 'I3'];
 export const PURITY_TYPES = [750, 585, 375, 916, 999];
+export const ringSizer = Array.from({ length: 10 }, (_, i) => 15 + i * 0.5);
