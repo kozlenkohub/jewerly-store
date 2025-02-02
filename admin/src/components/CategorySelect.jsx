@@ -1,28 +1,27 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Select from 'react-select';
 
 const CategorySelect = ({ categories, onChange, value }) => {
-  const createOptions = (categories, prefix = '') => {
-    let options = [];
+  const options = useMemo(() => {
+    const createOptions = (categories, level = 0) => {
+      return categories.reduce((acc, category) => {
+        acc.push({
+          value: category._id,
+          label: category.name,
+          level: level,
+        });
 
-    for (const category of categories) {
-      // Добавляем текущую категорию
-      options.push({
-        value: category._id,
-        label: prefix + category.name,
-      });
+        if (category.children?.length > 0) {
+          acc.push(...createOptions(category.children, level + 1));
+        }
 
-      // Если есть дочерние категории, добавляем их с отступом
-      if (category.children && category.children.length > 0) {
-        const childOptions = createOptions(category.children, prefix + '    ');
-        options = [...options, ...childOptions];
-      }
-    }
+        return acc;
+      }, []);
+    };
 
-    return options;
-  };
+    return createOptions(categories);
+  }, [categories]);
 
-  const options = createOptions(categories);
   const selectedOption = options.find((opt) => opt.value === value);
 
   return (
@@ -40,11 +39,12 @@ const CategorySelect = ({ categories, onChange, value }) => {
       isClearable
       isSearchable
       placeholder="Select Category"
-      classNamePrefix="select"
+      formatOptionLabel={({ label, level }) => (
+        <span style={{ paddingLeft: `${level * 20}px` }}>{label}</span>
+      )}
       styles={{
         option: (base, state) => ({
           ...base,
-          paddingLeft: base.paddingLeft + (state.data.label.match(/^\s+/) || [''])[0].length * 4,
           backgroundColor: state.isSelected ? '#3B82F6' : state.isFocused ? '#BFDBFE' : 'white',
           color: state.isSelected ? 'white' : '#374151',
           ':active': {
