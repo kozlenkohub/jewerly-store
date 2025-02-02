@@ -9,6 +9,7 @@ const ImageSlider = ({ media, productName, isVideo }) => {
   const videoRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isVideo(media[currentSlide]) && videoRef.current) {
@@ -46,7 +47,7 @@ const ImageSlider = ({ media, productName, isVideo }) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 200,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
@@ -68,33 +69,45 @@ const ImageSlider = ({ media, productName, isVideo }) => {
     ),
   };
 
+  const LoadingSpinner = () => (
+    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
   const renderMedia = (url) => {
     if (isVideo(url)) {
       return (
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          loop
-          muted
-          playsInline
-          autoPlay
-          poster={url.replace('.mp4', '.jpg')}
-          preload="auto"
-          onLoadedMetadata={() => setIsVideoReady(true)}
-          onError={(e) => {
-            console.error('Video error:', e);
-            setIsVideoReady(false);
-          }}
-          onClick={(e) => {
-            if (e.target.paused) {
-              e.target.play().catch(console.error);
-            } else {
-              e.target.pause();
-            }
-          }}>
-          <source src={url} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="relative w-full h-full">
+          {isLoading && <LoadingSpinner />}
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            loop
+            muted
+            playsInline
+            autoPlay
+            poster={url.replace('.mp4', '.jpg')}
+            preload="auto"
+            onLoadStart={() => setIsLoading(true)}
+            onLoadedData={() => setIsLoading(false)}
+            onLoadedMetadata={() => setIsVideoReady(true)}
+            onError={(e) => {
+              console.error('Video error:', e);
+              setIsVideoReady(false);
+              setIsLoading(false);
+            }}
+            onClick={(e) => {
+              if (e.target.paused) {
+                e.target.play().catch(console.error);
+              } else {
+                e.target.pause();
+              }
+            }}>
+            <source src={url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       );
     }
     return <img src={url} alt={productName} className="w-full h-full object-cover" />;
