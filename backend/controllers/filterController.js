@@ -45,6 +45,11 @@ export const getAllFilters = async (req, res) => {
       }))
       .filter((filter) => filter.options.length > 0);
 
+    // If no filters found for the category, return all filters
+    if (filteredFilters.length === 0) {
+      return res.json(filters);
+    }
+
     res.json(filteredFilters);
   } catch (error) {
     res.status(500).json({ message: 'Error getting filters', error });

@@ -1,44 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from '../../config/axiosInstance';
 import BackButton from '../../components/BackButton';
+import CategoryForm from '../../components/CategoryForm/CategoryForm';
 
 const AddNewCategory = () => {
-  const [name, setName] = useState('');
+  const [parentCategories, setParentCategories] = useState([]);
 
-  const handleSubmit = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesRes = await axios.get('/api/category/get');
+        console.log('Fetched categories:', categoriesRes.data);
+        setParentCategories(categoriesRes.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Error fetching data');
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const { data } = await axios.post('/api/category/add', { name });
+      const formData = new FormData();
+
+      // Append text fields
+      formData.append('name', String(values.name || ''));
+      formData.append('label', String(values.label || ''));
+      formData.append('parent', String(values.parent || ''));
+      formData.append('slug', String(values.slug || ''));
+
+      // Append files with correct field names
+      if (values.image) {
+        formData.append('image', values.image);
+      }
+      if (values.icon) {
+        formData.append('icon', values.icon);
+      }
+
+      const response = await axios.post('/api/category/add', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Server response:', response.data);
       toast.success('Category added successfully!');
-      setName('');
+      resetForm();
     } catch (error) {
-      console.error('Error adding category:', error);
-      toast.error('Error adding category');
+      console.error('Category creation error:', error);
+      console.error('Error response:', error.response?.data);
+      toast.error(error.response?.data?.message || 'Error adding category');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
       <BackButton />
-
       <h1 className="text-2xl font-bold mb-4">Add New Category</h1>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-          Category Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Submit
-      </button>
+      <CategoryForm onSubmit={handleSubmit} parentCategories={parentCategories} />
     </div>
   );
 };

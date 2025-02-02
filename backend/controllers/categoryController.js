@@ -1,14 +1,47 @@
 import Category from '../models/categoryModel.js';
+import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinaryUpload.js';
 
 export const createCategory = async (req, res) => {
   try {
-    const { name, parent, icon, slug } = req.body; // Include slug
-    const newCategory = new Category({ name, parent, icon, slug }); // Include slug
+    const { name, parent, label, slug } = req.body;
+    const files = req.files || {};
+
+    if (!name) {
+      return res.status(400).json({ message: 'Name is required' });
+    }
+
+    const categoryData = {
+      name,
+      slug: slug || generateSlug(name),
+      label,
+      parent: parent || null,
+    };
+
+    // Handle image upload
+    if (files.image) {
+      const imageResult = await uploadToCloudinary(files.image[0].buffer);
+      categoryData.image = imageResult.secure_url;
+    }
+
+    // Handle icon upload
+    if (files.icon) {
+      const iconResult = await uploadToCloudinary(files.icon[0].buffer);
+      categoryData.icon = iconResult.secure_url;
+    }
+
+    const newCategory = new Category(categoryData);
     await newCategory.save();
+
     return res.status(201).json(newCategory);
   } catch (error) {
+    console.error('Error creating category:', error);
     return res.status(400).json({ message: error.message });
   }
+};
+
+// Helper function
+const generateSlug = (name) => {
+  return name.toLowerCase().replace(/\s+/g, '-');
 };
 
 export const getAllCategories = async (req, res) => {
@@ -52,13 +85,38 @@ export const getCategoryById = async (req, res) => {
 
 export const updateCategory = async (req, res) => {
   try {
-    const { name, parent, icon } = req.body;
-    const updatedCategory = await Category.findByIdAndUpdate(
-      req.params.id,
-      { name, parent, icon },
-      { new: true },
-    );
-    if (!updatedCategory) return res.status(404).json({ message: 'Category not found' });
+    const { name, parent, label } = req.body;
+    const files = req.files || {};
+
+    const category = await Category.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
+    const updateData = { name, parent, label };
+
+    // Handle image update
+    if (files.image) {
+      if (category.image) {
+        await deleteFromCloudinary(category.image);
+      }
+      const imageResult = await uploadToCloudinary(files.image[0].buffer);
+      updateData.image = imageResult.secure_url;
+    }
+
+    // Handle icon update
+    if (files.icon) {
+      if (category.icon) {
+        await deleteFromCloudinary(category.icon);
+      }
+      const iconResult = await uploadToCloudinary(files.icon[0].buffer);
+      updateData.icon = iconResult.secure_url;
+    }
+
+    const updatedCategory = await Category.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    });
+
     return res.json(updatedCategory);
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -67,8 +125,20 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   try {
-    const removed = await Category.findByIdAndDelete(req.params.id);
-    if (!removed) return res.status(404).json({ message: 'Category not found' });
+    const category = await Category.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
+    // Delete associated files from Cloudinary
+    if (category.image) {
+      await deleteFromCloudinary(category.image);
+    }
+    if (category.icon) {
+      await deleteFromCloudinary(category.icon);
+    }
+
+    await Category.findByIdAndDelete(req.params.id);
     return res.json({ message: 'Category deleted' });
   } catch (error) {
     return res.status(400).json({ message: error.message });

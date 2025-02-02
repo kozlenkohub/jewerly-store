@@ -66,7 +66,6 @@ export const getProducts = async (req, res) => {
     const products = await query;
     res.json({ products, categoryName: categoryDoc ? categoryDoc.name : '' });
   } catch (error) {
-    console.error('Error in getProducts:', error);
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
@@ -92,51 +91,18 @@ export const addProduct = async (req, res) => {
       weight,
     } = req.body;
 
-    console.log('Starting product addition with files:', {
-      fileCount: req.files?.length,
-      files: req.files?.map((f) => ({
-        name: f.originalname,
-        type: f.mimetype,
-        size: f.size,
-      })),
-    });
-
     const mediaUrls = [];
 
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {
         const isVideo = file.mimetype.startsWith('video/');
-        console.log(`Processing ${isVideo ? 'video' : 'image'} file:`, {
-          name: file.originalname,
-          size: file.size,
-          type: file.mimetype,
-        });
 
-        try {
-          if (isVideo && file.size > 50 * 1024 * 1024) {
-            console.log('Video file too large:', file.size);
-            return res.status(400).json({ message: 'Video file size must be less than 50MB' });
-          }
-
-          console.log('Starting media upload...');
-          const result = await uploadToCloudinary(file.buffer, isVideo ? 'video' : 'image').catch(
-            (error) => {
-              console.error('Upload error caught:', error);
-              throw error;
-            },
-          );
-
-          console.log('Upload completed successfully');
-          mediaUrls.push(`${result.secure_url}${isVideo ? '#video' : '#image'}`);
-        } catch (uploadError) {
-          console.error('Detailed upload error:', uploadError);
-          return res.status(500).json({
-            message: 'Error uploading media',
-            error: uploadError.message,
-            details: uploadError,
-            file: file.originalname,
-          });
+        if (isVideo && file.size > 50 * 1024 * 1024) {
+          return res.status(400).json({ message: 'Video file size must be less than 50MB' });
         }
+
+        const result = await uploadToCloudinary(file.buffer, isVideo ? 'video' : 'image');
+        mediaUrls.push(`${result.secure_url}${isVideo ? '#video' : '#image'}`);
       }
     }
 
@@ -178,7 +144,6 @@ export const addProduct = async (req, res) => {
     await newProduct.save();
     res.status(201).json({ message: 'Product added successfully', product: newProduct });
   } catch (error) {
-    console.error('Error in addProduct:', error);
     res.status(500).json({
       message: 'Server Error',
       error: error.message,
@@ -249,7 +214,6 @@ export const insertProducts = async (req, res) => {
     await Product.insertMany(products);
     res.json({ message: 'Products inserted successfully' });
   } catch (error) {
-    console.error('Error inserting products:', error);
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };

@@ -47,7 +47,6 @@ export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, shippingFee, paymentMethod, payment, status, userId } =
       req.body;
-    console.log(orderItems);
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {

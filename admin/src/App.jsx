@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Add from './pages/Add';
 import AddNewProduct from './pages/Add/AddNewProduct';
 import AddNewCategory from './pages/Add/AddNewCategory';
+import Edit from './pages/Edit';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
               <Route path="/add" element={<Add />} />
               <Route path="/add-new-product" element={<AddNewProduct />} />
               <Route path="/add-new-category" element={<AddNewCategory />} />
+              <Route path="/edit" element={<Edit />} />
             </Routes>
           </div>
         </div>
