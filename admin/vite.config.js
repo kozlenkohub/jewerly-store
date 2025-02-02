@@ -5,12 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: { port: 5174 },
 
-  resolve: {
-    alias: {
-      '@': '/src',
-    },
-  },
-  base: '/', // Важно для корректной работы маршрутов
+  base: '/',
   build: {
     outDir: 'dist', // Папка для сборки
   },
