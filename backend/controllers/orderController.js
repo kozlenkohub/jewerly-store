@@ -78,6 +78,7 @@ export const placeOrder = async (req, res) => {
     if (userId) {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
+    console.log(savedOrder);
 
     await sendEmail({
       email: shippingFields.email,

@@ -71,16 +71,16 @@ export function createOrderMessage(orderDetails) {
     .map(
       (item) => `
     <div style="border-bottom:1px solid #eee; padding:10px 0; margin-bottom:10px;">
-      <div style="display:flex; align-items:start;">
+      <div style="display:flex; align-items:start; flex-wrap:wrap;">
         <img src="${item.image[0].split('#')[0]}" alt="${
         item.name
-      }" style="width:100px; height:100px; object-fit:cover; margin-right:15px;">
-        <div>
+      }" style="width:100%; max-width:100px; height:auto; object-fit:cover; margin-right:15px;">
+        <div style="flex:1; min-width:200px;">
           <h4 style="margin:0 0 5px; color:#333;">${item.name}</h4>
           <p style="margin:0 0 5px; color:#666;">Quantity: ${item.quantity}</p>
-          <p style="margin:0 0 5px; color:#666;">Metal: ${item.metal}</p>
-          <p style="margin:0 0 5px; color:#666;">Weight: ${item.weight}g</p>
-          <p style="margin:0 0 5px; color:#666;">Carats: ${item.carats}</p>
+          ${item.metal ? `<p style="margin:0 0 5px; color:#666;">Metal: ${item.metal}</p>` : ''}
+          ${item.weight ? `<p style="margin:0 0 5px; color:#666;">Weight: ${item.weight}g</p>` : ''}
+          ${item.carats ? `<p style="margin:0 0 5px; color:#666;">Carats: ${item.carats}</p>` : ''}
           <p style="margin:0; color:#b79259;">Price: ${formatPrice(item.price)} × ${
         item.quantity
       }</p>
