@@ -109,6 +109,7 @@ export const placeOrder = async (req, res) => {
       });
     } else {
       res.status(201).json({
+        paymentMethod,
         message: 'Order Created',
         orderId: savedOrder._id,
       });

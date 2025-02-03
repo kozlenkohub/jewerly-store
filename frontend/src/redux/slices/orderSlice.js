@@ -80,8 +80,9 @@ const orderSlice = createSlice({
         }
         state.orders.push(action.payload);
         state.isLoadingOrder = false;
-
-        toast.success('Order placed successfully!');
+        if (action.payload.paymentMethod === 'cash') {
+          toast.success('Order placed successfully');
+        }
       })
       .addCase(checkout.rejected, (state, action) => {
         state.status = 'failed';
