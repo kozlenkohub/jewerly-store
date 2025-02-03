@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Title from './Title';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import Select from 'react-select';
+import countryList from 'react-select-country-list';
 
 const CheckoutForm = ({ formData, setFormData }) => {
+  const countries = useMemo(() => countryList().getData(), []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handlePhoneChange = (value) => {
+    setFormData({ ...formData, phone: value });
+  };
+
+  const handleCountryChange = (option) => {
+    setFormData({ ...formData, country: option.label });
   };
 
   return (
@@ -56,13 +70,20 @@ const CheckoutForm = ({ formData, setFormData }) => {
           placeholder="Apartament"
         />
       </div>
-      <input
-        type="text"
-        name="country"
-        value={formData.country}
-        onChange={handleInputChange}
-        className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-        placeholder="Country"
+      <Select
+        options={countries}
+        value={countries.find((option) => option.label === formData.country)}
+        onChange={handleCountryChange}
+        placeholder="Select country"
+        className="w-full"
+        classNames={{
+          control: (state) =>
+            'border border-gray-300 rounded py-0.5 px-2 !min-h-[38px] !shadow-none' +
+            (state.isFocused ? ' border-gray-400' : ''),
+          input: () => '!m-0 !p-0',
+          valueContainer: () => '!p-0',
+          singleValue: () => '!m-0',
+        }}
       />
       <div className="flex gap-3 ">
         <input
@@ -82,15 +103,22 @@ const CheckoutForm = ({ formData, setFormData }) => {
           placeholder="Zip code"
         />
       </div>
-      <input
-        type="tel"
-        name="phone"
-        value={formData.phone}
-        onChange={handleInputChange}
-        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-        className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-        placeholder="Phone"
-      />
+      <div className="relative">
+        <PhoneInput
+          country={'us'}
+          value={formData.phone}
+          onChange={handlePhoneChange}
+          containerClass="!w-full"
+          inputClass="!w-full !h-[38px] !text-base !font-normal !border !border-gray-300 !rounded !py-1.5 !pl-12 !pr-3.5"
+          buttonClass="!border-gray-300 !rounded-l !h-[38px]"
+          dropdownClass="!rounded !shadow-lg"
+          searchClass="!py-1.5 !px-3.5 !border !border-gray-300 !rounded !mt-1"
+          inputProps={{
+            name: 'phone',
+            required: true,
+          }}
+        />
+      </div>
     </div>
   );
 };
