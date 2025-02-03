@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCartItems } from '../redux/slices/cartSlice';
 
-const StripeForm = ({ orderId, amount }) => {
+const StripeForm = ({ orderId, amount, commision }) => {
   // добавляем amount в пропсы
   const { currency } = useSelector((state) => state.product);
   const dispatch = useDispatch();

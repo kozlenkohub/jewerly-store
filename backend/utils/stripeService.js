@@ -4,21 +4,21 @@ import dotenv from 'dotenv';
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const calculateAmountWithCommission = (amount) => {
-  // Stripe fee is 2.9% + 0.30 USD
-  // Formula: (amount + 0.30) / (1 - 0.029)
-  return Math.round((amount + 0.3) / (1 - 0.029));
+const calculateTotalWithStripeFees = (amount) => {
+  const FIXED_FEE = 0.3; // фиксированная комиссия ($0.30)
+  const PERCENTAGE_FEE = 0.029; // процентная комиссия (2.9%)
+
+  return Math.round((amount + FIXED_FEE) / (1 - PERCENTAGE_FEE));
 };
 
 const createPaymentIntent = async (amount, currency = 'uah') => {
   try {
-    const amountWithCommission = calculateAmountWithCommission(amount);
+    const amountWithFees = calculateTotalWithStripeFees(amount);
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amountWithCommission * 100),
+      commision: amoutWithFees - amount,
+      amount: amountWithFees * 100, // Stripe работает в центах
       currency,
-      automatic_payment_methods: {
-        enabled: true,
-      },
+      automatic_payment_methods: { enabled: true },
     });
     return paymentIntent;
   } catch (error) {

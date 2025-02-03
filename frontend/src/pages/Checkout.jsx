@@ -39,6 +39,7 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [amount, setAmount] = useState(null);
+  const [commision, setCommision] = useState(null);
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
@@ -71,6 +72,7 @@ const Checkout = () => {
           setClientSecret(response.clientSecret);
           setAmount(response.amount);
           setOrderId(response.orderId);
+          setCommision(response.commision);
         } else {
           navigate('/orders');
         }
@@ -144,7 +146,7 @@ const Checkout = () => {
 
           {paymentMethod === 'stripe' && clientSecret ? (
             <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <StripeForm orderId={orderId} amount={amount} />
+              <StripeForm orderId={orderId} amount={amount} commision={commision} />
             </Elements>
           ) : (
             <div className="w-full text-center mt-8">
