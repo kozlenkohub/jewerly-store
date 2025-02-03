@@ -1,6 +1,8 @@
 import Order from '../models/orderModel.js';
 import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
+import sendEmail from '../utils/emailServices.js';
+import { createOrderMessage } from '../utils/messageServices.js';
 
 const validateOrderData = (data) => {
   const errors = {};
@@ -65,7 +67,7 @@ export const placeOrder = async (req, res) => {
       email: shippingFields.email,
     });
 
-    await order.save();
+    const savedOrder = await order.save();
 
     // Update product sales
     for (const item of orderItems) {
@@ -76,6 +78,13 @@ export const placeOrder = async (req, res) => {
     if (userId) {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
+
+    // Send order confirmation email
+    await sendEmail({
+      email: shippingFields.email,
+      subject: 'Order Confirmation - Luxury Jewelry Store',
+      message: createOrderMessage(savedOrder),
+    });
 
     res.status(201).json({ message: 'Order Created' });
   } catch (error) {
