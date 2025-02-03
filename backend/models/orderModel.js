@@ -71,6 +71,10 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: Date.now,
     },
+    stripeFees: {
+      type: Number,
+      required: false,
+    },
     status: {
       type: String,
       enum: ['Order Placed', 'Processing', 'Shipped', 'Delivered'],

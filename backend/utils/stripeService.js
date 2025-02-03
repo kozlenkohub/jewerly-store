@@ -15,12 +15,16 @@ const createPaymentIntent = async (amount, currency = 'uah') => {
   try {
     const amountWithFees = calculateTotalWithStripeFees(amount);
     const paymentIntent = await stripe.paymentIntents.create({
-      commision: amoutWithFees - amount,
       amount: amountWithFees * 100, // Stripe работает в центах
       currency,
       automatic_payment_methods: { enabled: true },
     });
-    return paymentIntent;
+
+    // Add the fees calculation to the response
+    return {
+      ...paymentIntent,
+      calculatedFees: amountWithFees - amount,
+    };
   } catch (error) {
     throw new Error(`Error creating payment intent: ${error.message}`);
   }

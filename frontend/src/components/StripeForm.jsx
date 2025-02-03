@@ -99,6 +99,10 @@ const StripeForm = ({ orderId, amount, commision }) => {
         Total to pay: {currency}
         {(amount / 100).toFixed(2)}
       </div>
+      <div className="text-sm text-gray-500 mb-4 futura">
+        Including Stripe fees - {currency}
+        {commision.toFixed(2)}
+      </div>
       <button
         disabled={isProcessing || !stripe}
         className="bg-mainColor w-full text-white px-16 py-3 text-sm mt-4">

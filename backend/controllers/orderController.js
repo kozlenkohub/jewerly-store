@@ -64,10 +64,12 @@ export const placeOrder = async (req, res) => {
     let paymentIntent = null;
     let paymentStatus = 'pending';
     let paymentIntentId = null;
+    let stripeFees = null;
 
     if (paymentMethod === 'stripe') {
       paymentIntent = await createPaymentIntent(totalPrice);
       paymentIntentId = paymentIntent.id;
+      stripeFees = paymentIntent.calculatedFees;
     }
 
     const order = new Order({
@@ -81,6 +83,7 @@ export const placeOrder = async (req, res) => {
       paymentIntentId,
       paymentStatus,
       shippingFee,
+      stripeFees, // Add the fees to the order
     });
 
     const savedOrder = await order.save();
@@ -109,6 +112,7 @@ export const placeOrder = async (req, res) => {
         orderId: savedOrder._id,
         clientSecret: paymentIntent.client_secret,
         amount: paymentIntent.amount,
+        commision: stripeFees,
       });
     } else {
       res.status(201).json({
