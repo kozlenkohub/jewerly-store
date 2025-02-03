@@ -71,7 +71,7 @@ export function createOrderMessage(orderDetails) {
     .map(
       (item) => `
     <div style="border-bottom:1px solid #eee; padding:10px 0; margin-bottom:10px;">
-      <div style="display:flex; align-items:start; flex-wrap:wrap;">
+      <div class="responsive-items" style="display:flex; align-items:start; flex-wrap:wrap;">
         <img src="${item.image[0].split('#')[0]}" alt="${
         item.name
       }" style="width:100%; max-width:100px; height:auto; object-fit:cover; margin-right:15px;">
@@ -92,8 +92,19 @@ export function createOrderMessage(orderDetails) {
     .join('');
 
   return `
+  <style>
+    @media only screen and (max-width: 600px) {
+      .responsive-items {
+        display: block !important;
+      }
+      .responsive-items img {
+        margin: 0 auto 15px !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
   <div style="font-family:Helvetica,Arial,sans-serif; padding:40px; background:#f9f9f9;">
-    <div style="max-width:600px; margin:auto; background:white; border-radius:8px; overflow:hidden;">
+    <div style="width:100%; max-width:600px; margin:auto; background:white; border-radius:8px; overflow:hidden;">
       <div style="background:#b79259; padding:20px; text-align:center;">
         <h1 style="color:white; margin:0;">Luxury Jewelry Store</h1>
       </div>
