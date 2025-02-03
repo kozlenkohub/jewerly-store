@@ -21,10 +21,10 @@ const validateOrderData = (data) => {
     if (!data.shippingFields.zipCode) errors['shippingFields.zipCode'] = 'Zip Code is required';
     if (!data.shippingFields.city) errors['shippingFields.city'] = 'City is required';
     if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
+    if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
   }
   if (!data.paymentMethod) errors.paymentMethod = 'Payment method is required';
   if (!data.payment) errors.payment = 'Payment is required';
-  if (!data.userId) errors.userId = 'User ID is required';
   return errors;
 };
 
@@ -45,8 +45,8 @@ const calculateTotalPrice = async (orderItems, shippingFee) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const { orderItems, shippingFields, shippingFee, paymentMethod, payment, status, userId } =
-      req.body;
+    const { orderItems, shippingFields, shippingFee, paymentMethod, payment } = req.body;
+    const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
 
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
@@ -57,22 +57,27 @@ export const placeOrder = async (req, res) => {
 
     const order = new Order({
       orderItems,
-      user: userId,
+      user: userId, // Теперь это должно работать корректно
       shippingFields,
       paymentMethod,
       payment,
       totalPrice,
-      status,
+      email: shippingFields.email,
     });
 
     await order.save();
+
+    // Update product sales
     for (const item of orderItems) {
       await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
     }
 
-    await User.findByIdAndUpdate(userId, { cartData: {} });
+    // Clear cart only for authenticated users
+    if (userId) {
+      await User.findByIdAndUpdate(userId, { cartData: {} });
+    }
 
-    await res.status(201).json({ message: 'Order Created' });
+    res.status(201).json({ message: 'Order Created' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

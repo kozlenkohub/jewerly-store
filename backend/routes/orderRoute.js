@@ -7,11 +7,12 @@ import {
   getOrders,
 } from '../controllers/orderController.js';
 import auth from '../middleware/auth.js';
+import optionalAuth from '../middleware/optionalAuth.js'; // Create this middleware
 
 const orderRouter = express.Router();
 
-orderRouter.post('/', auth, placeOrder);
-orderRouter.post('/stripe', auth, placeOrderStripe);
+orderRouter.post('/', optionalAuth, placeOrder); // Optional auth
+orderRouter.post('/stripe', optionalAuth, placeOrderStripe); // Optional auth
 orderRouter.get('/myorders', auth, userOrders);
 orderRouter.get('/lastorder', auth, getLastOrder);
 orderRouter.get('/', getOrders);

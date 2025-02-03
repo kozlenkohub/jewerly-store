@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from '../config/axiosInstance';
 import CheckoutForm from '../components/CheckoutForm';
+import AuthRecommendModal from '../components/AuthRecommendModal';
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -28,21 +29,45 @@ const Checkout = () => {
     zipCode: '',
     phone: '',
   });
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingOrderData, setPendingOrderData] = useState(null);
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
       toast.error('Cart is empty');
       return;
     }
-    if (!paymentMethod) {
-      toast.error('Payment method is required');
+
+    const orderData = {
+      shippingFields: formData,
+      shippingFee,
+      orderItems,
+      paymentMethod,
+    };
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setPendingOrderData(orderData);
+      setShowAuthModal(true);
       return;
     }
-    dispatch(checkout({ shippingFields: formData, shippingFee, orderItems, paymentMethod }))
+
+    processOrder(orderData);
+  };
+
+  const processOrder = (orderData) => {
+    dispatch(checkout(orderData))
       .unwrap()
       .then(() => {
         navigate('/orders');
       });
+  };
+
+  const handleGuestCheckout = () => {
+    setShowAuthModal(false);
+    if (pendingOrderData) {
+      processOrder(pendingOrderData);
+    }
   };
 
   const paymentMethods = [
@@ -114,6 +139,12 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      {showAuthModal && (
+        <AuthRecommendModal
+          onClose={() => setShowAuthModal(false)}
+          onContinue={handleGuestCheckout}
+        />
+      )}
     </div>
   );
 };

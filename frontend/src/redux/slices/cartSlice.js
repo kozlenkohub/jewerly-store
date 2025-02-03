@@ -185,6 +185,12 @@ const cartSlice = createSlice({
       );
       state.totalPrice = calculateTotalPrice(state.cartItems);
     },
+    clearCart: (state) => {
+      state.cartItems = [];
+      state.delivery_fee = 0;
+      state.itemsPrice = 0;
+      state.totalPrice = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -238,6 +244,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setCartItems } = cartSlice.actions;
+export const { setCartItems, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
