@@ -3,8 +3,12 @@ import { useState } from 'react';
 import axios from '../config/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCartItems } from '../redux/slices/cartSlice';
 
 const StripeForm = ({ orderId }) => {
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.cart);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -38,6 +42,7 @@ const StripeForm = ({ orderId }) => {
         toast.success(response.data.message || 'Payment successful!');
         navigate('/orders');
         localStorage.removeItem('guestCart');
+        dispatch(setCartItems([]));
       } else {
         toast.error(response.data.message || 'Payment failed');
       }

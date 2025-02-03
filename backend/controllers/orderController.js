@@ -122,7 +122,7 @@ export const updateOrderPayment = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    // Проверяем, не был ли платеж уже подтвержден
+    // Check if payment was already confirmed
     if (order.paymentStatus === 'paid') {
       return res.json({
         success: true,
@@ -132,22 +132,14 @@ export const updateOrderPayment = async (req, res) => {
       });
     }
 
-    // Проверяем метод оплаты
+    const previousStatus = order.paymentStatus;
+
+    // Handle payment method specific logic
     if (order.paymentMethod === 'stripe') {
       try {
         const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
         order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
-
-        // Отправляем письмо только при успешной оплате через Stripe
-        if (paymentResult.status === 'succeeded') {
-          await sendEmail({
-            email: order.shippingFields.email,
-            subject: 'Successful Order Payment',
-            html: createOrderMessage(order),
-          });
-        }
       } catch (stripeError) {
-        // Если платеж уже был подтвержден, проверяем его статус
         if (stripeError.message.includes('already succeeded')) {
           order.paymentStatus = 'paid';
         } else {
@@ -159,6 +151,15 @@ export const updateOrderPayment = async (req, res) => {
     }
 
     await order.save();
+
+    // Send email only when status changes to 'paid'
+    if (previousStatus !== 'paid' && order.paymentStatus === 'paid') {
+      await sendEmail({
+        email: order.shippingFields.email,
+        subject: 'Successful Order Payment',
+        html: createOrderMessage(order),
+      });
+    }
 
     res.json({
       success: true,
