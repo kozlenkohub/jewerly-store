@@ -40,7 +40,7 @@ export const checkout = createAsyncThunk(
       });
       dispatch(fetchCartItems());
       // Очищаем гостевую корзину из localStorage
-      localStorage.removeItem('guestCart');
+      // localStorage.removeItem('guestCart');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

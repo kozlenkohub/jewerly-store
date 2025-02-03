@@ -54,7 +54,21 @@ const StripeForm = ({ orderId }) => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full mt-4">
-      <PaymentElement />
+      <PaymentElement
+        options={{
+          wallets: {
+            applePay: 'auto',
+            googlePay: 'auto',
+          },
+          appearance: {
+            theme: 'stripe',
+            variables: {
+              colorPrimary: '#0A2540',
+              borderRadius: '4px',
+            },
+          },
+        }}
+      />
       <button
         disabled={isProcessing || !stripe}
         className="bg-mainColor w-full text-white px-16 py-3 text-sm mt-4">
