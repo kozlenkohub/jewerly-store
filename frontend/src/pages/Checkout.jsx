@@ -44,7 +44,6 @@ const Checkout = () => {
       toast.error('Cart is empty');
       return;
     }
-    console.log(shippingFee);
 
     const orderData = {
       shippingFields: formData,
