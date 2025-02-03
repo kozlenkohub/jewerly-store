@@ -9,7 +9,6 @@ const createPaymentIntent = async (amount, currency = 'usd') => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
       currency,
-      payment_method_types: ['card', 'apple_pay', 'google_pay'],
       automatic_payment_methods: {
         enabled: true,
       },
