@@ -15,7 +15,7 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
     const token = localStorage.getItem('token');
     if (token) {
       const response = await axios.get('/api/orders/myorders');
-      // Ensure we always return an array
+
       return Array.isArray(response.data) ? response.data : Object.values(response.data || {});
     }
     return []; // Return empty array if no token
@@ -38,8 +38,11 @@ export const checkout = createAsyncThunk(
         payment,
         shippingFee,
       });
+      if (paymentMethod === 'cash') {
+        // Очищаем гостевую корзину из localStorage
+        localStorage.removeItem('guestCart');
+      }
       dispatch(fetchCartItems());
-      // Очищаем гостевую корзину из localStorage
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -77,9 +80,8 @@ const orderSlice = createSlice({
         }
         state.orders.push(action.payload);
         state.isLoadingOrder = false;
-        if (action.payload.paymentMethod === 'cash') {
-          toast.success('Order placed successfully!');
-        }
+
+        toast.success('Order placed successfully!');
       })
       .addCase(checkout.rejected, (state, action) => {
         state.status = 'failed';

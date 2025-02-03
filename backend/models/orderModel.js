@@ -52,7 +52,9 @@ const orderSchema = new mongoose.Schema(
     },
     paymentIntentId: {
       type: String,
-      required: true,
+      required: function () {
+        return this.paymentMethod === 'stripe';
+      },
     },
     paymentStatus: {
       type: String,

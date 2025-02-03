@@ -62,12 +62,11 @@ export const placeOrder = async (req, res) => {
 
     let paymentIntent = null;
     let paymentStatus = 'pending';
+    let paymentIntentId = null;
 
-    // Создаем payment intent только для метода оплаты stripe
     if (paymentMethod === 'stripe') {
       paymentIntent = await createPaymentIntent(totalPrice);
-    } else if (paymentMethod === 'cash') {
-      paymentStatus = 'pending'; // Для наличных статус всегда pending до подтверждения
+      paymentIntentId = paymentIntent.id;
     }
 
     const order = new Order({
@@ -78,7 +77,7 @@ export const placeOrder = async (req, res) => {
       payment,
       totalPrice,
       email: shippingFields.email,
-      paymentIntentId: paymentIntent?.id || null,
+      paymentIntentId,
       paymentStatus,
     });
 
@@ -94,7 +93,13 @@ export const placeOrder = async (req, res) => {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
 
-    // Убираем отправку письма отсюда
+    if (paymentMethod === 'cash') {
+      await sendEmail({
+        email: shippingFields.email,
+        subject: 'Order Confirmation',
+        html: createOrderMessage(savedOrder),
+      });
+    }
 
     if (paymentMethod === 'stripe') {
       res.status(201).json({
