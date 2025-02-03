@@ -3,6 +3,7 @@ import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
 import sendEmail from '../utils/emailServices.js';
 import { createOrderMessage } from '../utils/messageServices.js';
+import { createPaymentIntent } from '../utils/stripeService.js';
 
 const validateOrderData = (data) => {
   const errors = {};
@@ -93,39 +94,69 @@ export const placeOrder = async (req, res) => {
 
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { orderItems, shippingFields, paymentMethod, payment, status, userId } = req.body;
+    const { orderItems, shippingFields, paymentMethod, userId } = req.body;
 
-    const errors = validateOrderData(req.body);
+    const errors = validateOrderData({
+      ...req.body,
+      payment: true,
+    });
+
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({ message: 'Validation failed', errors });
     }
 
     const totalPrice = await calculateTotalPrice(orderItems);
+    const paymentIntent = await createPaymentIntent(totalPrice);
+
+    // Store order data in session or return it to frontend
+    res.status(200).json({
+      orderData: { orderItems, shippingFields, paymentMethod, totalPrice, userId },
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.error('Stripe order error:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const confirmStripePayment = async (req, res) => {
+  try {
+    const { orderData } = req.body;
+    const userId = orderData.userId; // Get userId from orderData instead of req.userId
 
     const order = new Order({
-      orderItems,
+      orderItems: orderData.orderItems,
       user: userId,
-      shippingFields,
-      paymentMethod,
-      payment,
-      totalPrice,
-      status,
+      shippingFields: orderData.shippingFields,
+      paymentMethod: orderData.paymentMethod,
+      payment: true,
+      totalPrice: orderData.totalPrice,
+      status: 'Processing',
+      email: orderData.shippingFields.email,
     });
 
-    const createdOrder = await order.save();
-    for (const item of orderItems) {
+    const savedOrder = await order.save();
+
+    // Update product sales
+    for (const item of orderData.orderItems) {
       await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
     }
 
-    await sendEmail({
-      email,
-      subject: 'Reset password',
-      html: createResetPasswordMessage(resetUrl),
-    });
-    res.json({ message: 'Email sent' });
+    // Clear cart for authenticated users
+    if (userId) {
+      await User.findByIdAndUpdate(userId, { cartData: {} });
+    }
 
-    res.status(201).json(createdOrder);
+    // Send confirmation email
+    await sendEmail({
+      email: orderData.shippingFields.email,
+      subject: 'Successful Order',
+      html: createOrderMessage(savedOrder),
+    });
+
+    res.json({ success: true, order: savedOrder });
   } catch (error) {
+    console.error('Payment confirmation error:', error);
     res.status(500).json({ message: error.message });
   }
 };
