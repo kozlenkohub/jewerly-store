@@ -6,7 +6,9 @@ import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCartItems } from '../redux/slices/cartSlice';
 
-const StripeForm = ({ orderId }) => {
+const StripeForm = ({ orderId, amount }) => {
+  // добавляем amount в пропсы
+  const { currency } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const stripe = useStripe();
@@ -33,10 +35,18 @@ const StripeForm = ({ orderId }) => {
       }
 
       // Обновляем статус заказа
-      const response = await axios.post('/api/orders/payment', {
-        orderId,
-        paymentMethodId: paymentIntent.payment_method,
-      });
+      const response = await axios.post(
+        '/api/orders/payment',
+        {
+          orderId,
+          paymentMethodId: paymentIntent.payment_method,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Добавляем токен
+          },
+        },
+      );
 
       if (response.data.success) {
         toast.success(response.data.message || 'Payment successful!');
@@ -73,8 +83,22 @@ const StripeForm = ({ orderId }) => {
               borderRadius: '4px',
             },
           },
+          payment_method_order: ['card', 'apple_pay', 'google_pay'],
+          defaultValues: {
+            billingDetails: {
+              currency: 'uah',
+            },
+          },
+          layout: {
+            type: 'tabs',
+            defaultCollapsed: false,
+          },
         }}
       />
+      <div className="text-lg font-semibold mt-4 mb-2 futura">
+        Total to pay: {currency}
+        {(amount / 100).toFixed(2)}
+      </div>
       <button
         disabled={isProcessing || !stripe}
         className="bg-mainColor w-full text-white px-16 py-3 text-sm mt-4">

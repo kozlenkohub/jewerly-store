@@ -38,6 +38,7 @@ const Checkout = () => {
   const [pendingOrderData, setPendingOrderData] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const [orderId, setOrderId] = useState(null);
+  const [amount, setAmount] = useState(null);
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
@@ -68,6 +69,7 @@ const Checkout = () => {
       .then((response) => {
         if (orderData.paymentMethod === 'stripe') {
           setClientSecret(response.clientSecret);
+          setAmount(response.amount);
           setOrderId(response.orderId);
         } else {
           navigate('/orders');
@@ -142,7 +144,7 @@ const Checkout = () => {
 
           {paymentMethod === 'stripe' && clientSecret ? (
             <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <StripeForm orderId={orderId} />
+              <StripeForm orderId={orderId} amount={amount} />
             </Elements>
           ) : (
             <div className="w-full text-center mt-8">

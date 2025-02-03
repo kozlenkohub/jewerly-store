@@ -91,7 +91,7 @@ export const placeOrder = async (req, res) => {
     }
 
     // Clear cart only for authenticated users
-    if (userId) {
+    if (userId && paymentMethod === 'cash') {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
 
@@ -108,6 +108,7 @@ export const placeOrder = async (req, res) => {
         message: 'Order Created',
         orderId: savedOrder._id,
         clientSecret: paymentIntent.client_secret,
+        amount: paymentIntent.amount,
       });
     } else {
       res.status(201).json({
@@ -124,14 +125,33 @@ export const placeOrder = async (req, res) => {
 export const updateOrderPayment = async (req, res) => {
   try {
     const { orderId, paymentMethodId } = req.body;
+    const userId = req.userId; // Получаем из middleware auth
 
     const order = await Order.findById(orderId);
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
+    // Проверяем, принадлежит ли заказ пользователю
+    if (order.user && order.user.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to update this order',
+      });
+    }
+
     // Check if payment was already confirmed
     if (order.paymentStatus === 'paid') {
+      // Очищаем корзину даже если платеж уже был подтвержден
+      if (userId) {
+        await User.findByIdAndUpdate(
+          userId,
+          {
+            cartData: {},
+          },
+          { new: true },
+        ); // добавляем { new: true } для получения обновленного документа
+      }
       return res.json({
         success: true,
         order,
@@ -139,6 +159,8 @@ export const updateOrderPayment = async (req, res) => {
         message: 'Payment was already confirmed',
       });
     }
+
+    await User.findByIdAndUpdate(userId, { cartData: {} });
 
     const previousStatus = order.paymentStatus;
 
