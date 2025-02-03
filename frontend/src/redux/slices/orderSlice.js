@@ -4,7 +4,7 @@ import axios from '../../config/axiosInstance';
 import { fetchCartItems } from './cartSlice';
 
 const initialState = {
-  orders: [],
+  orders: [], // Ensure orders is always initialized as an array
   isLoadingOrder: false,
   status: 'idle',
   error: null,
@@ -15,9 +15,10 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
     const token = localStorage.getItem('token');
     if (token) {
       const response = await axios.get('/api/orders/myorders');
-      const orders = Object.values(response.data);
-      return orders;
+      // Ensure we always return an array
+      return Array.isArray(response.data) ? response.data : Object.values(response.data || {});
     }
+    return []; // Return empty array if no token
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -52,6 +53,9 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addOrder: (state, action) => {
+      if (!Array.isArray(state.orders)) {
+        state.orders = []; // Initialize if undefined
+      }
       state.orders.push(action.payload);
     },
     setOrderStatus: (state, action) => {
@@ -69,6 +73,9 @@ const orderSlice = createSlice({
       })
       .addCase(checkout.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        if (!Array.isArray(state.orders)) {
+          state.orders = []; // Initialize if undefined
+        }
         state.orders.push(action.payload);
         state.isLoadingOrder = false;
         toast.success('Order placed successfully!');
@@ -92,7 +99,7 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.orders = action.payload;
+        state.orders = action.payload || []; // Ensure we always set an array
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = 'failed';

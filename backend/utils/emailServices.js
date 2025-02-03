@@ -10,7 +10,7 @@ const sendEmail = async (options) => {
   });
 
   const mailOptions = {
-    from: 'JANUARY <3',
+    from: 'JANUARY',
     to: options.email,
     subject: options.subject,
     html: options.html,

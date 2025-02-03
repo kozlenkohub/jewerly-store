@@ -79,13 +79,11 @@ export const placeOrder = async (req, res) => {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
 
-    // Send order confirmation email
     await sendEmail({
       email: shippingFields.email,
-      subject: 'Order Confirmation - Luxury Jewelry Store',
-      message: createOrderMessage(savedOrder),
+      subject: 'Successful Order',
+      html: createOrderMessage(savedOrder),
     });
-
     res.status(201).json({ message: 'Order Created' });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -117,6 +115,13 @@ export const placeOrderStripe = async (req, res) => {
     for (const item of orderItems) {
       await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
     }
+
+    await sendEmail({
+      email,
+      subject: 'Reset password',
+      html: createResetPasswordMessage(resetUrl),
+    });
+    res.json({ message: 'Email sent' });
 
     res.status(201).json(createdOrder);
   } catch (error) {
