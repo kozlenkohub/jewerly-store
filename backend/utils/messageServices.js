@@ -135,7 +135,6 @@ export function createOrderMessage(orderDetails) {
         <div style="background:#f5f5f5; padding:15px; border-radius:5px; margin-top:20px;">
           <h3 style="color:#b79259; margin-top:0;">Order Summary</h3>
           <p>Subtotal: ${formatPrice(orderDetails.totalPrice - orderDetails.shippingFee)}</p>
-          <p>Shipping Fee: ${formatPrice(orderDetails.shippingFee)}</p>
           <p style="font-weight:bold; color:#b79259; font-size:18px;">Total: ${formatPrice(
             orderDetails.totalPrice,
           )}</p>
