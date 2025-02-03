@@ -37,6 +37,7 @@ const StripeForm = ({ orderId }) => {
       if (response.data.success) {
         toast.success(response.data.message || 'Payment successful!');
         navigate('/orders');
+        localStorage.removeItem('guestCart');
       } else {
         toast.error(response.data.message || 'Payment failed');
       }
