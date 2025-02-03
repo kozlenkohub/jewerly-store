@@ -25,6 +25,7 @@ const validateOrderData = (data) => {
     if (!data.shippingFields.city) errors['shippingFields.city'] = 'City is required';
     if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
     if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
+    if (!data.shippingFields.phone) errors['shippingFields.phone'] = 'Phone is required';
   }
   if (!data.paymentMethod || !['cash', 'stripe'].includes(data.paymentMethod)) {
     errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
