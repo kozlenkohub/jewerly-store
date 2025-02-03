@@ -75,7 +75,7 @@ export const placeOrder = async (req, res) => {
 
     const order = new Order({
       orderItems,
-      user: userId, // Теперь это должно работать корректно
+      user: userId,
       shippingFields,
       paymentMethod,
       payment,
@@ -84,7 +84,7 @@ export const placeOrder = async (req, res) => {
       paymentIntentId,
       paymentStatus,
       shippingFee,
-      stripeFees, // Add the fees to the order
+      stripeFees,
     });
 
     const savedOrder = await order.save();
