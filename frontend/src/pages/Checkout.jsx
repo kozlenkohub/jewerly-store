@@ -10,6 +10,11 @@ import toast from 'react-hot-toast';
 import axios from '../config/axiosInstance';
 import CheckoutForm from '../components/CheckoutForm';
 import AuthRecommendModal from '../components/AuthRecommendModal';
+import StripeForm from '../components/StripeForm';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -31,6 +36,8 @@ const Checkout = () => {
   });
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingOrderData, setPendingOrderData] = useState(null);
+  const [clientSecret, setClientSecret] = useState(null);
+  const [orderId, setOrderId] = useState(null);
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
@@ -58,8 +65,13 @@ const Checkout = () => {
   const processOrder = (orderData) => {
     dispatch(checkout(orderData))
       .unwrap()
-      .then(() => {
-        navigate('/orders');
+      .then((response) => {
+        if (orderData.paymentMethod === 'stripe') {
+          setClientSecret(response.clientSecret);
+          setOrderId(response.orderId);
+        } else {
+          navigate('/orders');
+        }
       });
   };
 
@@ -127,16 +139,23 @@ const Checkout = () => {
               </div>
             ))}
           </div>
-          <div className="w-full text-center mt-8">
-            <button
-              onClick={handleCheckout}
-              className={`bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm ${
-                isLoadingOrder ? 'text-gray-500 bg-gray-800' : ''
-              }`}
-              disabled={isLoadingOrder}>
-              {isLoadingOrder ? 'PLACING...' : 'PLACE ORDER'}
-            </button>
-          </div>
+
+          {paymentMethod === 'stripe' && clientSecret ? (
+            <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <StripeForm orderId={orderId} />
+            </Elements>
+          ) : (
+            <div className="w-full text-center mt-8">
+              <button
+                onClick={handleCheckout}
+                className={`bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm ${
+                  isLoadingOrder ? 'text-gray-500 bg-gray-800' : ''
+                }`}
+                disabled={isLoadingOrder}>
+                {isLoadingOrder ? 'PLACING...' : 'PLACE ORDER'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {showAuthModal && (

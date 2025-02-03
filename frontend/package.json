@@ -31,7 +31,9 @@
     "react-sparkle": "^2.0.0",
     "react-spinners": "^0.15.0",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.2.1"
+    "swiper": "^11.2.1",
+    "@stripe/stripe-js": "^2.0.0",
+    "@stripe/react-stripe-js": "^2.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

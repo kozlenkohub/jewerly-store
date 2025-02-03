@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
 import sendEmail from '../utils/emailServices.js';
 import { createOrderMessage } from '../utils/messageServices.js';
-import { createPaymentIntent } from '../utils/stripeService.js';
+import { createPaymentIntent, confirmPaymentIntent } from '../utils/stripeService.js';
 
 const validateOrderData = (data) => {
   const errors = {};
@@ -26,7 +26,9 @@ const validateOrderData = (data) => {
     if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
     if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
   }
-  if (!data.paymentMethod) errors.paymentMethod = 'Payment method is required';
+  if (!data.paymentMethod || !['cash', 'stripe'].includes(data.paymentMethod)) {
+    errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
+  }
   if (!data.payment) errors.payment = 'Payment is required';
   return errors;
 };
@@ -58,6 +60,16 @@ export const placeOrder = async (req, res) => {
 
     const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
 
+    let paymentIntent = null;
+    let paymentStatus = 'pending';
+
+    // Создаем payment intent только для метода оплаты stripe
+    if (paymentMethod === 'stripe') {
+      paymentIntent = await createPaymentIntent(totalPrice);
+    } else if (paymentMethod === 'cash') {
+      paymentStatus = 'pending'; // Для наличных статус всегда pending до подтверждения
+    }
+
     const order = new Order({
       orderItems,
       user: userId, // Теперь это должно работать корректно
@@ -66,6 +78,8 @@ export const placeOrder = async (req, res) => {
       payment,
       totalPrice,
       email: shippingFields.email,
+      paymentIntentId: paymentIntent?.id || null,
+      paymentStatus,
     });
 
     const savedOrder = await order.save();
@@ -79,85 +93,83 @@ export const placeOrder = async (req, res) => {
     if (userId) {
       await User.findByIdAndUpdate(userId, { cartData: {} });
     }
-    console.log(savedOrder);
 
-    await sendEmail({
-      email: shippingFields.email,
-      subject: 'Successful Order',
-      html: createOrderMessage(savedOrder),
-    });
-    res.status(201).json({ message: 'Order Created' });
+    // Убираем отправку письма отсюда
+
+    if (paymentMethod === 'stripe') {
+      res.status(201).json({
+        message: 'Order Created',
+        orderId: savedOrder._id,
+        clientSecret: paymentIntent.client_secret,
+      });
+    } else {
+      res.status(201).json({
+        message: 'Order Created',
+        orderId: savedOrder._id,
+      });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export const placeOrderStripe = async (req, res) => {
+export const updateOrderPayment = async (req, res) => {
   try {
-    const { orderItems, shippingFields, paymentMethod, userId } = req.body;
+    const { orderId, paymentMethodId } = req.body;
 
-    const errors = validateOrderData({
-      ...req.body,
-      payment: true,
-    });
-
-    if (Object.keys(errors).length > 0) {
-      return res.status(400).json({ message: 'Validation failed', errors });
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    const totalPrice = await calculateTotalPrice(orderItems);
-    const paymentIntent = await createPaymentIntent(totalPrice);
+    // Проверяем, не был ли платеж уже подтвержден
+    if (order.paymentStatus === 'paid') {
+      return res.json({
+        success: true,
+        order,
+        paymentStatus: order.paymentStatus,
+        message: 'Payment was already confirmed',
+      });
+    }
 
-    // Store order data in session or return it to frontend
-    res.status(200).json({
-      orderData: { orderItems, shippingFields, paymentMethod, totalPrice, userId },
-      clientSecret: paymentIntent.client_secret,
+    // Проверяем метод оплаты
+    if (order.paymentMethod === 'stripe') {
+      try {
+        const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
+        order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
+
+        // Отправляем письмо только при успешной оплате через Stripe
+        if (paymentResult.status === 'succeeded') {
+          await sendEmail({
+            email: order.shippingFields.email,
+            subject: 'Successful Order Payment',
+            html: createOrderMessage(order),
+          });
+        }
+      } catch (stripeError) {
+        // Если платеж уже был подтвержден, проверяем его статус
+        if (stripeError.message.includes('already succeeded')) {
+          order.paymentStatus = 'paid';
+        } else {
+          throw stripeError;
+        }
+      }
+    } else if (order.paymentMethod === 'cash') {
+      order.paymentStatus = 'paid';
+    }
+
+    await order.save();
+
+    res.json({
+      success: true,
+      order,
+      paymentStatus: order.paymentStatus,
     });
   } catch (error) {
-    console.error('Stripe order error:', error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const confirmStripePayment = async (req, res) => {
-  try {
-    const { orderData } = req.body;
-    const userId = orderData.userId; // Get userId from orderData instead of req.userId
-
-    const order = new Order({
-      orderItems: orderData.orderItems,
-      user: userId,
-      shippingFields: orderData.shippingFields,
-      paymentMethod: orderData.paymentMethod,
-      payment: true,
-      totalPrice: orderData.totalPrice,
-      status: 'Processing',
-      email: orderData.shippingFields.email,
+    res.status(400).json({
+      success: false,
+      message: error.message,
     });
-
-    const savedOrder = await order.save();
-
-    // Update product sales
-    for (const item of orderData.orderItems) {
-      await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
-    }
-
-    // Clear cart for authenticated users
-    if (userId) {
-      await User.findByIdAndUpdate(userId, { cartData: {} });
-    }
-
-    // Send confirmation email
-    await sendEmail({
-      email: orderData.shippingFields.email,
-      subject: 'Successful Order',
-      html: createOrderMessage(savedOrder),
-    });
-
-    res.json({ success: true, order: savedOrder });
-  } catch (error) {
-    console.error('Payment confirmation error:', error);
-    res.status(500).json({ message: error.message });
   }
 };
 
