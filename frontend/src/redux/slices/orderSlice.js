@@ -31,6 +31,8 @@ export const checkout = createAsyncThunk(
     { rejectWithValue, dispatch },
   ) => {
     try {
+      console.log(shippingFee);
+
       const response = await axios.post('/api/orders', {
         shippingFields,
         orderItems,

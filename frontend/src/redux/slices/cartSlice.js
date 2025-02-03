@@ -8,7 +8,7 @@ const initialState = {
   cartItems: [],
   counter: 0,
   totalPrice: 0,
-  delivery_fee: 50,
+  shippingFee: 50,
 };
 
 const calculateTotalPrice = (cartItems) => {
@@ -187,7 +187,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.cartItems = [];
-      state.delivery_fee = 0;
+      state.shippingFee = 0;
       state.itemsPrice = 0;
       state.totalPrice = 0;
     },

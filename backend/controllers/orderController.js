@@ -51,6 +51,7 @@ const calculateTotalPrice = async (orderItems, shippingFee) => {
 export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, shippingFee, paymentMethod, payment } = req.body;
+
     const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
 
     const errors = validateOrderData(req.body);
@@ -79,6 +80,7 @@ export const placeOrder = async (req, res) => {
       email: shippingFields.email,
       paymentIntentId,
       paymentStatus,
+      shippingFee,
     });
 
     const savedOrder = await order.save();

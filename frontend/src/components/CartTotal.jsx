@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Title from './Title';
 
 const CartTotal = () => {
-  const { totalPrice, delivery_fee } = useSelector((state) => state.cart);
+  const { totalPrice, shippingFee } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.product);
   return (
     <div className="w-full ">
@@ -22,14 +22,14 @@ const CartTotal = () => {
         <div className="flex justify-between">
           <p>Shipping Fee</p>
           <p>
-            {currency} {delivery_fee.toFixed(2)}
+            {currency} {shippingFee.toFixed(2)}
           </p>
         </div>
         <hr />
         <div className="flex justify-between">
           <p>Total</p>
           <p>
-            {currency} {(totalPrice + delivery_fee).toFixed(2)}
+            {currency} {(totalPrice + shippingFee).toFixed(2)}
           </p>
         </div>
       </div>
