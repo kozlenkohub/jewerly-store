@@ -172,7 +172,6 @@ export const paymentCallback = async (req, res) => {
     const { data, signature } = req.body;
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
-    console.log('Decoded Data:', decodedData);
 
     // Сформируем ожидаемую сигнатуру
     const expectedSignature = crypto
@@ -180,19 +179,14 @@ export const paymentCallback = async (req, res) => {
       .update(LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY)
       .digest('base64');
 
-    console.log('Expected Signature:', expectedSignature);
-
-    // Проверяем сигнатуру
     if (signature !== expectedSignature) {
       return res.status(400).json({ message: 'Invalid signature' });
     }
 
-    // Разбираем JSON из decodedData
     const paymentData = JSON.parse(decodedData);
+    console.log('Payment data:', paymentData);
 
-    // Дальше продолжайте с обработкой данных...
     if (paymentData.status === 'success') {
-      // Ваши действия после успешного платежа
       return res.status(200).json({ message: 'Payment successful' });
     }
 
