@@ -167,6 +167,8 @@ export const placeOrder = async (req, res) => {
 
 export const paymentCallback = async (req, res) => {
   try {
+    console.log('Payment callback:', req.body);
+
     const { data, signature } = req.body;
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
@@ -182,6 +184,8 @@ export const paymentCallback = async (req, res) => {
     }
 
     const paymentData = JSON.parse(decodedData);
+
+    console.log('Payment data:', paymentData);
 
     if (paymentData.status === 'success') {
       // Обработка успешного платеж
