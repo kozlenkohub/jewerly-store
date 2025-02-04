@@ -370,6 +370,7 @@ export const updateOrderPayment = async (req, res) => {
     try {
       const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
       order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
+      order.status = 'Order Placed'; // Update status on successful payment
     } catch (stripeError) {
       if (stripeError.message.includes('already succeeded')) {
         order.paymentStatus = 'paid';
