@@ -257,6 +257,7 @@ export const paymentCallback = async (req, res) => {
     }
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
+    console.log('decodedData:', decodedData);
 
     const expectedSignature = generateLiqPaySignature(data);
 
@@ -360,19 +361,19 @@ export const updateOrderPayment = async (req, res) => {
     }
 
     await User.findByIdAndUpdate(userId, { cartData: {} });
-    await order.findByIdAndUpdate(orderId, {
-      status: 'Order Placed',
-    });
 
     const previousStatus = order.paymentStatus;
 
     try {
       const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
       order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
-      order.status = 'Order Placed'; // Update status on successful payment
+      if (order.paymentStatus === 'paid') {
+        order.status = 'Order Placed'; // Update status on successful payment
+      }
     } catch (stripeError) {
       if (stripeError.message.includes('already succeeded')) {
         order.paymentStatus = 'paid';
+        order.status = 'Order Placed'; // Update status on successful payment
       } else {
         throw stripeError;
       }
