@@ -170,6 +170,23 @@ export const placeOrder = async (req, res) => {
   }
 };
 
+const handlePaymentError = async (status, orderId, res) => {
+  const order = await Order.findById(orderId);
+  if (!order) {
+    return res.status(404).json({ message: 'Order not found' });
+  }
+  await Order.findByIdAndDelete(orderId);
+
+  const statusMessages = {
+    err_cache: 'Order deleted due to cache error',
+    failure: 'Payment failed, order deleted',
+    reversed: 'Payment reversed, order deleted',
+    error: 'Payment error occurred, order deleted',
+  };
+
+  return res.status(200).json({ message: statusMessages[status] || 'Order deleted' });
+};
+
 export const paymentCallback = async (req, res) => {
   try {
     const { data, signature } = req.body;
@@ -227,31 +244,9 @@ export const paymentCallback = async (req, res) => {
 
       return res.status(200).json({ message: 'Payment successful' });
     }
-    if (paymentData.status === 'failure') {
-      const order = await Order.findById(paymentData.order_id);
-      if (!order) {
-        return res.status(404).json({ message: 'Order not found' });
-      }
-      await Order.findByIdAndDelete(paymentData.order_id);
-      return res.status(200).json({ message: 'Payment failed, order deleted' });
-    }
 
-    if (paymentData.status === 'reversed') {
-      const order = await Order.findById(paymentData.order_id);
-      if (!order) {
-        return res.status(404).json({ message: 'Order not found' });
-      }
-      await Order.findByIdAndDelete(paymentData.order_id);
-      return res.status(200).json({ message: 'Payment reversed, order deleted' });
-    }
-
-    if (paymentData.status === 'error') {
-      const order = await Order.findById(paymentData.order_id);
-      if (!order) {
-        return res.status(404).json({ message: 'Order not found' });
-      }
-      await Order.findByIdAndDelete(paymentData.order_id);
-      return res.status(200).json({ message: 'Payment error occurred, order deleted' });
+    if (['err_cache', 'failure', 'reversed', 'error'].includes(paymentData.status)) {
+      await handlePaymentError(paymentData.status, paymentData.order_id, res);
     }
 
     // Обработка других статусов
