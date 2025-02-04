@@ -59,6 +59,8 @@ const calculateTotalPrice = async (orderItems, shippingFee) => {
 
 export const placeOrder = async (req, res) => {
   try {
+    console.log(LIQPAY_PUBLIC_KEY);
+
     const { orderItems, shippingFields, shippingFee, paymentMethod, payment } = req.body;
 
     const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
