@@ -40,6 +40,9 @@ const Checkout = () => {
   const [orderId, setOrderId] = useState(null);
   const [amount, setAmount] = useState(null);
   const [commision, setCommision] = useState(null);
+  const [liqpayData, setLiqpayData] = useState(null);
+  const [liqpaySignature, setLiqpaySignature] = useState(null);
+  const [isLiqPayProcessing, setIsLiqPayProcessing] = useState(false);
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
@@ -73,6 +76,9 @@ const Checkout = () => {
           setAmount(response.amount);
           setOrderId(response.orderId);
           setCommision(response.commision);
+        } else if (orderData.paymentMethod === 'liqpay') {
+          setLiqpayData(response.data);
+          setLiqpaySignature(response.signature);
         } else {
           navigate('/orders');
         }
@@ -86,6 +92,43 @@ const Checkout = () => {
     }
   };
 
+  const handleLiqPaySelection = async () => {
+    setPaymentMethod('liqpay');
+    setIsLiqPayProcessing(true);
+
+    try {
+      const orderData = {
+        shippingFields: formData,
+        shippingFee,
+        orderItems,
+        paymentMethod: 'liqpay',
+      };
+
+      const response = await dispatch(checkout(orderData)).unwrap();
+
+      // Create temporary div to parse HTML string
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = response;
+
+      // Get data and signature from the form
+      const data = tempDiv.querySelector('input[name="data"]')?.value;
+      const signature = tempDiv.querySelector('input[name="signature"]')?.value;
+
+      if (data && signature) {
+        setLiqpayData(data);
+        setLiqpaySignature(signature);
+      } else {
+        throw new Error('Invalid LiqPay response format');
+      }
+    } catch (error) {
+      console.error('Error processing LiqPay:', error);
+      toast.error('Failed to initiate LiqPay payment');
+      setPaymentMethod('cash'); // Reset payment method on error
+    } finally {
+      setIsLiqPayProcessing(false);
+    }
+  };
+
   const paymentMethods = [
     {
       id: 'cash',
@@ -94,6 +137,10 @@ const Checkout = () => {
     {
       id: 'stripe',
       label: <FaStripe className="h-8 w-8 mx-2" />,
+    },
+    {
+      id: 'liqpay',
+      label: <p className="text-gray-500 text-sm font-medium mx-2 futura">LiqPay</p>,
     },
   ];
 
@@ -133,8 +180,10 @@ const Checkout = () => {
             {paymentMethods.map((method) => (
               <div
                 key={method.id}
-                className="flex items-center gap-1 border  min-h-[50px] p-2 px-3 cursor-pointer"
-                onClick={() => setPaymentMethod(method.id)}>
+                className="flex items-center gap-1 border min-h-[50px] p-2 px-3 cursor-pointer"
+                onClick={() =>
+                  method.id === 'liqpay' ? handleLiqPaySelection() : setPaymentMethod(method.id)
+                }>
                 <p
                   className={`min-w-3.5 h-3.5 border rounded-full ${
                     paymentMethod === method.id ? 'bg-mainColor' : ''
@@ -144,12 +193,32 @@ const Checkout = () => {
             ))}
           </div>
 
-          {paymentMethod === 'stripe' && clientSecret ? (
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <StripeForm orderId={orderId} amount={amount} commision={commision} />
-            </Elements>
-          ) : (
-            <div className="w-full text-center mt-8">
+          <div className="w-full text-center mt-8">
+            {paymentMethod === 'stripe' && clientSecret ? (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <StripeForm orderId={orderId} amount={amount} commision={commision} />
+              </Elements>
+            ) : paymentMethod === 'liqpay' && liqpayData && liqpaySignature ? (
+              <form
+                method="POST"
+                action="https://www.liqpay.ua/api/3/checkout"
+                acceptCharset="utf-8"
+                className="w-full text-center">
+                <input type="hidden" name="data" value={liqpayData} />
+                <input type="hidden" name="signature" value={liqpaySignature} />
+                <button
+                  type="submit"
+                  className="bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm">
+                  Pay Now
+                </button>
+              </form>
+            ) : paymentMethod === 'liqpay' ? (
+              <button
+                disabled
+                className="bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm opacity-50">
+                Processing...
+              </button>
+            ) : (
               <button
                 onClick={handleCheckout}
                 className={`bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm ${
@@ -158,8 +227,8 @@ const Checkout = () => {
                 disabled={isLoadingOrder}>
                 {isLoadingOrder ? 'PLACING...' : 'PLACE ORDER'}
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       {showAuthModal && (

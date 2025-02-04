@@ -4,6 +4,14 @@ import Product from '../models/productModel.js';
 import sendEmail from '../utils/emailServices.js';
 import { createOrderMessage } from '../utils/messageServices.js';
 import { createPaymentIntent, confirmPaymentIntent } from '../utils/stripeService.js';
+import crypto from 'crypto';
+
+const { LIQPAY_PUBLIC_KEY, LIQPAY_PRIVATE_KEY } = process.env;
+
+function generateLiqPaySignature(data) {
+  const signatureString = LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY;
+  return crypto.createHash('sha1').update(signatureString).digest('base64');
+}
 
 const validateOrderData = (data) => {
   const errors = {};
@@ -27,7 +35,7 @@ const validateOrderData = (data) => {
     if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
     if (!data.shippingFields.phone) errors['shippingFields.phone'] = 'Phone is required';
   }
-  if (!data.paymentMethod || !['cash', 'stripe'].includes(data.paymentMethod)) {
+  if (!data.paymentMethod || !['cash', 'stripe', 'liqpay'].includes(data.paymentMethod)) {
     errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
   }
   if (!data.payment) errors.payment = 'Payment is required';
@@ -67,12 +75,6 @@ export const placeOrder = async (req, res) => {
     let paymentIntentId = null;
     let stripeFees = null;
 
-    if (paymentMethod === 'stripe') {
-      paymentIntent = await createPaymentIntent(totalPrice);
-      paymentIntentId = paymentIntent.id;
-      stripeFees = paymentIntent.calculatedFees;
-    }
-
     const order = new Order({
       orderItems,
       user: userId,
@@ -87,7 +89,43 @@ export const placeOrder = async (req, res) => {
       stripeFees,
     });
 
-    const savedOrder = await order.save();
+    const savedOrder = await order.save(); // Save the order first
+    const orderId = savedOrder._id;
+    // Use savedOrder._id
+
+    if (paymentMethod === 'liqpay') {
+      const paymentData = {
+        public_key: LIQPAY_PUBLIC_KEY,
+        version: '3',
+        action: 'pay',
+        amount: totalPrice,
+        currency: 'UAH',
+        description: 'Order payment: ' + orderId,
+        order_id: orderId,
+        result_url: 'http://localhost:3000',
+        server_url: 'https://jewerly-server.onrender.com/api/orders/payment-callback',
+        sandbox: 1,
+      };
+
+      const base64Data = Buffer.from(JSON.stringify(paymentData)).toString('base64');
+      const signature = generateLiqPaySignature(base64Data);
+
+      const form = `
+    <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+      <input type="hidden" name="data" value="${base64Data}" />
+      <input type="hidden" name="signature" value="${signature}" />
+      <button type="submit">Pay Now</button>
+    </form>
+  `;
+
+      return res.status(200).send(form);
+    }
+
+    if (paymentMethod === 'stripe') {
+      paymentIntent = await createPaymentIntent(totalPrice);
+      paymentIntentId = paymentIntent.id;
+      stripeFees = paymentIntent.calculatedFees;
+    }
 
     // Update product sales
     for (const item of orderItems) {
@@ -108,7 +146,7 @@ export const placeOrder = async (req, res) => {
     }
 
     if (paymentMethod === 'stripe') {
-      res.status(201).json({
+      return res.status(201).json({
         message: 'Order Created',
         orderId: savedOrder._id,
         clientSecret: paymentIntent.client_secret,
@@ -116,14 +154,57 @@ export const placeOrder = async (req, res) => {
         commision: stripeFees,
       });
     } else {
-      res.status(201).json({
+      return res.status(201).json({
         paymentMethod,
         message: 'Order Created',
         orderId: savedOrder._id,
       });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message }); // Add return statement here
+  }
+};
+
+export const paymentCallback = async (req, res) => {
+  try {
+    const { order_id, status, data, signature } = req.body;
+    const order = await Order.findById(order_id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Важный шаг: проверка подписи для безопасности
+    // Предполагаем, что приватный ключ хранится в .env
+    const expectedSignature = crypto
+      .createHash('sha1')
+      .update(LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY)
+      .digest('base64');
+
+    if (signature !== expectedSignature) {
+      return res.status(400).json({ message: 'Invalid signature' });
+    }
+
+    if (status === 'success') {
+      order.paymentStatus = 'paid';
+      await order.save();
+
+      // Отправляем подтверждение на email клиента
+      await sendEmail({
+        email: order.shippingFields.email,
+        subject: 'Order Payment Confirmation',
+        html: createOrderMessage(order),
+      });
+
+      return res.status(200).json({ message: 'Payment successful' });
+    } else if (status === 'failure' || status === 'error') {
+      return res.status(400).json({ message: 'Payment failed' });
+    } else {
+      return res.status(400).json({ message: 'Unknown payment status' });
+    }
+  } catch (error) {
+    console.error('Error processing payment callback:', error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
