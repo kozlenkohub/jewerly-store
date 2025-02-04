@@ -1,11 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Breadcrumb = ({ categoryPath }) => {
+  const categories = useSelector((state) => state.category.category);
+
   const breadcrumbStyle = {
     backgroundColor: 'rgb(244, 244, 244)', // light gray background
     padding: '10px',
     color: '#000',
+  };
+
+  const findCategoryNameBySlug = (slug) => {
+    const findCategory = (categories, slug) => {
+      for (const category of categories) {
+        if (category.slug === slug) {
+          return category.name;
+        }
+        if (category.children.length > 0) {
+          const childCategory = findCategory(category.children, slug);
+          if (childCategory) {
+            return childCategory;
+          }
+        }
+      }
+      return null;
+    };
+    return findCategory(categories, slug);
   };
 
   if (!categoryPath) {
@@ -19,7 +40,7 @@ const Breadcrumb = ({ categoryPath }) => {
   const segments = categoryPath
     .split('/')
     .filter(Boolean)
-    .map((segment) => segment.replace(/-/g, ' ')); // remove empty strings and replace hyphens with spaces
+    .map((segment) => findCategoryNameBySlug(segment) || segment.replace(/-/g, ' ')); // remove empty strings and replace hyphens with spaces
 
   return (
     <nav className="text-sm mb-2 futura" style={breadcrumbStyle}>
@@ -39,4 +60,5 @@ const Breadcrumb = ({ categoryPath }) => {
     </nav>
   );
 };
+
 export default Breadcrumb;
