@@ -187,7 +187,52 @@ export const paymentCallback = async (req, res) => {
     console.log('Payment data:', paymentData);
 
     if (paymentData.status === 'success') {
+      // Обработка успешного платеж
+      const order = await Order.findById(paymentData.order_id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+
+      order.paymentStatus = 'paid';
+      order.paymentIntentId = paymentData.payment_id;
+
+      await order.save();
+
+      // Отправка письма об успешной оплате
+      await sendEmail({
+        email: order.shippingFields.email,
+        subject: 'Successful Order Payment',
+        html: createOrderMessage(order),
+      });
+
       return res.status(200).json({ message: 'Payment successful' });
+    }
+    // failure,reversed,error
+    if (paymentData.status === 'failure') {
+      const order = await Order.findById(paymentData.order_id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      await Order.findByIdAndDelete(paymentData.order_id);
+      return res.status(200).json({ message: 'Payment failed, order deleted' });
+    }
+
+    if (paymentData.status === 'reversed') {
+      const order = await Order.findById(paymentData.order_id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      await Order.findByIdAndDelete(paymentData.order_id);
+      return res.status(200).json({ message: 'Payment reversed, order deleted' });
+    }
+
+    if (paymentData.status === 'error') {
+      const order = await Order.findById(paymentData.order_id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      await Order.findByIdAndDelete(paymentData.order_id);
+      return res.status(200).json({ message: 'Payment error occurred, order deleted' });
     }
 
     // Обработка других статусов
