@@ -367,20 +367,15 @@ export const updateOrderPayment = async (req, res) => {
 
     const previousStatus = order.paymentStatus;
 
-    // Handle payment method specific logic
-    if (order.paymentMethod === 'stripe') {
-      try {
-        const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
-        order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
-      } catch (stripeError) {
-        if (stripeError.message.includes('already succeeded')) {
-          order.paymentStatus = 'paid';
-        } else {
-          throw stripeError;
-        }
+    try {
+      const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
+      order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
+    } catch (stripeError) {
+      if (stripeError.message.includes('already succeeded')) {
+        order.paymentStatus = 'paid';
+      } else {
+        throw stripeError;
       }
-    } else if (order.paymentMethod === 'cash') {
-      order.paymentStatus = 'paid';
     }
 
     await order.save();
