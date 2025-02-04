@@ -284,7 +284,6 @@ export const paymentCallback = async (req, res) => {
         return res.status(404).json({ message: 'Order not found' });
       }
       if (userId) {
-        await User.findByIdAndUpdate(status);
         await User.findByIdAndUpdate(
           userId,
           {
@@ -343,7 +342,6 @@ export const updateOrderPayment = async (req, res) => {
       });
     }
 
-    // If payment is already confirmed, just clean up cart and return
     if (order.paymentStatus === 'paid') {
       if (userId) {
         await User.findByIdAndUpdate(userId, { cartData: {} });
