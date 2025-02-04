@@ -39,7 +39,6 @@ export const checkout = createAsyncThunk(
         shippingFee,
       });
       if (paymentMethod === 'cash') {
-        // Очищаем гостевую корзину из localStorage
         localStorage.removeItem('guestCart');
       }
       dispatch(fetchCartItems());

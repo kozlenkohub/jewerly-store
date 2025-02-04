@@ -24,6 +24,7 @@ const validateOrderData = (data) => {
     data.orderItems.forEach((item, index) => {
       if (!item.quantity) errors[`orderItems.${index}.quantity`] = 'Quantity is required';
       if (!item._id) errors[`orderItems.${index}._id`] = 'Product ID is required';
+      if (!item.size) errors[`orderItems.${index}.size`] = 'Size is required';
     });
   }
   if (!data.shippingFields) {
@@ -73,10 +74,74 @@ export const placeOrder = async (req, res) => {
 
     const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
 
+    // For Stripe payments, create payment intent before saving order
+    if (paymentMethod === 'stripe') {
+      const paymentIntent = await createPaymentIntent(totalPrice);
+      const order = new Order({
+        orderItems,
+        user: req.userId,
+        shippingFields,
+        paymentMethod,
+        payment: true,
+        totalPrice,
+        email: shippingFields.email,
+        paymentIntentId: paymentIntent.id,
+        paymentStatus: 'pending',
+        status: 'Processing',
+        shippingFee,
+        stripeFees: paymentIntent.calculatedFees,
+      });
+
+      const savedOrder = await order.save();
+
+      return res.status(201).json({
+        message: 'Order Created',
+        orderId: savedOrder._id,
+        clientSecret: paymentIntent.client_secret,
+        amount: paymentIntent.amount,
+        commision: paymentIntent.calculatedFees,
+      });
+    }
+
     let paymentIntent = null;
     let paymentStatus = 'pending';
     let paymentIntentId = null;
     let stripeFees = null;
+
+    if (paymentMethod === 'cash') {
+      const order = new Order({
+        orderItems,
+        user: userId,
+        shippingFields,
+        paymentMethod,
+        payment,
+        totalPrice,
+        email: shippingFields.email,
+        paymentIntentId,
+        paymentStatus: 'paid',
+        status: 'Order Placed',
+        shippingFee,
+        stripeFees,
+      });
+
+      const savedOrder = await order.save();
+
+      // Send email and clear cart
+      await sendEmail({
+        email: shippingFields.email,
+        subject: 'Order Confirmation',
+        html: createOrderMessage(savedOrder),
+      });
+
+      if (userId) {
+        await User.findByIdAndUpdate(userId, { cartData: {} });
+      }
+
+      return res.status(201).json({
+        message: 'Order Created',
+        orderId: savedOrder._id,
+      });
+    }
 
     const order = new Order({
       orderItems,
@@ -129,12 +194,6 @@ export const placeOrder = async (req, res) => {
   `;
 
       return res.status(200).send(form);
-    }
-
-    if (paymentMethod === 'stripe') {
-      paymentIntent = await createPaymentIntent(totalPrice);
-      paymentIntentId = paymentIntent.id;
-      stripeFees = paymentIntent.calculatedFees;
     }
 
     // Update product sales
@@ -225,6 +284,7 @@ export const paymentCallback = async (req, res) => {
         return res.status(404).json({ message: 'Order not found' });
       }
       if (userId) {
+        await User.findByIdAndUpdate(status);
         await User.findByIdAndUpdate(
           userId,
           {
@@ -235,6 +295,7 @@ export const paymentCallback = async (req, res) => {
       }
 
       order.paymentStatus = 'paid';
+      order.status = 'Order Placed'; // Update status on successful payment
       order.paymentIntentId = paymentData.payment_id;
 
       await order.save();
@@ -282,17 +343,10 @@ export const updateOrderPayment = async (req, res) => {
       });
     }
 
-    // Check if payment was already confirmed
+    // If payment is already confirmed, just clean up cart and return
     if (order.paymentStatus === 'paid') {
-      // Очищаем корзину даже если платеж уже был подтвержден
       if (userId) {
-        await User.findByIdAndUpdate(
-          userId,
-          {
-            cartData: {},
-          },
-          { new: true },
-        ); // добавляем { new: true } для получения обновленного документа
+        await User.findByIdAndUpdate(userId, { cartData: {} });
       }
       return res.json({
         success: true,
@@ -302,34 +356,42 @@ export const updateOrderPayment = async (req, res) => {
       });
     }
 
-    await User.findByIdAndUpdate(userId, { cartData: {} });
-
-    const previousStatus = order.paymentStatus;
-
+    // Handle Stripe payment confirmation
     if (order.paymentMethod === 'stripe') {
       try {
         const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
-        order.paymentStatus = paymentResult.status === 'succeeded' ? 'paid' : 'failed';
+
+        if (paymentResult.status === 'succeeded') {
+          order.paymentStatus = 'paid';
+          order.status = 'Order Placed';
+
+          // Clear cart after successful payment
+          if (userId) {
+            await User.findByIdAndUpdate(userId, { cartData: {} });
+          }
+
+          // Send confirmation email
+          await sendEmail({
+            email: order.shippingFields.email,
+            subject: 'Successful Order Payment',
+            html: createOrderMessage(order),
+          });
+        } else {
+          order.paymentStatus = 'failed';
+          order.status = 'Payment Failed';
+        }
+
+        await order.save();
       } catch (stripeError) {
+        console.error('Stripe payment error:', stripeError);
         if (stripeError.message.includes('already succeeded')) {
           order.paymentStatus = 'paid';
+          order.status = 'Order Placed';
+          await order.save();
         } else {
           throw stripeError;
         }
       }
-    } else if (order.paymentMethod === 'cash') {
-      order.paymentStatus = 'paid';
-    }
-
-    await order.save();
-
-    // Send email only when status changes to 'paid'
-    if (previousStatus !== 'paid' && order.paymentStatus === 'paid') {
-      await sendEmail({
-        email: order.shippingFields.email,
-        subject: 'Successful Order Payment',
-        html: createOrderMessage(order),
-      });
     }
 
     res.json({
@@ -338,6 +400,7 @@ export const updateOrderPayment = async (req, res) => {
       paymentStatus: order.paymentStatus,
     });
   } catch (error) {
+    console.error('Payment update error:', error);
     res.status(400).json({
       success: false,
       message: error.message,
@@ -347,7 +410,10 @@ export const updateOrderPayment = async (req, res) => {
 
 export const userOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.body.userId }).sort({ createdAt: -1 });
+    const orders = await Order.find({
+      user: req.body.userId,
+      status: { $ne: 'Processing' }, // Exclude Processing status
+    }).sort({ createdAt: -1 });
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
     }

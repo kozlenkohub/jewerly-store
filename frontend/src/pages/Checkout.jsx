@@ -55,6 +55,7 @@ const Checkout = () => {
       shippingFee,
       orderItems,
       paymentMethod,
+      payment: true,
     };
 
     const token = localStorage.getItem('token');
