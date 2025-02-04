@@ -167,8 +167,6 @@ export const placeOrder = async (req, res) => {
 
 export const paymentCallback = async (req, res) => {
   try {
-    console.log('Payment callback received:', req.body);
-
     const { data, signature } = req.body;
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
