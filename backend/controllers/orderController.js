@@ -10,7 +10,10 @@ const { LIQPAY_PUBLIC_KEY, LIQPAY_PRIVATE_KEY } = process.env;
 
 function generateLiqPaySignature(data) {
   const signatureString = LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY;
-  return crypto.createHash('sha1').update(signatureString).digest('base64');
+
+  const signature = crypto.createHash('sha1').update(signatureString).digest('base64');
+
+  return signature;
 }
 
 const validateOrderData = (data) => {
@@ -96,13 +99,14 @@ export const placeOrder = async (req, res) => {
     if (paymentMethod === 'liqpay') {
       const paymentData = {
         public_key: LIQPAY_PUBLIC_KEY,
+        customer: userId || 'guest',
         version: '3',
         action: 'pay',
         amount: totalPrice,
         currency: 'UAH',
         description: 'Order payment: ' + orderId,
         order_id: orderId,
-        result_url: 'http://localhost:3000',
+        result_url: 'https://jewerly-store.vercel.app',
         server_url: 'https://jewerly-server.onrender.com/api/orders/payment-callback',
         sandbox: 1,
       };
@@ -167,31 +171,44 @@ export const placeOrder = async (req, res) => {
 
 export const paymentCallback = async (req, res) => {
   try {
-    console.log('Payment callback:', req.body);
-
     const { data, signature } = req.body;
+
+    if (!data || !signature) {
+      return res.status(400).json({ message: 'Отсутствуют обязательные параметры' });
+    }
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
 
-    // Сформируем ожидаемую сигнатуру
-    const expectedSignature = crypto
-      .createHash('sha1')
-      .update(LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY)
-      .digest('base64');
+    const expectedSignature = generateLiqPaySignature(data);
 
     if (signature !== expectedSignature) {
-      return res.status(400).json({ message: 'Invalid signature' });
+      console.error('Несовпадение подписей!');
+      return res.status(400).json({
+        message: 'Неверная подпись',
+        details: {
+          received: signature,
+          expected: expectedSignature,
+        },
+      });
     }
 
     const paymentData = JSON.parse(decodedData);
 
-    console.log('Payment data:', paymentData);
+    const userId = paymentData.customer === 'guest' ? null : paymentData.customer;
 
-    if (paymentData.status === 'success') {
-      // Обработка успешного платеж
+    if (paymentData.status === 'sandbox') {
       const order = await Order.findById(paymentData.order_id);
       if (!order) {
         return res.status(404).json({ message: 'Order not found' });
+      }
+      if (userId) {
+        await User.findByIdAndUpdate(
+          userId,
+          {
+            cartData: {},
+          },
+          { new: true },
+        ); // добавляем { new: true } для получения обновленного документа
       }
 
       order.paymentStatus = 'paid';
@@ -238,8 +255,11 @@ export const paymentCallback = async (req, res) => {
     // Обработка других статусов
     return res.status(400).json({ message: 'Payment failed' });
   } catch (error) {
-    console.error('Error processing payment callback:', error);
-    return res.status(500).json({ message: error.message });
+    console.error('Ошибка обработки платежного callback:', error);
+    return res.status(500).json({
+      message: 'Внутренняя ошибка сервера',
+      error: error.message,
+    });
   }
 };
 
@@ -285,7 +305,6 @@ export const updateOrderPayment = async (req, res) => {
 
     const previousStatus = order.paymentStatus;
 
-    // Handle payment method specific logic
     if (order.paymentMethod === 'stripe') {
       try {
         const paymentResult = await confirmPaymentIntent(order.paymentIntentId, paymentMethodId);
