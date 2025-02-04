@@ -88,6 +88,7 @@ export const placeOrder = async (req, res) => {
       email: shippingFields.email,
       paymentIntentId,
       paymentStatus,
+      status: 'Processing',
       shippingFee,
       stripeFees,
     });

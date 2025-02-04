@@ -32,6 +32,11 @@ app.use('/api/filter', filterRouter);
 app.use('/api/cart', cartRouter); // Ensure this line is present
 app.use('/api/orders', orderRouter); // Ensure this line is present
 
+// Запускаем проверку каждую минуту
+setInterval(() => {
+  orderModel.removeExpiredProcessingOrders();
+}, 60000);
+
 app.get('/', (req, res) => {
   res.status(200).send('Api is running');
 });

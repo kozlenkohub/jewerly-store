@@ -81,11 +81,42 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 'Order Placed',
     },
+    processingStartedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
   },
 );
+
+// Middleware для отслеживания изменения статуса
+orderSchema.pre('save', function (next) {
+  if (this.isModified('status')) {
+    if (this.status === 'Processing') {
+      this.processingStartedAt = new Date();
+    } else {
+      this.processingStartedAt = null;
+    }
+  }
+  next();
+});
+
+// Статический метод для удаления просроченных заказов
+orderSchema.statics.removeExpiredProcessingOrders = async function () {
+  const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+  try {
+    const result = await this.deleteMany({
+      status: 'Processing',
+      processingStartedAt: { $lt: fiveMinutesAgo },
+    });
+    console.log(`Removed ${result.deletedCount} expired processing orders`);
+  } catch (error) {
+    console.error('Error removing expired orders:', error);
+  }
+};
 
 const orderModel = mongoose.models.Order || mongoose.model('Order', orderSchema);
 
