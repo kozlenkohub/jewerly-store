@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
 
 const initialState = {
-  category: [], // Initialize category as an empty array
+  category: [],
 };
 
 export const fetchCategories = createAsyncThunk('category/fetchCategories', async () => {
-  const response = await axios.get('api/category/get');
+  const response = await axios.get(`api/category/get`);
   return response.data;
 });
 

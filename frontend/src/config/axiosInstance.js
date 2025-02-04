@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Используем REACT_APP_BACKEND_URL
+  baseURL: import.meta.env.VITE_API_URL, // Use your backend URL from the environment
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -11,15 +11,18 @@ const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    const lang = localStorage.getItem('lang') || 'en';
+    config.headers['Accept-Language'] = lang;
+
     return config;
   },
   (error) => {
-    // Do something with request error
+    // Handle any request errors
     return Promise.reject(error);
   },
 );
@@ -27,11 +30,11 @@ axiosInstance.interceptors.request.use(
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
-    // Do something with response data
+    // Handle response data if needed
     return response;
   },
   (error) => {
-    // Do something with response error
+    // Handle response errors if needed
     return Promise.reject(error);
   },
 );

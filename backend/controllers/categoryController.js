@@ -46,23 +46,27 @@ const generateSlug = (name) => {
 
 export const getAllCategories = async (req, res) => {
   try {
-    // Получение всех категорий
+    const lang = req.headers['accept-language'] || 'en';
     const categories = await Category.find().lean();
 
-    // Создаем объект для быстрого доступа по `_id`
+    // Create a map for quick access by _id
     const categoriesMap = {};
     categories.forEach((category) => {
-      categoriesMap[category._id] = { ...category, children: [] };
+      categoriesMap[category._id] = {
+        ...category,
+        name: category.name[lang] || category.name.en, // Filter name by language
+        children: [],
+      };
     });
 
-    // Формируем иерархическое дерево
+    // Build the hierarchical tree
     const rootCategories = [];
     categories.forEach((category) => {
       if (category.parent) {
-        // Если есть родитель, добавляем текущую категорию в массив `children` родителя
+        // If there's a parent, add the current category to its 'children' array
         categoriesMap[category.parent]?.children.push(categoriesMap[category._id]);
       } else {
-        // Если нет родителя, это корневая категория
+        // If there's no parent, it's a root category
         rootCategories.push(categoriesMap[category._id]);
       }
     });
@@ -144,5 +148,3 @@ export const deleteCategory = async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 };
-
-const category = [{}];

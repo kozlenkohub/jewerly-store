@@ -19,6 +19,7 @@ export const getProducts = async (req, res) => {
   try {
     const { metal, carats, price, cutForm, sort, search, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
+    const lang = req.headers['accept-language'] || 'en'; // Initialize lang variable
 
     const filter = {};
     let categoryDoc = null;
@@ -64,7 +65,7 @@ export const getProducts = async (req, res) => {
       else if (sort === 'relevent') query = query.sort({ sales: -1 });
     }
     const products = await query;
-    res.json({ products, categoryName: categoryDoc ? categoryDoc.name : '' });
+    res.json({ products, categoryName: categoryDoc ? categoryDoc.name[lang] : '' });
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }

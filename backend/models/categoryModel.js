@@ -1,9 +1,17 @@
 import mongoose from 'mongoose';
 
+const localizedStringSchema = new mongoose.Schema(
+  {
+    en: { type: String, required: true },
+    ru: { type: String, required: false },
+  },
+  { _id: false },
+);
+
 const categorySchema = new mongoose.Schema(
   {
     name: {
-      type: String,
+      type: localizedStringSchema,
       required: true,
       trim: true,
       unique: true,
