@@ -46,10 +46,6 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    payment: {
-      type: Boolean,
-      required: false,
-    },
     paymentIntentId: {
       type: String,
       required: function () {

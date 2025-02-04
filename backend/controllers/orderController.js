@@ -42,7 +42,6 @@ const validateOrderData = (data) => {
   if (!data.paymentMethod || !['cash', 'stripe', 'liqpay'].includes(data.paymentMethod)) {
     errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
   }
-  if (!data.payment) errors.payment = 'Payment is required';
   return errors;
 };
 
@@ -63,7 +62,7 @@ const calculateTotalPrice = async (orderItems, shippingFee) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const { orderItems, shippingFields, shippingFee, paymentMethod, payment } = req.body;
+    const { orderItems, shippingFields, shippingFee, paymentMethod } = req.body;
 
     const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
 
@@ -82,7 +81,6 @@ export const placeOrder = async (req, res) => {
         user: req.userId,
         shippingFields,
         paymentMethod,
-        payment: true,
         totalPrice,
         email: shippingFields.email,
         paymentIntentId: paymentIntent.id,
@@ -114,7 +112,6 @@ export const placeOrder = async (req, res) => {
         user: userId,
         shippingFields,
         paymentMethod,
-        payment,
         totalPrice,
         email: shippingFields.email,
         paymentIntentId,
@@ -149,7 +146,6 @@ export const placeOrder = async (req, res) => {
       user: userId,
       shippingFields,
       paymentMethod,
-      payment,
       totalPrice,
       email: shippingFields.email,
       paymentIntentId,
@@ -364,6 +360,9 @@ export const updateOrderPayment = async (req, res) => {
     }
 
     await User.findByIdAndUpdate(userId, { cartData: {} });
+    await order.findByIdAndUpdate(orderId, {
+      status: 'Order Placed',
+    });
 
     const previousStatus = order.paymentStatus;
 

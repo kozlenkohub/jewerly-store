@@ -27,7 +27,7 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
 export const checkout = createAsyncThunk(
   'order/checkout',
   async (
-    { shippingFields, shippingFee, orderItems, paymentMethod, payment = true },
+    { shippingFields, shippingFee, orderItems, paymentMethod },
     { rejectWithValue, dispatch },
   ) => {
     try {
@@ -35,7 +35,6 @@ export const checkout = createAsyncThunk(
         shippingFields,
         orderItems,
         paymentMethod,
-        payment,
         shippingFee,
       });
       if (paymentMethod === 'cash') {
