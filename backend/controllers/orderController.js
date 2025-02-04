@@ -216,7 +216,6 @@ export const paymentCallback = async (req, res) => {
     }
 
     const paymentData = JSON.parse(decodedData);
-    console.log(paymentData.customer);
 
     const userId = paymentData.customer === 'guest' ? null : paymentData.customer;
 
