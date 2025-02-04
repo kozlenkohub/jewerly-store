@@ -4,7 +4,7 @@ import validator from 'validator';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import sendEmail from '../utils/emailServices.js';
-import { createResetPasswordMessage } from '../utils/messageServices.js';
+import { createResetPasswordMessage, createWelcomeMessage } from '../utils/messageServices.js';
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -61,6 +61,12 @@ export const registerUser = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     const savedUser = await newUser.save();
     const token = createToken(savedUser._id);
+
+    await sendEmail({
+      email: email,
+      subject: 'Welcome to our store',
+      html: createWelcomeMessage(newUser),
+    });
 
     res.json({ token });
   } catch (error) {
