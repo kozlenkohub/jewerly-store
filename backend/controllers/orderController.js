@@ -288,7 +288,7 @@ export const paymentCallback = async (req, res) => {
             cartData: {},
           },
           { new: true },
-        ); // добавляем { new: true } для получения обновленного документа
+        );
       }
 
       order.paymentStatus = 'paid';
