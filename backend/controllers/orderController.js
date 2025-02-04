@@ -104,6 +104,7 @@ export const placeOrder = async (req, res) => {
         version: '3',
         action: 'pay',
         amount: totalPrice,
+        expired_date: Math.floor(Date.now() / 1000) + 300, // 5 minutes expiration
         currency: 'UAH',
         description: 'Order payment: ' + orderId,
         order_id: orderId,

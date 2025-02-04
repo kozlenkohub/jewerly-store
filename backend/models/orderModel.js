@@ -105,7 +105,7 @@ orderSchema.pre('save', function (next) {
 
 // Статический метод для удаления просроченных заказов
 orderSchema.statics.removeExpiredProcessingOrders = async function () {
-  const fiveMinutesAgo = new Date(Date.now() - 3 * 60 * 1000);
+  const fiveMinutesAgo = new Date(Date.now() - 6 * 60 * 1000);
 
   try {
     const result = await this.deleteMany({
