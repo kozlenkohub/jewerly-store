@@ -184,7 +184,6 @@ export const paymentCallback = async (req, res) => {
     }
 
     const paymentData = JSON.parse(decodedData);
-    console.log('Payment data:', paymentData);
 
     if (paymentData.status === 'success') {
       // Обработка успешного платеж
@@ -207,7 +206,6 @@ export const paymentCallback = async (req, res) => {
 
       return res.status(200).json({ message: 'Payment successful' });
     }
-    // failure,reversed,error
     if (paymentData.status === 'failure') {
       const order = await Order.findById(paymentData.order_id);
       if (!order) {
