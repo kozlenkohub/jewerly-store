@@ -169,41 +169,35 @@ export const paymentCallback = async (req, res) => {
   try {
     console.log('Payment callback received:', req.body);
 
-    const { order_id, status, data, signature } = req.body;
-    const order = await Order.findById(order_id);
+    const { data, signature } = req.body;
 
-    if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
-    }
+    const decodedData = Buffer.from(data, 'base64').toString('utf-8');
+    console.log('Decoded Data:', decodedData);
 
-    // Важный шаг: проверка подписи для безопасности
-    // Предполагаем, что приватный ключ хранится в .env
+    // Сформируем ожидаемую сигнатуру
     const expectedSignature = crypto
       .createHash('sha1')
       .update(LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY)
       .digest('base64');
 
+    console.log('Expected Signature:', expectedSignature);
+
+    // Проверяем сигнатуру
     if (signature !== expectedSignature) {
       return res.status(400).json({ message: 'Invalid signature' });
     }
 
-    if (status === 'success') {
-      order.paymentStatus = 'paid';
-      await order.save();
+    // Разбираем JSON из decodedData
+    const paymentData = JSON.parse(decodedData);
 
-      // Отправляем подтверждение на email клиента
-      await sendEmail({
-        email: order.shippingFields.email,
-        subject: 'Order Payment Confirmation',
-        html: createOrderMessage(order),
-      });
-
+    // Дальше продолжайте с обработкой данных...
+    if (paymentData.status === 'success') {
+      // Ваши действия после успешного платежа
       return res.status(200).json({ message: 'Payment successful' });
-    } else if (status === 'failure' || status === 'error') {
-      return res.status(400).json({ message: 'Payment failed' });
-    } else {
-      return res.status(400).json({ message: 'Unknown payment status' });
     }
+
+    // Обработка других статусов
+    return res.status(400).json({ message: 'Payment failed' });
   } catch (error) {
     console.error('Error processing payment callback:', error);
     return res.status(500).json({ message: error.message });
