@@ -85,7 +85,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                   onClick={handleProfileClick}
                 />
                 {isProfileMenuOpen && token && (
-                  <div className="absolute right-0 bg-mainColor text-white w-36 rounded shadow-lg z-50">
+                  <div className="absolute right-0 bg-mainColor text-white w-36  shadow-lg z-50">
                     <div className="flex flex-col gap-2 py-3 px-5">
                       <p
                         className="cursor-pointer hover:text-gray-300"
@@ -222,14 +222,14 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
         <div className="flex items-center justify-center gap-2 p-3 border-t border-gray-200">
           <button
             onClick={() => setLanguage('en')}
-            className={`px-2 py-1 border border-mainColor rounded ${
+            className={`px-2 py-1 border border-mainColor  ${
               currentLanguage === 'en' ? 'bg-mainColor text-white' : 'text-mainColor'
             } hover:bg-mainColor hover:text-white transition-colors`}>
             EN
           </button>
           <button
             onClick={() => setLanguage('ru')}
-            className={`px-2 py-1 border border-mainColor rounded ${
+            className={`px-2 py-1 border border-mainColor  ${
               currentLanguage === 'ru' ? 'bg-mainColor text-white' : 'text-mainColor'
             } hover:bg-mainColor hover:text-white transition-colors`}>
             RU
