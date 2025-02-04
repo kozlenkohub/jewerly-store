@@ -98,13 +98,17 @@ export const placeOrder = async (req, res) => {
     // Use savedOrder._id
 
     if (paymentMethod === 'liqpay') {
+      const currentDate = new Date();
+      const expirationDate = new Date(currentDate.getTime() + 5 * 60000); // додаємо 5 хвилин
+      const expired_date = expirationDate.toISOString().slice(0, 19).replace('T', ' ');
+
       const paymentData = {
         public_key: LIQPAY_PUBLIC_KEY,
         customer: userId || 'guest',
         version: '3',
         action: 'pay',
         amount: totalPrice,
-        expired_date: Math.floor(Date.now() / 1000) + 300, // 5 minutes expiration
+        expired_date: expired_date, // формат: "2016-04-24 00:00:00"
         currency: 'UAH',
         description: 'Order payment: ' + orderId,
         order_id: orderId,
