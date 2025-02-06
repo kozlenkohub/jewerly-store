@@ -177,9 +177,9 @@ export const addProduct = async (req, res) => {
 const products = [
   {
     name: {
-      en: 'Engagement Ring',
-      ru: 'Кольцо для Помолвки',
-      uk: 'Кільце для Заручин',
+      en: 'ENGAGEMENT RING WITH 0.50 CT ROUND CUT DIAMOND IN WHITE GOLD',
+      ru: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
+      uk: 'КАБЛУЧКА ДЛЯ ЗАРУЧИН З ДІАМАНТОМ 0,50 CT ОГРАНКИ «КРУГ» З БІЛОГО ЗОЛОТА',
     },
     description: {
       en: 'A stunning engagement ring crafted from white gold, featuring a round cut diamond with a clarity of SI1 and a carat weight of 0.37. This solitaire style ring is perfect for a timeless and elegant proposal.',
@@ -188,7 +188,6 @@ const products = [
     },
     price: 160000,
     image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/5ng95apsen1348-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',
