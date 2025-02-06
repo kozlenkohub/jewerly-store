@@ -483,8 +483,8 @@
   },
   "profile": {
     "title": {
-      "text1": "Профіль",
-      "text2": "Сторінка"
+      "text1": "Сторінка",
+      "text2": "Профілю"
     },
     "forms": {
       "updateName": {

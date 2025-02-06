@@ -481,5 +481,28 @@
     "title": "Ваша корзина пуста",
     "description": "Похоже, вы еще не добавили ни одного товара. Начните исследовать нашу прекрасную коллекцию украшений!",
     "button": "Перейти в каталог"
+  },
+  "profile": {
+    "title": {
+      "text1": "Страница",
+      "text2": "Профиля"
+    },
+    "forms": {
+      "updateName": {
+        "placeholder": "Имя",
+        "buttonText": "Обновить имя"
+      },
+      "updateEmail": {
+        "placeholder": "Электронная почта",
+        "buttonText": "Обновить email"
+      },
+      "updatePassword": {
+        "currentPasswordPlaceholder": "Текущий пароль",
+        "newPasswordPlaceholder": "Новый пароль",
+        "buttonText": "Обновить пароль"
+      },
+      "noUserData": "Данные пользователя отсутствуют",
+      "loading": "Загрузка..."
+    }
   }
 }

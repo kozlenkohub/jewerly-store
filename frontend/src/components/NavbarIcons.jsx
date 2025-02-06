@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { FaSearch, FaShoppingCart, FaUser, FaCaretDown } from 'react-icons/fa';
+import {
+  FaSearch,
+  FaShoppingCart,
+  FaUser,
+  FaCaretDown,
+  FaClipboardList,
+  FaSignOutAlt,
+} from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toggleSearch } from '../redux/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,12 +59,19 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         />
         {token && (
           <div className="group-hover:block hidden absolute dropdown-menu z-50 right-0 pt-2">
-            <div className={`flex flex-col gap-2 w-36 py-3 px-5 ${bgColor} ${textColor2} `}>
+            <div
+              className={`flex flex-col gap-2 w-40 items-center py-3 px-5 ${bgColor} ${textColor2} `}>
               <Link to="/profile" className="cursor-pointer hover:text-gray-500">
-                {t('navbar.myProfile')}
+                <div className="navbar-item flex items-center">
+                  <FaUser className="mr-1 inline-block" />
+                  <span>{t('navbar.myProfile')}</span>
+                </div>
               </Link>
               <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-gray-500">
-                {t('navbar.orders')}
+                <div className="navbar-item flex items-center">
+                  <FaClipboardList className="mr-1 inline-block" />
+                  <span>{t('navbar.orders')}</span>
+                </div>
               </p>
               <p
                 onClick={() => {
@@ -66,7 +80,10 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                   navigate('/');
                 }}
                 className="cursor-pointer hover:text-gray-500">
-                {t('navbar.logout')}
+                <div className="navbar-item flex items-center">
+                  <FaSignOutAlt className="mr-1 inline-block" />
+                  <span>{t('navbar.logout')}</span>
+                </div>
               </p>
             </div>
           </div>

@@ -89,7 +89,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-[95.5vh] flex justify-center ">
-      <div className="bg-white p-8  w-[90%] sm:max-w-96">
+      <div className="bg-white p-8  w-[90%] sm:max-w-[500px] ">
         <div className="text-3xl mb-6 text-center">
           <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
         </div>

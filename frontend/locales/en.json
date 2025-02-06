@@ -481,5 +481,28 @@
     "title": "Your Cart is Empty",
     "description": "Looks like you haven't added any items yet. Start exploring our beautiful jewelry collection!",
     "button": "Go to Catalog"
+  },
+  "profile": {
+    "title": {
+      "text1": "Profile",
+      "text2": "Page"
+    },
+    "forms": {
+      "updateName": {
+        "placeholder": "Name",
+        "buttonText": "Update Name"
+      },
+      "updateEmail": {
+        "placeholder": "Email",
+        "buttonText": "Update Email"
+      },
+      "updatePassword": {
+        "currentPasswordPlaceholder": "Current Password",
+        "newPasswordPlaceholder": "New Password",
+        "buttonText": "Update Password"
+      },
+      "noUserData": "User data unavailable",
+      "loading": "Loading..."
+    }
   }
 }

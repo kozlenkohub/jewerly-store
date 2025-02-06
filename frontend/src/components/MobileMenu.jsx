@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { FaSearch, FaUser, FaShoppingCart, FaChevronDown } from 'react-icons/fa';
+import {
+  FaSearch,
+  FaUser,
+  FaShoppingCart,
+  FaChevronDown,
+  FaClipboardList,
+  FaSignOutAlt,
+} from 'react-icons/fa';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearch } from '../redux/slices/productSlice';
@@ -87,36 +94,39 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                   onClick={handleProfileClick}
                 />
                 {isProfileMenuOpen && token && (
-                  <div className="absolute right-0 bg-mainColor text-white w-36  shadow-lg z-50">
+                  <div className="absolute right-0 bg-mainColor text-white w-40  shadow-lg z-50">
                     <div className="flex flex-col gap-2 py-3 px-5">
-                      <p
-                        className="cursor-pointer hover:text-gray-300"
+                      <div
+                        className="mobile-menu-item flex items-center cursor-pointer hover:text-gray-300"
                         onClick={() => {
                           setVisible(false);
                           closeProfileMenu();
                           navigate('/profile');
                         }}>
-                        {t('navbar.myProfile')}
-                      </p>
-                      <p
+                        <FaUser className="mr-1 inline-block" />
+                        <span>{t('navbar.myProfile')}</span>
+                      </div>
+                      <div
                         onClick={() => {
                           navigate('/orders');
                           setVisible(false);
                           closeProfileMenu();
                         }}
-                        className="cursor-pointer hover:text-gray-300">
-                        {t('navbar.orders')}
-                      </p>
-                      <p
-                        className="cursor-pointer hover:text-gray-300"
+                        className="mobile-menu-item flex items-center cursor-pointer hover:text-gray-300">
+                        <FaClipboardList className="mr-1 inline-block" />
+                        <span>{t('navbar.orders')}</span>
+                      </div>
+                      <div
+                        className="mobile-menu-item flex items-center cursor-pointer hover:text-gray-300"
                         onClick={() => {
                           setVisible(false);
                           closeProfileMenu();
                           dispatch(logout());
                           dispatch(setCartItems([]));
                         }}>
-                        {t('navbar.logout')}
-                      </p>
+                        <FaSignOutAlt className="mr-1 inline-block" />
+                        <span>{t('navbar.logout')}</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -135,8 +145,8 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             </div>
           </div>
           <NavLink
-            onClick={() => setVisible(false)}
             to="/"
+            onClick={() => setVisible(false)}
             className="flex flex-col items-center gap-1 p-3">
             {t('navbar.menu.home')}
           </NavLink>
@@ -163,7 +173,6 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 />
               )}
             </div>
-
             {isDropdownVisible && categories.length > 0 && (
               <div className="pl-8 z-40 bg-white shadow-lg">
                 {categories.map((category) => (
