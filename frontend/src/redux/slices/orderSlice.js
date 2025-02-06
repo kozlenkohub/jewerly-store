@@ -14,7 +14,9 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
   try {
     const token = localStorage.getItem('token');
     if (token) {
-      const response = await axios.get('/api/orders/myorders');
+      const response = await axios.get('/api/orders/myorders', {
+        headers: { 'X-Localize': true },
+      });
 
       return Array.isArray(response.data) ? response.data : Object.values(response.data || {});
     }
@@ -31,12 +33,18 @@ export const checkout = createAsyncThunk(
     { rejectWithValue, dispatch },
   ) => {
     try {
-      const response = await axios.post('/api/orders', {
-        shippingFields,
-        orderItems,
-        paymentMethod,
-        shippingFee,
-      });
+      const response = await axios.post(
+        '/api/orders',
+        {
+          shippingFields,
+          orderItems,
+          paymentMethod,
+          shippingFee,
+        },
+        {
+          headers: { 'X-Localize': true },
+        },
+      );
       if (paymentMethod === 'cash') {
         localStorage.removeItem('guestCart');
       }

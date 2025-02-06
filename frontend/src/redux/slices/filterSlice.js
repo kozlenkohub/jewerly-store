@@ -8,7 +8,9 @@ const initialState = {
 
 export const fetchFilters = createAsyncThunk('filters/fetchFilters', async (categorySlug) => {
   const slug = categorySlug ? `categorySlug=${categorySlug}` : '';
-  const response = await axios.get(`api/filter?${slug}`);
+  const response = await axios.get(`api/filter?${slug}`, {
+    headers: { 'X-Localize': true },
+  });
   return response.data;
 });
 

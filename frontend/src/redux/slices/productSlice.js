@@ -7,6 +7,9 @@ export const fetchProducts = createAsyncThunk(
     const searchParam = search ? `&search=${search}` : '';
     const { data } = await axios.get(
       `/api/product/${slug}?${query}&sort=${sort || ''}${searchParam}`,
+      {
+        headers: { 'X-Localize': true },
+      },
     );
     return data;
   },
