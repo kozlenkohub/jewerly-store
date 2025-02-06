@@ -49,5 +49,140 @@
       "contact": "Contact"
     },
     "back": "Back"
+  },
+  "catalog": {
+    "filters": "Filters",
+    "sort": {
+      "relevant": "Relevant",
+      "lowToHigh": "Low to High",
+      "highToLow": "High to Low"
+    },
+    "title": "Catalog"
+  },
+  "product": {
+    "reviews": "Reviews",
+    "selectMetal": "Select Metal",
+    "selectSize": "Select Size",
+    "addToCart": "ADD TO CART",
+    "description": "Description"
+  },
+  "productDetails": {
+    "original": "100% original product",
+    "cashOnDelivery": "Cash on delivery is available on this product",
+    "returnPolicy": "Easy return policy within 7 days"
+  },
+  "description": {
+    "labels": {
+      "id": "ID",
+      "ringStyle": "Ring Style",
+      "cutForm": "Cut Form",
+      "metal": "Metal",
+      "color": "Color",
+      "purity": "Purity",
+      "clarity": "Clarity",
+      "weight": "Weight",
+      "diamond": "Diamond"
+    }
+  },
+  "relatedProducts": {
+    "title": {
+      "text1": "Related",
+      "text2": "Products"
+    }
+  },
+  "reviews": {
+    "writeReview": "Write a Review",
+    "submitReview": "Submit Review",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "yourReview": "Your Review",
+    "signInToReview": "Please sign in to write a review",
+    "signIn": "Sign In",
+    "noReviews": {
+      "title": "No reviews yet.",
+      "subtitle": "Be the first to review this product!"
+    },
+    "form": {
+      "title": "Write a Review"
+    }
+  },
+  "cart": {
+    "title": {
+      "text1": "Your",
+      "text2": "Cart"
+    },
+    "size": "Size",
+    "checkout": "CHECKOUT",
+    "empty": {
+      "title": "Your cart is empty",
+      "subtitle": "Add some products to your cart"
+    }
+  },
+  "cartTotal": {
+    "title": {
+      "text1": "Cart",
+      "text2": "Total"
+    },
+    "subtotal": "Subtotal",
+    "shippingFee": "Shipping Fee",
+    "total": "Total"
+  },
+  "checkout": {
+    "payment": {
+      "title": {
+        "text1": "Payment",
+        "text2": "Method"
+      },
+      "methods": {
+        "cash": "Cash on Delivery",
+        "liqpay": "LiqPay"
+      },
+      "buttons": {
+        "payNow": "Pay Now",
+        "processing": "Processing...",
+        "placeOrder": "PLACE ORDER",
+        "placing": "PLACING..."
+      }
+    },
+    "errors": {
+      "emptyCart": "Cart is empty"
+    }
+  },
+  "checkoutForm": {
+    "title": {
+      "text1": "Delivery",
+      "text2": "Information"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "street": "Street",
+      "apartment": "Apartment",
+      "country": "Select country",
+      "city": "City",
+      "zipCode": "Zip code"
+    }
+  },
+  "stripeForm": {
+    "totalToPay": "Total to pay",
+    "stripeFees": "Including Stripe fees",
+    "buttons": {
+      "processing": "Processing...",
+      "payNow": "Pay Now"
+    }
+  },
+  "orders": {
+    "title": {
+      "text1": "Your",
+      "text2": "Orders"
+    },
+    "orderNumber": "Order",
+    "details": {
+      "size": "Size",
+      "quantity": "Quantity",
+      "date": "Date",
+      "totalPrice": "Total Price"
+    }
   }
 }

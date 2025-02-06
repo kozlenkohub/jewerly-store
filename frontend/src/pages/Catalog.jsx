@@ -11,6 +11,7 @@ import qs from 'qs';
 import Breadcrumb from '../components/Breadcrumb';
 import Loader from '../components/Loader';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const Catalog = () => {
   const { selectedFilters } = useSelector((state) => state.filter);
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
+  const { t } = useTranslation();
 
   // Debounced fetch function
   const fetchWithDebounce = React.useMemo(
@@ -77,9 +79,9 @@ const Catalog = () => {
   }, [lastSegment, dispatch]);
 
   const sortOptions = [
-    { value: 'relevent', icon: <FaStar />, label: 'Relevent' },
-    { value: 'low-high', icon: <FaSortAmountUp />, label: 'Low to High' },
-    { value: 'high-low', icon: <FaSortAmountDown />, label: 'High to Low' },
+    { value: 'relevent', icon: <FaStar />, label: t('catalog.sort.relevant') },
+    { value: 'low-high', icon: <FaSortAmountUp />, label: t('catalog.sort.lowToHigh') },
+    { value: 'high-low', icon: <FaSortAmountDown />, label: t('catalog.sort.highToLow') },
   ];
 
   return (
@@ -96,7 +98,7 @@ const Catalog = () => {
               <p
                 onClick={() => setShowFilter(!showFilter)}
                 className="my-2 text-xl flex items-center cursor-pointer gap-2">
-                Filters
+                {t('catalog.filters')}
                 <FaChevronDown
                   className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
                   onClick={() => setShowFilter(!showFilter)}
@@ -109,7 +111,7 @@ const Catalog = () => {
 
             <div className="flex-1">
               <div className="flex flex-wrap justify-center sm:justify-between items-center  text-xl mb-4 relative sm:flex-row flex-col">
-                <Title text1={activeCategory} text2={'Catalog'} />
+                <Title text1={activeCategory} text2={t('catalog.title')} />
                 <div className="flex gap-2 flex-wrap sm:gap-4 mt-2 sm:mt-0">
                   {sortOptions.map((option) => (
                     <button

@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../redux/slices/orderSlice';
 import EmptyOrders from '../components/EmptyOrders';
 import Loader from '../components/Loader';
+import { useTranslation } from 'react-i18next';
 
 const Orders = () => {
   const dispatch = useDispatch();
   const { orders, isLoadingOrder, status } = useSelector((state) => state.order);
   const { currency } = useSelector((state) => state.product);
   const [openOrderIndex, setOpenOrderIndex] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchOrders());
@@ -48,8 +50,8 @@ const Orders = () => {
 
   return (
     <div className="border-t pt-4 max-w-[1280px] mx-auto px-4 min-h-[95.5vh] mb-12">
-      <div className="text-2xl text-right border-b ">
-        <Title text1="Your" text2="Orders" />
+      <div className="text-2xl text-right border-b">
+        <Title text1={t('orders.title.text1')} text2={t('orders.title.text2')} />
       </div>
       <div className="mt-4">
         {orders &&
@@ -61,7 +63,9 @@ const Orders = () => {
                 } text-center font-bold mb-4 forum flex items-center justify-center cursor-pointer relative`}
                 onClick={() => toggleOrder(index)}>
                 <FaBoxOpen className="mr-2" />
-                {order._id ? `Order ${order._id.slice(-4)}` : 'Order'}
+                {order._id
+                  ? `${t('orders.orderNumber')} ${order._id.slice(-4)}`
+                  : t('orders.orderNumber')}
                 <div className="flex items-center gap-2 ml-4 futura">
                   <div className="w-2 h-2 rounded-full bg-mainColor"></div>
                   <p className="text-mainColor text-xs sm:text-sm">{order.status}</p>
@@ -95,7 +99,7 @@ const Orders = () => {
                                 alt=""
                               />
                               <div className="absolute bottom-0 w-full text-center bg-black bg-opacity-50 text-white text-xs px-1 py-1 truncate">
-                                Size: {item.size}
+                                {t('orders.details.size')}: {item.size}
                               </div>
                             </div>
                             <div>
@@ -119,18 +123,21 @@ const Orders = () => {
                                 )}
                               </div>
                               <p className="mt-2 text-gray-400">
-                                Date: {new Date(order.dateOrdered).toLocaleDateString()}
+                                {t('orders.details.date')}:{' '}
+                                {new Date(order.dateOrdered).toLocaleDateString()}
                               </p>
                             </div>
                           </div>
                           <div className="flex items-center">
-                            <span>Quantity: {item.quantity}</span>
+                            <span>
+                              {t('orders.details.quantity')}: {item.quantity}
+                            </span>
                           </div>
                         </div>
                       );
                     })}
                   <div className="mt-4 text-center futura text-xl py-4  font-medium">
-                    Total Price: {formatPrice(order.totalPrice)} {currency}
+                    {t('orders.details.totalPrice')}: {formatPrice(order.totalPrice)} {currency}
                   </div>
                 </div>
               )}

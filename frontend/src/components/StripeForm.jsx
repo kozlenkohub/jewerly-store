@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCartItems } from '../redux/slices/cartSlice';
+import { useTranslation } from 'react-i18next';
 
 const StripeForm = ({ orderId, amount, commision }) => {
-  // добавляем amount в пропсы
+  const { t } = useTranslation();
   const { currency } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
@@ -96,17 +97,17 @@ const StripeForm = ({ orderId, amount, commision }) => {
         }}
       />
       <div className="text-lg font-semibold mt-4 mb-2 futura">
-        Total to pay: {currency}
+        {t('stripeForm.totalToPay')}: {currency}
         {(amount / 100).toFixed(2)}
       </div>
       <div className="text-sm text-gray-500 mb-4 futura">
-        Including Stripe fees - {currency}
+        {t('stripeForm.stripeFees')} - {currency}
         {commision.toFixed(2)}
       </div>
       <button
         disabled={isProcessing || !stripe}
         className="bg-mainColor w-full text-white px-16 py-3 text-sm mt-4">
-        {isProcessing ? 'Processing...' : 'Pay Now'}
+        {isProcessing ? t('stripeForm.buttons.processing') : t('stripeForm.buttons.payNow')}
       </button>
     </form>
   );

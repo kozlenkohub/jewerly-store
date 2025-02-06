@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Title from './Title';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -6,6 +7,7 @@ import Select from 'react-select';
 import countryList from 'react-select-country-list';
 
 const CheckoutForm = ({ formData, setFormData }) => {
+  const { t } = useTranslation();
   const countries = useMemo(() => countryList().getData(), []);
 
   const handleInputChange = (e) => {
@@ -24,16 +26,16 @@ const CheckoutForm = ({ formData, setFormData }) => {
   return (
     <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
       <div className="text-xl sm:text-2xl my-2">
-        <Title text1={'Delivery'} text2={'Information'} />
+        <Title text1={t('checkoutForm.title.text1')} text2={t('checkoutForm.title.text2')} />
       </div>
-      <div className="flex gap-3 ">
+      <div className="flex gap-3">
         <input
           type="text"
           name="firstName"
           value={formData.firstName}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="First name"
+          placeholder={t('checkoutForm.fields.firstName')}
         />
         <input
           type="text"
@@ -41,7 +43,7 @@ const CheckoutForm = ({ formData, setFormData }) => {
           value={formData.lastName}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="Last name"
+          placeholder={t('checkoutForm.fields.lastName')}
         />
       </div>
       <input
@@ -50,7 +52,7 @@ const CheckoutForm = ({ formData, setFormData }) => {
         value={formData.email}
         onChange={handleInputChange}
         className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-        placeholder="Email"
+        placeholder={t('checkoutForm.fields.email')}
       />
       <div className="flex gap-3">
         <input
@@ -59,7 +61,7 @@ const CheckoutForm = ({ formData, setFormData }) => {
           value={formData.street}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="Street"
+          placeholder={t('checkoutForm.fields.street')}
         />
         <input
           type="text"
@@ -67,14 +69,14 @@ const CheckoutForm = ({ formData, setFormData }) => {
           value={formData.apartament}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="Apartament"
+          placeholder={t('checkoutForm.fields.apartment')}
         />
       </div>
       <Select
         options={countries}
         value={countries.find((option) => option.label === formData.country)}
         onChange={handleCountryChange}
-        placeholder="Select country"
+        placeholder={t('checkoutForm.fields.country')}
         className="w-full"
         classNames={{
           control: (state) =>
@@ -85,14 +87,14 @@ const CheckoutForm = ({ formData, setFormData }) => {
           singleValue: () => '!m-0',
         }}
       />
-      <div className="flex gap-3 ">
+      <div className="flex gap-3">
         <input
           type="text"
           name="city"
           value={formData.city}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="City"
+          placeholder={t('checkoutForm.fields.city')}
         />
         <input
           type="text"
@@ -100,7 +102,7 @@ const CheckoutForm = ({ formData, setFormData }) => {
           value={formData.zipCode}
           onChange={handleInputChange}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          placeholder="Zip code"
+          placeholder={t('checkoutForm.fields.zipCode')}
         />
       </div>
       <div className="relative">

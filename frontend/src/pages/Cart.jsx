@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Title from '../components/Title';
 import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
 import { removeFromCart, updateQuantity, fetchCartItems } from '../redux/slices/cartSlice';
@@ -11,6 +12,7 @@ import Loader from '../components/Loader';
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { cartItems, isLoadingCart } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.product);
 
@@ -40,14 +42,14 @@ const Cart = () => {
 
   return (
     <div className="border-t pt-5 max-w-[1280px] mx-auto px-4 min-h-[95.5vh] relative flex flex-col justify-between">
-      <div className="text-2xl mb-3  ">
+      <div className="text-2xl mb-3">
         {isLoadingCart ? (
           <Loader />
         ) : cartItems.length === 0 ? (
           <EmptyCart />
         ) : (
           <>
-            <Title text1={'Your'} text2={'Cart'} />
+            <Title text1={t('cart.title.text1')} text2={t('cart.title.text2')} />
             {cartItems.map((item, index) => {
               const discountedPrice = item.discount
                 ? item.price - (item.price * item.discount) / 100
@@ -61,7 +63,9 @@ const Cart = () => {
                     <div className="relative w-36 sm:w-20">
                       <img className="object-cover " src={item.image[0]} alt="" />
                       <div className="absolute bottom-0 min-w-[57px] text-center  left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-1 py-1 whitespace-nowrap text-[13px] ">
-                        <p> Size: {item.size}</p>
+                        <p>
+                          {t('cart.size')}: {item.size}
+                        </p>
                       </div>
                     </div>
                     <div className="">
@@ -119,7 +123,7 @@ const Cart = () => {
               <button
                 onClick={() => navigate('/checkout')}
                 className="bg-mainColor text-white text-sm my-8 px-8 py-3">
-                CHECKOUT
+                {t('cart.checkout')}
               </button>
             </div>
           </div>

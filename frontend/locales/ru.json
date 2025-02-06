@@ -49,5 +49,141 @@
       "contact": "Контакты"
     },
     "back": "Назад"
+  },
+  "catalog": {
+    "filters": "Фильтры",
+    "sort": {
+      "relevant": "По релевантности",
+      "lowToHigh": "От дешевых к дорогим",
+      "highToLow": "От дорогих к дешевым"
+    },
+    "title": "Каталог"
+  },
+  "product": {
+    "reviews": "Отзывы",
+    "selectMetal": "Выберите металл",
+    "selectSize": "Выберите размер",
+    "addToCart": "ДОБАВИТЬ В КОРЗИНУ",
+    "description": "Описание",
+    "currency": "₽"
+  },
+  "productDetails": {
+    "original": "100% оригинальный товар",
+    "cashOnDelivery": "Доступна оплата при получении",
+    "returnPolicy": "Легкий возврат в течение 7 дней"
+  },
+  "description": {
+    "labels": {
+      "id": "ID",
+      "ringStyle": "Стиль кольца",
+      "cutForm": "Форма огранки",
+      "metal": "Металл",
+      "color": "Цвет",
+      "purity": "Чистота",
+      "clarity": "Прозрачность",
+      "weight": "Вес",
+      "diamond": "Бриллиант"
+    }
+  },
+  "relatedProducts": {
+    "title": {
+      "text1": "Похожие",
+      "text2": "Товары"
+    }
+  },
+  "reviews": {
+    "writeReview": "Написать отзыв",
+    "submitReview": "Отправить отзыв",
+    "submitting": "Отправка...",
+    "cancel": "Отменить",
+    "yourReview": "Ваш отзыв",
+    "signInToReview": "Пожалуйста, войдите чтобы написать отзыв",
+    "signIn": "Войти",
+    "noReviews": {
+      "title": "Пока нет отзывов.",
+      "subtitle": "Станьте первым, кто оставит отзыв!"
+    },
+    "form": {
+      "title": "Написать отзыв"
+    }
+  },
+  "cart": {
+    "title": {
+      "text1": "Ваша",
+      "text2": "Корзина"
+    },
+    "size": "Размер",
+    "checkout": "ОФОРМИТЬ ЗАКАЗ",
+    "empty": {
+      "title": "Ваша корзина пуста",
+      "subtitle": "Добавьте товары в корзину"
+    }
+  },
+  "cartTotal": {
+    "title": {
+      "text1": "Сумма",
+      "text2": "Заказа"
+    },
+    "subtotal": "Промежуточный итог",
+    "shippingFee": "Стоимость доставки",
+    "total": "Всего"
+  },
+  "checkout": {
+    "payment": {
+      "title": {
+        "text1": "Способ",
+        "text2": "Оплаты"
+      },
+      "methods": {
+        "cash": "Оплата при получении",
+        "liqpay": "LiqPay"
+      },
+      "buttons": {
+        "payNow": "Оплатить",
+        "processing": "Обработка...",
+        "placeOrder": "ОФОРМИТЬ ЗАКАЗ",
+        "placing": "ОФОРМЛЕНИЕ..."
+      }
+    },
+    "errors": {
+      "emptyCart": "Корзина пуста"
+    }
+  },
+  "checkoutForm": {
+    "title": {
+      "text1": "Информация",
+      "text2": "о доставке"
+    },
+    "fields": {
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "email": "Электронная почта",
+      "street": "Улица",
+      "apartment": "Квартира",
+      "country": "Выберите страну",
+      "city": "Город",
+      "zipCode": "Почтовый индекс"
+    }
+  },
+  "stripeForm": {
+    "totalToPay": "Всего к оплате",
+    "stripeFees": "Включая комиссию Stripe",
+    "buttons": {
+      "processing": "Обработка...",
+      "payNow": "Оплатить"
+    }
+  },
+  "orders": {
+    "title": {
+      "text1": "Ваши",
+      "text2": "Заказы"
+    },
+    "orderNumber": "Заказ",
+    "details": {
+      "size": "Размер",
+      "quantity": "Количество",
+      "date": "Дата",
+      "totalPrice": "Итого"
+    }
   }
 }

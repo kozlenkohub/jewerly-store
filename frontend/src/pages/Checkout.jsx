@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { FaStripe } from 'react-icons/fa';
@@ -17,6 +18,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const orderItems = useSelector((state) => state.cart.cartItems);
@@ -47,7 +49,7 @@ const Checkout = () => {
 
   const handleCheckout = () => {
     if (orderItems.length === 0) {
-      toast.error('Cart is empty');
+      toast.error(t('checkout.errors.emptyCart'));
       return;
     }
 
@@ -134,7 +136,11 @@ const Checkout = () => {
   const paymentMethods = [
     {
       id: 'cash',
-      label: <p className="text-gray-500 text-sm font-medium mx-2 futura">Cash on Delivery</p>,
+      label: (
+        <p className="text-gray-500 text-sm font-medium mx-2 futura">
+          {t('checkout.payment.methods.cash')}
+        </p>
+      ),
     },
     {
       id: 'stripe',
@@ -142,7 +148,11 @@ const Checkout = () => {
     },
     {
       id: 'liqpay',
-      label: <p className="text-gray-500 text-sm font-medium mx-2 futura">LiqPay</p>,
+      label: (
+        <p className="text-gray-500 text-sm font-medium mx-2 futura">
+          {t('checkout.payment.methods.liqpay')}
+        </p>
+      ),
     },
   ];
 
@@ -165,20 +175,23 @@ const Checkout = () => {
         console.error('Error fetching user:', error);
       }
     };
+
     fetchUser();
   }, []);
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[95.5vh] pb-10">
       <CheckoutForm formData={formData} setFormData={setFormData} />
-      {/* right */}
       <div className="mt-2">
         <div className="mt-2 min-w-80">
           <CartTotal />
         </div>
         <div className="mt-8">
-          <Title text1={'Payment'} text2={'Method'} />
-          <div className="flex gap-3 justify-between flex-col ">
+          <Title
+            text1={t('checkout.payment.title.text1')}
+            text2={t('checkout.payment.title.text2')}
+          />
+          <div className="flex gap-3 justify-between flex-col">
             {paymentMethods.map((method) => (
               <div
                 key={method.id}
@@ -211,14 +224,14 @@ const Checkout = () => {
                 <button
                   type="submit"
                   className="bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm">
-                  Pay Now
+                  {t('checkout.payment.buttons.payNow')}
                 </button>
               </form>
             ) : paymentMethod === 'liqpay' ? (
               <button
                 disabled
                 className="bg-mainColor md:min-w-[222px] text-white px-16 py-3 text-sm opacity-50">
-                Processing...
+                {t('checkout.payment.buttons.processing')}
               </button>
             ) : (
               <button
@@ -227,7 +240,9 @@ const Checkout = () => {
                   isLoadingOrder ? 'text-gray-500 bg-gray-800' : ''
                 }`}
                 disabled={isLoadingOrder}>
-                {isLoadingOrder ? 'PLACING...' : 'PLACE ORDER'}
+                {isLoadingOrder
+                  ? t('checkout.payment.buttons.placing')
+                  : t('checkout.payment.buttons.placeOrder')}
               </button>
             )}
           </div>

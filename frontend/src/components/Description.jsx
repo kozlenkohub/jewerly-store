@@ -1,16 +1,19 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weight, carats }) => {
+  const { t } = useTranslation();
+
   const detailsArray = [
-    { label: 'ID', value: _id.slice(-6) },
-    { label: 'Ring Style', value: style },
-    { label: 'Cut Form', value: cutForm.name },
-    { label: 'Metal', value: metal.name },
-    { label: 'Color', value: color },
-    { label: 'Purity', value: purity },
-    { label: 'Clarity', value: clarity },
-    { label: 'Weight', value: weight },
-    { label: 'Diamond', value: carats ? `${carats} ct` : undefined },
+    { label: t('description.labels.id'), value: _id.slice(-6) },
+    { label: t('description.labels.ringStyle'), value: style },
+    { label: t('description.labels.cutForm'), value: cutForm.name },
+    { label: t('description.labels.metal'), value: metal.name },
+    { label: t('description.labels.color'), value: color },
+    { label: t('description.labels.purity'), value: purity },
+    { label: t('description.labels.clarity'), value: clarity },
+    { label: t('description.labels.weight'), value: weight },
+    { label: t('description.labels.diamond'), value: carats ? `${carats} ct` : undefined },
   ].filter((detail) => detail.value !== undefined);
 
   return (

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import axios from '../config/axiosInstance';
+import { useTranslation } from 'react-i18next';
 
 const ReviewForm = ({ onSubmit, onCancel, isLoading }) => {
+  const { t } = useTranslation();
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [hover, setHover] = useState(null);
@@ -42,7 +44,7 @@ const ReviewForm = ({ onSubmit, onCancel, isLoading }) => {
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Your Review"
+          placeholder={t('reviews.yourReview')}
           required
           className="border p-2 min-h-[100px] futura"
         />
@@ -51,13 +53,13 @@ const ReviewForm = ({ onSubmit, onCancel, isLoading }) => {
             type="submit"
             disabled={isLoading}
             className="bg-mainColor text-white px-4 py-2 w-fit futura hover:bg-mainColor/90 disabled:bg-gray-400">
-            {isLoading ? 'Submitting...' : 'Submit Review'}
+            {isLoading ? t('reviews.submitting') : t('reviews.submitReview')}
           </button>
           <button
             type="button"
             onClick={onCancel}
             className="px-4 py-2 text-gray-500 hover:text-gray-700 futura">
-            Cancel
+            {t('reviews.cancel')}
           </button>
         </div>
       </div>
@@ -66,6 +68,7 @@ const ReviewForm = ({ onSubmit, onCancel, isLoading }) => {
 };
 
 const Reviews = ({ reviews = [], productId, onReviewAdded }) => {
+  const { t } = useTranslation();
   const [localReviews, setLocalReviews] = useState(reviews);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -112,8 +115,8 @@ const Reviews = ({ reviews = [], productId, onReviewAdded }) => {
       <div className="flex flex-col gap-6">
         {localReviews.length === 0 ? (
           <div className="text-center text-gray-500 py-8 futura">
-            <p>No reviews yet.</p>
-            <p className="mt-2">Be the first to review this product!</p>
+            <p>{t('reviews.noReviews.title')}</p>
+            <p className="mt-2">{t('reviews.noReviews.subtitle')}</p>
           </div>
         ) : (
           localReviews.map((review, index) => (
@@ -131,22 +134,22 @@ const Reviews = ({ reviews = [], productId, onReviewAdded }) => {
       <div className="mt-8">
         {!isAuthenticated ? (
           <div className="text-center">
-            <p className="text-gray-600 mb-2 futura">Please sign in to write a review</p>
+            <p className="text-gray-600 mb-2 futura">{t('reviews.signInToReview')}</p>
             <a
               href="/login"
               className="bg-mainColor text-white px-4 py-2 hover:bg-mainColor/90 inline-block">
-              Sign In
+              {t('reviews.signIn')}
             </a>
           </div>
         ) : !showReviewForm ? (
           <button
             onClick={() => setShowReviewForm(true)}
             className="bg-mainColor text-white px-4 py-2 hover:bg-mainColor/90 w-full md:w-auto">
-            Write a Review
+            {t('reviews.writeReview')}
           </button>
         ) : (
           <div className="border-t pt-6">
-            <h3 className="font-medium text-lg mb-4">Write a Review</h3>
+            <h3 className="font-medium text-lg mb-4">{t('reviews.form.title')}</h3>
             <ReviewForm
               onSubmit={handleNewReview}
               onCancel={() => setShowReviewForm(false)}

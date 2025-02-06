@@ -49,5 +49,141 @@
       "contact": "Контакти"
     },
     "back": "Назад"
+  },
+  "catalog": {
+    "filters": "Фільтри",
+    "sort": {
+      "relevant": "За релевантністю",
+      "lowToHigh": "Від дешевих до дорогих",
+      "highToLow": "Від дорогих до дешевих"
+    },
+    "title": "Каталог"
+  },
+  "product": {
+    "reviews": "Відгуки",
+    "selectMetal": "Виберіть метал",
+    "selectSize": "Виберіть розмір",
+    "addToCart": "ДОДАТИ В КОШИК",
+    "description": "Опис",
+    "currency": "₴"
+  },
+  "productDetails": {
+    "original": "100% оригінальний товар",
+    "cashOnDelivery": "Доступна оплата при отриманні",
+    "returnPolicy": "Легке повернення протягом 7 днів"
+  },
+  "description": {
+    "labels": {
+      "id": "ID",
+      "ringStyle": "Стиль кільця",
+      "cutForm": "Форма огранки",
+      "metal": "Метал",
+      "color": "Колір",
+      "purity": "Чистота",
+      "clarity": "Прозорість",
+      "weight": "Вага",
+      "diamond": "Діамант"
+    }
+  },
+  "relatedProducts": {
+    "title": {
+      "text1": "Схожі",
+      "text2": "Товари"
+    }
+  },
+  "reviews": {
+    "writeReview": "Написати відгук",
+    "submitReview": "Надіслати відгук",
+    "submitting": "Надсилання...",
+    "cancel": "Скасувати",
+    "yourReview": "Ваш відгук",
+    "signInToReview": "Будь ласка, увійдіть щоб написати відгук",
+    "signIn": "Увійти",
+    "noReviews": {
+      "title": "Поки немає відгуків.",
+      "subtitle": "Станьте першим, хто залишить відгук!"
+    },
+    "form": {
+      "title": "Написати відгук"
+    }
+  },
+  "cart": {
+    "title": {
+      "text1": "Ваш",
+      "text2": "Кошик"
+    },
+    "size": "Розмір",
+    "checkout": "ОФОРМИТИ ЗАМОВЛЕННЯ",
+    "empty": {
+      "title": "Ваш кошик порожній",
+      "subtitle": "Додайте товари до кошика"
+    }
+  },
+  "cartTotal": {
+    "title": {
+      "text1": "Сума",
+      "text2": "Замовлення"
+    },
+    "subtotal": "Проміжний підсумок",
+    "shippingFee": "Вартість доставки",
+    "total": "Всього"
+  },
+  "checkout": {
+    "payment": {
+      "title": {
+        "text1": "Спосіб",
+        "text2": "Оплати"
+      },
+      "methods": {
+        "cash": "Оплата при отриманні",
+        "liqpay": "LiqPay"
+      },
+      "buttons": {
+        "payNow": "Оплатити",
+        "processing": "Обробка...",
+        "placeOrder": "ОФОРМИТИ ЗАМОВЛЕННЯ",
+        "placing": "ОФОРМЛЕННЯ..."
+      }
+    },
+    "errors": {
+      "emptyCart": "Кошик порожній"
+    }
+  },
+  "checkoutForm": {
+    "title": {
+      "text1": "Інформація",
+      "text2": "про доставку"
+    },
+    "fields": {
+      "firstName": "Ім'я",
+      "lastName": "Прізвище",
+      "email": "Електронна пошта",
+      "street": "Вулиця",
+      "apartment": "Квартира",
+      "country": "Виберіть країну",
+      "city": "Місто",
+      "zipCode": "Поштовий індекс"
+    }
+  },
+  "stripeForm": {
+    "totalToPay": "Всього до оплати",
+    "stripeFees": "Включаючи комісію Stripe",
+    "buttons": {
+      "processing": "Обробка...",
+      "payNow": "Оплатити"
+    }
+  },
+  "orders": {
+    "title": {
+      "text1": "Ваші",
+      "text2": "Замовлення"
+    },
+    "orderNumber": "Замовлення",
+    "details": {
+      "size": "Розмір",
+      "quantity": "Кількість",
+      "date": "Дата",
+      "totalPrice": "Загальна сума"
+    }
   }
 }

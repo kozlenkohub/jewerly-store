@@ -13,11 +13,13 @@ import ProductDetails from '../components/ProductDetails';
 import Loader from '../components/Loader';
 import Reviews from '../components/Reviews.jsx';
 import ProductGallery from '../components/ProductGallery';
+import { useTranslation } from 'react-i18next';
 
 const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -152,7 +154,7 @@ const Product = () => {
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>
-                <p>Select Metal</p>
+                <p>{t('product.selectMetal')}</p>
                 <MetalDetails
                   productId={params.productId}
                   product={product}
@@ -163,7 +165,7 @@ const Product = () => {
                 />
               </>
             )}
-            <p>Select Size</p>
+            <p>{t('product.selectSize')}</p>
             <SelectSize
               sizes={product.size}
               activeSize={activeSize}
@@ -173,7 +175,7 @@ const Product = () => {
           <button
             onClick={handleAddToCart}
             className={`bg-mainColor text-white px-8 py-3 min-w-[145px] text-sm active:bg-mainColor/90`}>
-            ADD TO CART
+            {t('product.addToCart')}
           </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
@@ -189,14 +191,14 @@ const Product = () => {
             className={`border px-5 py-3 text-sm ${
               activeTab === 'description' ? 'font-bold bg-gray-50' : ''
             }`}>
-            Description
+            {t('product.description')}
           </button>
           <button
             onClick={() => setActiveTab('reviews')}
             className={`border px-5 py-3 text-sm ${
               activeTab === 'reviews' ? 'font-bold bg-gray-50' : ''
             }`}>
-            Reviews ({product.reviews?.length || 0})
+            {t('product.reviews')} ({product.reviews?.length || 0})
           </button>
         </div>
         {activeTab === 'description' ? (
