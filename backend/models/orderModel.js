@@ -1,4 +1,13 @@
 import mongoose from 'mongoose';
+import Product from './productModel.js';
+
+const localizedStringSchema = new mongoose.Schema(
+  {
+    en: { type: String, required: true, trim: true },
+    ru: { type: String, trim: true },
+  },
+  { _id: false },
+);
 
 const orderSchema = new mongoose.Schema(
   {
@@ -18,7 +27,10 @@ const orderSchema = new mongoose.Schema(
           required: true,
           ref: 'Product',
         },
-        name: { type: String, required: true },
+        name: {
+          type: localizedStringSchema,
+          required: true,
+        },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
         discount: { type: Number, required: true },
@@ -86,6 +98,33 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+// Middleware для заполнения поля name из Product при сохранении заказа
+orderSchema.pre('validate', async function (next) {
+  if (this.isNew) {
+    // Only populate name when creating a new order
+    try {
+      for (const item of this.orderItems) {
+        const product = await Product.findById(item._id);
+        if (product && product.name) {
+          // Ensure item.name is an object before modifying it
+          if (typeof item.name !== 'object' || item.name === null) {
+            item.name = { en: '', ru: '' }; // Initialize as an empty object
+          }
+          item.name.en = product.name.en || '';
+          item.name.ru = product.name.ru || '';
+        } else {
+          item.name = { en: '', ru: '' };
+        }
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
+});
 
 // Middleware для отслеживания изменения статуса
 orderSchema.pre('save', function (next) {

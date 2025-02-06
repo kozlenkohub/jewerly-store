@@ -20,6 +20,7 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const orderItems = useSelector((state) => state.cart.cartItems);
+
   const { shippingFee } = useSelector((state) => state.cart);
   const { isLoadingOrder } = useSelector((state) => state.order);
   const [paymentMethod, setPaymentMethod] = useState('cash');

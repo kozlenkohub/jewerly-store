@@ -5,6 +5,7 @@ export const localizeResponse =
   (req, res, next) => {
     res.localizeData = (data, fieldsToLocalize = fields) => {
       const lang = req.headers['accept-language']?.split(',')[0] || 'en';
+      const visited = new WeakSet(); // Для отслеживания циклических ссылок
 
       // Функция для локализации значений
       const localizeField = (field, item) => {
@@ -32,6 +33,15 @@ export const localizeResponse =
       // Функция обработки объекта
       const deepLocalize = (obj) => {
         if (!obj || typeof obj !== 'object') return obj;
+
+        // Проверяем на циклические ссылки
+        if (visited.has(obj)) return obj;
+        visited.add(obj);
+
+        // Если это Mongoose документ, преобразуем его в обычный объект
+        if (obj instanceof mongoose.Document) {
+          obj = obj.toObject();
+        }
 
         const localizedObj = Array.isArray(obj) ? [...obj] : { ...obj };
 

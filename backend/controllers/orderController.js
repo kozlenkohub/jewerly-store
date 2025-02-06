@@ -64,6 +64,10 @@ export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, shippingFee, paymentMethod } = req.body;
 
+    // const itemsId = orderItems.map((item) => item._id);
+
+    // const updatedOrderItems = await Product.find({ _id: { $in: itemsId } }).lean();
+
     const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
 
     const errors = validateOrderData(req.body);
@@ -73,11 +77,10 @@ export const placeOrder = async (req, res) => {
 
     const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
 
-    // For Stripe payments, create payment intent before saving order
     if (paymentMethod === 'stripe') {
       const paymentIntent = await createPaymentIntent(totalPrice);
       const order = new Order({
-        orderItems,
+        updatedOrderItems,
         user: req.userId,
         shippingFields,
         paymentMethod,
@@ -102,7 +105,7 @@ export const placeOrder = async (req, res) => {
     }
 
     let paymentIntent = null;
-    let paymentStatus = 'pending';
+
     let paymentIntentId = null;
     let stripeFees = null;
 
@@ -120,10 +123,10 @@ export const placeOrder = async (req, res) => {
         shippingFee,
         stripeFees,
       });
+      console.log('orderItems:', order.orderItems);
 
       const savedOrder = await order.save();
 
-      // Send email and clear cart
       await sendEmail({
         email: shippingFields.email,
         subject: 'Order Confirmation',
@@ -140,24 +143,6 @@ export const placeOrder = async (req, res) => {
         orderId: savedOrder._id,
       });
     }
-
-    const order = new Order({
-      orderItems,
-      user: userId,
-      shippingFields,
-      paymentMethod,
-      totalPrice,
-      email: shippingFields.email,
-      paymentIntentId,
-      paymentStatus,
-      status: 'Processing',
-      shippingFee,
-      stripeFees,
-    });
-
-    const savedOrder = await order.save(); // Save the order first
-    const orderId = savedOrder._id;
-    // Use savedOrder._id
 
     if (paymentMethod === 'liqpay') {
       const currentDate = new Date();
@@ -194,7 +179,7 @@ export const placeOrder = async (req, res) => {
     }
 
     // Update product sales
-    for (const item of orderItems) {
+    for (const item of updatedOrderItems) {
       await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
     }
 
@@ -412,7 +397,7 @@ export const userOrders = async (req, res) => {
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
     }
-    res.json(orders);
+    res.json(res.localizeData(orders, ['shippingFields', 'orderItems']));
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

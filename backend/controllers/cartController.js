@@ -43,7 +43,7 @@ export const getCartItems = async (req, res) => {
     let hasInvalidItems = false;
 
     for (const [key, cartItem] of Object.entries(cartData)) {
-      const product = await Product.findById(cartItem.itemId);
+      const product = await Product.findById(cartItem.itemId).lean();
       if (product) {
         validCartItems.push({
           _id: cartItem.itemId,
@@ -65,7 +65,7 @@ export const getCartItems = async (req, res) => {
       await User.findByIdAndUpdate(userId, { cartData });
     }
 
-    res.json(validCartItems);
+    res.json(res.localizeData(validCartItems, ['name']));
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
