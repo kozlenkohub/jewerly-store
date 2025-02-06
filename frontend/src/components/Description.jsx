@@ -4,8 +4,8 @@ const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weigh
   const detailsArray = [
     { label: 'ID', value: _id.slice(-6) },
     { label: 'Ring Style', value: style },
-    { label: 'Cut Form', value: cutForm },
-    { label: 'Metal', value: metal },
+    { label: 'Cut Form', value: cutForm.name },
+    { label: 'Metal', value: metal.name },
     { label: 'Color', value: color },
     { label: 'Purity', value: purity },
     { label: 'Clarity', value: clarity },

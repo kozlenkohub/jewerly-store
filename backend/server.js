@@ -10,6 +10,7 @@ import filterRouter from './routes/filterRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import initSchedulers from './services/schedulers.js';
+import { localizeResponse } from './middleware/localizeData.js';
 
 // app config
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(cors());
 
 // api endpoints
+app.use(localizeResponse());
 
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter); // Ensure this line is present

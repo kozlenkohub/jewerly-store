@@ -84,6 +84,8 @@ const Product = () => {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(`/api/product/get/${params.productId}`);
+        console.log(data);
+
         setProduct(data['product']);
         setRelated(data['relatedProducts']);
         setAnotherVariantion(data['anotherVariation']);

@@ -14,12 +14,10 @@ async function getAllChildCategoryIds(catId, collected = []) {
   }
   return collected;
 }
-
 export const getProducts = async (req, res) => {
   try {
     const { metal, carats, price, cutForm, sort, search, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
-    const lang = req.headers['accept-language'] || 'en'; // Initialize lang variable
 
     const filter = {};
     let categoryDoc = null;
@@ -29,7 +27,14 @@ export const getProducts = async (req, res) => {
       return res.json([]); // Return message if unknown filters are present
     }
 
-    if (metal) filter.metal = { $in: metal }; // Используем $in для массива металлов
+    // Handle 'metal' filter
+    if (metal) {
+      // Normalize the metal value by replacing hyphens with spaces
+      const metals = Array.isArray(metal) ? metal : [metal];
+      filter.metal = { $in: metals.map((m) => m.replace('-', ' ')) };
+    }
+
+    // Handle 'carats' filter
     if (carats) {
       const caratsRanges = Array.isArray(carats) ? carats : [carats];
       filter.$or = caratsRanges.map((range) => {
@@ -37,35 +42,51 @@ export const getProducts = async (req, res) => {
         return { carats: { $gte: minCarats, $lte: maxCarats } };
       });
     }
+
+    // Handle 'category' filter
     if (paramCategory) {
-      categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id name');
+      categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id name').lean();
       if (!categoryDoc) {
         return res.status(404).json({ message: 'Category not found' });
       }
       const allCategoryIds = await getAllChildCategoryIds(categoryDoc._id);
       filter.category = { $in: allCategoryIds };
     }
+
+    // Handle 'price' filter
     if (price) {
       const [minPrice, maxPrice] = price.split('-').map(Number);
       filter.price = { $gte: minPrice, $lte: maxPrice };
     }
 
+    // Handle 'cutForm' filter
     if (cutForm) {
       filter.cutForm = { $in: cutForm };
     }
 
+    // Handle 'search' filter
     if (search) {
       filter.name = { $regex: search, $options: 'i' };
     }
 
-    let query = Product.find(filter);
+    // Prepare the query
+    let query = Product.find(filter).lean();
+
+    // Handle 'sort' filter
     if (sort) {
       if (sort === 'low-high') query = query.sort({ price: 1 });
       else if (sort === 'high-low') query = query.sort({ price: -1 });
       else if (sort === 'relevent') query = query.sort({ sales: -1 });
     }
+
+    // Execute the query
     const products = await query;
-    res.json({ products, categoryName: categoryDoc ? categoryDoc.name[lang] : '' });
+
+    // Return the response
+    res.json({
+      products: res.localizeData(products, ['name', 'metal.name', 'cutForm.name', 'description']),
+      categoryName: categoryDoc ? res.localizeData(categoryDoc, ['name']).name : '',
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
@@ -155,57 +176,48 @@ export const addProduct = async (req, res) => {
 
 const products = [
   {
-    name: 'Серьги с бриллиантами в огранке «Круг» из желтого золота',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
+    name: {
+      en: 'Engagement Ring',
+      ru: 'Кольцо для Помолвки',
+    },
+    description: {
+      en: 'lorem228',
+      ru: '',
+    },
     price: 160000,
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam cumque doloribus voluptas assumenda corrupti dignissimos laudantium numquam et. Velit ex recusandae quaerat ducimus officia rerum, neque ratione repudiandae porro. Facere, optio unde velit assumenda quidem numquam. Ipsum voluptatibus ad quasi suscipit sequi consectetur commodi numquam nulla voluptates iste odio ',
     image: [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/5ng95apsen1348-1000x1000.webp',
-
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',
     ],
-    category: '6797b7419efe656b1d2bbd8e',
+    category: '67a24fa954fb707082c036f4',
     collection: 'kiev',
-    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
+    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5), // Автоматическая генерация размеров
     discount: 20,
     bestseller: true,
-    metal: 'yellow gold',
-    cutForm: 'round',
+    metal: {
+      value: 'white gold',
+      name: {
+        en: 'White Gold',
+        ru: 'Белое золото',
+      },
+    },
+    cutForm: {
+      value: 'round',
+      name: {
+        en: 'Round',
+        ru: 'Круглый',
+      },
+    },
     style: 'solitaire',
     clarity: 'SI1',
     purity: 750,
     color: 'H',
-    carats: 0.57,
+    carats: 0.37,
     weight: 2.3,
-  },
-  {
-    name: 'Серьги с бриллиантами в огранке «Круг» из красного золота',
-    description:
-      'A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.',
-    price: 160000,
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam cumque doloribus voluptas assumenda corrupti dignissimos laudantium numquam et. Velit ex recusandae quaerat ducimus officia rerum, neque ratione repudiandae porro. Facere, optio unde velit assumenda quidem numquam. Ipsum voluptatibus ad quasi suscipit sequi consectetur commodi numquam nulla voluptates iste odio ',
-    image: [
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/2ng95apsen1348-1000x1000.webp',
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/5ng95apsen1348-1000x1000.webp',
-      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',
-    ],
-    category: '6797b7419efe656b1d2bbd8e',
-    collection: 'kiev',
-    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
-    discount: 20,
-    bestseller: true,
-    metal: 'rose gold',
-    cutForm: 'round',
-    style: 'solitaire',
-    clarity: 'SI1',
-    purity: 750,
-    color: 'H',
-    carats: 0.57,
-    weight: 2.3,
+    isAvailable: true,
+    reviews: [],
+    sales: 0,
   },
 ];
 
@@ -222,7 +234,7 @@ export const insertProducts = async (req, res) => {
 // by id
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('reviews');
+    const product = await Product.findById(req.params.id).populate('reviews').lean();
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -231,14 +243,32 @@ export const getProductById = async (req, res) => {
     const relatedProducts = await Product.find({
       category: product.category,
       _id: { $ne: product._id },
-    }).limit(5);
+    })
+      .limit(5)
+      .lean();
 
     const anotherVariation = await Product.find({
       collection: product.collection,
       _id: { $ne: product._id },
-    }).select('_id metal');
+    })
+      .select('_id metal')
+      .lean();
 
-    res.json({ product, relatedProducts, anotherVariation });
+    res.json({
+      product: res.localizeData(product, ['name', 'metal.name', 'cutForm.name', 'description']), // Убрали массив
+      relatedProducts: res.localizeData(relatedProducts, [
+        'name',
+        'metal.name',
+        'cutForm.name',
+        'description',
+      ]),
+      anotherVariation: res.localizeData(anotherVariation, [
+        'name',
+        'metal.name',
+        'cutForm.name',
+        'description',
+      ]),
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

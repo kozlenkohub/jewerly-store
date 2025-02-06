@@ -25,8 +25,8 @@ export const getAllFilters = async (req, res) => {
     const { categorySlug } = req.query;
 
     if (!categorySlug) {
-      const filters = await Filter.find();
-      return res.json(filters);
+      const filters = await Filter.find().lean();
+      return res.json(res.localizeData(filters, ['label', 'options.name']));
     }
 
     const category = await Category.findOne({ slug: categorySlug });
@@ -51,7 +51,7 @@ export const getAllFilters = async (req, res) => {
       return res.json([priceFilter, ...filters]);
     }
 
-    res.json(filteredFilters);
+    res.json(res.localizeData(filteredFilters, ['label', 'options.name']));
   } catch (error) {
     res.status(500).json({ message: 'Error getting filters', error });
   }
@@ -133,155 +133,232 @@ export const updateFilter = async (req, res) => {
 export const populateFilters = async (req, res) => {
   const filters = [
     {
-      _id: '67954cb73b46dfefeb0ab0f7',
       key: 'carats',
-      label: 'Carats',
+      label: {
+        en: 'Carats',
+        ru: 'Караты',
+      },
       type: 'checkbox',
       options: [
         {
-          type: '0.3 - 0.5',
+          name: {
+            en: '0.3 - 0.5',
+            ru: '0.3 - 0.5',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat1.jpg',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: '0.3-0.5',
         },
         {
-          type: '0.51 - 0.6',
+          name: {
+            en: '0.51 - 0.6',
+            ru: '0.51 - 0.6',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat2.jpg',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: '0.51-0.6',
         },
         {
-          type: '0.61 - 0.7',
+          name: {
+            en: '0.61 - 0.7',
+            ru: '0.61 - 0.7',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat3.jpg',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: '0.61-0.7',
         },
         {
-          type: '0.71 - 3',
+          name: {
+            en: '0.71 - 3',
+            ru: '0.71 - 3',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat4.jpg',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: '0.71-3',
         },
       ],
-      createdAt: '2025-01-25T20:42:31.169Z',
-      updatedAt: '2025-01-25T20:42:31.169Z',
-      __v: 0,
     },
     {
-      _id: '679551083b46dfefeb0ab11c',
       key: 'metal',
-      label: 'Metal',
+      label: {
+        en: 'Metal',
+        ru: 'Металл',
+      },
       type: 'checkbox',
       options: [
         {
-          type: 'white gold',
+          name: {
+            en: 'White Gold',
+            ru: 'Белое золото',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/beloe-zoloto.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'white-gold',
         },
         {
-          type: 'yellow gold',
+          name: {
+            en: 'Yellow Gold',
+            ru: 'Желтое золото',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/zheltoe-zoloto.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'yellow-gold',
         },
         {
-          type: 'red gold',
+          name: {
+            en: 'Rose Gold',
+            ru: 'Красное золото',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krasnoe-zoloto.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'rose-gold',
         },
       ],
-      createdAt: '2025-01-25T21:00:56.525Z',
-      updatedAt: '2025-01-25T21:00:56.525Z',
-      __v: 0,
     },
     {
-      _id: '679559ab33e3c8da4e18ff80',
       key: 'price',
-      label: 'Price',
+      label: {
+        en: 'Price',
+        ru: 'Цена',
+      },
       type: 'range',
       options: [
         {
+          name: {
+            en: '0-100',
+            ru: '0-100',
+          },
+          img: '',
+          category: [],
           type: '0-100',
-          img: '',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
         },
         {
+          name: {
+            en: '101-200',
+            ru: '101-200',
+          },
+          img: '',
+          category: [],
           type: '101-200',
-          img: '',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
         },
         {
-          type: '201-300',
+          name: {
+            en: '201-300',
+            ru: '201-300',
+          },
           img: '',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: '201-300',
         },
       ],
-      createdAt: '2025-01-25T21:37:47.310Z',
-      updatedAt: '2025-01-25T21:37:47.310Z',
-      __v: 0,
     },
     {
-      _id: '67979514812ad4ca61d31655',
       key: 'cutForm',
-      label: 'Cut Form',
+      label: {
+        en: 'Cut Form',
+        ru: 'Форма огранки',
+      },
       type: 'checkbox',
       options: [
         {
-          type: 'asher',
+          name: {
+            en: 'Asher',
+            ru: 'Ашер',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/asher.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'asher',
         },
         {
-          type: 'pear',
+          name: {
+            en: 'Pear',
+            ru: 'Груша',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/grusha.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'pear',
         },
         {
-          type: 'round',
+          name: {
+            en: 'Round',
+            ru: 'Круг',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krug.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'round',
         },
         {
-          type: 'cushion',
+          name: {
+            en: 'Cushion',
+            ru: 'Кушон',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/kushon.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'cushion',
         },
         {
-          type: 'marquise',
+          name: {
+            en: 'Marquise',
+            ru: 'Маркиз',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/markiz.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'marquise',
         },
         {
-          type: 'oval',
+          name: {
+            en: 'Oval',
+            ru: 'Овал',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/oval.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'oval',
         },
         {
-          type: 'princess',
+          name: {
+            en: 'Princess',
+            ru: 'Принцесса',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/princessa.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'princess',
         },
         {
-          type: 'radiant',
+          name: {
+            en: 'Radiant',
+            ru: 'Радиант',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/radiant.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'radiant',
         },
         {
-          type: 'heart',
+          name: {
+            en: 'Heart',
+            ru: 'Сердце',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/serdce.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'heart',
         },
         {
-          type: 'emerald',
+          name: {
+            en: 'Emerald',
+            ru: 'Изумруд',
+          },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/emerald.png',
-          category: ['6797b4a6301dba2c33a5c7f5', '6797b4d5301dba2c33a5c7f7'],
+          category: [],
+          type: 'emerald',
         },
       ],
-      createdAt: '2025-01-27T14:15:48.550Z',
-      updatedAt: '2025-01-27T14:15:48.550Z',
-      __v: 0,
     },
   ];
 
   try {
+    // Вставляем фильтры в базу
     const result = await Filter.insertMany(filters);
-    res.status(201).json(result);
+    res.status(201).json(result); // Отправляем ответ с данными
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: `Error inserting filters: ${error.message}` }); // Более подробное сообщение об ошибке
   }
 };

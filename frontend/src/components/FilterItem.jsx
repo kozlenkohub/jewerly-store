@@ -60,7 +60,7 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
                   }`}
                 />
               )}
-              {option.type}
+              {option.name}
             </div>
           ))}
       </div>

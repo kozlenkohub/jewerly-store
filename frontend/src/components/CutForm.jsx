@@ -48,7 +48,7 @@ const CutForm = ({ filterKey, label, options }) => {
                 }`}
               />
             )}
-            <span>{option.type}</span>
+            <span>{option.name}</span>
           </div>
         ))}
       </div>

@@ -26,6 +26,9 @@ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setItems: (state, action) => {
       state.products = action.payload;
     },
@@ -55,6 +58,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { setItems, toggleSearch, setSearch } = productSlice.actions;
+export const { setItems, toggleSearch, setSearch, setIsLoading } = productSlice.actions;
 
 export default productSlice.reducer;

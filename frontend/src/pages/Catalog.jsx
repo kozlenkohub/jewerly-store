@@ -4,7 +4,7 @@ import { FaChevronDown, FaSortAmountDown, FaSortAmountUp, FaStar } from 'react-i
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import Filters from '../components/Filters';
-import { fetchProducts } from '../redux/slices/productSlice';
+import { fetchProducts, setIsLoading } from '../redux/slices/productSlice';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
@@ -71,6 +71,7 @@ const Catalog = () => {
   }, [selectedFilters, fetchWithDebounce]);
 
   React.useEffect(() => {
+    dispatch(setIsLoading(true));
     dispatch(fetchFilters(lastSegment));
   }, [lastSegment, dispatch]);
 

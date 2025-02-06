@@ -1,5 +1,13 @@
 import mongoose from 'mongoose';
 
+const localizedStringSchema = new mongoose.Schema(
+  {
+    en: { type: String, required: true },
+    ru: { type: String, required: false },
+  },
+  { _id: false },
+);
+
 const filterSchema = new mongoose.Schema(
   {
     key: {
@@ -8,8 +16,10 @@ const filterSchema = new mongoose.Schema(
       unique: true,
     },
     label: {
-      type: String,
+      type: localizedStringSchema,
       required: true,
+      trim: true,
+      unique: true,
     },
     type: {
       type: String,
@@ -21,6 +31,12 @@ const filterSchema = new mongoose.Schema(
           type: {
             type: String,
             required: true,
+            trim: true,
+          },
+          name: {
+            type: localizedStringSchema,
+            required: true,
+            trim: true,
           },
           img: {
             type: String,
