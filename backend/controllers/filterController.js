@@ -137,6 +137,7 @@ export const populateFilters = async (req, res) => {
       label: {
         en: 'Carats',
         ru: 'Караты',
+        uk: 'Карати', // Added
       },
       type: 'checkbox',
       options: [
@@ -144,6 +145,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '0.3 - 0.5',
             ru: '0.3 - 0.5',
+            uk: '0.3 - 0.5', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat1.jpg',
           category: [],
@@ -153,6 +155,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '0.51 - 0.6',
             ru: '0.51 - 0.6',
+            uk: '0.51 - 0.6', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat2.jpg',
           category: [],
@@ -162,6 +165,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '0.61 - 0.7',
             ru: '0.61 - 0.7',
+            uk: '0.61 - 0.7', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat3.jpg',
           category: [],
@@ -171,6 +175,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '0.71 - 3',
             ru: '0.71 - 3',
+            uk: '0.71 - 3', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/carat4.jpg',
           category: [],
@@ -183,6 +188,7 @@ export const populateFilters = async (req, res) => {
       label: {
         en: 'Metal',
         ru: 'Металл',
+        uk: 'Метал', // Added
       },
       type: 'checkbox',
       options: [
@@ -190,6 +196,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'White Gold',
             ru: 'Белое золото',
+            uk: 'Біле золото', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/beloe-zoloto.png',
           category: [],
@@ -199,6 +206,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Yellow Gold',
             ru: 'Желтое золото',
+            uk: 'Жовте золото', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/zheltoe-zoloto.png',
           category: [],
@@ -208,6 +216,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Rose Gold',
             ru: 'Красное золото',
+            uk: 'Рожеве золото', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krasnoe-zoloto.png',
           category: [],
@@ -220,6 +229,7 @@ export const populateFilters = async (req, res) => {
       label: {
         en: 'Price',
         ru: 'Цена',
+        uk: 'Ціна', // Added
       },
       type: 'range',
       options: [
@@ -227,6 +237,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '0-100',
             ru: '0-100',
+            uk: '0-100', // Added
           },
           img: '',
           category: [],
@@ -236,6 +247,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '101-200',
             ru: '101-200',
+            uk: '101-200', // Added
           },
           img: '',
           category: [],
@@ -245,6 +257,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: '201-300',
             ru: '201-300',
+            uk: '201-300', // Added
           },
           img: '',
           category: [],
@@ -257,6 +270,7 @@ export const populateFilters = async (req, res) => {
       label: {
         en: 'Cut Form',
         ru: 'Форма огранки',
+        uk: 'Форма огранки', // Added
       },
       type: 'checkbox',
       options: [
@@ -264,6 +278,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Asher',
             ru: 'Ашер',
+            uk: 'Ашер', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/asher.png',
           category: [],
@@ -273,6 +288,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Pear',
             ru: 'Груша',
+            uk: 'Груша', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/grusha.png',
           category: [],
@@ -282,6 +298,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Round',
             ru: 'Круг',
+            uk: 'Круг', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/krug.png',
           category: [],
@@ -291,6 +308,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Cushion',
             ru: 'Кушон',
+            uk: 'Кушон', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/kushon.png',
           category: [],
@@ -300,6 +318,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Marquise',
             ru: 'Маркиз',
+            uk: 'Маркіз', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/markiz.png',
           category: [],
@@ -309,6 +328,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Oval',
             ru: 'Овал',
+            uk: 'Овал', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/oval.png',
           category: [],
@@ -318,6 +338,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Princess',
             ru: 'Принцесса',
+            uk: 'Принцеса', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/princessa.png',
           category: [],
@@ -327,6 +348,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Radiant',
             ru: 'Радиант',
+            uk: 'Радіант', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/radiant.png',
           category: [],
@@ -336,6 +358,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Heart',
             ru: 'Сердце',
+            uk: 'Серце', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/serdce.png',
           category: [],
@@ -345,6 +368,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'Emerald',
             ru: 'Изумруд',
+            uk: 'Ізумруд', // Added
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/emerald.png',
           category: [],

@@ -1,0 +1,16 @@
+{
+  "ourPolicy": {
+    "exchangePolicy": {
+      "title": "Easy Exchange Policy",
+      "description": "Hassle-free exchange within 14 days of purchase"
+    },
+    "quality": {
+      "title": "Premium Quality",
+      "description": "All products are certified and quality assured"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Professional support team at your service"
+    }
+  }
+}

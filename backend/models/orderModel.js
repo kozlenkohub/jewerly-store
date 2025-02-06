@@ -5,6 +5,7 @@ const localizedStringSchema = new mongoose.Schema(
   {
     en: { type: String, required: true, trim: true },
     ru: { type: String, trim: true },
+    uk: { type: String, trim: true },
   },
   { _id: false },
 );
@@ -109,10 +110,11 @@ orderSchema.pre('validate', async function (next) {
         if (product && product.name) {
           // Ensure item.name is an object before modifying it
           if (typeof item.name !== 'object' || item.name === null) {
-            item.name = { en: '', ru: '' }; // Initialize as an empty object
+            item.name = { en: '', ru: '', uk: '' }; // Initialize as an empty object
           }
           item.name.en = product.name.en || '';
           item.name.ru = product.name.ru || '';
+          item.name.uk = product.name.uk || '';
         } else {
           item.name = { en: '', ru: '' };
         }

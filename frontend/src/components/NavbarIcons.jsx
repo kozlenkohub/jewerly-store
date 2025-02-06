@@ -107,6 +107,14 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
               <Flag code="RU" className="w-5 h-5" />
               RU
             </button>
+            <button
+              onClick={() => setLanguage('uk')}
+              className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
+                currentLanguage === 'uk' ? 'bg-mainColor text-white' : 'text-gray-700'
+              } hover:bg-mainColor hover:text-white transition-colors`}>
+              <Flag code="UA" className="w-5 h-5" />
+              UK
+            </button>
           </div>
         )}
       </div>

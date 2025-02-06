@@ -19,6 +19,7 @@ import { fetchCartItems } from './redux/slices/cartSlice';
 import ForgotPassword from './pages/ForgotPassword.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
 import Profile from './pages/Profile.jsx';
+import './i18n';
 
 const App = () => {
   const dispatch = useDispatch();

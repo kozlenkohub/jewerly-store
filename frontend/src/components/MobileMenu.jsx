@@ -234,6 +234,13 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             } hover:bg-mainColor hover:text-white transition-colors`}>
             RU
           </button>
+          <button
+            onClick={() => setLanguage('uk')}
+            className={`px-2 py-1 border border-mainColor  ${
+              currentLanguage === 'uk' ? 'bg-mainColor text-white' : 'text-mainColor'
+            } hover:bg-mainColor hover:text-white transition-colors`}>
+            UK
+          </button>
         </div>
       </div>
     </div>

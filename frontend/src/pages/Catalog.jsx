@@ -67,6 +67,7 @@ const Catalog = () => {
 
   React.useEffect(() => {
     fetchWithDebounce(selectedFilters);
+
     return fetchWithDebounce.cancel;
   }, [selectedFilters, fetchWithDebounce]);
 

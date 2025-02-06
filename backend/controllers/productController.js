@@ -179,13 +179,16 @@ const products = [
     name: {
       en: 'Engagement Ring',
       ru: 'Кольцо для Помолвки',
+      uk: 'Кільце для Заручин',
     },
     description: {
-      en: 'lorem228',
-      ru: '',
+      en: 'A stunning engagement ring crafted from white gold, featuring a round cut diamond with a clarity of SI1 and a carat weight of 0.37. This solitaire style ring is perfect for a timeless and elegant proposal.',
+      ru: 'Потрясающее кольцо для помолвки, изготовленное из белого золота, с круглым бриллиантом чистоты SI1 и весом 0.37 карата. Это кольцо в стиле солитер идеально подходит для вечного и элегантного предложения.',
+      uk: 'Приголомшливе кільце для заручин, виготовлене з білого золота, з круглим діамантом чистоти SI1 і вагою 0.37 карата. Це кільце в стилі солітер ідеально підходить для вічної та елегантної пропозиції.',
     },
     price: 160000,
     image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/494/2ng95apsen494-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/5ng95apsen1348-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',

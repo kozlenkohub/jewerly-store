@@ -4,6 +4,7 @@ const localizedStringSchema = new mongoose.Schema(
   {
     en: { type: String, required: true, trim: true },
     ru: { type: String, trim: true },
+    uk: { type: String, trim: true },
   },
   { _id: false },
 );
