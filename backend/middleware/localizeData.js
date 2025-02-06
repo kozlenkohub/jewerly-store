@@ -15,7 +15,7 @@ export const localizeResponse =
 
         visited.add(obj);
 
-        // Если это Mongoose-документ, преобразуем в простой объект
+        // If this is a Mongoose document, convert it to a plain object
         if (obj instanceof mongoose.Document) {
           obj = obj.toObject();
         }
@@ -26,9 +26,25 @@ export const localizeResponse =
           const value = localizedObj[key];
           if (!value) continue;
 
+          // Skip localization for non-localizable fields
+          if (
+            [
+              'createdAt',
+              'updatedAt',
+              'dateOrdered',
+              'paymentIntentId',
+              'paymentMethod',
+              'paymentStatus',
+              'shippingFee',
+              'totalPrice',
+            ].includes(key)
+          ) {
+            continue;
+          }
+
           if (typeof value === 'object') {
             if ('en' in value || 'ru' in value) {
-              // Если объект локализации
+              // If the field is a localization object
               localizedObj[key] = value[lang] || value.en || Object.values(value)[0];
             } else if (value instanceof mongoose.Types.ObjectId) {
               localizedObj[key] = value.toString();

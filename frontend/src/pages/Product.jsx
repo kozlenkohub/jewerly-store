@@ -83,7 +83,9 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`/api/product/get/${params.productId}`);
+        const { data } = await axios.get(`/api/product/get/${params.productId}`, {
+          headers: { 'X-Localize': true },
+        });
 
         setProduct(data['product']);
         setRelated(data['relatedProducts']);

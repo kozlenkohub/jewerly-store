@@ -64,10 +64,6 @@ export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, shippingFee, paymentMethod } = req.body;
 
-    // const itemsId = orderItems.map((item) => item._id);
-
-    // const updatedOrderItems = await Product.find({ _id: { $in: itemsId } }).lean();
-
     const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
 
     const errors = validateOrderData(req.body);
@@ -76,11 +72,15 @@ export const placeOrder = async (req, res) => {
     }
 
     const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
+    let paymentIntent = null;
+
+    let paymentIntentId = null;
+    let stripeFees = null;
 
     if (paymentMethod === 'stripe') {
       const paymentIntent = await createPaymentIntent(totalPrice);
       const order = new Order({
-        updatedOrderItems,
+        orderItems,
         user: req.userId,
         shippingFields,
         paymentMethod,
@@ -103,11 +103,6 @@ export const placeOrder = async (req, res) => {
         commision: paymentIntent.calculatedFees,
       });
     }
-
-    let paymentIntent = null;
-
-    let paymentIntentId = null;
-    let stripeFees = null;
 
     if (paymentMethod === 'cash') {
       const order = new Order({
@@ -144,6 +139,22 @@ export const placeOrder = async (req, res) => {
       });
     }
 
+    const order = new Order({
+      orderItems,
+      user: userId,
+      shippingFields,
+      paymentMethod,
+      totalPrice,
+      email: shippingFields.email,
+      paymentIntentId,
+      paymentStatus: 'paid',
+      status: 'Processing',
+      shippingFee,
+      stripeFees,
+    });
+
+    const savedOrder = await order.save();
+
     if (paymentMethod === 'liqpay') {
       const currentDate = new Date();
       const expirationDate = new Date(currentDate.getTime() + 5 * 60000); // додаємо 5 хвилин
@@ -157,8 +168,8 @@ export const placeOrder = async (req, res) => {
         amount: totalPrice,
         expired_date: expired_date, // формат: "2016-04-24 00:00:00"
         currency: 'UAH',
-        description: 'Order payment: ' + orderId,
-        order_id: orderId,
+        description: 'Order payment: ' + order._id,
+        order_id: order._id,
         result_url: 'https://jewerly-store.vercel.app',
         server_url: 'https://jewerly-server.onrender.com/api/orders/payment-callback',
         sandbox: 1,
@@ -179,7 +190,7 @@ export const placeOrder = async (req, res) => {
     }
 
     // Update product sales
-    for (const item of updatedOrderItems) {
+    for (const item of orderItems) {
       await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
     }
 
@@ -397,7 +408,7 @@ export const userOrders = async (req, res) => {
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
     }
-    res.json(res.localizeData(orders, ['shippingFields', 'orderItems']));
+    res.json(res.localizeData(orders, ['orderItems']));
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
