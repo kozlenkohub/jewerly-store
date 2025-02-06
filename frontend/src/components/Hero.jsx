@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import video from '../assets/promo.webm';
 
 const Hero = () => {
+  const { t } = useTranslation();
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const Hero = () => {
           objectFit: 'cover',
         }}>
         <source src={video} type="video/webm" />
-        Ваш браузер не поддерживает воспроизведение видео.
+        {t('hero.videoFallback')}
       </video>
       <div
         style={{
@@ -75,8 +77,8 @@ const Hero = () => {
           }}>
           The Queen's diamond
         </h1>
-        <p className="font-light poppins" style={{ fontSize: '13px', margin: '0.5rem' }}>
-          Experience the luxury and elegance
+        <p className="font-light futura" style={{ fontSize: '13px', margin: '0.5rem' }}>
+          {t('hero.subtitle')}
         </p>
       </div>
       <div

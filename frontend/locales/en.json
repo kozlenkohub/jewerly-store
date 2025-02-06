@@ -256,5 +256,10 @@
       "links": ["INSTAGRAM", "+380-633-733-013", "test@gmail.com"]
     },
     "copyright": "Copyright 2025@ JEWERLY - All Rights Reserved"
+  },
+  "hero": {
+    "title": "The Queen's diamond",
+    "subtitle": "Experience the luxury and elegance",
+    "videoFallback": "Your browser does not support video playback."
   }
 }
