@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
@@ -6,9 +7,11 @@ import 'rc-slider/assets/index.css';
 import Slider from 'rc-slider';
 
 const PriceFilter = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selectedFilters = useSelector((state) => state.filter.selectedFilters);
+  const { currency } = useSelector((state) => state.product);
   const [priceRange, setPriceRange] = useState([0, 1000000]);
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const PriceFilter = () => {
 
   return (
     <div className="p-4 my-4 border border-gray-300">
-      <p className="mb-3 text-sm font-medium">Price</p>
+      <p className="mb-3 text-sm font-medium">{t('priceFilter.title')}</p>
       <div className="flex flex-col gap-2 text-sm text-textColor">
         <Slider
           range
@@ -48,8 +51,14 @@ const PriceFilter = () => {
           railStyle={{ backgroundColor: 'rgba(128, 128, 128, 0.3)' }}
         />
         <div className="flex justify-between text-xs">
-          <span>Min: ₴{priceRange[0]}</span>
-          <span>Max: ₴{priceRange[1]}</span>
+          <span>
+            {t('priceFilter.min')}: {currency}
+            {priceRange[0]}
+          </span>
+          <span>
+            {t('priceFilter.max')}: {currency}
+            {priceRange[1]}
+          </span>
         </div>
       </div>
     </div>

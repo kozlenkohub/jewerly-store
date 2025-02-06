@@ -59,6 +59,11 @@
     },
     "title": "Catalog"
   },
+  "priceFilter": {
+    "title": "Price",
+    "min": "Min",
+    "max": "Max"
+  },
   "product": {
     "reviews": "Reviews",
     "selectMetal": "Select Metal",
@@ -184,5 +189,72 @@
       "date": "Date",
       "totalPrice": "Total Price"
     }
+  },
+  "search": {
+    "placeholder": "Search"
+  },
+  "breadcrumb": {
+    "catalog": "Catalog"
+  },
+  "resetPassword": {
+    "title": {
+      "text1": "Reset",
+      "text2": "Password"
+    },
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "resetButton": "Reset Password",
+    "errors": {
+      "mismatch": "Passwords do not match"
+    },
+    "success": "Password reset successfully"
+  },
+  "login": {
+    "title": {
+      "login": {
+        "text1": "Login",
+        "text2": "Page"
+      },
+      "signup": {
+        "text1": "Sign Up",
+        "text2": "Page"
+      }
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "links": {
+      "forgotPassword": "Forgot your password?",
+      "loginHere": "Login here",
+      "createAccount": "Create an account"
+    },
+    "buttons": {
+      "login": "Login",
+      "signup": "Sign Up",
+      "loading": "Loading..."
+    }
+  },
+  "forgotPassword": {
+    "title": {
+      "text1": "Reset",
+      "text2": "Password"
+    },
+    "email": "Email",
+    "sendResetLink": "Send Reset Link",
+    "success": "Reset link sent to your email"
+  },
+  "footer": {
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
+    "company": {
+      "title": "Company",
+      "links": ["HOME", "ABOUT US", "DELIVERY", "Privacy Policy"]
+    },
+    "contacts": {
+      "title": "Our Contacts",
+      "links": ["INSTAGRAM", "+380-633-733-013", "test@gmail.com"]
+    },
+    "copyright": "Copyright 2025@ JEWERLY - All Rights Reserved"
   }
 }

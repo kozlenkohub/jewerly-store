@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearch } from '../redux/slices/productSlice';
 import { FaSearch } from 'react-icons/fa';
@@ -6,6 +7,7 @@ import { FaTimes } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   const { isOpenSearch, search } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -29,7 +31,7 @@ const SearchBar = () => {
         <input
           className="flex-1 bg-inherit text-sm border-none outline-none focus:ring-0"
           type="text"
-          placeholder="Search"
+          placeholder={t('search.placeholder')}
           onChange={handleChange}
           value={search}
         />

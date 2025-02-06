@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const Breadcrumb = ({ categoryPath }) => {
+  const { t } = useTranslation();
   const categories = useSelector((state) => state.category.category);
 
   const breadcrumbStyle = {
@@ -32,7 +34,7 @@ const Breadcrumb = ({ categoryPath }) => {
   if (!categoryPath) {
     return (
       <nav className="text-sm mb-2 futura" style={breadcrumbStyle}>
-        <Link to="/catalog">Catalog</Link>
+        <Link to="/catalog">{t('breadcrumb.catalog')}</Link>
       </nav>
     );
   }
@@ -44,7 +46,7 @@ const Breadcrumb = ({ categoryPath }) => {
 
   return (
     <nav className="text-sm mb-2 futura" style={breadcrumbStyle}>
-      <Link to="/catalog">Catalog</Link>
+      <Link to="/catalog">{t('breadcrumb.catalog')}</Link>
       {segments.map((segment, idx) => {
         const pathUrl = `/catalog/${categoryPath
           .split('/')

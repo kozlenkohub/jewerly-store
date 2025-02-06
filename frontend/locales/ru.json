@@ -59,13 +59,17 @@
     },
     "title": "Каталог"
   },
+  "priceFilter": {
+    "title": "Цена",
+    "min": "Мин",
+    "max": "Макс"
+  },
   "product": {
     "reviews": "Отзывы",
     "selectMetal": "Выберите металл",
     "selectSize": "Выберите размер",
     "addToCart": "ДОБАВИТЬ В КОРЗИНУ",
-    "description": "Описание",
-    "currency": "₽"
+    "description": "Описание"
   },
   "productDetails": {
     "original": "100% оригинальный товар",
@@ -185,5 +189,72 @@
       "date": "Дата",
       "totalPrice": "Итого"
     }
+  },
+  "search": {
+    "placeholder": "Поиск"
+  },
+  "breadcrumb": {
+    "catalog": "Каталог"
+  },
+  "resetPassword": {
+    "title": {
+      "text1": "Сбросить",
+      "text2": "Пароль"
+    },
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "resetButton": "Сбросить пароль",
+    "errors": {
+      "mismatch": "Пароли не совпадают"
+    },
+    "success": "Пароль успешно сброшен"
+  },
+  "login": {
+    "title": {
+      "login": {
+        "text1": "Вход",
+        "text2": "в аккаунт"
+      },
+      "signup": {
+        "text1": "Регистрация",
+        "text2": "аккаунта"
+      }
+    },
+    "fields": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "password": "Пароль"
+    },
+    "links": {
+      "forgotPassword": "Забыли пароль?",
+      "loginHere": "Войти здесь",
+      "createAccount": "Создать аккаунт"
+    },
+    "buttons": {
+      "login": "Войти",
+      "signup": "Зарегистрироваться",
+      "loading": "Загрузка..."
+    }
+  },
+  "forgotPassword": {
+    "title": {
+      "text1": "Восстановление",
+      "text2": "Пароля"
+    },
+    "email": "Электронная почта",
+    "sendResetLink": "Отправить ссылку",
+    "success": "Ссылка для восстановления отправлена на вашу почту"
+  },
+  "footer": {
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
+    "company": {
+      "title": "Компания",
+      "links": ["ГЛАВНАЯ", "О НАС", "ДОСТАВКА", "Политика конфиденциальности"]
+    },
+    "contacts": {
+      "title": "Наши контакты",
+      "links": ["INSTAGRAM", "+380-633-733-013", "test@gmail.com"]
+    },
+    "copyright": "Авторское право 2025@ JEWERLY - Все права защищены"
   }
 }

@@ -59,13 +59,17 @@
     },
     "title": "Каталог"
   },
+  "priceFilter": {
+    "title": "Ціна",
+    "min": "Мін",
+    "max": "Макс"
+  },
   "product": {
     "reviews": "Відгуки",
     "selectMetal": "Виберіть метал",
     "selectSize": "Виберіть розмір",
     "addToCart": "ДОДАТИ В КОШИК",
-    "description": "Опис",
-    "currency": "₴"
+    "description": "Опис"
   },
   "productDetails": {
     "original": "100% оригінальний товар",
@@ -185,5 +189,72 @@
       "date": "Дата",
       "totalPrice": "Загальна сума"
     }
+  },
+  "search": {
+    "placeholder": "Пошук"
+  },
+  "breadcrumb": {
+    "catalog": "Каталог"
+  },
+  "resetPassword": {
+    "title": {
+      "text1": "Скинути",
+      "text2": "Пароль"
+    },
+    "newPassword": "Новий пароль",
+    "confirmPassword": "Підтвердіть пароль",
+    "resetButton": "Скинути пароль",
+    "errors": {
+      "mismatch": "Паролі не співпадають"
+    },
+    "success": "Пароль успішно скинуто"
+  },
+  "login": {
+    "title": {
+      "login": {
+        "text1": "Вхід",
+        "text2": "в акаунт"
+      },
+      "signup": {
+        "text1": "Реєстрація",
+        "text2": "акаунту"
+      }
+    },
+    "fields": {
+      "name": "Ім'я",
+      "email": "Електронна пошта",
+      "password": "Пароль"
+    },
+    "links": {
+      "forgotPassword": "Забули пароль?",
+      "loginHere": "Увійти тут",
+      "createAccount": "Створити акаунт"
+    },
+    "buttons": {
+      "login": "Увійти",
+      "signup": "Зареєструватися",
+      "loading": "Завантаження..."
+    }
+  },
+  "forgotPassword": {
+    "title": {
+      "text1": "Відновлення",
+      "text2": "Паролю"
+    },
+    "email": "Електронна пошта",
+    "sendResetLink": "Надіслати посилання",
+    "success": "Посилання для відновлення надіслано на вашу пошту"
+  },
+  "footer": {
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
+    "company": {
+      "title": "Компанія",
+      "links": ["ГОЛОВНА", "ПРО НАС", "ДОСТАВКА", "Політика конфіденційності"]
+    },
+    "contacts": {
+      "title": "Наші контакти",
+      "links": ["INSTAGRAM", "+380-633-733-013", "test@gmail.com"]
+    },
+    "copyright": "Авторське право 2025@ JEWERLY - Всі права захищені"
   }
 }
