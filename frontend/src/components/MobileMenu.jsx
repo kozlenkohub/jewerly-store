@@ -142,20 +142,29 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           </NavLink>
           <div className="flex flex-col">
             <div
-              onClick={handleCatalogClick}
+              onClick={() => {
+                if (categories.length > 0) {
+                  handleCatalogClick();
+                } else {
+                  navigate('/catalog');
+                  setVisible(false);
+                }
+              }}
               className={`relative flex items-center justify-center p-3 cursor-pointer z-40 ${
                 isCatalogPage ? 'bg-mainColor text-white' : ''
               }`}>
               <p className="relative">{t('navbar.menu.catalog')}</p>
-              <FaChevronDown
-                className={`absolute transition-transform duration-300 ${
-                  isDropdownVisible ? '-rotate-180' : ''
-                }`}
-                style={{ left: 'calc(60%)' }}
-              />
+              {categories.length > 0 && (
+                <FaChevronDown
+                  className={`absolute transition-transform duration-300 ${
+                    isDropdownVisible ? '-rotate-180' : ''
+                  }`}
+                  style={{ left: 'calc(60%)' }}
+                />
+              )}
             </div>
 
-            {isDropdownVisible && (
+            {isDropdownVisible && categories.length > 0 && (
               <div className="pl-8 z-40 bg-white shadow-lg">
                 {categories.map((category) => (
                   <div key={category._id} className="flex flex-col futura">

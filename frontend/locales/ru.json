@@ -261,5 +261,52 @@
     "title": "Бриллиант Королевы",
     "subtitle": "Почувствуйте роскошь и элегантность",
     "videoFallback": "Ваш браузер не поддерживает воспроизведение видео."
+  },
+  "about": {
+    "title": {
+      "text1": "О",
+      "text2": "Нас"
+    },
+    "storeImage": "Изображение магазина",
+    "description": {
+      "part1": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui, corporis natus magnam cumque laboriosam illo totam. Dolores, quae dolore dolorum, aut et optio quam aspernatur, eum blanditiis vel nesciunt. Rem totam voluptatibus voluptates qui ducimus optio, sunt amet maiores fuga quos veritatis praesentium excepturi autem cum tempore in dolor velit corrupti?",
+      "part2": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum error, maiores nisi quaerat dolore quod adipisci quasi optio sequi minima quae tempora, illum perspiciatis? Quis vero quaerat sint iste quos dolorem asperiores perferendis."
+    },
+    "mission": {
+      "title": "Наша миссия",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsum vero natus incidunt libero nostrum dolore a! Quaerat sed dicta explicabo voluptate."
+    },
+    "whyChooseUs": {
+      "title": {
+        "text1": "Почему",
+        "text2": "Выбирают нас"
+      },
+      "quality": {
+        "title": "Гарантия качества:",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore nostrum."
+      },
+      "convenience": {
+        "title": "Удобство:",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore nostrum."
+      },
+      "service": {
+        "title": "Исключительный сервис:",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore nostrum."
+      }
+    }
+  },
+  "contact": {
+    "title": {
+      "text1": "Наши",
+      "text2": "Контакты"
+    },
+    "storeImage": "Изображение расположения магазина",
+    "store": "Наш магазин",
+    "address": {
+      "city": "г. Киев",
+      "street": "Майдан Незалежности, 1"
+    },
+    "phone": "Телефон: +380 44 123 4567",
+    "email": "Email: sample@gmail.com"
   }
 }
