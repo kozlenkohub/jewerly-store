@@ -32,5 +32,22 @@
     },
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla tempora expedita laboriosam",
     "seeMore": "See more"
+  },
+  "navbar": {
+    "myProfile": "My Profile",
+    "orders": "Orders",
+    "logout": "Logout",
+    "languages": {
+      "en": "EN",
+      "ru": "RU",
+      "uk": "UK"
+    },
+    "menu": {
+      "home": "Home",
+      "catalog": "Catalog",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "back": "Back"
   }
 }

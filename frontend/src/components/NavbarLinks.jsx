@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 
 const NavbarLinks = ({ textColor, categories }) => {
+  const { t } = useTranslation();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const NavbarLinks = ({ textColor, categories }) => {
   return (
     <ul className={`hidden sm:flex gap-5 text-sm transition-colors duration-300 ${textColor}`}>
       <NavLink to="/" className="flex flex-col items-center gap-1">
-        <p>Home</p>
+        <p>{t('navbar.menu.home')}</p>
         <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
       </NavLink>
       <div
@@ -56,7 +58,7 @@ const NavbarLinks = ({ textColor, categories }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}>
         <NavLink to="/catalog" className="flex flex-col items-center gap-1">
-          <p>Catalog</p>
+          <p>{t('navbar.menu.catalog')}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
         </NavLink>
         <div
@@ -100,11 +102,11 @@ const NavbarLinks = ({ textColor, categories }) => {
         </div>
       </div>
       <NavLink to="/about" className="flex flex-col items-center gap-1">
-        <p>About</p>
+        <p>{t('navbar.menu.about')}</p>
         <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
       </NavLink>
       <NavLink to="/contact" className="flex flex-col items-center gap-1">
-        <p>Contact</p>
+        <p>{t('navbar.menu.contact')}</p>
         <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
       </NavLink>
     </ul>

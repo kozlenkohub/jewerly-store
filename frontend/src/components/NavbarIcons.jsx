@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/userSlice';
 import { setCartItems } from '../redux/slices/cartSlice';
 import Flag from 'react-world-flags';
+import { useTranslation } from 'react-i18next';
 
 const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
   const { token } = useSelector((state) => state.user);
   const currentLanguage = localStorage.getItem('lang') || 'en';
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const { t } = useTranslation();
 
   const setLanguage = (language) => {
     localStorage.setItem('lang', language);
@@ -51,15 +53,11 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         {token && (
           <div className="group-hover:block hidden absolute dropdown-menu z-50 right-0 pt-2">
             <div className={`flex flex-col gap-2 w-36 py-3 px-5 ${bgColor} ${textColor2} `}>
-              <Link to="/profile" className="cursor-pointer hover:text-gray-500 ">
-                My Profile
+              <Link to="/profile" className="cursor-pointer hover:text-gray-500">
+                {t('navbar.myProfile')}
               </Link>
-              <p
-                onClick={() => {
-                  navigate('/orders');
-                }}
-                className="cursor-pointer hover:text-gray-500 ">
-                Orders
+              <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-gray-500">
+                {t('navbar.orders')}
               </p>
               <p
                 onClick={() => {
@@ -67,8 +65,8 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                   dispatch(setCartItems([]));
                   navigate('/');
                 }}
-                className="cursor-pointer hover:text-gray-500 ">
-                LogOut
+                className="cursor-pointer hover:text-gray-500">
+                {t('navbar.logout')}
               </p>
             </div>
           </div>
@@ -86,35 +84,25 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         <div
           onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
           className={`flex items-center gap-2 cursor-pointer ${iconColor}`}>
-          <span>{currentLanguage.toUpperCase()}</span>
+          <span>{t(`navbar.languages.${currentLanguage}`)}</span>
           <FaCaretDown />
         </div>
         {isLanguageDropdownOpen && (
           <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-200 shadow-lg z-50">
-            <button
-              onClick={() => setLanguage('en')}
-              className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
-                currentLanguage === 'en' ? 'bg-mainColor text-white' : 'text-gray-700'
-              } hover:bg-mainColor hover:text-white transition-colors`}>
-              <Flag code="US" className="w-5 h-5" />
-              EN
-            </button>
-            <button
-              onClick={() => setLanguage('ru')}
-              className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
-                currentLanguage === 'ru' ? 'bg-mainColor text-white' : 'text-gray-700'
-              } hover:bg-mainColor hover:text-white transition-colors`}>
-              <Flag code="RU" className="w-5 h-5" />
-              RU
-            </button>
-            <button
-              onClick={() => setLanguage('uk')}
-              className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
-                currentLanguage === 'uk' ? 'bg-mainColor text-white' : 'text-gray-700'
-              } hover:bg-mainColor hover:text-white transition-colors`}>
-              <Flag code="UA" className="w-5 h-5" />
-              UK
-            </button>
+            {['en', 'ru', 'uk'].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
+                  currentLanguage === lang ? 'bg-mainColor text-white' : 'text-gray-700'
+                } hover:bg-mainColor hover:text-white transition-colors`}>
+                <Flag
+                  code={lang === 'en' ? 'US' : lang === 'uk' ? 'UA' : 'RU'}
+                  className="w-5 h-5"
+                />
+                {t(`navbar.languages.${lang}`)}
+              </button>
+            ))}
           </div>
         )}
       </div>

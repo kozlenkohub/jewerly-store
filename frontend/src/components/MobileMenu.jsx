@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearch } from '../redux/slices/productSlice';
 import { logout } from '../redux/slices/userSlice';
 import { setCartItems } from '../redux/slices/cartSlice';
+import { useTranslation } from 'react-i18next';
 
 const setLanguage = (language) => {
   localStorage.setItem('lang', language);
@@ -13,6 +14,7 @@ const setLanguage = (language) => {
 };
 
 const MobileMenu = ({ visible, setVisible, categories }) => {
+  const { t } = useTranslation();
   const currentLanguage = localStorage.getItem('lang') || 'en';
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -72,7 +74,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
           <div className="flex items-center justify-between p-3">
             <div onClick={() => setVisible(false)} className="flex items-center gap-1">
               <MdOutlineKeyboardArrowLeft className="w-6 h-6 text-mainColor" />
-              <p className="text-mainColor">Back</p>
+              <p className="text-mainColor">{t('navbar.back')}</p>
             </div>
             <div className="flex items-center gap-6">
               <FaSearch
@@ -94,7 +96,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                           closeProfileMenu();
                           navigate('/profile');
                         }}>
-                        My Profile
+                        {t('navbar.myProfile')}
                       </p>
                       <p
                         onClick={() => {
@@ -103,7 +105,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                           closeProfileMenu();
                         }}
                         className="cursor-pointer hover:text-gray-300">
-                        Orders
+                        {t('navbar.orders')}
                       </p>
                       <p
                         className="cursor-pointer hover:text-gray-300"
@@ -113,7 +115,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                           dispatch(logout());
                           dispatch(setCartItems([]));
                         }}>
-                        LogOut
+                        {t('navbar.logout')}
                       </p>
                     </div>
                   </div>
@@ -136,7 +138,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             onClick={() => setVisible(false)}
             to="/"
             className="flex flex-col items-center gap-1 p-3">
-            Home
+            {t('navbar.menu.home')}
           </NavLink>
           <div className="flex flex-col">
             <div
@@ -144,7 +146,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               className={`relative flex items-center justify-center p-3 cursor-pointer z-40 ${
                 isCatalogPage ? 'bg-mainColor text-white' : ''
               }`}>
-              <p className="relative">Catalog</p>
+              <p className="relative">{t('navbar.menu.catalog')}</p>
               <FaChevronDown
                 className={`absolute transition-transform duration-300 ${
                   isDropdownVisible ? '-rotate-180' : ''
@@ -210,37 +212,26 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             onClick={() => setVisible(false)}
             to="/about"
             className="flex flex-col items-center gap-1 p-3">
-            About
+            {t('navbar.menu.about')}
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
             to="/contact"
             className="flex flex-col items-center gap-1 p-3">
-            Contact
+            {t('navbar.menu.contact')}
           </NavLink>
         </div>
         <div className="flex items-center justify-center gap-2 p-3 border-t border-gray-200">
-          <button
-            onClick={() => setLanguage('en')}
-            className={`px-2 py-1 border border-mainColor  ${
-              currentLanguage === 'en' ? 'bg-mainColor text-white' : 'text-mainColor'
-            } hover:bg-mainColor hover:text-white transition-colors`}>
-            EN
-          </button>
-          <button
-            onClick={() => setLanguage('ru')}
-            className={`px-2 py-1 border border-mainColor  ${
-              currentLanguage === 'ru' ? 'bg-mainColor text-white' : 'text-mainColor'
-            } hover:bg-mainColor hover:text-white transition-colors`}>
-            RU
-          </button>
-          <button
-            onClick={() => setLanguage('uk')}
-            className={`px-2 py-1 border border-mainColor  ${
-              currentLanguage === 'uk' ? 'bg-mainColor text-white' : 'text-mainColor'
-            } hover:bg-mainColor hover:text-white transition-colors`}>
-            UK
-          </button>
+          {['en', 'ru', 'uk'].map((lang) => (
+            <button
+              key={lang}
+              onClick={() => setLanguage(lang)}
+              className={`px-2 py-1 border border-mainColor ${
+                currentLanguage === lang ? 'bg-mainColor text-white' : 'text-mainColor'
+              } hover:bg-mainColor hover:text-white transition-colors`}>
+              {t(`navbar.languages.${lang}`)}
+            </button>
+          ))}
         </div>
       </div>
     </div>
