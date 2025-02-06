@@ -78,6 +78,13 @@ const Catalog = () => {
     dispatch(fetchFilters(lastSegment));
   }, [lastSegment, dispatch]);
 
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [products]);
+
   const sortOptions = [
     { value: 'relevent', icon: <FaStar />, label: t('catalog.sort.relevant') },
     { value: 'low-high', icon: <FaSortAmountUp />, label: t('catalog.sort.lowToHigh') },

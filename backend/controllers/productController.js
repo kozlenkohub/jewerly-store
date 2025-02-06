@@ -29,9 +29,10 @@ export const getProducts = async (req, res) => {
 
     // Handle 'metal' filter
     if (metal) {
-      // Normalize the metal value by replacing hyphens with spaces
       const metals = Array.isArray(metal) ? metal : [metal];
-      filter.metal = { $in: metals.map((m) => m.replace('-', ' ')) };
+      filter['metal.value'] = {
+        $in: metals.map((m) => m.replace('-', ' ')),
+      };
     }
 
     // Handle 'carats' filter
@@ -61,7 +62,8 @@ export const getProducts = async (req, res) => {
 
     // Handle 'cutForm' filter
     if (cutForm) {
-      filter.cutForm = { $in: cutForm };
+      const forms = Array.isArray(cutForm) ? cutForm : [cutForm];
+      filter['cutForm.value'] = { $in: forms };
     }
 
     // Handle 'search' filter
