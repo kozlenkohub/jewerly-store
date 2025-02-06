@@ -179,9 +179,9 @@ export const addProduct = async (req, res) => {
 const products = [
   {
     name: {
-      en: 'ENGAGEMENT RING WITH 0.50 CT ROUND CUT DIAMOND IN WHITE GOLD',
-      ru: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ БЕЛОГО ЗОЛОТА',
-      uk: 'КАБЛУЧКА ДЛЯ ЗАРУЧИН З ДІАМАНТОМ 0,50 CT ОГРАНКИ «КРУГ» З БІЛОГО ЗОЛОТА',
+      en: 'ENGAGEMENT RING WITH 0.50 CT ROUND CUT DIAMOND IN Yellow GOLD',
+      ru: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ ЖЁЛТОГО ЗОЛОТА',
+      uk: 'КАБЛУЧКА ДЛЯ ЗАРУЧИН З ДІАМАНТОМ 0,50 CT ОГРАНКИ «КРУГ» З ЖОВТОГО ЗОЛОТА',
     },
     description: {
       en: 'A stunning engagement ring crafted from white gold, featuring a round cut diamond with a clarity of SI1 and a carat weight of 0.37. This solitaire style ring is perfect for a timeless and elegant proposal.',
@@ -194,24 +194,54 @@ const products = [
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/5ng95apsen1348-1000x1000.webp',
       'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',
     ],
-    category: '67a24fa954fb707082c036f4',
-    collection: 'kiev',
-    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5), // Автоматическая генерация размеров
+    category: null,
+    collection: '1',
+    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
     discount: 20,
     bestseller: true,
     metal: {
-      value: 'white gold',
-      name: {
-        en: 'White Gold',
-        ru: 'Белое золото',
-      },
+      value: 'yellow gold',
     },
     cutForm: {
       value: 'round',
-      name: {
-        en: 'Round',
-        ru: 'Круглый',
-      },
+    },
+    style: 'solitaire',
+    clarity: 'SI1',
+    purity: 750,
+    color: 'H',
+    carats: 0.37,
+    weight: 2.3,
+    isAvailable: true,
+    reviews: [],
+    sales: 0,
+  },
+  {
+    name: {
+      en: 'ENGAGEMENT RING WITH 0.50 CT ROUND CUT DIAMOND IN ROSE GOLD',
+      ru: 'КОЛЬЦО ДЛЯ ПОМОЛВКИ С БРИЛЛИАНТОМ 0,50 CT ОГРАНКИ «КРУГ» ИЗ РОЗОВОГО ЗОЛОТА',
+      uk: 'КАБЛУЧКА ДЛЯ ЗАРУЧИН З ДІАМАНТОМ 0,50 CT ОГРАНКИ «КРУГ» З РОЖЕВОГО ЗОЛОТА',
+    },
+    description: {
+      en: 'A stunning engagement ring crafted from rose gold, featuring a round cut diamond with a clarity of SI1 and a carat weight of 0.37. This solitaire style ring is perfect for a timeless and elegant proposal.',
+      ru: 'Потрясающее кольцо для помолвки, изготовленное из розового золота, с круглым бриллиантом чистоты SI1 и весом 0.37 карата. Это кольцо в стиле солитер идеально подходит для вечного и элегантного предложения.',
+      uk: 'Приголомшливе кільце для заручин, виготовлене з рожевого золота, з круглим діамантом чистоти SI1 і вагою 0.37 карата. Це кільце в стилі солітер ідеально підходить для вічної та елегантної пропозиції.',
+    },
+    price: 160000,
+    image: [
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/3ng95apsen1348-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/1ng95apsen1348-1000x1000.webp',
+      'https://apsen-diamond.com.ua/image/cachewebp/catalog/1348/2ng95apsen1348-1000x1000.webp',
+    ],
+    category: null,
+    collection: '1',
+    size: Array.from({ length: 10 }, (_, i) => 15 + i * 0.5),
+    discount: 20,
+    bestseller: true,
+    metal: {
+      value: 'rose gold',
+    },
+    cutForm: {
+      value: 'round',
     },
     style: 'solitaire',
     clarity: 'SI1',
