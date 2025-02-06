@@ -190,6 +190,11 @@
       "totalPrice": "Total Price"
     }
   },
+  "emptyOrders": {
+    "title": "You have no orders",
+    "description": "Looks like you haven't placed any orders yet. Start exploring our beautiful jewelry collection!",
+    "button": "Go to Catalog"
+  },
   "search": {
     "placeholder": "Search"
   },
@@ -471,5 +476,10 @@
         "value": "Kyiv, Independence Square, 1"
       }
     }
+  },
+  "emptyCart": {
+    "title": "Your Cart is Empty",
+    "description": "Looks like you haven't added any items yet. Start exploring our beautiful jewelry collection!",
+    "button": "Go to Catalog"
   }
 }
