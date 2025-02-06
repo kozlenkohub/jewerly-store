@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfile, updateName, updateEmail, updatePassword } from '../redux/slices/userSlice';
 import Loader from '../components/Loader';
 import Title from '../components/Title';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user, isUserLoading, error } = useSelector((state) => state.user);
   const [name, setName] = useState('');
@@ -32,12 +34,12 @@ const Profile = () => {
       inputs: [
         {
           type: 'text',
-          placeholder: 'Name',
+          placeholder: t('profile.forms.updateName.placeholder'),
           value: name,
           onChange: (e) => setName(e.target.value),
         },
       ],
-      buttonText: 'Update Name',
+      buttonText: t('profile.forms.updateName.buttonText'),
     },
     {
       onSubmit: (e) => {
@@ -47,12 +49,12 @@ const Profile = () => {
       inputs: [
         {
           type: 'email',
-          placeholder: 'Email',
+          placeholder: t('profile.forms.updateEmail.placeholder'),
           value: email,
           onChange: (e) => setEmail(e.target.value),
         },
       ],
-      buttonText: 'Update Email',
+      buttonText: t('profile.forms.updateEmail.buttonText'),
     },
     {
       onSubmit: (e) => {
@@ -62,18 +64,18 @@ const Profile = () => {
       inputs: [
         {
           type: 'password',
-          placeholder: 'Current Password',
+          placeholder: t('profile.forms.updatePassword.currentPasswordPlaceholder'),
           value: password,
           onChange: (e) => setPassword(e.target.value),
         },
         {
           type: 'password',
-          placeholder: 'New Password',
+          placeholder: t('profile.forms.updatePassword.newPasswordPlaceholder'),
           value: newPassword,
           onChange: (e) => setNewPassword(e.target.value),
         },
       ],
-      buttonText: 'Update Password',
+      buttonText: t('profile.forms.updatePassword.buttonText'),
     },
   ];
 
@@ -82,14 +84,14 @@ const Profile = () => {
   }
 
   if (!user) {
-    return <div>No user data available</div>;
+    return <div>{t('profile.forms.noUserData')}</div>;
   }
 
   return (
     <div className="min-h-[95.5vh] flex justify-center ">
       <div className="bg-white p-8  w-[90%] sm:max-w-96">
         <div className="text-3xl mb-6 text-center">
-          <Title text1="Profile" text2="Page" />
+          <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
         </div>
         {forms.map((form, index) => (
           <form
@@ -110,7 +112,7 @@ const Profile = () => {
             <button
               className="w-full p-2 bg-mainColor text-white font-medium text-xl  futura"
               disabled={isUserLoading}>
-              {isUserLoading ? 'Loading...' : form.buttonText}
+              {isUserLoading ? t('profile.forms.loading') : form.buttonText}
             </button>
           </form>
         ))}

@@ -480,5 +480,28 @@
     "title": "Ваш кошик порожній",
     "description": "Схоже, ви ще не додали жодного товару. Почніть досліджувати нашу чудову колекцію прикрас!",
     "button": "Перейти до каталогу"
+  },
+  "profile": {
+    "title": {
+      "text1": "Профіль",
+      "text2": "Сторінка"
+    },
+    "forms": {
+      "updateName": {
+        "placeholder": "Ім'я",
+        "buttonText": "Оновити ім'я"
+      },
+      "updateEmail": {
+        "placeholder": "Електронна пошта",
+        "buttonText": "Оновити email"
+      },
+      "updatePassword": {
+        "currentPasswordPlaceholder": "Поточний пароль",
+        "newPasswordPlaceholder": "Новий пароль",
+        "buttonText": "Оновити пароль"
+      },
+      "noUserData": "Дані користувача відсутні",
+      "loading": "Завантаження..."
+    }
   }
 }
