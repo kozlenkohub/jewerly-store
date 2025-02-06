@@ -308,5 +308,168 @@
     },
     "phone": "Phone: +380 44 123 4567",
     "email": "Email: sample@gmail.com"
+  },
+  "delivery": {
+    "title": {
+      "text1": "Delivery",
+      "text2": "Rules"
+    },
+    "deliveryImage": "Delivery service image",
+    "description": {
+      "part1": "We strive to provide the best delivery service for our valued customers. Our shipping partners are carefully selected to ensure your precious jewelry reaches you safely and on time.",
+      "part2": "We offer various delivery options to suit your needs, from standard delivery to express shipping for those urgent occasions."
+    },
+    "generalInfo": {
+      "title": "Our Delivery Service",
+      "description": "We partner with trusted courier services to ensure safe and timely delivery of your valuable purchases. All shipments are fully insured and tracked."
+    },
+    "methods": {
+      "title": {
+        "text1": "Delivery",
+        "text2": "Methods"
+      },
+      "standard": {
+        "title": "Standard Delivery",
+        "description": "Our economical shipping option",
+        "time": "Delivery within 3-5 business days",
+        "cost": "Free shipping for orders over ₴7000"
+      },
+      "express": {
+        "title": "Express Delivery",
+        "description": "Fast delivery option for urgent orders",
+        "time": "Delivery within 1-2 business days",
+        "cost": "Additional ₴500 shipping fee"
+      }
+    },
+    "areas": {
+      "title": "Delivery Areas",
+      "domestic": {
+        "title": "Domestic Shipping",
+        "description": "We deliver to all major cities and regions within the country. Remote areas may require additional delivery time."
+      },
+      "international": {
+        "title": "International Shipping",
+        "description": "We currently ship to select countries. International delivery times may vary depending on customs clearance."
+      }
+    },
+    "payment": {
+      "title": "Payment Options",
+      "methods": {
+        "card": {
+          "title": "Credit/Debit Card",
+          "description": "Secure payment using major credit and debit cards"
+        },
+        "cash": {
+          "title": "Cash on Delivery",
+          "description": "Pay in cash when your order arrives"
+        },
+        "online": {
+          "title": "Online Payment",
+          "description": "Various online payment options including PayPal"
+        }
+      }
+    },
+    "times": {
+      "title": "Delivery Times",
+      "description": "Our delivery services operate according to the following schedule:",
+      "workdays": "Monday to Friday: 9:00 AM - 6:00 PM",
+      "weekend": "Saturday: 10:00 AM - 2:00 PM",
+      "holidays": "No deliveries on Sundays and public holidays"
+    },
+    "notes": {
+      "title": "Important Notes",
+      "tracking": "All shipments include tracking numbers that will be sent to your email",
+      "insurance": "All deliveries are fully insured against loss or damage",
+      "signature": "Signature required upon delivery for orders over ₴15000",
+      "reschedule": "Free delivery rescheduling available if needed"
+    }
+  },
+  "privacy": {
+    "title": {
+      "text1": "Privacy",
+      "text2": "Policy"
+    },
+    "intro": {
+      "title": "Introduction",
+      "description": "We value your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and protect your information.",
+      "lastUpdate": "Last updated: January 1, 2024"
+    },
+    "dataCollection": {
+      "title": "Data Collection",
+      "description": "We collect the following types of information:",
+      "items": {
+        "personal": "Personal information (name, address, email)",
+        "payment": "Payment information (encrypted card details)",
+        "technical": "Technical information (IP address, browser type)",
+        "usage": "Usage information (purchase history, product views)"
+      }
+    },
+    "cookies": {
+      "title": "Use of Cookies",
+      "description": "We use cookies to enhance your experience:",
+      "types": {
+        "essential": "Essential cookies for site functionality",
+        "functional": "Functional cookies to save your preferences",
+        "analytical": "Analytical cookies for visit analysis",
+        "advertising": "Advertising cookies for relevant ads"
+      }
+    },
+    "dataUsage": {
+      "title": "Use of Data",
+      "description": "We use your data for:",
+      "purposes": {
+        "orders": "Processing and delivering orders",
+        "communication": "Communication about your orders and updates",
+        "improvement": "Improving our services",
+        "marketing": "Sending marketing materials (with your consent)"
+      }
+    },
+    "security": {
+      "title": "Data Security",
+      "description": "We implement strict security measures:",
+      "measures": {
+        "encryption": "SSL encryption for all data",
+        "access": "Limited access to personal data",
+        "monitoring": "Continuous security monitoring",
+        "compliance": "Compliance with GDPR and other standards"
+      }
+    },
+    "rights": {
+      "title": "User Rights",
+      "description": "You have the right to:",
+      "list": {
+        "access": "Access your personal data",
+        "rectification": "Correct inaccurate data",
+        "erasure": "Delete your data",
+        "portability": "Data portability",
+        "withdraw": "Withdraw consent for data processing"
+      }
+    },
+    "thirdParties": {
+      "title": "Third Parties",
+      "description": "We work with trusted partners:",
+      "services": {
+        "payment": "Payment processors for transactions",
+        "delivery": "Delivery services for shipping orders",
+        "analytics": "Analytics services for visit analysis",
+        "marketing": "Marketing platforms for newsletters"
+      }
+    },
+    "contact": {
+      "title": "Contact Information",
+      "description": "If you have any privacy-related questions, contact us:",
+      "email": {
+        "label": "Email",
+        "value": "privacy@jewelry.com"
+      },
+      "phone": {
+        "label": "Phone",
+        "value": "+380 44 123 4567"
+      },
+      "address": {
+        "label": "Address",
+        "value": "Kyiv, Independence Square, 1"
+      }
+    }
   }
 }

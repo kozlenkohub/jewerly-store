@@ -270,7 +270,7 @@
     "storeImage": "Изображение магазина",
     "description": {
       "part1": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui, corporis natus magnam cumque laboriosam illo totam. Dolores, quae dolore dolorum, aut et optio quam aspernatur, eum blanditiis vel nesciunt. Rem totam voluptatibus voluptates qui ducimus optio, sunt amet maiores fuga quos veritatis praesentium excepturi autem cum tempore in dolor velit corrupti?",
-      "part2": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum error, maiores nisi quaerat dolore quod adipisci quasi optio sequi minima quae tempora, illum perspiciatis? Quis vero quaerat sint iste quos dolorem asperiores perferendis."
+      "part2": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum error, maiores nisi quaerat dolore quod adipisci почти optio sequi minima quae tempora, illum perspiciatis? Quis vero quaerat sint iste quos dolorem asperiores perferendis."
     },
     "mission": {
       "title": "Наша миссия",
@@ -308,5 +308,168 @@
     },
     "phone": "Телефон: +380 44 123 4567",
     "email": "Email: sample@gmail.com"
+  },
+  "delivery": {
+    "title": {
+      "text1": "Правила",
+      "text2": "Доставки"
+    },
+    "deliveryImage": "Изображение службы доставки",
+    "description": {
+      "part1": "Мы стремимся предоставить лучший сервис доставки для наших ценных клиентов. Наши партнеры по доставке тщательно отобраны, чтобы гарантировать, что ваши драгоценные украшения прибудут к вам безопасно и вовремя.",
+      "part2": "Мы предлагаем различные варианты доставки, чтобы удовлетворить ваши потребности: от стандартной доставки до экспресс-доставки для срочных случаев."
+    },
+    "generalInfo": {
+      "title": "Наш Сервис Доставки",
+      "description": "Мы сотрудничаем с надежными курьерскими службами для обеспечения безопасной и своевременной доставки ваших ценных покупок. Все отправления застрахованы и отслеживаются."
+    },
+    "methods": {
+      "title": {
+        "text1": "Способы",
+        "text2": "Доставки"
+      },
+      "standard": {
+        "title": "Стандартная Доставка",
+        "description": "Наш экономичный вариант доставки",
+        "time": "Доставка в течение 3-5 рабочих дней",
+        "cost": "Бесплатная доставка для заказов от 7000 грн"
+      },
+      "express": {
+        "title": "Экспресс Доставка",
+        "description": "Быстрая доставка для срочных заказов",
+        "time": "Доставка в течение 1-2 рабочих дней",
+        "cost": "Дополнительная плата за доставку 500 грн"
+      }
+    },
+    "areas": {
+      "title": "Зоны Доставки",
+      "domestic": {
+        "title": "Доставка по России",
+        "description": "Мы осуществляем доставку во все крупные города и регионы страны. Доставка в отдаленные районы может требовать дополнительного времени."
+      },
+      "international": {
+        "title": "Международная Доставка",
+        "description": "В настоящее время мы осуществляем доставку в отдельные страны. Время международной доставки может варьироваться в зависимости от таможенного оформления."
+      }
+    },
+    "payment": {
+      "title": "Способы Оплаты",
+      "methods": {
+        "card": {
+          "title": "Карта",
+          "description": "Безопасная оплата основными кредитными и дебетовыми картами"
+        },
+        "cash": {
+          "title": "Наложенный Платеж",
+          "description": "Оплата наличными при получении заказа"
+        },
+        "online": {
+          "title": "Онлайн Оплата",
+          "description": "Различные варианты онлайн-оплаты, включая PayPal"
+        }
+      }
+    },
+    "times": {
+      "title": "График Доставки",
+      "description": "Наши службы доставки работают по следующему графику:",
+      "workdays": "Понедельник-Пятница: 9:00 - 18:00",
+      "weekend": "Суббота: 10:00 - 14:00",
+      "holidays": "Без доставки в воскресенье и праздничные дни"
+    },
+    "notes": {
+      "title": "Важные Примечания",
+      "tracking": "Все отправления включают номера для отслеживания, которые будут отправлены на вашу почту",
+      "insurance": "Все доставки полностью застрахованы от потери или повреждения",
+      "signature": "Требуется подпись при доставке для заказов стоимостью более 15000 грн",
+      "reschedule": "Доступно бесплатное изменение времени доставки при необходимости"
+    }
+  },
+  "privacy": {
+    "title": {
+      "text1": "Политика",
+      "text2": "Конфиденциальности"
+    },
+    "intro": {
+      "title": "Введение",
+      "description": "Мы ценим вашу конфиденциальность и обязуемся защищать ваши личные данные. Эта политика конфиденциальности объясняет, как мы собираем, используем и защищаем вашу информацию.",
+      "lastUpdate": "Последнее обновление: 1 января 2024"
+    },
+    "dataCollection": {
+      "title": "Сбор Данных",
+      "description": "Мы собираем следующие типы информации:",
+      "items": {
+        "personal": "Личная информация (имя, адрес, email)",
+        "payment": "Платежная информация (зашифрованные данные карты)",
+        "technical": "Техническая информация (IP-адрес, тип браузера)",
+        "usage": "Информация об использовании (история покупок, просмотры товаров)"
+      }
+    },
+    "cookies": {
+      "title": "Использование Cookies",
+      "description": "Мы используем файлы cookie для улучшения вашего опыта:",
+      "types": {
+        "essential": "Необходимые cookies для функционирования сайта",
+        "functional": "Функциональные cookies для сохранения ваших настроек",
+        "analytical": "Аналитические cookies для анализа посещений",
+        "advertising": "Рекламные cookies для показа релевантной рекламы"
+      }
+    },
+    "dataUsage": {
+      "title": "Использование Данных",
+      "description": "Мы используем ваши данные для:",
+      "purposes": {
+        "orders": "Обработки и доставки заказов",
+        "communication": "Общения относительно ваших заказов и обновлений",
+        "improvement": "Улучшения наших услуг",
+        "marketing": "Отправки маркетинговых материалов (с вашего согласия)"
+      }
+    },
+    "security": {
+      "title": "Безопасность Данных",
+      "description": "Мы применяем строгие меры безопасности:",
+      "measures": {
+        "encryption": "SSL-шифрование всех данных",
+        "access": "Ограниченный доступ к персональным данным",
+        "monitoring": "Постоянный мониторинг безопасности",
+        "compliance": "Соответствие GDPR и другим стандартам"
+      }
+    },
+    "rights": {
+      "title": "Права Пользователя",
+      "description": "Вы имеете право на:",
+      "list": {
+        "access": "Доступ к вашим персональным данным",
+        "rectification": "Исправление неточных данных",
+        "erasure": "Удаление ваших данных",
+        "portability": "Перенос данных",
+        "withdraw": "Отзыв согласия на обработку данных"
+      }
+    },
+    "thirdParties": {
+      "title": "Третьи Стороны",
+      "description": "Мы работаем с надежными партнерами:",
+      "services": {
+        "payment": "Платежные системы для обработки платежей",
+        "delivery": "Службы доставки для отправки заказов",
+        "analytics": "Аналитические сервисы для анализа посещений",
+        "marketing": "Маркетинговые платформы для рассылок"
+      }
+    },
+    "contact": {
+      "title": "Контактная Информация",
+      "description": "Если у вас есть вопросы касательно конфиденциальности, свяжитесь с нами:",
+      "email": {
+        "label": "Email",
+        "value": "privacy@jewelry.com"
+      },
+      "phone": {
+        "label": "Телефон",
+        "value": "+380 44 123 4567"
+      },
+      "address": {
+        "label": "Адрес",
+        "value": "г. Киев, Майдан Незалежности, 1"
+      }
+    }
   }
 }

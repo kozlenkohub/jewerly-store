@@ -270,7 +270,7 @@
     "storeImage": "Зображення магазину",
     "description": {
       "part1": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui, corporis natus magnam cumque laboriosam illo totam. Dolores, quae dolore dolorum, aut et optio quam aspernatur, eum blanditiis vel nesciunt. Rem totam voluptatibus voluptates qui ducimus optio, sunt amet maiores fuga quos veritatis praesentium excepturi autem cum tempore in dolor velit corrupti?",
-      "part2": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum error, maiores nisi quaerat dolore quod adipisci quasi optio sequi minima quae tempora, illum perspiciatis? Quis vero quaerat sint iste quos dolorem asperiores perferendis."
+      "part2": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum error, maiores nisi quaerat dolore quod adipisci майже optio sequi minima quae tempora, illum perspiciatis? Quis vero quaerat sint iste quos dolorem asperiores perferendis."
     },
     "mission": {
       "title": "Наша місія",
@@ -308,5 +308,167 @@
     },
     "phone": "Телефон: +380 44 123 4567",
     "email": "Email: sample@gmail.com"
+  },
+  "delivery": {
+    "title": {
+      "text1": "Правила",
+      "text2": "Доставки"
+    },
+    "deliveryImage": "Зображення служби доставки",
+    "description": {
+      "part1": "Ми прагнемо надати найкращий сервіс доставки для наших цінних клієнтів. Наші партнери з доставки ретельно відібрані, щоб гарантувати, що ваші дорогоцінні прикраси надійдуть до вас безпечно і вчасно.",
+      "part2": "Ми пропонуємо різні варіанти доставки, щоб задовольнити ваші потреби: від стандартної доставки до експрес-доставки для термінових випадків."
+    },
+    "generalInfo": {
+      "title": "Наш Сервіс Доставки",
+      "description": "Ми співпрацюємо з надійними кур'єрськими службами для забезпечення безпечної та своєчасної доставки ваших цінних покупок. Всі відправлення застраховані та відстежуються."
+    },
+    "methods": {
+      "title": {
+        "text1": "Способи",
+        "text2": "Доставки"
+      },
+      "standard": {
+        "title": "Стандартна Доставка",
+        "description": "Наш найбільш економічний варіант доставки",
+        "time": "Доставка протягом 3-5 робочих днів",
+        "cost": "Безкоштовна доставка для замовлень від 7000 грн"
+      },
+      "express": {
+        "title": "Експрес Доставка",
+        "description": "Швидка доставка для термінових замовлень",
+        "time": "Доставка протягом 1-2 робочих днів",
+        "cost": "Додаткова плата за доставку 500 грн"
+      }
+    },
+    "areas": {
+      "title": "Зони Доставки",
+      "domestic": {
+        "title": "Доставка по Україні",
+        "description": "Ми здійснюємо доставку у всі великі міста та регіони країни. Доставка у віддалені райони може потребувати додаткового часу."
+      },
+      "international": {
+        "title": "Міжнародна Доставка",
+        "description": "Наразі ми здійснюємо доставку в окремі країни. Час міжнародної доставки може варіюватися залежно від митного оформлення."
+      }
+    },
+    "payment": {
+      "title": "Способи Оплати",
+      "methods": {
+        "card": {
+          "title": "Картка",
+          "description": "Безпечна оплата основними кредитними та дебетовими картками"
+        },
+        "cash": {
+          "title": "Накладений Платіж",
+          "description": "Оплата готівкою при отриманні замовлення"
+        },
+        "online": {
+          "title": "Онлайн Оплата",
+          "description": "Різні варіанти онлайн-оплати, включаючи PayPal"
+        }
+      }
+    },
+    "times": {
+      "title": "Графік Доставки",
+      "description": "Наші служби доставки працюють за таким графіком:",
+      "workdays": "Понеділок-П'ятниця: 9:00 - 18:00",
+      "weekend": "Субота: 10:00 - 14:00",
+      "holidays": "Без доставки в неділю та святкові дні"
+    },
+    "notes": {
+      "title": "Важливі Примітки",
+      "tracking": "Всі відправлення включають номери для відстеження, які будуть надіслані на вашу пошту",
+      "insurance": "Всі доставки повністю застраховані від втрати чи пошкодження",
+      "signature": "Потрібен підпис при доставці для замовлень вартістю понад 15000 грн"
+    }
+  },
+  "privacy": {
+    "title": {
+      "text1": "Політика",
+      "text2": "Конфіденційності"
+    },
+    "intro": {
+      "title": "Вступ",
+      "description": "Ми цінуємо вашу конфіденційність і зобов'язуємося захищати ваші особисті дані. Ця політика конфіденційності пояснює, як ми збираємо, використовуємо та захищаємо вашу інформацію.",
+      "lastUpdate": "Останнє оновлення: 1 січня 2024"
+    },
+    "dataCollection": {
+      "title": "Збір Даних",
+      "description": "Ми збираємо наступні типи інформації:",
+      "items": {
+        "personal": "Особиста інформація (ім'я, адреса, email)",
+        "payment": "Платіжна інформація (зашифровані дані карти)",
+        "technical": "Технічна інформація (IP-адреса, тип браузера)",
+        "usage": "Інформація про використання (історія покупок, перегляди товарів)"
+      }
+    },
+    "cookies": {
+      "title": "Використання Cookies",
+      "description": "Ми використовуємо файли cookie для покращення вашого досвіду:",
+      "types": {
+        "essential": "Необхідні cookies для функціонування сайту",
+        "functional": "Функціональні cookies для збереження ваших налаштувань",
+        "analytical": "Аналітичні cookies для аналізу відвідувань",
+        "advertising": "Рекламні cookies для показу релевантної реклами"
+      }
+    },
+    "dataUsage": {
+      "title": "Використання Даних",
+      "description": "Ми використовуємо ваші дані для:",
+      "purposes": {
+        "orders": "Обробки та доставки замовлень",
+        "communication": "Спілкування щодо ваших замовлень та оновлень",
+        "improvement": "Покращення наших послуг",
+        "marketing": "Надсилання маркетингових матеріалів (з вашої згоди)"
+      }
+    },
+    "security": {
+      "title": "Безпека Даних",
+      "description": "Ми застосовуємо суворі заходи безпеки:",
+      "measures": {
+        "encryption": "SSL-шифрування всіх даних",
+        "access": "Обмежений доступ до персональних даних",
+        "monitoring": "Постійний моніторинг безпеки",
+        "compliance": "Відповідність GDPR та іншим стандартам"
+      }
+    },
+    "rights": {
+      "title": "Права Користувача",
+      "description": "Ви маєте право на:",
+      "list": {
+        "access": "Доступ до ваших персональних даних",
+        "rectification": "Виправлення неточних даних",
+        "erasure": "Видалення ваших даних",
+        "portability": "Перенесення даних",
+        "withdraw": "Відкликання згоди на обробку даних"
+      }
+    },
+    "thirdParties": {
+      "title": "Треті Сторони",
+      "description": "Ми працюємо з надійними партнерами:",
+      "services": {
+        "payment": "Платіжні системи для обробки платежів",
+        "delivery": "Служби доставки для відправки замовлень",
+        "analytics": "Аналітичні сервіси для аналізу відвідувань",
+        "marketing": "Маркетингові платформи для розсилок"
+      }
+    },
+    "contact": {
+      "title": "Контактна Інформація",
+      "description": "Якщо у вас є питання щодо конфіденційності, зв'яжіться з нами:",
+      "email": {
+        "label": "Email",
+        "value": "privacy@jewelry.com"
+      },
+      "phone": {
+        "label": "Телефон",
+        "value": "+380 44 123 4567"
+      },
+      "address": {
+        "label": "Адреса",
+        "value": "м. Київ, Майдан Незалежності, 1"
+      }
+    }
   }
 }
