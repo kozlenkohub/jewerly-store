@@ -75,7 +75,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
       <Link to="/cart" className={`relative sm:block hidden ${iconColor}`}>
         <FaShoppingCart className={`w-5 h-5 ${iconColor}`} />
         {counter > 0 && (
-          <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px]">
+          <p className="absolute right-[-12px] bottom-[-9px] w-[20px] h-[20px] text-center leading-4 bg-secondaryColor text-white aspect-square rounded-full text-[12px] ">
             {counter}
           </p>
         )}
