@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Title from './Title';
 import ProductItem from './ProductItem';
 import { products } from '../assets/assets';
 import { Link } from 'react-router-dom';
 
 const LatestCatalog = () => {
+  const { t } = useTranslation();
   const [latestProducts, setLatestProducts] = React.useState([]);
 
   React.useEffect(() => {
@@ -15,12 +17,11 @@ const LatestCatalog = () => {
   return (
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center py-8 text-3xl">
-        <Title text1={'Bestseller '} text2={'Catalog'} />
+        <Title text1={t('latestCatalog.title.text1')} text2={t('latestCatalog.title.text2')} />
         <p
           className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600"
           style={{ fontSize: '11px' }}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla tempora expedita
-          laboriosam
+          {t('latestCatalog.description')}
         </p>
         <div className="grid py grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 ">
           {latestProducts.map((product) => (
@@ -31,7 +32,7 @@ const LatestCatalog = () => {
           <Link
             to="/catalog"
             className="text-[20px] hover:underline transition duration-300 ease-in-out transform hover:scale-105 text-textColor">
-            See more
+            {t('latestCatalog.seeMore')}
           </Link>
         </div>
       </div>

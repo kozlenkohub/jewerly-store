@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import video from '../../assets/night.webm'; // Импортируем видео
 import './NewsletterBox.css'; // Импортируем файл стилей
 
 const NewsletterBox = () => {
+  const { t } = useTranslation();
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -44,19 +46,19 @@ const NewsletterBox = () => {
         Your browser does not support the video tag.
       </video>
       <div className="overlay">
-        <p className="text-2xl font-medium text-white">Subscribe now & get 20% off</p>
-        <p className="text-white mt-3">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        <p className="text-2xl font-medium text-white">{t('newsletterBox.title')}</p>
+        <p className="text-white mt-3">{t('newsletterBox.description')}</p>
         <form
           onSubmit={onSubmit}
           className="w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6 pl-3">
           <input
             type="email"
-            placeholder="Email"
+            placeholder={t('newsletterBox.emailPlaceholder')}
             className="w-full sm:flex-1 outline-none bg-white text-black border-2 border-mainColor/40 py-2"
             required
           />
           <button type="submit" className="bg-mainColor text-white text-xs px-10 py-4">
-            Subscribe
+            {t('newsletterBox.buttonText')}
           </button>
         </form>
       </div>

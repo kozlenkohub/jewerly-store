@@ -1,20 +1,20 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import Title from './Title';
 import { category } from '../assets/assets';
-import { useSelector } from 'react-redux';
 
 const Category = () => {
-  // const { category } = useSelector((state) => state.category);
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-[1280px] mx-auto">
       <div className="text-center py-8 text-3xl">
-        <Title text1={'Our'} text2={'Categories'} />
+        <Title text1={t('category.title.text1')} text2={t('category.title.text2')} />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-0 gap-y-6 mt-6">
           {category.map((category) => (
             <div
               key={category._id}
-              className="p-2 transform transition-transform duration-300 cursor-pointer ">
+              className="p-2 transform transition-transform duration-300 cursor-pointer">
               <div className="h-40 w-full relative overflow-hidden">
                 <img
                   src={category.image}

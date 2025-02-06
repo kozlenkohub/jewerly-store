@@ -12,5 +12,25 @@
       "title": "24/7 Support",
       "description": "Professional support team at your service"
     }
+  },
+  "newsletterBox": {
+    "title": "Subscribe now & get 20% off",
+    "description": "Join our newsletter and get exclusive offers",
+    "emailPlaceholder": "Email",
+    "buttonText": "Subscribe"
+  },
+  "category": {
+    "title": {
+      "text1": "Our",
+      "text2": "Categories"
+    }
+  },
+  "latestCatalog": {
+    "title": {
+      "text1": "Bestseller",
+      "text2": "Catalog"
+    },
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla tempora expedita laboriosam",
+    "seeMore": "See more"
   }
 }
