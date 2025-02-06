@@ -63,7 +63,9 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
     return guestCart;
   }
 
-  const response = await axios.get('api/cart/get');
+  const response = await axios.get('api/cart/get', {
+    headers: { 'X-Localize': true },
+  });
 
   return response.data;
 });
