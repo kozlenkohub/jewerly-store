@@ -1,17 +1,33 @@
 import 'dotenv/config';
 import TelegramBot from 'node-telegram-bot-api';
+import TelegramUser from '../models/telegramModel.js';
+import { setupOrderHandlers } from './handlers/orderHandlers.js';
+import { setupAdminHandlers } from './handlers/adminHandlers.js';
+import { setupProductHandlers } from './handlers/productHandlers.js';
 
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
-bot.on('message', (msg) => {
+// Setup handlers
+setupOrderHandlers(bot);
+setupAdminHandlers(bot);
+setupProductHandlers(bot);
+
+bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
+  const username = msg.from.username;
 
-  if (text.toLowerCase() === '/start') {
-    bot.sendMessage(chatId, 'Привет! Я твой бот. Чем могу помочь?');
-  } else {
-    bot.sendMessage(chatId, `Вы сказали: ${text}`);
+  const isAuthorized = await TelegramUser.checkAuthorization(chatId);
+
+  if (!isAuthorized) {
+    await TelegramUser.createOrUpdate(chatId, username);
+    return bot.sendMessage(
+      chatId,
+      'Извините, у вас нет доступа к боту. Обратитесь к администратору.',
+    );
   }
 });
 
+// Make bot instance available for notifications
+export { bot };
 export default bot;

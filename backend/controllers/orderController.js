@@ -5,6 +5,8 @@ import sendEmail from '../utils/emailServices.js';
 import { createOrderMessage } from '../utils/messageServices.js';
 import { createPaymentIntent, confirmPaymentIntent } from '../utils/stripeService.js';
 import crypto from 'crypto';
+import { bot } from '../telegram/bot.js';
+import { sendOrderNotification } from '../telegram/handlers/orderHandlers.js';
 
 const { LIQPAY_PUBLIC_KEY, LIQPAY_PRIVATE_KEY } = process.env;
 
@@ -94,6 +96,7 @@ export const placeOrder = async (req, res) => {
       });
 
       const savedOrder = await order.save();
+      // Добавляем уведомление для Stripe заказа
 
       return res.status(201).json({
         message: 'Order Created',
@@ -131,6 +134,9 @@ export const placeOrder = async (req, res) => {
       if (userId) {
         await User.findByIdAndUpdate(userId, { cartData: {} });
       }
+
+      // Send Telegram notification
+      await sendOrderNotification(bot, savedOrder);
 
       return res.status(201).json({
         message: 'Order Created',
@@ -293,6 +299,9 @@ export const paymentCallback = async (req, res) => {
 
       await order.save();
 
+      // Send Telegram notification for successful payment
+      await sendOrderNotification(bot, order);
+
       // Отправка письма об успешной оплате
       await sendEmail({
         email: order.shippingFields.email,
@@ -384,6 +393,9 @@ export const updateOrderPayment = async (req, res) => {
         subject: 'Successful Order Payment',
         html: createOrderMessage(order),
       });
+
+      // Добавляем уведомление при успешной оплате
+      await sendOrderNotification(bot, order);
     }
 
     res.json({
