@@ -67,7 +67,7 @@ const ImageSlider = ({ media, productName, isVideo }) => {
             preload="auto"
             onLoadStart={() => setIsLoading(true)}
             onLoadedData={() => setIsLoading(false)}>
-            <source src={url.split('#')[0]} type="video/mp4" />
+            <source src={url} type="video/mp4" />
           </video>
         </div>
       );

@@ -2,16 +2,25 @@ import React from 'react';
 import ImageSlider from './ImageSlider';
 
 const ProductGallery = ({ product, mainImage, setMainImage }) => {
-  const isVideo = (url) => url.includes('#video');
+  const isVideo = (url) => url.includes('/video/upload/');
 
   const renderMedia = (mediaUrl, className) => {
-    const url = mediaUrl.split('#')[0]; // Remove the type marker
+    console.log('mediaUrl:', mediaUrl);
+
     if (isVideo(mediaUrl)) {
       return (
-        <video src={url} className={className} preload="metadata" playsInline autoPlay muted loop />
+        <video
+          src={mediaUrl}
+          className={className}
+          preload="metadata"
+          playsInline
+          autoPlay
+          muted
+          loop
+        />
       );
     }
-    return <img src={url} alt="" className={className} />;
+    return <img src={mediaUrl} alt="" className={className} />;
   };
 
   return (

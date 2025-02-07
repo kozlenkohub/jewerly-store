@@ -1,19 +1,16 @@
 import { v2 as cloudinary } from 'cloudinary';
 import streamifier from 'streamifier';
 
-export const uploadToCloudinary = (buffer, resourceType = 'image') => {
+export const uploadToCloudinary = (buffer, resourceType = 'image', options = {}) => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         resource_type: resourceType,
-        folder: 'jewerly-store',
+        ...options,
       },
       (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
+        if (error) return reject(error);
+        resolve(result);
       },
     );
 

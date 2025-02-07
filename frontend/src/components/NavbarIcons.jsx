@@ -67,13 +67,13 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                   <span>{t('navbar.myProfile')}</span>
                 </div>
               </Link>
-              <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-gray-500">
+              <Link to="/orders" className="cursor-pointer hover:text-gray-500">
                 <div className="navbar-item flex items-center">
                   <FaClipboardList className="mr-1 inline-block" />
                   <span>{t('navbar.orders')}</span>
                 </div>
-              </p>
-              <p
+              </Link>
+              <div
                 onClick={() => {
                   dispatch(logout());
                   dispatch(setCartItems([]));
@@ -84,7 +84,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                   <FaSignOutAlt className="mr-1 inline-block" />
                   <span>{t('navbar.logout')}</span>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         )}
