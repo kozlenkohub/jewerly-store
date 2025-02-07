@@ -1,11 +1,9 @@
-import { handleBasicInfo } from './components/basicInfoHandler.js';
-import { handleSpecifications } from './components/specificationsHandler.js';
-import { handleMessageWithPhotos } from './components/messageHandler.js';
+import { handleMessageWithPhotos } from './components/product/messageHandler.js';
 import {
   handlePhotoUpload,
   handleDocumentUpload,
   handleVideoUpload,
-} from './components/mediaHandler.js';
+} from './components/product/mediaHandler.js';
 
 export const productStates = {};
 

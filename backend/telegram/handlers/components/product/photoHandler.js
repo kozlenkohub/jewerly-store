@@ -1,4 +1,4 @@
-import telegramCloudinaryHandler from '../../../utils/telegramCloudinaryHandler.js';
+import telegramCloudinaryHandler from '../../../../utils/telegramCloudinaryHandler.js';
 
 // Maximum file sizes in bytes (20MB for bots via API)
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB is Telegram's bot API limit

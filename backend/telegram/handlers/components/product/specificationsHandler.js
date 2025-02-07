@@ -1,6 +1,6 @@
-import Product from '../../../models/productModel.js';
-import Category from '../../../models/categoryModel.js';
-import { productStates } from '../productHandlers.js';
+import Product from '../../../../models/productModel.js';
+import Category from '../../../../models/categoryModel.js';
+import { productStates } from '../../productHandlers.js';
 
 const goldColors = ['Y', 'W', 'R', 'RG', 'H', 'C', 'I', 'G', 'B'];
 
