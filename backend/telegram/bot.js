@@ -14,7 +14,6 @@ setupProductHandlers(bot);
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
-  const text = msg.text;
   const username = msg.from.username;
 
   const isAuthorized = await TelegramUser.checkAuthorization(chatId);
