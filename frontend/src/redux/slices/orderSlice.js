@@ -58,20 +58,11 @@ export const checkout = createAsyncThunk(
         },
       );
 
-      // Локализуем названия продуктов в новом заказе
-      const localizedOrder = {
-        ...response.data,
-        orderItems: response.data.orderItems.map((item) => ({
-          ...item,
-          name: localizeField(item.name),
-        })),
-      };
-
       if (paymentMethod === 'cash') {
         localStorage.removeItem('guestCart');
       }
       dispatch(fetchCartItems());
-      return localizedOrder;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -84,7 +75,7 @@ const orderSlice = createSlice({
   reducers: {
     addOrder: (state, action) => {
       if (!Array.isArray(state.orders)) {
-        state.orders = []; // Initialize if undefined
+        state.orders = [];
       }
       state.orders.push(action.payload);
     },
