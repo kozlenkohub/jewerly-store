@@ -537,5 +537,9 @@
       "removeFailed": "Failed to remove product from cart",
       "sizeRequired": "Please select a size before adding to cart"
     }
+  },
+  "mobileMenu": {
+    "order": "Place an order",
+    "callInfo": "Call us from 11:00 to 22:45. Our hotline is open every day!"
   }
 }

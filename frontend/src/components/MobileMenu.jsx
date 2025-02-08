@@ -14,6 +14,7 @@ import { toggleSearch } from '../redux/slices/productSlice';
 import { logout } from '../redux/slices/userSlice';
 import { setCartItems } from '../redux/slices/cartSlice';
 import { useTranslation } from 'react-i18next';
+import MobileMenuPhoneNumbers from './MobileMenuPhoneNumbers';
 
 const setLanguage = (language) => {
   localStorage.setItem('lang', language);
@@ -239,17 +240,20 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
             {t('navbar.menu.contact')}
           </NavLink>
         </div>
-        <div className="flex items-center justify-center gap-2 p-3 border-t border-gray-200">
-          {['en', 'ru', 'uk'].map((lang) => (
-            <button
-              key={lang}
-              onClick={() => setLanguage(lang)}
-              className={`px-2 py-1 border border-mainColor ${
-                currentLanguage === lang ? 'bg-mainColor text-white' : 'text-mainColor'
-              } hover:bg-mainColor hover:text-white transition-colors`}>
-              {t(`navbar.languages.${lang}`)}
-            </button>
-          ))}
+        <div className="flex flex-col">
+          <MobileMenuPhoneNumbers />
+          <div className="flex items-center justify-center gap-2 p-3 border-t border-gray-200">
+            {['en', 'ru', 'uk'].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`px-2 py-1 border border-mainColor ${
+                  currentLanguage === lang ? 'bg-mainColor text-white' : 'text-mainColor'
+                } hover:bg-mainColor hover:text-white transition-colors`}>
+                {t(`navbar.languages.${lang}`)}
+              </button>
+            ))}
+          </div>{' '}
         </div>
       </div>
     </div>
