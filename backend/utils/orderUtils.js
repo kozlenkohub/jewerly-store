@@ -35,3 +35,32 @@ export const handlePaymentError = async (status, orderId, res) => {
   };
   return res.status(200).json({ message: statusMessages[status] || 'Order deleted' });
 };
+
+export const validateOrderData = (data) => {
+  const errors = {};
+  if (!data.orderItems || data.orderItems.length === 0) {
+    errors.orderItems = 'No order items';
+  } else {
+    data.orderItems.forEach((item, index) => {
+      if (!item.quantity) errors[`orderItems.${index}.quantity`] = 'Quantity is required';
+      if (!item._id) errors[`orderItems.${index}._id`] = 'Product ID is required';
+      if (!item.size) errors[`orderItems.${index}.size`] = 'Size is required';
+    });
+  }
+  if (!data.shippingFields) {
+    errors.shippingFields = 'Shipping address is required';
+  } else {
+    if (!data.shippingFields.apartament)
+      errors['shippingFields.apartament'] = 'Apartment is required';
+    if (!data.shippingFields.country) errors['shippingFields.country'] = 'Country is required';
+    if (!data.shippingFields.zipCode) errors['shippingFields.zipCode'] = 'Zip Code is required';
+    if (!data.shippingFields.city) errors['shippingFields.city'] = 'City is required';
+    if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
+    if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
+    if (!data.shippingFields.phone) errors['shippingFields.phone'] = 'Phone is required';
+  }
+  if (!data.paymentMethod || !['cash', 'stripe', 'liqpay'].includes(data.paymentMethod)) {
+    errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
+  }
+  return errors;
+};

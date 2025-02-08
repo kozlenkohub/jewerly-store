@@ -16,18 +16,19 @@ async function getAllChildCategoryIds(catId, collected = []) {
 }
 export const getProducts = async (req, res) => {
   try {
+    // Извлекаем известные параметры запроса и все остальные помещаем в unknownFilters
     const { metal, carats, price, cutForm, sort, search, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
+
+    // Если присутствуют неизвестные фильтры – возвращаем пустой массив
+    if (Object.keys(unknownFilters).length > 0) {
+      return res.json([]);
+    }
 
     const filter = {};
     let categoryDoc = null;
 
-    // Check for unknown filters
-    if (Object.keys(unknownFilters).length > 0) {
-      return res.json([]); // Return message if unknown filters are present
-    }
-
-    // Handle 'metal' filter
+    // Фильтр по металлу
     if (metal) {
       const metals = Array.isArray(metal) ? metal : [metal];
       filter['metal.value'] = {
@@ -35,7 +36,7 @@ export const getProducts = async (req, res) => {
       };
     }
 
-    // Handle 'carats' filter
+    // Фильтр по диапазонам каратов
     if (carats) {
       const caratsRanges = Array.isArray(carats) ? carats : [carats];
       filter.$or = caratsRanges.map((range) => {
@@ -44,50 +45,65 @@ export const getProducts = async (req, res) => {
       });
     }
 
-    // Handle 'category' filter
+    // Фильтр по категории (из параметров маршрута)
     if (paramCategory) {
       categoryDoc = await Category.findOne({ slug: paramCategory }).select('_id name').lean();
+
       if (!categoryDoc) {
         return res.status(404).json({ message: 'Category not found' });
       }
+
       const allCategoryIds = await getAllChildCategoryIds(categoryDoc._id);
       filter.category = { $in: allCategoryIds };
     }
 
-    // Handle 'price' filter
+    // Фильтр по цене
     if (price) {
       const [minPrice, maxPrice] = price.split('-').map(Number);
       filter.price = { $gte: minPrice, $lte: maxPrice };
     }
 
-    // Handle 'cutForm' filter
+    // Фильтр по cutForm
     if (cutForm) {
       const forms = Array.isArray(cutForm) ? cutForm : [cutForm];
       filter['cutForm.value'] = { $in: forms };
     }
 
-    // Handle 'search' filter
+    // Фильтр по поисковой строке (регулярное выражение, без учета регистра)
     if (search) {
       filter.name = { $regex: search, $options: 'i' };
     }
 
-    // Prepare the query
+    // Подготовка запроса с использованием фильтра
     let query = Product.find(filter).lean();
 
-    // Handle 'sort' filter
-    if (sort) {
-      if (sort === 'low-high') query = query.sort({ price: 1 });
-      else if (sort === 'high-low') query = query.sort({ price: -1 });
-      else if (sort === 'relevent') query = query.sort({ sales: -1 });
+    // Определяем варианты сортировки
+    const sortOptions = {
+      'low-high': { price: 1 },
+      'high-low': { price: -1 },
+      relevent: { sales: -1 },
+    };
+
+    if (sort && sortOptions[sort]) {
+      query = query.sort(sortOptions[sort]);
     }
 
-    // Execute the query
+    // Выполняем запрос
     const products = await query;
 
-    // Return the response
+    // Локализация данных для клиента
+    const localizedProducts = res.localizeData(products, [
+      'name',
+      'metal.name',
+      'cutForm.name',
+      'description',
+    ]);
+    const categoryName = categoryDoc ? res.localizeData(categoryDoc, ['name']).name : '';
+
+    // Отправляем результат
     res.json({
-      products: res.localizeData(products, ['name', 'metal.name', 'cutForm.name', 'description']),
-      categoryName: categoryDoc ? res.localizeData(categoryDoc, ['name']).name : '',
+      products: localizedProducts,
+      categoryName,
     });
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
@@ -115,27 +131,33 @@ export const addProduct = async (req, res) => {
       weight,
     } = req.body;
 
-    const mediaUrls = [];
-
-    if (req.files && req.files.length > 0) {
-      for (const file of req.files) {
-        const isVideo = file.mimetype.startsWith('video/');
-
-        if (isVideo && file.size > 50 * 1024 * 1024) {
-          return res.status(400).json({ message: 'Video file size must be less than 50MB' });
-        }
-
-        const result = await uploadToCloudinary(file.buffer, isVideo ? 'video' : 'image');
-        mediaUrls.push(`${result.secure_url}${isVideo ? '#video' : '#image'}`);
-      }
-    }
-
-    // Validate required fields
+    // Проверка обязательных полей
     if (!name || !price || !category || !metal) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Find category
+    // Обработка и загрузка медиа-файлов (изображений/видео)
+    let mediaUrls = [];
+    if (req.files && req.files.length > 0) {
+      // Проверка: если какой-либо видеофайл превышает 50MB, возвращаем ошибку
+      const invalidVideo = req.files.find(
+        (file) => file.mimetype.startsWith('video/') && file.size > 50 * 1024 * 1024,
+      );
+      if (invalidVideo) {
+        return res.status(400).json({ message: 'Video file size must be less than 50MB' });
+      }
+
+      // Загружаем все файлы параллельно
+      mediaUrls = await Promise.all(
+        req.files.map(async (file) => {
+          const isVideo = file.mimetype.startsWith('video/');
+          const result = await uploadToCloudinary(file.buffer, isVideo ? 'video' : 'image');
+          return `${result.secure_url}${isVideo ? '#video' : '#image'}`;
+        }),
+      );
+    }
+
+    // Поиск категории по _id или shortId
     const categoryDoc = await Category.findOne({
       $or: [{ _id: category }, { shortId: category }],
     });
@@ -143,8 +165,8 @@ export const addProduct = async (req, res) => {
       return res.status(404).json({ message: 'Category not found' });
     }
 
-    // Create new product with null checks for numeric fields
-    const newProduct = new Product({
+    // Формирование данных для нового продукта
+    const newProductData = {
       name,
       description,
       price: Number(price) || 0,
@@ -163,10 +185,15 @@ export const addProduct = async (req, res) => {
       carats: carats ? Number(carats) : undefined,
       weight: Number(weight) || 0,
       reviews: [],
-    });
+    };
 
+    const newProduct = new Product(newProductData);
     await newProduct.save();
-    res.status(201).json({ message: 'Product added successfully', product: newProduct });
+
+    res.status(201).json({
+      message: 'Product added successfully',
+      product: newProduct,
+    });
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',

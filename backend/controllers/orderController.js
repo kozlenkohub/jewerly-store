@@ -4,166 +4,95 @@ import Product from '../models/productModel.js';
 import sendEmail from '../utils/emailServices.js';
 import { createOrderMessage } from '../utils/messageServices.js';
 import { createPaymentIntent, confirmPaymentIntent } from '../utils/stripeService.js';
-import crypto from 'crypto';
 import { bot } from '../telegram/bot.js';
 import { sendOrderNotification } from '../telegram/handlers/orderHandlers.js';
+import {
+  validateOrderData,
+  calculateTotalPrice,
+  generateLiqPaySignature,
+} from '../utils/orderUtils.js';
 
-const { LIQPAY_PUBLIC_KEY, LIQPAY_PRIVATE_KEY } = process.env;
-
-function generateLiqPaySignature(data) {
-  const signatureString = LIQPAY_PRIVATE_KEY + data + LIQPAY_PRIVATE_KEY;
-
-  const signature = crypto.createHash('sha1').update(signatureString).digest('base64');
-
-  return signature;
-}
-
-const validateOrderData = (data) => {
-  const errors = {};
-  if (!data.orderItems || data.orderItems.length === 0) {
-    errors.orderItems = 'No order items';
-  } else {
-    data.orderItems.forEach((item, index) => {
-      if (!item.quantity) errors[`orderItems.${index}.quantity`] = 'Quantity is required';
-      if (!item._id) errors[`orderItems.${index}._id`] = 'Product ID is required';
-      if (!item.size) errors[`orderItems.${index}.size`] = 'Size is required';
-    });
-  }
-  if (!data.shippingFields) {
-    errors.shippingFields = 'Shipping address is required';
-  } else {
-    if (!data.shippingFields.apartament)
-      errors['shippingFields.apartament'] = 'Apartment is required';
-    if (!data.shippingFields.country) errors['shippingFields.country'] = 'Country is required';
-    if (!data.shippingFields.zipCode) errors['shippingFields.zipCode'] = 'Zip Code is required';
-    if (!data.shippingFields.city) errors['shippingFields.city'] = 'City is required';
-    if (!data.shippingFields.street) errors['shippingFields.street'] = 'Street is required';
-    if (!data.shippingFields.email) errors['shippingFields.email'] = 'Email is required';
-    if (!data.shippingFields.phone) errors['shippingFields.phone'] = 'Phone is required';
-  }
-  if (!data.paymentMethod || !['cash', 'stripe', 'liqpay'].includes(data.paymentMethod)) {
-    errors.paymentMethod = 'Invalid payment method. Must be either cash or stripe';
-  }
-  return errors;
-};
-
-const calculateTotalPrice = async (orderItems, shippingFee) => {
-  let totalPrice = 0;
-  if (shippingFee) totalPrice += shippingFee;
-  for (const item of orderItems) {
-    const product = await Product.findById(item._id);
-    if (product) {
-      const discount = product.discount || 0;
-      const price = product.price || 0;
-
-      totalPrice += (price - (price * discount) / 100) * item.quantity;
-    }
-  }
-  return totalPrice;
-};
+const { LIQPAY_PUBLIC_KEY } = process.env;
 
 export const placeOrder = async (req, res) => {
   try {
     const { orderItems, shippingFields, shippingFee, paymentMethod } = req.body;
+    const userId = req.userId;
 
-    const userId = req.userId; // Теперь берем userId из req.userId, а не из req.body.userId
-
+    // Валидация данных заказа
     const errors = validateOrderData(req.body);
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({ message: 'Please enter all fields', errors });
     }
 
+    // Расчёт итоговой цены
     const totalPrice = await calculateTotalPrice(orderItems, shippingFee);
-    let paymentIntent = null;
 
-    let paymentIntentId = null;
-    let stripeFees = null;
-
-    if (paymentMethod === 'stripe') {
-      const paymentIntent = await createPaymentIntent(totalPrice);
-      const order = new Order({
-        orderItems,
-        user: req.userId,
-        shippingFields,
-        paymentMethod,
-        totalPrice,
-        email: shippingFields.email,
-        paymentIntentId: paymentIntent.id,
-        paymentStatus: 'pending',
-        status: 'Processing',
-        shippingFee,
-        stripeFees: paymentIntent.calculatedFees,
-      });
-
-      const savedOrder = await order.save();
-      // Добавляем уведомление для Stripe заказа
-
-      return res.status(201).json({
-        message: 'Order Created',
-        orderId: savedOrder._id,
-        clientSecret: paymentIntent.client_secret,
-        amount: paymentIntent.amount,
-        commision: paymentIntent.calculatedFees,
-      });
-    }
-
-    if (paymentMethod === 'cash') {
-      const order = new Order({
-        orderItems,
-        user: userId,
-        shippingFields,
-        paymentMethod,
-        totalPrice,
-        email: shippingFields.email,
-        paymentIntentId,
-        paymentStatus: 'paid',
-        status: 'Order Placed',
-        shippingFee,
-        stripeFees,
-      });
-      console.log('orderItems:', order.orderItems);
-
-      const savedOrder = await order.save();
-
-      await sendEmail({
-        email: shippingFields.email,
-        subject: 'Order Confirmation',
-        html: createOrderMessage(savedOrder),
-      });
-
-      if (userId) {
-        await User.findByIdAndUpdate(userId, { cartData: {} });
-      }
-
-      // Send Telegram notification
-      await sendOrderNotification(bot, savedOrder);
-
-      return res.status(201).json({
-        message: 'Order Created',
-        paymentMethod,
-        orderId: savedOrder._id,
-      });
-    }
-
-    const order = new Order({
+    // Подготовка общих данных заказа
+    let orderData = {
       orderItems,
       user: userId,
       shippingFields,
       paymentMethod,
       totalPrice,
       email: shippingFields.email,
-      paymentIntentId,
+      shippingFee,
+
       paymentStatus: 'paid',
       status: 'Processing',
-      shippingFee,
-      stripeFees,
-    });
+      paymentIntentId: null,
+      stripeFees: null,
+    };
 
+    let stripePaymentIntent = null;
+
+    if (paymentMethod === 'stripe') {
+      stripePaymentIntent = await createPaymentIntent(totalPrice);
+      orderData.paymentIntentId = stripePaymentIntent.id;
+      orderData.paymentStatus = 'pending';
+      orderData.stripeFees = stripePaymentIntent.calculatedFees;
+    } else if (paymentMethod === 'cash') {
+      orderData.status = 'Order Placed';
+    }
+
+    // Создание и сохранение заказа
+    const order = new Order(orderData);
     const savedOrder = await order.save();
 
-    if (paymentMethod === 'liqpay') {
+    if (paymentMethod === 'cash') {
+      for (const item of orderItems) {
+        await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
+      }
+    }
+
+    // Очистка корзины для авторизованных пользователей при оплате наличными
+    if (userId && paymentMethod === 'cash') {
+      await User.findByIdAndUpdate(userId, { cartData: {} });
+    }
+
+    if (paymentMethod === 'stripe') {
+      return res.status(201).json({
+        message: 'Order Created',
+        orderId: savedOrder._id,
+        clientSecret: stripePaymentIntent.client_secret,
+        amount: stripePaymentIntent.amount,
+        commision: stripePaymentIntent.calculatedFees,
+      });
+    } else if (paymentMethod === 'cash') {
+      await sendEmail({
+        email: shippingFields.email,
+        subject: 'Order Confirmation',
+        html: createOrderMessage(savedOrder),
+      });
+      await sendOrderNotification(bot, savedOrder);
+      return res.status(201).json({
+        message: 'Order Created',
+        paymentMethod,
+        orderId: savedOrder._id,
+      });
+    } else if (paymentMethod === 'liqpay') {
       const currentDate = new Date();
-      const expirationDate = new Date(currentDate.getTime() + 5 * 60000); // додаємо 5 хвилин
+      const expirationDate = new Date(currentDate.getTime() + 5 * 60000); // +5 минут
       const expired_date = expirationDate.toISOString().slice(0, 19).replace('T', ' ');
 
       const paymentData = {
@@ -172,10 +101,10 @@ export const placeOrder = async (req, res) => {
         version: '3',
         action: 'pay',
         amount: totalPrice,
-        expired_date: expired_date, // формат: "2016-04-24 00:00:00"
+        expired_date, // формат: "YYYY-MM-DD HH:mm:ss"
         currency: 'UAH',
-        description: 'Order payment: ' + order._id,
-        order_id: order._id,
+        description: 'Order payment: ' + savedOrder._id,
+        order_id: savedOrder._id,
         result_url: 'https://jewerly-store.vercel.app',
         server_url: 'https://jewerly-server.onrender.com/api/orders/payment-callback',
         sandbox: 1,
@@ -185,43 +114,15 @@ export const placeOrder = async (req, res) => {
       const signature = generateLiqPaySignature(base64Data);
 
       const form = `
-    <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
-      <input type="hidden" name="data" value="${base64Data}" />
-      <input type="hidden" name="signature" value="${signature}" />
-      <button type="submit">Pay Now</button>
-    </form>
-  `;
-
+        <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+          <input type="hidden" name="data" value="${base64Data}" />
+          <input type="hidden" name="signature" value="${signature}" />
+          <button type="submit">Pay Now</button>
+        </form>
+      `;
       return res.status(200).send(form);
-    }
-
-    // Update product sales
-    for (const item of orderItems) {
-      await Product.findByIdAndUpdate(item._id, { $inc: { sales: item.quantity } });
-    }
-
-    // Clear cart only for authenticated users
-    if (userId && paymentMethod === 'cash') {
-      await User.findByIdAndUpdate(userId, { cartData: {} });
-    }
-
-    if (paymentMethod === 'cash') {
-      await sendEmail({
-        email: shippingFields.email,
-        subject: 'Order Confirmation',
-        html: createOrderMessage(savedOrder),
-      });
-    }
-
-    if (paymentMethod === 'stripe') {
-      return res.status(201).json({
-        message: 'Order Created',
-        orderId: savedOrder._id,
-        clientSecret: paymentIntent.client_secret,
-        amount: paymentIntent.amount,
-        commision: stripeFees,
-      });
     } else {
+      // Ветка для неизвестных способов оплаты
       return res.status(201).json({
         paymentMethod,
         message: 'Order Created',
@@ -229,7 +130,7 @@ export const placeOrder = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({ message: error.message }); // Add return statement here
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -330,14 +231,13 @@ export const paymentCallback = async (req, res) => {
 export const updateOrderPayment = async (req, res) => {
   try {
     const { orderId, paymentMethodId } = req.body;
-    const userId = req.userId; // Получаем из middleware auth
+    const userId = req.userId;
 
     const order = await Order.findById(orderId);
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    // Проверяем, принадлежит ли заказ пользователю
     if (order.user && order.user.toString() !== userId.toString()) {
       return res.status(403).json({
         success: false,
@@ -415,7 +315,7 @@ export const userOrders = async (req, res) => {
   try {
     const orders = await Order.find({
       user: req.body.userId,
-      status: { $ne: 'Processing' }, // Exclude Processing status
+      status: { $ne: 'Processing' },
     }).sort({ createdAt: -1 });
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
