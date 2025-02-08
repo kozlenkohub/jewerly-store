@@ -159,3 +159,76 @@ export function createOrderMessage(orderDetails) {
   </div>
   `;
 }
+
+export function createOrderStatusUpdateMessage(order) {
+  const orderDate = new Date(order.dateOrdered).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  const statusEmoji =
+    {
+      'Order Placed': '📋',
+      Processing: '⚙️',
+      Shipped: '🚚',
+      Delivered: '✅',
+    }[order.status] || '📦';
+
+  return `
+  <div style="font-family:Helvetica,Arial,sans-serif; padding:40px; background:#f9f9f9;">
+    <div style="max-width:600px; margin:auto; background:white; border-radius:8px; overflow:hidden;">
+      <div style="background:#b79259; padding:20px; text-align:center;">
+        <h1 style="color:white; margin:0;">Luxury Jewelry Store</h1>
+      </div>
+      <div style="padding:30px;">
+        <h2 style="margin-bottom:20px; text-align:center;">Order Status Update</h2>
+        
+        <div style="background:#f5f5f5; padding:20px; border-radius:5px; text-align:center; margin-bottom:30px;">
+          <h3 style="color:#b79259; margin:0;">
+            ${statusEmoji} Your order status has changed to: <strong>${order.status}</strong>
+          </h3>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <p><strong>Order Number:</strong> #${order._id}</p>
+          <p><strong>Order Date:</strong> ${orderDate}</p>
+          <p><strong>Shipping Address:</strong><br>
+            ${order.shippingFields.street}, Apt ${order.shippingFields.apartament}<br>
+            ${order.shippingFields.city}, ${order.shippingFields.country} ${
+    order.shippingFields.zipCode
+  }
+          </p>
+        </div>
+
+        ${
+          order.status === 'Shipped'
+            ? `
+          <div style="background:#e8f5e9; padding:15px; border-radius:5px; margin-bottom:20px;">
+            <p style="margin:0; color:#2e7d32;">🚚 Your order is on its way! You will receive delivery updates soon.</p>
+          </div>
+        `
+            : ''
+        }
+        
+        ${
+          order.status === 'Delivered'
+            ? `
+          <div style="background:#e8f5e9; padding:15px; border-radius:5px; margin-bottom:20px;">
+            <p style="margin:0; color:#2e7d32;">✨ Thank you for shopping with us! We hope you enjoy your purchase.</p>
+          </div>
+        `
+            : ''
+        }
+
+        <p style="font-size:14px; color:#777; text-align:center; margin-top:30px;">
+          If you have any questions about your order, please contact us at 
+          <a href="mailto:support@luxuryjewelry.com" style="color:#b79259;">support@luxuryjewelry.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  `;
+}

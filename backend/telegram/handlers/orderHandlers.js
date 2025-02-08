@@ -1,86 +1,10 @@
 import Order from '../../models/orderModel.js';
 import TelegramUser from '../../models/telegramModel.js';
-
-const formatOrderDetails = (order) => {
-  const items = order.orderItems
-    .map((item) => `- ${item.name.ru || item.name.en} (${item.quantity} шт.)`)
-    .join('\n');
-
-  // Преобразуем метод оплаты в читаемый текст
-  const paymentMethodText =
-    {
-      cash: 'Наличные',
-      stripe: 'Stripe',
-      liqpay: 'LiqPay',
-    }[order.paymentMethod] || order.paymentMethod;
-
-  return `
-📦 Заказ #${order._id}
-📅 Дата: ${new Date(order.dateOrdered).toLocaleString()}
-👤 Покупатель: ${order.shippingFields.firstName} ${order.shippingFields.lastName}
-📱 Телефон: ${order.shippingFields.phone}
-📧 Email: ${order.email}
-🏠 Адрес: ${order.shippingFields.country}, ${order.shippingFields.city}, ${
-    order.shippingFields.street
-  }
-💰 Сумма: ${order.totalPrice}₴
-💳 Оплата: ${paymentMethodText}
-🚚 Статус: ${order.status}
-
-Товары:
-${items}`;
-};
-
-const ORDERS_PER_PAGE = 5;
-
-const getOrdersKeyboard = async (page = 1) => {
-  const skip = (page - 1) * ORDERS_PER_PAGE;
-  const orders = await Order.find().sort({ dateOrdered: -1 }).skip(skip).limit(ORDERS_PER_PAGE);
-
-  const totalOrders = await Order.countDocuments();
-  const totalPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
-
-  const keyboard = [];
-
-  // Add order buttons
-  orders.forEach((order) => {
-    keyboard.push([
-      {
-        text: `Заказ #${order._id}`,
-        callback_data: `order_${order._id}`,
-      },
-    ]);
-  });
-
-  // Add navigation buttons
-  const navRow = [];
-  if (page > 1) {
-    navRow.push({
-      text: '⬅️ Назад',
-      callback_data: `page_${page - 1}`,
-    });
-  }
-  navRow.push({
-    text: `${page} из ${totalPages}`,
-    callback_data: 'current_page',
-  });
-  if (page < totalPages) {
-    navRow.push({
-      text: 'Вперед ➡️',
-      callback_data: `page_${page + 1}`,
-    });
-  }
-  if (navRow.length > 0) {
-    keyboard.push(navRow);
-  }
-
-  return {
-    keyboard,
-    totalOrders,
-    currentPage: page,
-    totalPages,
-  };
-};
+import { formatOrderDetails } from './components/order/formatOrderDetails.js';
+import { getOrdersKeyboard } from './components/order/getOrdersKeyboard.js';
+import { getStatusKeyboard } from './components/order/getStatusKeyboard.js';
+import sendEmail from '../../utils/emailServices.js';
+import { createOrderStatusUpdateMessage } from '../../utils/messageServices.js';
 
 export const sendOrderNotification = async (bot, order) => {
   try {
@@ -159,10 +83,65 @@ export const setupOrderHandlers = (bot) => {
         if (!order) {
           return bot.answerCallbackQuery(query.id, 'Заказ не найден.');
         }
-        await bot.sendMessage(chatId, formatOrderDetails(order));
+
+        const statusKeyboard = getStatusKeyboard(orderId);
+        await bot.sendMessage(chatId, formatOrderDetails(order), {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '✏️ Изменить статус', callback_data: `change_status_${orderId}` }],
+            ],
+          },
+        });
         await bot.answerCallbackQuery(query.id);
       } catch (error) {
         bot.answerCallbackQuery(query.id, 'Произошла ошибка при получении заказа.');
+      }
+    } else if (query.data.startsWith('change_status_')) {
+      const orderId = query.data.split('_')[2];
+      const statusKeyboard = getStatusKeyboard(orderId);
+
+      await bot.editMessageReplyMarkup(
+        {
+          inline_keyboard: statusKeyboard,
+        },
+        {
+          chat_id: chatId,
+          message_id: messageId,
+        },
+      );
+      await bot.answerCallbackQuery(query.id);
+    } else if (query.data.startsWith('status_')) {
+      const [, orderId, newStatus] = query.data.split('_');
+      try {
+        const order = await Order.findById(orderId);
+        if (!order) {
+          return bot.answerCallbackQuery(query.id, 'Заказ не найден.');
+        }
+
+        const oldStatus = order.status;
+        order.status = newStatus;
+        await order.save();
+
+        // Send email notification about status change
+        await sendEmail({
+          email: order.shippingFields.email,
+          subject: `Order Status Update: ${newStatus}`,
+          html: createOrderStatusUpdateMessage(order),
+        });
+
+        await bot.editMessageText(formatOrderDetails(order), {
+          chat_id: chatId,
+          message_id: messageId,
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '✏️ Изменить статус', callback_data: `change_status_${orderId}` }],
+            ],
+          },
+        });
+
+        await bot.answerCallbackQuery(query.id, `Статус заказа изменен на ${newStatus}`);
+      } catch (error) {
+        bot.answerCallbackQuery(query.id, 'Произошла ошибка при обновлении статуса.');
       }
     }
   });
