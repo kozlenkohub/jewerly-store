@@ -7,9 +7,7 @@ const initialState = {
 };
 
 export const fetchCategories = createAsyncThunk('category/fetchCategories', async () => {
-  const response = await axios.get(`api/category/get`, {
-    headers: { 'X-Localize': true },
-  });
+  const response = await axios.get(`api/category/get`);
   // Локализуем названия категорий
   return response.data.map((category) => ({
     ...category,
