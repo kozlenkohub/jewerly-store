@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
 import { fetchCartItems } from './cartSlice';
+import i18n from '../../i18n';
 
 export const register = createAsyncThunk('user/register', async (userData, { rejectWithValue }) => {
   try {
@@ -110,7 +111,7 @@ const userSlice = createSlice({
       state.token = null;
       state.user = null;
       localStorage.removeItem('token');
-      toast.success('Logout successful!');
+      toast.success(i18n.t('toasts.auth.logoutSuccess'));
     },
   },
   extraReducers: (builder) => {
@@ -123,12 +124,12 @@ const userSlice = createSlice({
         state.token = action.payload.token;
         state.user = action.payload.user;
         localStorage.setItem('token', action.payload.token);
-        toast.success('Registration successful!');
+        toast.success(i18n.t('toasts.auth.registrationSuccess'));
       })
       .addCase(register.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Registration failed!');
+        toast.error(action.payload.message || i18n.t('toasts.auth.registrationFailed'));
       })
       .addCase(login.pending, (state) => {
         state.isUserLoading = true;
@@ -138,12 +139,12 @@ const userSlice = createSlice({
         state.token = action.payload.token;
         state.user = action.payload.user;
         localStorage.setItem('token', action.payload.token);
-        toast.success('Login successful!');
+        toast.success(i18n.t('toasts.auth.loginSuccess'));
       })
       .addCase(login.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Login failed!');
+        toast.error(action.payload.message || i18n.t('toasts.auth.loginFailed'));
       })
       .addCase(fetchProfile.pending, (state) => {
         state.isUserLoading = true;
@@ -155,7 +156,7 @@ const userSlice = createSlice({
       .addCase(fetchProfile.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Failed to fetch profile!');
+        toast.error(action.payload.message || i18n.t('toasts.profile.fetchFailed'));
       })
       .addCase(updateName.pending, (state) => {
         state.isUserLoading = true;
@@ -163,12 +164,12 @@ const userSlice = createSlice({
       .addCase(updateName.fulfilled, (state, action) => {
         state.isUserLoading = false;
         state.user.name = action.payload.name;
-        toast.success('Name updated successfully!');
+        toast.success(i18n.t('toasts.profile.nameUpdateSuccess'));
       })
       .addCase(updateName.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Failed to update name!');
+        toast.error(action.payload.message || i18n.t('toasts.profile.nameUpdateFailed'));
       })
       .addCase(updateEmail.pending, (state) => {
         state.isUserLoading = true;
@@ -176,24 +177,24 @@ const userSlice = createSlice({
       .addCase(updateEmail.fulfilled, (state, action) => {
         state.isUserLoading = false;
         state.user.email = action.payload.email;
-        toast.success('Email updated successfully!');
+        toast.success(i18n.t('toasts.profile.emailUpdateSuccess'));
       })
       .addCase(updateEmail.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Failed to update email!');
+        toast.error(action.payload.message || i18n.t('toasts.profile.emailUpdateFailed'));
       })
       .addCase(updatePassword.pending, (state) => {
         state.isUserLoading = true;
       })
       .addCase(updatePassword.fulfilled, (state, action) => {
         state.isUserLoading = false;
-        toast.success('Password updated successfully!');
+        toast.success(i18n.t('toasts.profile.passwordUpdateSuccess'));
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.isUserLoading = false;
         state.error = action.payload.message;
-        toast.error(action.payload.message || 'Failed to update password!');
+        toast.error(action.payload.message || i18n.t('toasts.profile.passwordUpdateFailed'));
       });
   },
 });

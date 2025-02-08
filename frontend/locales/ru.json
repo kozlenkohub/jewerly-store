@@ -505,5 +505,37 @@
       "noUserData": "Данные пользователя отсутствуют",
       "loading": "Загрузка..."
     }
+  },
+  "toasts": {
+    "auth": {
+      "logoutSuccess": "Выход выполнен успешно!",
+      "registrationSuccess": "Регистрация успешна!",
+      "registrationFailed": "Ошибка регистрации!",
+      "loginSuccess": "Вход выполнен успешно!",
+      "loginFailed": "Ошибка входа!"
+    },
+    "profile": {
+      "fetchFailed": "Ошибка получения профиля!",
+      "nameUpdateSuccess": "Имя успешно обновлено!",
+      "nameUpdateFailed": "Ошибка обновления имени!",
+      "emailUpdateSuccess": "Email успешно обновлен!",
+      "emailUpdateFailed": "Ошибка обновления email!",
+      "passwordUpdateSuccess": "Пароль успешно обновлен!",
+      "passwordUpdateFailed": "Ошибка обновления пароля!"
+    },
+    "orders": {
+      "placedSuccess": "Заказ успешно оформлен!",
+      "placedFailed": "Ошибка при оформлении заказа!",
+      "authError": "Необходимо авторизоваться",
+      "fetchFailed": "Ошибка при загрузке заказов!"
+    },
+    "cart": {
+      "addSuccess": "Товар добавлен в корзину",
+      "addFailed": "Ошибка при добавлении товара в корзину",
+      "updateFailed": "Ошибка при обновлении количества",
+      "removeSuccess": "Товар удален из корзины",
+      "removeFailed": "Ошибка при удалении товара из корзины",
+      "sizeRequired": "Пожалуйста, выберите размер перед добавлением в корзину"
+    }
   }
 }

@@ -505,5 +505,37 @@
       "noUserData": "User data unavailable",
       "loading": "Loading..."
     }
+  },
+  "toasts": {
+    "auth": {
+      "logoutSuccess": "Logout successful!",
+      "registrationSuccess": "Registration successful!",
+      "registrationFailed": "Registration failed!",
+      "loginSuccess": "Login successful!",
+      "loginFailed": "Login failed!"
+    },
+    "profile": {
+      "fetchFailed": "Failed to fetch profile!",
+      "nameUpdateSuccess": "Name updated successfully!",
+      "nameUpdateFailed": "Failed to update name!",
+      "emailUpdateSuccess": "Email updated successfully!",
+      "emailUpdateFailed": "Failed to update email!",
+      "passwordUpdateSuccess": "Password updated successfully!",
+      "passwordUpdateFailed": "Failed to update password!"
+    },
+    "orders": {
+      "placedSuccess": "Order placed successfully!",
+      "placedFailed": "Failed to place order!",
+      "authError": "You must be authenticated",
+      "fetchFailed": "Failed to fetch orders!"
+    },
+    "cart": {
+      "addSuccess": "Product has been added to your cart",
+      "addFailed": "Failed to add product to cart",
+      "updateFailed": "Failed to update item quantity",
+      "removeSuccess": "Product has been removed",
+      "removeFailed": "Failed to remove product from cart",
+      "sizeRequired": "Please select a size before adding to cart"
+    }
   }
 }

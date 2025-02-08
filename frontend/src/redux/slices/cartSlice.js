@@ -3,6 +3,7 @@ import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
 import { localizeField } from '../../utils/localizeField';
+import i18n from '../../i18n';
 
 const initialState = {
   isLoadingCart: true,
@@ -21,6 +22,11 @@ const calculateTotalPrice = (cartItems) => {
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async (data, { rejectWithValue, dispatch }) => {
+    // Add size validation with early return
+    if (!data.size) {
+      return rejectWithValue({ message: i18n.t('toasts.cart.sizeRequired') });
+    }
+
     const token = localStorage.getItem('token');
 
     // Если пользователь не залогинен, сохраняем в localStorage
@@ -212,10 +218,10 @@ const cartSlice = createSlice({
       });
 
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      toast.success('Product has been added to your cart');
+      toast.success(i18n.t('toasts.cart.addSuccess'));
     });
     builder.addCase(addToCart.rejected, (state, action) => {
-      toast.error(action.payload.message || 'Failed to add product to cart');
+      toast.error(action.payload.message || i18n.t('toasts.cart.addFailed'));
     });
     builder.addCase(updateQuantity.fulfilled, (state, action) => {
       if (!action.payload) {
@@ -231,7 +237,7 @@ const cartSlice = createSlice({
       }
     });
     builder.addCase(updateQuantity.rejected, (state, action) => {
-      toast.error(action.payload.message || 'Failed to update item quantity');
+      toast.error(action.payload.message || i18n.t('toasts.cart.updateFailed'));
     });
     builder.addCase(removeFromCart.fulfilled, (state, action) => {
       const { itemId } = action.payload;
@@ -242,11 +248,11 @@ const cartSlice = createSlice({
         }
         state.cartItems = state.cartItems.filter((x) => x._id !== itemId);
         state.totalPrice = calculateTotalPrice(state.cartItems);
-        toast.success('Product has been removed');
+        toast.success(i18n.t('toasts.cart.removeSuccess'));
       }
     });
     builder.addCase(removeFromCart.rejected, (state, action) => {
-      toast.error(action.payload.message || 'Failed to remove product from cart');
+      toast.error(action.payload.message || i18n.t('toasts.cart.removeFailed'));
     });
   },
 });

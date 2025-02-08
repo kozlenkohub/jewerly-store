@@ -504,5 +504,37 @@
       "noUserData": "Дані користувача відсутні",
       "loading": "Завантаження..."
     }
+  },
+  "toasts": {
+    "auth": {
+      "logoutSuccess": "Вихід успішний!",
+      "registrationSuccess": "Реєстрація успішна!",
+      "registrationFailed": "Помилка реєстрації!",
+      "loginSuccess": "Вхід успішний!",
+      "loginFailed": "Помилка входу!"
+    },
+    "profile": {
+      "fetchFailed": "Помилка отримання профілю!",
+      "nameUpdateSuccess": "Ім'я успішно оновлено!",
+      "nameUpdateFailed": "Помилка оновлення імені!",
+      "emailUpdateSuccess": "Email успішно оновлено!",
+      "emailUpdateFailed": "Помилка оновлення email!",
+      "passwordUpdateSuccess": "Пароль успішно оновлено!",
+      "passwordUpdateFailed": "Помилка оновлення паролю!"
+    },
+    "orders": {
+      "placedSuccess": "Замовлення успішно оформлено!",
+      "placedFailed": "Помилка при оформленні замовлення!",
+      "authError": "Необхідно авторизуватися",
+      "fetchFailed": "Помилка при завантаженні замовлень!"
+    },
+    "cart": {
+      "addSuccess": "Товар додано до кошика",
+      "addFailed": "Помилка при додаванні товару до кошика",
+      "updateFailed": "Помилка при оновленні кількості",
+      "removeSuccess": "Товар видалено з кошика",
+      "removeFailed": "Помилка при видаленні товару з кошика",
+      "sizeRequired": "Будь ласка, виберіть розмір перед додаванням у кошик"
+    }
   }
 }

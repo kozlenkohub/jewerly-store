@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast';
 import axios from '../../config/axiosInstance';
 import { fetchCartItems } from './cartSlice';
 import { localizeField } from '../../utils/localizeField';
+import i18n from '../../i18n';
 
 const initialState = {
   orders: [], // Ensure orders is always initialized as an array
@@ -100,7 +101,7 @@ const orderSlice = createSlice({
         state.orders.push(action.payload);
         state.isLoadingOrder = false;
         if (action.payload.paymentMethod === 'cash') {
-          toast.success('Order placed successfully');
+          toast.success(i18n.t('toasts.orders.placedSuccess'));
         }
       })
       .addCase(checkout.rejected, (state, action) => {
@@ -110,11 +111,11 @@ const orderSlice = createSlice({
 
         if (action.payload.errors) {
           const errorMessages = Object.values(action.payload.errors).join(', ');
-          toast.error(`Order failed: ${errorMessages}`);
+          toast.error(`${i18n.t('toasts.orders.placedFailed')} ${errorMessages}`);
         }
 
         if (action.payload.msg === 'You must be authenticated') {
-          toast.error('You must be authenticated');
+          toast.error(i18n.t('toasts.orders.authError'));
         }
       })
       .addCase(fetchOrders.pending, (state) => {
@@ -127,6 +128,7 @@ const orderSlice = createSlice({
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
+        toast.error(i18n.t('toasts.orders.fetchFailed'));
       });
   },
 });
