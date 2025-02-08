@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
+import { localizeField } from '../../utils/localizeField';
 
 const initialState = {
   isLoadingCart: true,
@@ -60,14 +61,20 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
 
   if (!token) {
     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
-    return guestCart;
+    return guestCart.map((item) => ({
+      ...item,
+      name: localizeField(item.name),
+    }));
   }
 
   const response = await axios.get('api/cart/get', {
     headers: { 'X-Localize': true },
   });
 
-  return response.data;
+  return response.data.map((item) => ({
+    ...item,
+    name: localizeField(item.name),
+  }));
 });
 
 const debouncedUpdate = debounce(async (data, token, dispatch, rejectWithValue) => {

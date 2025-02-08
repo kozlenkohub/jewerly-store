@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
+import { localizeField } from '../../utils/localizeField';
 
 const initialState = {
   category: [],
@@ -9,7 +10,11 @@ export const fetchCategories = createAsyncThunk('category/fetchCategories', asyn
   const response = await axios.get(`api/category/get`, {
     headers: { 'X-Localize': true },
   });
-  return response.data;
+  // Локализуем названия категорий
+  return response.data.map((category) => ({
+    ...category,
+    name: localizeField(category.name),
+  }));
 });
 
 const categorySlice = createSlice({

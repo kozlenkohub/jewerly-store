@@ -320,7 +320,7 @@ export const userOrders = async (req, res) => {
     if (orders.length === 0) {
       return res.status(404).json({ message: 'No orders found' });
     }
-    res.json(res.localizeData(orders, ['orderItems']));
+    res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

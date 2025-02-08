@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 import PriceFilter from './PriceFilter';
 import CutForm from './CutForm';
+import { localizeField } from '../utils/localizeField';
 
 const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
               {option.img && (
                 <img
                   src={option.img}
-                  alt={option.type}
+                  alt={localizeField(option.name)}
                   className={`w-6 h-6 object-contain ${
                     selectedFilters[filterKey]?.includes(option.type)
                       ? 'border-[1px] border-mainColor'
@@ -60,7 +61,7 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
                   }`}
                 />
               )}
-              {option.name}
+              {localizeField(option.name)}
             </div>
           ))}
       </div>

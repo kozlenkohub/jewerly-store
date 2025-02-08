@@ -5,8 +5,6 @@ const ProductGallery = ({ product, mainImage, setMainImage }) => {
   const isVideo = (url) => url.includes('/video/upload/');
 
   const renderMedia = (mediaUrl, className) => {
-    console.log('mediaUrl:', mediaUrl);
-
     if (isVideo(mediaUrl)) {
       return (
         <video

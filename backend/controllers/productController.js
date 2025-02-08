@@ -91,18 +91,12 @@ export const getProducts = async (req, res) => {
     // Выполняем запрос
     const products = await query;
 
-    // Локализация данных для клиента
-    const localizedProducts = res.localizeData(products, [
-      'name',
-      'metal.name',
-      'cutForm.name',
-      'description',
-    ]);
-    const categoryName = categoryDoc ? res.localizeData(categoryDoc, ['name']).name : '';
+    // Get category name from the found category document
+    const categoryName = categoryDoc ? categoryDoc.name : '';
 
     // Отправляем результат
     res.json({
-      products: localizedProducts,
+      products,
       categoryName,
     });
   } catch (error) {
@@ -313,23 +307,10 @@ export const getProductById = async (req, res) => {
         .lean(),
     ]);
 
-    // Локализация данных (проверяем доступность метода)
-    const localizeData = res.localizeData || ((data) => data);
-
     res.json({
-      product: localizeData(product, ['name', 'metal.name', 'cutForm.name', 'description']),
-      relatedProducts: localizeData(relatedProducts, [
-        'name',
-        'metal.name',
-        'cutForm.name',
-        'description',
-      ]),
-      anotherVariation: localizeData(anotherVariation, [
-        'name',
-        'metal.name',
-        'cutForm.name',
-        'description',
-      ]),
+      product,
+      relatedProducts,
+      anotherVariation,
     });
   } catch (error) {
     console.error('Error fetching product:', error);

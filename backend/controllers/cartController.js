@@ -65,7 +65,7 @@ export const getCartItems = async (req, res) => {
       await User.findByIdAndUpdate(userId, { cartData });
     }
 
-    res.json(res.localizeData(validCartItems, ['name']));
+    res.json(validCartItems);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }

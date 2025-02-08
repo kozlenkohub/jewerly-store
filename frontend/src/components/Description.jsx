@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { localizeField } from '../utils/localizeField';
 
 const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weight, carats }) => {
   const { t } = useTranslation();
@@ -7,8 +8,8 @@ const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weigh
   const detailsArray = [
     { label: t('description.labels.id'), value: _id.slice(-6) },
     { label: t('description.labels.ringStyle'), value: style },
-    { label: t('description.labels.cutForm'), value: cutForm.name },
-    { label: t('description.labels.metal'), value: metal.name },
+    { label: t('description.labels.cutForm'), value: localizeField(cutForm.name) },
+    { label: t('description.labels.metal'), value: localizeField(metal.name) },
     { label: t('description.labels.color'), value: color },
     { label: t('description.labels.purity'), value: purity },
     { label: t('description.labels.clarity'), value: clarity },

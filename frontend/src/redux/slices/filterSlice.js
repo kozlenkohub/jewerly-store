@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
+import { localizeField } from '../../utils/localizeField';
 
 const initialState = {
   filters: [],
@@ -11,7 +12,18 @@ export const fetchFilters = createAsyncThunk('filters/fetchFilters', async (cate
   const response = await axios.get(`api/filter?${slug}`, {
     headers: { 'X-Localize': true },
   });
-  return response.data;
+
+  return response.data.map((filter) => ({
+    ...filter,
+    name: localizeField(filter.name),
+    label: localizeField(filter.label),
+    options: filter.options.map((option) => ({
+      ...option,
+      name: localizeField(option.name),
+      type: option.type,
+      img: option.img,
+    })),
+  }));
 });
 
 const filterSlice = createSlice({

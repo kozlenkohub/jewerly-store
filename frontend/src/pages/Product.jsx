@@ -14,6 +14,7 @@ import Loader from '../components/Loader';
 import Reviews from '../components/Reviews.jsx';
 import ProductGallery from '../components/ProductGallery';
 import { useTranslation } from 'react-i18next';
+import { localizeField } from '../utils/localizeField';
 
 const Product = () => {
   const params = useParams();
@@ -79,7 +80,7 @@ const Product = () => {
         </video>
       );
     }
-    return <img src={url} alt={product.name} className={className} />;
+    return <img src={url} alt={localizeField(product.name)} className={className} />;
   };
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const Product = () => {
         });
 
         setProduct(data['product']);
+
         setRelated(data['relatedProducts']);
         setAnotherVariantion(data['anotherVariation']);
         setMainImage(data['product'].image[0]);
@@ -131,7 +133,7 @@ const Product = () => {
         />
 
         <div className="flex-1 futura">
-          <h1 className="font-medium text-2xl mt-2 forum">{product.name}</h1>
+          <h1 className="font-medium text-2xl mt-2 forum">{localizeField(product.name)}</h1>
           <div className="flex items-center gap-1 mt-2">
             {renderStars(calculateAverageRating(product.reviews))}
             <p className="pl-2">({product.reviews?.length || 0})</p>
@@ -150,7 +152,7 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-gray-500 md:w-4/5">{product.description}</p>
+          <p className="mt-5 text-gray-500 md:w-4/5">{localizeField(product.description)}</p>
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>

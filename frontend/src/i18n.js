@@ -4,7 +4,7 @@ import en from '../locales/en.json';
 import ru from '../locales/ru.json';
 import uk from '../locales/uk.json';
 
-const getStoredLanguage = () => {
+export const getStoredLanguage = () => {
   const storedLang = localStorage.getItem('lang');
   return storedLang || 'en'; // default to 'en' if no language is stored
 };

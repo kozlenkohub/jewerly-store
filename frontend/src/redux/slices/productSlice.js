@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../config/axiosInstance';
+import { localizeField } from '../../utils/localizeField';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchProductsStatus',
@@ -11,7 +12,22 @@ export const fetchProducts = createAsyncThunk(
         headers: { 'X-Localize': true },
       },
     );
-    return data;
+
+    // Локализуем данные продуктов
+    return {
+      ...data,
+      categoryName: localizeField(data.categoryName),
+      products: data.products.map((product) => ({
+        ...product,
+        name: localizeField(product.name),
+        description: localizeField(product.description),
+        characteristics: product.characteristics?.map((char) => ({
+          ...char,
+          name: localizeField(char.name),
+          value: localizeField(char.value),
+        })),
+      })),
+    };
   },
 );
 

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
 import axios from '../../config/axiosInstance';
 import { fetchCartItems } from './cartSlice';
+import { localizeField } from '../../utils/localizeField';
 
 const initialState = {
   orders: [], // Ensure orders is always initialized as an array
@@ -18,7 +19,18 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rej
         headers: { 'X-Localize': true },
       });
 
-      return Array.isArray(response.data) ? response.data : Object.values(response.data || {});
+      // Локализуем названия продуктов в заказах
+      const localizedOrders = (
+        Array.isArray(response.data) ? response.data : Object.values(response.data || {})
+      ).map((order) => ({
+        ...order,
+        orderItems: order.orderItems.map((item) => ({
+          ...item,
+          name: localizeField(item.name),
+        })),
+      }));
+
+      return localizedOrders;
     }
     return []; // Return empty array if no token
   } catch (error) {
@@ -45,11 +57,21 @@ export const checkout = createAsyncThunk(
           headers: { 'X-Localize': true },
         },
       );
+
+      // Локализуем названия продуктов в новом заказе
+      const localizedOrder = {
+        ...response.data,
+        orderItems: response.data.orderItems.map((item) => ({
+          ...item,
+          name: localizeField(item.name),
+        })),
+      };
+
       if (paymentMethod === 'cash') {
         localStorage.removeItem('guestCart');
       }
       dispatch(fetchCartItems());
-      return response.data;
+      return localizedOrder;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

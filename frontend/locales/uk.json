@@ -69,7 +69,8 @@
     "selectMetal": "Виберіть метал",
     "selectSize": "Виберіть розмір",
     "addToCart": "ДОДАТИ В КОШИК",
-    "description": "Опис"
+    "description": "Опис",
+    "bestseller": "Бестселер"
   },
   "productDetails": {
     "original": "100% оригінальний товар",

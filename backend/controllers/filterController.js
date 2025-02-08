@@ -26,7 +26,7 @@ export const getAllFilters = async (req, res) => {
 
     if (!categorySlug) {
       const filters = await Filter.find().lean();
-      return res.json(res.localizeData(filters, ['label', 'options.name']));
+      return res.json(filters);
     }
 
     const category = await Category.findOne({ slug: categorySlug });
@@ -51,7 +51,7 @@ export const getAllFilters = async (req, res) => {
       return res.json([priceFilter, ...filters]);
     }
 
-    res.json(res.localizeData(filteredFilters, ['label', 'options.name']));
+    res.json(filteredFilters);
   } catch (error) {
     res.status(500).json({ message: 'Error getting filters', error });
   }

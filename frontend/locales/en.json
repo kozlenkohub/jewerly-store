@@ -69,7 +69,8 @@
     "selectMetal": "Select Metal",
     "selectSize": "Select Size",
     "addToCart": "ADD TO CART",
-    "description": "Description"
+    "description": "Description",
+    "bestseller": "Bestseller"
   },
   "productDetails": {
     "original": "100% original product",
