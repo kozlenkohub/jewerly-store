@@ -295,35 +295,36 @@ export const insertProducts = async (req, res) => {
 // by id
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('reviews').lean();
+    const productId = req.params.id;
+
+    const product = await Product.findById(productId).populate('reviews').lean();
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    const relatedProducts = await Product.find({
-      category: product.category,
-      _id: { $ne: product._id },
-    })
-      .limit(5)
-      .lean();
+    // Выполнение запросов параллельно для оптимизации
+    const [relatedProducts, anotherVariation] = await Promise.all([
+      Product.find({ category: product.category, _id: { $ne: product._id } })
+        .limit(5)
+        .lean(),
+      Product.find({ collection: product.collection, _id: { $ne: product._id } })
+        .select('_id metal')
+        .lean(),
+    ]);
 
-    const anotherVariation = await Product.find({
-      collection: product.collection,
-      _id: { $ne: product._id },
-    })
-      .select('_id metal')
-      .lean();
+    // Локализация данных (проверяем доступность метода)
+    const localizeData = res.localizeData || ((data) => data);
 
     res.json({
-      product: res.localizeData(product, ['name', 'metal.name', 'cutForm.name', 'description']), // Убрали массив
-      relatedProducts: res.localizeData(relatedProducts, [
+      product: localizeData(product, ['name', 'metal.name', 'cutForm.name', 'description']),
+      relatedProducts: localizeData(relatedProducts, [
         'name',
         'metal.name',
         'cutForm.name',
         'description',
       ]),
-      anotherVariation: res.localizeData(anotherVariation, [
+      anotherVariation: localizeData(anotherVariation, [
         'name',
         'metal.name',
         'cutForm.name',
@@ -331,7 +332,8 @@ export const getProductById = async (req, res) => {
       ]),
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching product:', error);
+    res.status(500).json({ message: 'An error occurred while retrieving the product' });
   }
 };
 
