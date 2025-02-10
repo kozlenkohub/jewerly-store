@@ -1,16 +1,16 @@
 {
   "ourPolicy": {
     "exchangePolicy": {
-      "title": "Easy Exchange Policy",
-      "description": "Hassle-free exchange within 14 days of purchase"
+      "title": "Quality Assurance",
+      "description": "We guarantee the high quality of every product"
     },
     "quality": {
       "title": "Premium Quality",
       "description": "All products are certified and quality assured"
     },
     "support": {
-      "title": "24/7 Support",
-      "description": "Professional support team at your service"
+      "title": "Exclusive Design",
+      "description": "Create your unique style with our jewelry"
     }
   },
   "newsletterBox": {
@@ -317,77 +317,34 @@
   },
   "delivery": {
     "title": {
-      "text1": "Delivery",
-      "text2": "Rules"
+      "text1": "Payment and Delivery:",
+      "text2": "Comfort and Safety at Every Stage"
     },
-    "deliveryImage": "Delivery service image",
     "description": {
-      "part1": "We strive to provide the best delivery service for our valued customers. Our shipping partners are carefully selected to ensure your precious jewelry reaches you safely and on time.",
-      "part2": "We offer various delivery options to suit your needs, from standard delivery to express shipping for those urgent occasions."
+      "part1": "WE STRIVE TO PROVIDE THE BEST DELIVERY SERVICE FOR OUR VALUED CUSTOMERS.",
+      "part2": "At Queen Diamond, we've created a convenient purchasing process so you can receive your dream jewelry without unnecessary complications, no matter where you are."
     },
     "generalInfo": {
-      "title": "Our Delivery Service",
-      "description": "We partner with trusted courier services to ensure safe and timely delivery of your valuable purchases. All shipments are fully insured and tracked."
+      "title": "How to Place an Order?",
+      "description": "Choose jewelry from our website or order unique pieces with custom design. If you need assistance, click 'Jeweler Consultation' or 'Request Call' — our expert will help you choose the diamond, cut shape, and design details.",
+      "custom": "Creating a custom piece? We can send photos of key production stages so you can be part of the process.",
+      "confirmation": "After order confirmation, we begin preparation, and after full payment, we organize fast and secure delivery."
     },
-    "methods": {
-      "title": {
-        "text1": "Delivery",
-        "text2": "Methods"
+    "shipping": {
+      "title": "Delivery and Timing",
+      "subtitle": "WE OFFER VARIOUS DELIVERY OPTIONS TO SUIT YOUR NEEDS: FROM STANDARD DELIVERY TO EXPRESS SHIPPING FOR URGENT CASES.",
+      "info": "Queen Diamond provides convenient and secure delivery. Compensation amount depends on the order value and delivery region.",
+      "options": {
+        "kyiv": "Free courier delivery in Kyiv — regardless of order amount",
+        "ukraine": "Free delivery across Ukraine — for orders over 150,000 UAH",
+        "europe": "Free delivery across Europe — for orders over 300,000 UAH"
       },
-      "standard": {
-        "title": "Standard Delivery",
-        "description": "Our economical shipping option",
-        "time": "Delivery within 3-5 business days",
-        "cost": "Free shipping for orders over ₴7000"
-      },
-      "express": {
-        "title": "Express Delivery",
-        "description": "Fast delivery option for urgent orders",
-        "time": "Delivery within 1-2 business days",
-        "cost": "Additional ₴500 shipping fee"
-      }
+      "international": "We ensure delivery of your order to any point in Europe. For international shipping, contact our manager — they will explain available options and select the optimal shipping method.",
+      "timing": "Order completion time — up to 14 days, including product manufacturing, documentation, and hallmarking at the State Assay Office of Ukraine."
     },
-    "areas": {
-      "title": "Delivery Areas",
-      "domestic": {
-        "title": "Domestic Shipping",
-        "description": "We deliver to all major cities and regions within the country. Remote areas may require additional delivery time."
-      },
-      "international": {
-        "title": "International Shipping",
-        "description": "We currently ship to select countries. International delivery times may vary depending on customs clearance."
-      }
-    },
-    "payment": {
-      "title": "Payment Options",
-      "methods": {
-        "card": {
-          "title": "Credit/Debit Card",
-          "description": "Secure payment using major credit and debit cards"
-        },
-        "cash": {
-          "title": "Cash on Delivery",
-          "description": "Pay in cash when your order arrives"
-        },
-        "online": {
-          "title": "Online Payment",
-          "description": "Various online payment options including PayPal"
-        }
-      }
-    },
-    "times": {
-      "title": "Delivery Times",
-      "description": "Our delivery services operate according to the following schedule:",
-      "workdays": "Monday to Friday: 9:00 AM - 6:00 PM",
-      "weekend": "Saturday: 10:00 AM - 2:00 PM",
-      "holidays": "No deliveries on Sundays and public holidays"
-    },
-    "notes": {
-      "title": "Important Notes",
-      "tracking": "All shipments include tracking numbers that will be sent to your email",
-      "insurance": "All deliveries are fully insured against loss or damage",
-      "signature": "Signature required upon delivery for orders over ₴15000",
-      "reschedule": "Free delivery rescheduling available if needed"
+    "guarantee": {
+      "title": "Our Guarantee",
+      "description": "Each piece of jewelry is securely packaged and delivered with full insurance. We guarantee your order will arrive in perfect condition because luxury requires special attention."
     }
   },
   "privacy": {
@@ -541,5 +498,74 @@
   "mobileMenu": {
     "order": "Place an order",
     "callInfo": "Call us from 11:00 to 22:45. Our hotline is open every day!"
+  },
+  "create": {
+    "title": {
+      "text1": "Creating",
+      "text2": "exclusive custom-made jewelry"
+    },
+    "intro": "Bring your ideal jewelry to life with Queen Diamond. You can not only choose materials, but also participate in the creation process: from idea to finished product. We will select the shape and size of the stones, the shade of the metal and design details, taking into account all your wishes.",
+    "description": "Production takes up to 14 days and includes several stages:",
+    "productionTime": "Production takes up to 14 days and includes several stages:",
+    "stages": {
+      "idea": {
+        "title": "Idea and design",
+        "description": "Each piece of jewelry begins with a concept. You can offer your own sketch, choose an inspiring example, or develop a design together with our specialist. We will estimate the cost and timing of the work or adjust the project to your budget."
+      },
+      "model": {
+        "title": "Creating a 3D model",
+        "description": "At this stage, a computer model is created that can be refined. Shape, size, color accents - all this is easy to change. If you want to add stones or complex elements, the cost will be recalculated taking into account the new details."
+      },
+      "visualization": {
+        "title": "Final visualization",
+        "description": "After approving the design, we will create a realistic render of the future jewelry. You will be able to examine the product in detail from all angles and make final adjustments if necessary."
+      },
+      "replica": {
+        "title": "Wax replica",
+        "description": "Before proceeding with manufacturing, an accurate wax copy is created. This allows you to make sure that all elements look as intended. Upon request, we will provide a photo or video of the model."
+      },
+      "production": {
+        "title": "Jewelry production",
+        "description": "At the final stage, the product is cast, ground, polished and stones are fixed. As a result, you get not just a piece of jewelry, but an exclusive work created specifically for you."
+      }
+    },
+    "conclusion": "Creating jewelry to your order is an art that requires time and skill. You pay not only for materials, but also for exclusivity, the value of which increases many times, making it not just expensive, but a unique heritage."
+  },
+  "guarantee": {
+    "title": {
+      "text1": "Queen Diamond",
+      "text2": "Jewelry Warranty"
+    },
+    "duration": "3-year warranty for manufacturing defects",
+    "intro": "We are confident in the quality of our jewelry, which is why we provide a 3-year warranty for manufacturing defects and hidden defects.",
+    "covered": {
+      "title": "What's Covered?",
+      "description": "The warranty covers defects that could not be detected upon receipt of the item but appeared during wear and affected its quality."
+    },
+    "notCovered": {
+      "title": "What's Not Covered?",
+      "items": {
+        "mechanical": "Mechanical damage (impacts, chips, scratches, deformation, ring breakage, loosening of stone settings)",
+        "repair": "Repairs or size modifications at third-party workshops",
+        "misuse": "Improper use and care leading to damage",
+        "chemical": "Exposure to chemicals (household chemicals, cosmetics, mercury, high temperature)"
+      }
+    },
+    "important": {
+      "title": "Important Note",
+      "description": "Some metals in the alloy (nickel, copper, zinc, silver) may cause allergic reactions or skin darkening. This is an individual body characteristic and is not covered by the warranty."
+    },
+    "care": {
+      "title": "How to Maintain Perfect Jewelry Appearance",
+      "description": "Precious metals and stones require careful handling as they are susceptible to mechanical damage and environmental influences. To keep your jewelry in perfect condition, follow these simple care rules:",
+      "rules": {
+        "fit": "Ensure comfortable ring fit. If jewelry fits too tightly against the skin, bacteria can accumulate underneath, causing irritation.",
+        "activity": "Remove rings before physical activity. Metal can get scratched, and stones can crack from impact.",
+        "beach": "Don't wear jewelry at the beach. Sand scratches metal, and cold water can cause rings to slip off fingers.",
+        "chemicals": "Avoid contact with chemicals and cosmetics. Cleaning products and skincare items can leave stains or weaken metal.",
+        "rhodium": "Rhodium plating needs renewal. Over time, white gold may acquire a yellowish tint. To restore its shine, periodically have professional rhodium plating done at a workshop."
+      }
+    },
+    "conclusion": "Regular care and timely maintenance will help preserve your jewelry in perfect condition for many years to come."
   }
 }

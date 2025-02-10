@@ -76,7 +76,7 @@ const Privacy = () => {
       <div className="max-w-[1280px] mx-auto px-4">
         {/* Header Section */}
         <div className="text-center py-12 border-b">
-          <div className="text-3xl">
+          <div className="sm:text-3xl text-xl ">
             <Title text1={t('privacy.title.text1')} text2={t('privacy.title.text2')} />
           </div>
           <div className="max-w-2xl mx-auto mt-6">

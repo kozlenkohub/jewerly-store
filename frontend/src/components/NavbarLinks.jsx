@@ -1,24 +1,45 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaChevronDown } from 'react-icons/fa';
+import {
+  FaChevronDown,
+  FaInfoCircle,
+  FaTools,
+  FaTruck,
+  FaShieldAlt,
+  FaWrench,
+  FaMagic,
+} from 'react-icons/fa';
 
 const NavbarLinks = ({ textColor, categories }) => {
   const { t } = useTranslation();
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [isCatalogDropdownVisible, setCatalogDropdownVisible] = useState(false);
+  const [isInfoDropdownVisible, setInfoDropdownVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const navigate = useNavigate();
-  let timeoutId;
+  let catalogTimeoutId;
+  let infoTimeoutId;
 
-  const handleMouseEnter = useCallback(() => {
-    clearTimeout(timeoutId);
-    setDropdownVisible(true);
+  const handleCatalogMouseEnter = useCallback(() => {
+    clearTimeout(catalogTimeoutId);
+    setCatalogDropdownVisible(true);
   }, []);
 
-  const handleMouseLeave = useCallback(() => {
-    timeoutId = setTimeout(() => {
-      setDropdownVisible(false);
+  const handleCatalogMouseLeave = useCallback(() => {
+    catalogTimeoutId = setTimeout(() => {
+      setCatalogDropdownVisible(false);
       setActiveCategory(null);
+    }, 120);
+  }, []);
+
+  const handleInfoMouseEnter = useCallback(() => {
+    clearTimeout(infoTimeoutId);
+    setInfoDropdownVisible(true);
+  }, []);
+
+  const handleInfoMouseLeave = useCallback(() => {
+    infoTimeoutId = setTimeout(() => {
+      setInfoDropdownVisible(false);
     }, 120);
   }, []);
 
@@ -39,7 +60,7 @@ const NavbarLinks = ({ textColor, categories }) => {
         }
       } else {
         // Для категорий без дочерних элементов, всегда переходим
-        setDropdownVisible(false);
+        setCatalogDropdownVisible(false);
         setActiveCategory(null);
         navigate(`/catalog/${categorySlug}`);
       }
@@ -47,24 +68,35 @@ const NavbarLinks = ({ textColor, categories }) => {
     [activeCategory, navigate],
   );
 
+  const serviceLinks = [
+    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
+    { path: '/create', icon: <FaMagic />, label: 'create' },
+    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
+    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
+    { path: '/repair', icon: <FaTools />, label: 'repair' },
+    { path: '/guarantee', icon: <FaWrench />, label: 'guarantee' },
+  ];
+
   return (
     <ul className={`hidden sm:flex gap-5 text-sm transition-colors duration-300 ${textColor}`}>
       <NavLink to="/" className="flex flex-col items-center gap-1">
         <p>{t('navbar.menu.home')}</p>
         <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
       </NavLink>
+
+      {/* Catalog Dropdown */}
       <div
         className="relative group"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        onMouseEnter={handleCatalogMouseEnter}
+        onMouseLeave={handleCatalogMouseLeave}>
         <NavLink to="/catalog" className="flex flex-col items-center gap-1">
           <p>{t('navbar.menu.catalog')}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
         </NavLink>
         <div
           className={`absolute ${
-            isDropdownVisible ? 'flex' : 'hidden'
-          } flex-col bg-white shadow-lg rounded mt-2 w-64 transition-opacity duration-300 opacity-100`}>
+            isCatalogDropdownVisible ? 'flex' : 'hidden'
+          } flex-col bg-white shadow-lg rounded mt-2 w-64 transition-opacity duration-300 opacity-100 z-50`}>
           {categories.map((category) => (
             <div key={category._id} className="flex flex-col">
               <div
@@ -101,10 +133,34 @@ const NavbarLinks = ({ textColor, categories }) => {
           ))}
         </div>
       </div>
-      <NavLink to="/about" className="flex flex-col items-center gap-1">
-        <p>{t('navbar.menu.about')}</p>
-        <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
-      </NavLink>
+
+      {/* Services Dropdown */}
+      <div
+        className="relative group"
+        onMouseEnter={handleInfoMouseEnter}
+        onMouseLeave={handleInfoMouseLeave}>
+        <NavLink to="/service" className="flex flex-col items-center gap-1">
+          <p>{t('navbar.menu.service')}</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
+        </NavLink>
+        <div
+          className={`absolute ${
+            isInfoDropdownVisible ? 'flex' : 'hidden'
+          } flex-col bg-white shadow-lg rounded mt-2 w-64 transition-opacity duration-300 opacity-100 z-50`}>
+          {serviceLinks.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.path}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 futura">
+              <div className="flex items-center justify-center w-5 h-5 mr-3 text-mainColor">
+                {link.icon}
+              </div>
+              {t(`navbar.menu.${link.label}`)}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+
       <NavLink to="/contact" className="flex flex-col items-center gap-1">
         <p>{t('navbar.menu.contact')}</p>
         <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />

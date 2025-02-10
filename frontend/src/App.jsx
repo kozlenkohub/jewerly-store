@@ -22,6 +22,10 @@ import Profile from './pages/Profile.jsx';
 import './i18n';
 import Delivery from './pages/Delivery.jsx';
 import Privacy from './pages/Privacy.jsx';
+import Repair from './pages/Repair.jsx';
+import Create from './pages/Create.jsx';
+import Guarantee from './pages/Guarantee.jsx';
+import GIA from './pages/GIA.jsx';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -52,13 +56,17 @@ const App = () => {
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/about" element={<About />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/create" element={<Create />} />
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/repair" element={<Repair />} />
+        <Route path="/guarantee" element={<Guarantee />} />
+        <Route path="/gia" element={<GIA />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

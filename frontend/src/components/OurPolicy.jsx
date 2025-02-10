@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MdCurrencyExchange } from 'react-icons/md';
 import { IoDiamond } from 'react-icons/io5';
-import { BiSupport } from 'react-icons/bi';
+import { GiDiamondRing } from 'react-icons/gi';
+import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 
 const OurPolicy = () => {
   const { t } = useTranslation();
 
   const policies = [
     {
-      Icon: MdCurrencyExchange,
+      Icon: IoIosCheckmarkCircleOutline,
       translationKey: 'exchangePolicy',
     },
     {
@@ -17,7 +17,7 @@ const OurPolicy = () => {
       translationKey: 'quality',
     },
     {
-      Icon: BiSupport,
+      Icon: GiDiamondRing,
       translationKey: 'support',
     },
   ];
