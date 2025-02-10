@@ -10,6 +10,7 @@ import {
   FaWrench,
   FaMagic,
 } from 'react-icons/fa';
+import { GiDiamondTrophy } from 'react-icons/gi';
 
 const NavbarLinks = ({ textColor, categories }) => {
   const { t } = useTranslation();
@@ -75,6 +76,7 @@ const NavbarLinks = ({ textColor, categories }) => {
     { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
     { path: '/repair', icon: <FaTools />, label: 'repair' },
     { path: '/guarantee', icon: <FaWrench />, label: 'guarantee' },
+    { path: '/gia', icon: <GiDiamondTrophy />, label: 'gia' },
   ];
 
   return (
@@ -139,7 +141,7 @@ const NavbarLinks = ({ textColor, categories }) => {
         className="relative group"
         onMouseEnter={handleInfoMouseEnter}
         onMouseLeave={handleInfoMouseLeave}>
-        <NavLink to="/service" className="flex flex-col items-center gap-1">
+        <NavLink to="/about" className="flex flex-col items-center gap-1">
           <p>{t('navbar.menu.service')}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
         </NavLink>

@@ -7,7 +7,14 @@ import {
   FaChevronDown,
   FaClipboardList,
   FaSignOutAlt,
+  FaInfoCircle,
+  FaMagic,
+  FaTruck,
+  FaShieldAlt,
+  FaTools,
+  FaWrench,
 } from 'react-icons/fa';
+import { GiDiamondTrophy } from 'react-icons/gi';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearch } from '../redux/slices/productSlice';
@@ -27,11 +34,22 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [isServicesDropdownVisible, setServicesDropdownVisible] = useState(false);
   const { counter } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.user);
+
+  const serviceLinks = [
+    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
+    { path: '/create', icon: <FaMagic />, label: 'create' },
+    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
+    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
+    { path: '/repair', icon: <FaTools />, label: 'repair' },
+    { path: '/guarantee', icon: <FaWrench />, label: 'guarantee' },
+    { path: '/gia', icon: <GiDiamondTrophy />, label: 'gia' },
+  ];
 
   const handleCategoryClick = (categorySlug, hasChildren) => {
     if (hasChildren) {
@@ -227,12 +245,43 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               </div>
             )}
           </div>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/about"
-            className="flex flex-col items-center gap-1 p-3">
-            {t('navbar.menu.about')}
-          </NavLink>
+
+          {/* Services Dropdown */}
+          <div className="flex flex-col">
+            <div
+              onClick={() => setServicesDropdownVisible(!isServicesDropdownVisible)}
+              className={`relative flex items-center justify-center p-3 cursor-pointer z-40 ${
+                isServicesDropdownVisible ? 'bg-mainColor text-white' : ''
+              }`}>
+              <p className="relative">{t('navbar.menu.service')}</p>
+              <FaChevronDown
+                className={`absolute transition-transform duration-300 ${
+                  isServicesDropdownVisible ? '-rotate-180' : ''
+                }`}
+                style={{ left: 'calc(60%)' }}
+              />
+            </div>
+            {isServicesDropdownVisible && (
+              <div className="pl-8 z-40 bg-white shadow-lg">
+                {serviceLinks.map((link) => (
+                  <div
+                    key={link.label}
+                    onClick={() => {
+                      navigate(link.path);
+                      setVisible(false);
+                    }}
+                    className="flex items-center justify-between px-6 py-4 text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div className="flex items-center">
+                      <div className="flex items-center justify-center w-5 h-5 mr-3 text-mainColor">
+                        {link.icon}
+                      </div>
+                      <span className="category-name">{t(`navbar.menu.${link.label}`)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <NavLink
             onClick={() => setVisible(false)}
             to="/contact"
