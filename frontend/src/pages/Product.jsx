@@ -152,7 +152,7 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-gray-500 md:w-4/5">{localizeField(product.description)}</p>
+          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>
