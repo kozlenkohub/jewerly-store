@@ -17,7 +17,6 @@ const Footer = () => {
   };
 
   const companyLinks = [
-    ,
     { name: t('footer.company.links.0'), path: '/' },
     { name: t('footer.company.links.1'), path: '/about' },
     { name: t('footer.company.links.2'), path: '/delivery' },

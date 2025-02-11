@@ -18,7 +18,7 @@ const Description = ({ _id, style, cutForm, metal, color, purity, clarity, weigh
   ].filter((detail) => detail.value !== undefined);
 
   return (
-    <div className="flex flex-col gap-4 border px-6 text-sm text-gray-500 futura">
+    <div className="flex flex-col gap-4 border px-6 text-sm max-w-[300px] text-black futura">
       <table className="w-full table-fixed border-collapse text-left text-gray-700">
         <tbody>
           {detailsArray.map((detail, index) => (

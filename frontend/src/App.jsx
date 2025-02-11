@@ -27,6 +27,7 @@ import Create from './pages/Create.jsx';
 import Guarantee from './pages/Guarantee.jsx';
 import GIA from './pages/GIA.jsx';
 import PublicOffer from './pages/PublicOffer.jsx';
+import Sizes from './pages/Sizes.jsx';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
 
         <Route path="/public-offer" element={<PublicOffer />} />
+        <Route path="/sizes" element={<Sizes />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

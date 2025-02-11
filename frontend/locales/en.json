@@ -77,7 +77,8 @@
     "selectSize": "Select Size",
     "addToCart": "ADD TO CART",
     "description": "Description",
-    "bestseller": "Bestseller"
+    "bestseller": "Bestseller",
+    "sizeGuide": "Size Guide"
   },
   "productDetails": {
     "original": "100% original product",
@@ -635,6 +636,48 @@
       "accountNumber": "Account Number: [Your Bank Account Number]",
       "bankName": "[Your Bank Name]",
       "legalCompliance": "Queen Diamond operates in full compliance with the laws of Ukraine."
+    }
+  },
+  "sizes": {
+    "title": {
+      "text1": "How to Choose",
+      "text2": "the Right Ring Size"
+    },
+    "description": {
+      "intro": "When choosing a ring, it's important to consider not only standard sizes but also fitting characteristics. To determine the size, try on a similar piece of jewelry in a jewelry store. It's advisable to test several options, as measurement systems may slightly differ."
+    },
+    "generalInfo": {
+      "title": "Before Measuring",
+      "description": "Proper size selection is key to comfortable jewelry wear. A professional consultant in our salon will help you determine the exact size."
+    },
+    "width": {
+      "title": "The width of the model also matters",
+      "narrow": {
+        "title": "Narrow rings (up to 5 mm)",
+        "description": "Fit better in a slightly smaller size"
+      },
+      "wide": {
+        "title": "Wide models (from 5 mm)",
+        "description": "Require a slightly larger size to avoid finger compression"
+      }
+    },
+    "timing": {
+      "title": "Best time to measure finger size",
+      "description": "The optimal time to measure your finger is between 12:00 and 14:00, when its size is most stable.",
+      "avoid": {
+        "morning": "Not in the morning or hot weather when fingers might be swollen",
+        "cold": "Not immediately after coming in from the cold — let your hands warm up"
+      },
+      "best": "The optimal time for accurate measurements is during the day at a comfortable temperature"
+    },
+    "surprise": {
+      "title": "How to find out ring size discreetly",
+      "tip1": "Find a ring she wears on the intended finger and take it to a jewelry store for measurement",
+      "tip2": "Try on her jewelry on your finger and note the level to which it slides on freely"
+    },
+    "notes": {
+      "title": "Important Note",
+      "resizing": "If the ring doesn't fit perfectly, don't worry — we'll adjust the size free of charge to ensure the jewelry fits perfectly on your hand"
     }
   }
 }

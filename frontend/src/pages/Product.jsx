@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosInstance';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaInfoCircle } from 'react-icons/fa';
 import RelatedProducts from '../components/RelatedProducts';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/slices/cartSlice';
@@ -15,6 +15,7 @@ import Reviews from '../components/Reviews.jsx';
 import ProductGallery from '../components/ProductGallery';
 import { useTranslation } from 'react-i18next';
 import { localizeField } from '../utils/localizeField';
+import { Link } from 'react-router-dom';
 
 const Product = () => {
   const params = useParams();
@@ -152,7 +153,6 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
               <>
@@ -167,7 +167,20 @@ const Product = () => {
                 />
               </>
             )}
-            <p>{t('product.selectSize')}</p>
+            <div className="flex items-center gap-2">
+              <p>{t('product.selectSize')}</p>
+              <div className="relative inline-block">
+                <Link to="/sizes" className="text-mainColor hover:text-mainColor/80">
+                  <FaInfoCircle
+                    size={14}
+                    className="peer" // Добавляем peer класс для иконки
+                  />
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 peer-hover:opacity-100 pointer-events-none whitespace-nowrap transition-opacity duration-200">
+                    {t('product.sizeGuide')}
+                  </span>
+                </Link>
+              </div>
+            </div>
             <SelectSize
               sizes={product.size}
               activeSize={activeSize}
@@ -179,6 +192,8 @@ const Product = () => {
             className={`bg-mainColor text-white px-8 py-3 min-w-[145px] text-sm active:bg-mainColor/90`}>
             {t('product.addToCart')}
           </button>
+          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
+
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <ProductDetails />
