@@ -44,7 +44,7 @@ const Privacy = () => {
   ];
 
   const renderSection = ({ icon, title, items, color }) => (
-    <div className={`${color} rounded-lg p-6 transition-transform hover:scale-[1.02] text-black`}>
+    <div className={`${color} rounded-lg p-6 transition-transform hover:scale-[1.02] text-black `}>
       <div className="flex items-center gap-3 mb-4">
         <div className="text-2xl text-mainColor">{icon}</div>
         <h3 className="text-xl font-bold">{t(`privacy.${title}.title`)}</h3>

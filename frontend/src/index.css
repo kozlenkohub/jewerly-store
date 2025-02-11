@@ -59,7 +59,7 @@ a.active hr {
 }
 
 .futura {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Futura Light', sans-serif;
   font-weight: 300;
   letter-spacing: 0.8px;
 }
@@ -67,4 +67,8 @@ a.active hr {
 .futura-normal {
   font-family: 'Futura', sans-serif;
   font-weight: normal;
+}
+
+.ubuntu {
+  font-family: 'Ubuntu', sans-serif;
 }
