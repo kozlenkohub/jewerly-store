@@ -10,7 +10,6 @@ import filterRouter from './routes/filterRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import initSchedulers from './services/schedulers.js';
-import bot from './telegram/bot.js';
 
 // app config
 

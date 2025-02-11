@@ -4,6 +4,7 @@ import TelegramUser from '../models/telegramModel.js';
 import { setupOrderHandlers } from './handlers/orderHandlers.js';
 import { setupAdminHandlers } from './handlers/adminHandlers.js';
 import { setupProductHandlers } from './handlers/productHandlers.js';
+import { setupTranslationHandlers } from './handlers/translationsHandlers.js';
 
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
@@ -11,6 +12,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 setupOrderHandlers(bot);
 setupAdminHandlers(bot);
 setupProductHandlers(bot);
+setupTranslationHandlers(bot);
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
