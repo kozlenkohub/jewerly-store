@@ -262,7 +262,13 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
     "company": {
       "title": "Компания",
-      "links": ["ГЛАВНАЯ", "О НАС", "ДОСТАВКА", "Политика конфиденциальности"]
+      "links": [
+        "ГЛАВНАЯ",
+        "О НАС",
+        "ДОСТАВКА",
+        "Политика конфиденциальности",
+        "Договор публичной оферты"
+      ]
     },
     "contacts": {
       "title": "Наши контакты",

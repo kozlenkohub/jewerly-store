@@ -262,7 +262,7 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
     "company": {
       "title": "Company",
-      "links": ["HOME", "ABOUT US", "DELIVERY", "Privacy Policy"]
+      "links": ["HOME", "ABOUT US", "DELIVERY", "Privacy Policy", "Public Offer Agreement"]
     },
     "contacts": {
       "title": "Our Contacts",
