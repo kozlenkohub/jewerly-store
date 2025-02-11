@@ -119,7 +119,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                     className="w-5 h-5"
                   />
                   {lang === 'ru' && (
-                    <div className="absolute top-1/2 left-0 w-full h-[2px] bg-red-600 transform -rotate-45"></div>
+                    <div className="absolute top-1/2 -left-[2px] w-[25px] h-[2px] bg-red-600 transform -rotate-45"></div>
                   )}
                 </div>
                 {t(`navbar.languages.${lang}`)}
