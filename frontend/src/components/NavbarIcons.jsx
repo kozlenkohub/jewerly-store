@@ -113,10 +113,15 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
                 className={`flex items-center gap-2 w-full px-4 py-2 text-left ${
                   currentLanguage === lang ? 'bg-mainColor text-white' : 'text-gray-700'
                 } hover:bg-mainColor hover:text-white transition-colors`}>
-                <Flag
-                  code={lang === 'en' ? 'US' : lang === 'uk' ? 'UA' : 'RU'}
-                  className="w-5 h-5"
-                />
+                <div className={lang === 'ru' ? 'relative' : ''}>
+                  <Flag
+                    code={lang === 'en' ? 'US' : lang === 'uk' ? 'UA' : 'RU'}
+                    className="w-5 h-5"
+                  />
+                  {lang === 'ru' && (
+                    <div className="absolute top-1/2 left-0 w-full h-[2px] bg-red-600 transform -rotate-45"></div>
+                  )}
+                </div>
                 {t(`navbar.languages.${lang}`)}
               </button>
             ))}
