@@ -16,10 +16,12 @@ const NavbarLinks = ({ textColor, categories }) => {
   const { t } = useTranslation();
   const [isCatalogDropdownVisible, setCatalogDropdownVisible] = useState(false);
   const [isInfoDropdownVisible, setInfoDropdownVisible] = useState(false);
+  const [isRealInfoDropdownVisible, setRealInfoDropdownVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const navigate = useNavigate();
   let catalogTimeoutId;
   let infoTimeoutId;
+  let realInfoTimeoutId;
 
   const handleCatalogMouseEnter = useCallback(() => {
     clearTimeout(catalogTimeoutId);
@@ -41,6 +43,17 @@ const NavbarLinks = ({ textColor, categories }) => {
   const handleInfoMouseLeave = useCallback(() => {
     infoTimeoutId = setTimeout(() => {
       setInfoDropdownVisible(false);
+    }, 120);
+  }, []);
+
+  const handleRealInfoMouseEnter = useCallback(() => {
+    clearTimeout(realInfoTimeoutId);
+    setRealInfoDropdownVisible(true);
+  }, []);
+
+  const handleRealInfoMouseLeave = useCallback(() => {
+    realInfoTimeoutId = setTimeout(() => {
+      setRealInfoDropdownVisible(false);
     }, 120);
   }, []);
 
@@ -70,13 +83,20 @@ const NavbarLinks = ({ textColor, categories }) => {
   );
 
   const serviceLinks = [
-    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
     { path: '/create', icon: <FaMagic />, label: 'create' },
-    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
-    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
     { path: '/repair', icon: <FaTools />, label: 'repair' },
-    { path: '/guarantee', icon: <FaWrench />, label: 'guarantee' },
-    { path: '/gia', icon: <GiDiamondTrophy />, label: 'gia' },
+    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
+  ];
+
+  const infoLinks = [
+    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
+    {
+      path: '/guarantee',
+      icon: <GiDiamondTrophy />,
+      label: 'guarantee',
+    },
+    { path: '/gia', icon: <FaWrench />, label: 'gia' },
+    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
   ];
 
   return (
@@ -163,10 +183,32 @@ const NavbarLinks = ({ textColor, categories }) => {
         </div>
       </div>
 
-      <NavLink to="/contact" className="flex flex-col items-center gap-1">
-        <p>{t('navbar.menu.contact')}</p>
-        <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
-      </NavLink>
+      {/* Info Dropdown */}
+      <div
+        className="relative group"
+        onMouseEnter={handleRealInfoMouseEnter}
+        onMouseLeave={handleRealInfoMouseLeave}>
+        <NavLink to="/contact" className="flex flex-col items-center gap-1">
+          <p>{t('navbar.menu.info')}</p>
+          <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
+        </NavLink>
+        <div
+          className={`absolute ${
+            isRealInfoDropdownVisible ? 'flex' : 'hidden'
+          } flex-col bg-white shadow-lg rounded mt-2 w-64 transition-opacity duration-300 opacity-100 z-50`}>
+          {infoLinks.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.path}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 futura">
+              <div className="flex items-center justify-center w-5 h-5 mr-3 text-mainColor">
+                {link.icon}
+              </div>
+              {t(`navbar.menu.${link.label}`)}
+            </NavLink>
+          ))}
+        </div>
+      </div>
     </ul>
   );
 };

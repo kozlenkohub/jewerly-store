@@ -60,13 +60,14 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/about" element={<About />} />
         <Route path="/create" element={<Create />} />
         <Route path="/delivery" element={<Delivery />} />
-        <Route path="/privacy" element={<Privacy />} />
         <Route path="/repair" element={<Repair />} />
+
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/guarantee" element={<Guarantee />} />
         <Route path="/gia" element={<GIA />} />
+        <Route path="/about" element={<About />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

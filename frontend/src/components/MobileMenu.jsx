@@ -7,12 +7,12 @@ import {
   FaChevronDown,
   FaClipboardList,
   FaSignOutAlt,
-  FaInfoCircle,
   FaMagic,
   FaTruck,
-  FaShieldAlt,
   FaTools,
+  FaShieldAlt,
   FaWrench,
+  FaInfoCircle,
 } from 'react-icons/fa';
 import { GiDiamondTrophy } from 'react-icons/gi';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
@@ -35,6 +35,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
   const [isServicesDropdownVisible, setServicesDropdownVisible] = useState(false);
+  const [isInfoDropdownVisible, setInfoDropdownVisible] = useState(false);
   const { counter } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,13 +43,16 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
   const { token } = useSelector((state) => state.user);
 
   const serviceLinks = [
-    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
     { path: '/create', icon: <FaMagic />, label: 'create' },
-    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
-    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
     { path: '/repair', icon: <FaTools />, label: 'repair' },
-    { path: '/guarantee', icon: <FaWrench />, label: 'guarantee' },
-    { path: '/gia', icon: <GiDiamondTrophy />, label: 'gia' },
+    { path: '/delivery', icon: <FaTruck />, label: 'delivery' },
+  ];
+
+  const infoLinks = [
+    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
+    { path: '/guarantee', icon: <GiDiamondTrophy />, label: 'guarantee' },
+    { path: '/gia', icon: <FaWrench />, label: 'gia' },
+    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
   ];
 
   const handleCategoryClick = (categorySlug, hasChildren) => {
@@ -282,12 +286,43 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
               </div>
             )}
           </div>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/contact"
-            className="flex flex-col items-center gap-1 p-3">
-            {t('navbar.menu.contact')}
-          </NavLink>
+
+          {/* Info Dropdown */}
+          <div className="flex flex-col">
+            <div
+              onClick={() => setInfoDropdownVisible(!isInfoDropdownVisible)}
+              className={`relative flex items-center justify-center p-3 cursor-pointer z-40 ${
+                isInfoDropdownVisible ? 'bg-mainColor text-white' : ''
+              }`}>
+              <p>{t('navbar.menu.info')}</p>
+              <FaChevronDown
+                className={`absolute transition-transform duration-300 ${
+                  isInfoDropdownVisible ? '-rotate-180' : ''
+                }`}
+                style={{ left: 'calc(60%)' }}
+              />
+            </div>
+            {isInfoDropdownVisible && (
+              <div className="pl-8 z-40 bg-white shadow-lg">
+                {infoLinks.map((link) => (
+                  <div
+                    key={link.label}
+                    onClick={() => {
+                      navigate(link.path);
+                      setVisible(false);
+                    }}
+                    className="flex items-center justify-between px-6 py-4 text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div className="flex items-center">
+                      <div className="flex items-center justify-center w-5 h-5 mr-3 text-mainColor">
+                        {link.icon}
+                      </div>
+                      <span>{t(`navbar.menu.${link.label}`)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex flex-col">
           <MobileMenuPhoneNumbers />
