@@ -597,5 +597,44 @@
       "title": "Your Investment in Quality",
       "description": "With a GIA certificate and laser marking, you can be confident that your diamond is not just a precious gem, but an asset that will maintain its value and beauty for many years. With Queen Diamond jewelry, you get not only a stylish accessory but also a valuable investment that will bring you joy and become part of your family history."
     }
+  },
+  "publicOffer": {
+    "title": {
+      "text1": "Terms of",
+      "text2": "Public Offer Agreement"
+    },
+    "intro": "This agreement governs the terms of purchase of goods remotely from Queen Diamond.",
+    "sections": {
+      "subject": {
+        "title": "Subject of the Agreement",
+        "text": "The Seller commits to transfer the goods to the Buyer, and the Buyer commits to accept and pay for them under the terms outlined herein."
+      },
+      "payment": {
+        "title": "Payment Conditions",
+        "text": "Payment is accepted via cash, credit card, or online payment services as indicated on our website."
+      },
+      "delivery": {
+        "title": "Delivery",
+        "text": "We arrange secure and insured delivery worldwide. Details and options are available on our Delivery page."
+      },
+      "warranty": {
+        "title": "Warranty and Returns",
+        "text": "All jewelry is provided with a warranty in accordance with consumer protection laws. Please see our Warranty Policy for details."
+      },
+      "final": {
+        "title": "Final Provisions",
+        "text": "This agreement is effective from the moment the order is placed and remains in effect until all obligations are fulfilled."
+      }
+    },
+    "details": {
+      "sellerInfo": "Seller Information",
+      "companyName": "Queen Diamond",
+      "address": "Kyiv, Ukraine",
+      "registrationNumber": "Registered Number: [Your Company Registration Number]",
+      "bankDetails": "Bank Details",
+      "accountNumber": "Account Number: [Your Bank Account Number]",
+      "bankName": "[Your Bank Name]",
+      "legalCompliance": "Queen Diamond operates in full compliance with the laws of Ukraine."
+    }
   }
 }

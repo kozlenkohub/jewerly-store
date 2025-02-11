@@ -26,6 +26,7 @@ import Repair from './pages/Repair.jsx';
 import Create from './pages/Create.jsx';
 import Guarantee from './pages/Guarantee.jsx';
 import GIA from './pages/GIA.jsx';
+import PublicOffer from './pages/PublicOffer.jsx';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -68,6 +69,8 @@ const App = () => {
         <Route path="/guarantee" element={<Guarantee />} />
         <Route path="/gia" element={<GIA />} />
         <Route path="/about" element={<About />} />
+
+        <Route path="/public-offer" element={<PublicOffer />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
