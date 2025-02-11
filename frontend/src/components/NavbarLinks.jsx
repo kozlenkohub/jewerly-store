@@ -89,14 +89,14 @@ const NavbarLinks = ({ textColor, categories }) => {
   ];
 
   const infoLinks = [
-    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
+    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
+    { path: '/gia', icon: <FaWrench />, label: 'gia' },
     {
       path: '/guarantee',
       icon: <GiDiamondTrophy />,
       label: 'guarantee',
     },
-    { path: '/gia', icon: <FaWrench />, label: 'gia' },
-    { path: '/about', icon: <FaInfoCircle />, label: 'about' },
+    { path: '/privacy', icon: <FaShieldAlt />, label: 'privacy' },
   ];
 
   return (
