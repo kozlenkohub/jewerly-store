@@ -22,7 +22,7 @@ const Create = () => {
           <Title text1={t('create.title.text1')} text2={t('create.title.text2')} />
         </div>
         <div className="max-w-2xl mx-auto mt-6">
-          <p className="text-gray-600 futura">{t('create.intro')}</p>
+          <p className="text-gray-600 ubuntu">{t('create.intro')}</p>
         </div>
       </div>
 
@@ -42,14 +42,14 @@ const Create = () => {
               <div className="text-2xl text-mainColor">{stage.icon}</div>
               <h3 className="text-xl font-bold">{t(`create.stages.${stage.id}.title`)}</h3>
             </div>
-            <p className="text-gray-600 futura">{t(`create.stages.${stage.id}.description`)}</p>
+            <p className="text-gray-600 ubuntu">{t(`create.stages.${stage.id}.description`)}</p>
           </div>
         ))}
       </div>
 
       {/* Conclusion */}
       <div className="bg-mainColor text-white rounded-lg p-8 my-8">
-        <p className="text-center text-lg futura leading-relaxed">{t('create.conclusion')}</p>
+        <p className="text-center text-lg ubuntu leading-relaxed">{t('create.conclusion')}</p>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const Delivery = () => {
             className="w-full md:max-w-[450px] text-mainColor"
             alt={t('delivery.deliveryImage')}
           />
-          <div className="flex flex-col justify-center gap-6 md:w-2/4 futura">
+          <div className="flex flex-col justify-center gap-6 md:w-2/4 ubuntu">
             <p>{t('delivery.description.part1')}</p>
             <p>{t('delivery.description.part2')}</p>
             <b className="text-mainColor flex items-center gap-2 playfair">
@@ -51,8 +51,8 @@ const Delivery = () => {
             <b className="flex items-center gap-2">
               <FaBox /> {t('delivery.methods.standard.title')}
             </b>
-            <p className="futura">{t('delivery.methods.standard.description')}</p>
-            <ul className="list-disc pl-5 futura">
+            <p className="ubuntu">{t('delivery.methods.standard.description')}</p>
+            <ul className="list-disc pl-5 ubuntu">
               <li>{t('delivery.methods.standard.time')}</li>
               <li>{t('delivery.methods.standard.cost')}</li>
             </ul>
@@ -68,11 +68,11 @@ const Delivery = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-bold mb-2">{t('delivery.areas.domestic.title')}</h4>
-              <p className="futura">{t('delivery.areas.domestic.description')}</p>
+              <p className="ubuntu">{t('delivery.areas.domestic.description')}</p>
             </div>
             <div>
               <h4 className="font-bold mb-2">{t('delivery.areas.international.title')}</h4>
-              <p className="futura">{t('delivery.areas.international.description')}</p>
+              <p className="ubuntu">{t('delivery.areas.international.description')}</p>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Delivery = () => {
             {['card', 'cash', 'online'].map((method) => (
               <div key={method} className="border p-4">
                 <h4 className="font-bold mb-2">{t(`delivery.payment.methods.${method}.title`)}</h4>
-                <p className="futura">{t(`delivery.payment.methods.${method}.description`)}</p>
+                <p className="ubuntu">{t(`delivery.payment.methods.${method}.description`)}</p>
               </div>
             ))}
           </div>
@@ -99,7 +99,7 @@ const Delivery = () => {
             <FaClock className="text-mainColor" />
             <h3 className="text-xl font-bold">{t('delivery.times.title')}</h3>
           </div>
-          <div className="futura">
+          <div className="ubuntu">
             <p className="mb-4">{t('delivery.times.description')}</p>
             <ul className="list-disc pl-5">
               <li>{t('delivery.times.workdays')}</li>
@@ -116,7 +116,7 @@ const Delivery = () => {
             <h3 className="text-xl font-bold">{t('delivery.notes.title')}</h3>
           </div>
           <div className="bg-gray-50 p-6 rounded-lg">
-            <ul className="list-disc pl-5 futura space-y-2">
+            <ul className="list-disc pl-5 ubuntu space-y-2">
               <li>{t('delivery.notes.tracking')}</li>
               <li>{t('delivery.notes.insurance')}</li>
               <li>{t('delivery.notes.signature')}</li>
