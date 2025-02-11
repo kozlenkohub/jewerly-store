@@ -262,7 +262,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 className={`absolute transition-transform duration-300 ${
                   isServicesDropdownVisible ? '-rotate-180' : ''
                 }`}
-                style={{ left: 'calc(57%)' }}
+                style={{ left: 'calc(58.5%)' }}
               />
             </div>
             {isServicesDropdownVisible && (
@@ -299,7 +299,7 @@ const MobileMenu = ({ visible, setVisible, categories }) => {
                 className={`absolute transition-transform duration-300 ${
                   isInfoDropdownVisible ? '-rotate-180' : ''
                 }`}
-                style={{ left: 'calc(62%)' }}
+                style={{ left: 'calc(65%)' }}
               />
             </div>
             {isInfoDropdownVisible && (
