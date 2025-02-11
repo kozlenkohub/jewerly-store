@@ -44,13 +44,13 @@ const Privacy = () => {
   ];
 
   const renderSection = ({ icon, title, items, color }) => (
-    <div className={`${color} rounded-lg p-6 transition-transform hover:scale-[1.02]`}>
+    <div className={`${color} rounded-lg p-6 transition-transform hover:scale-[1.02] text-black`}>
       <div className="flex items-center gap-3 mb-4">
         <div className="text-2xl text-mainColor">{icon}</div>
         <h3 className="text-xl font-bold">{t(`privacy.${title}.title`)}</h3>
       </div>
-      <p className="text-gray-600 futura mb-4">{t(`privacy.${title}.description`)}</p>
-      <ul className="space-y-2 text-gray-600 futura">
+      <p className=" futura mb-4">{t(`privacy.${title}.description`)}</p>
+      <ul className="space-y-2  futura">
         {items.map((item) => (
           <li key={item} className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-mainColor"></div>
@@ -80,7 +80,7 @@ const Privacy = () => {
             <Title text1={t('privacy.title.text1')} text2={t('privacy.title.text2')} />
           </div>
           <div className="max-w-2xl mx-auto mt-6">
-            <p className="text-gray-600 futura">{t('privacy.intro.description')}</p>
+            <p className=" futura">{t('privacy.intro.description')}</p>
             <p className="text-sm text-gray-500 mt-4">{t('privacy.intro.lastUpdate')}</p>
           </div>
         </div>
@@ -99,7 +99,7 @@ const Privacy = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {['access', 'rectification', 'erasure', 'portability', 'withdraw'].map((right) => (
               <div key={right} className="bg-white p-4 rounded-lg shadow-sm">
-                <p className="text-gray-600 futura">{t(`privacy.rights.list.${right}`)}</p>
+                <p className=" futura">{t(`privacy.rights.list.${right}`)}</p>
               </div>
             ))}
           </div>
@@ -116,9 +116,7 @@ const Privacy = () => {
               <div
                 key={service}
                 className="border p-4 rounded-lg hover:border-mainColor transition-colors">
-                <p className="text-gray-600 futura">
-                  {t(`privacy.thirdParties.services.${service}`)}
-                </p>
+                <p className=" futura">{t(`privacy.thirdParties.services.${service}`)}</p>
               </div>
             ))}
           </div>
