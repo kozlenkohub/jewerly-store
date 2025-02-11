@@ -5,6 +5,8 @@
 
 @import url(https://fonts.googleapis.com/css?family=Playfair+Display:regular,500,600,700,800,900,italic,500italic,600italic,700italic,800italic,900italic);
 
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,300italic,regular,italic,500,500italic,700,700italic);
+
 @font-face {
   font-family: 'Futura Light';
   src: url('./fonts/FuturaLight.woff2') format('woff2');
@@ -57,7 +59,9 @@ a.active hr {
 }
 
 .futura {
-  font-family: 'Futura Light', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.8px;
 }
 
 .futura-normal {
