@@ -15,7 +15,7 @@
   },
   "newsletterBox": {
     "title": "Subscribe now & get 20% off",
-    "description": "Join our newsletter and get exclusive offers",
+    "description": "Join our newsletter and get exclusive offers!",
     "emailPlaceholder": "Email",
     "buttonText": "Subscribe"
   },
@@ -262,11 +262,20 @@
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, voluptates!",
     "company": {
       "title": "Company",
-      "links": ["HOME", "ABOUT US", "DELIVERY", "Privacy Policy"]
+      "links": [
+        "HOME",
+        "ABOUT US",
+        "DELIVERY",
+        "Privacy Policy"
+      ]
     },
     "contacts": {
       "title": "Our Contacts",
-      "links": ["INSTAGRAM", "+380-633-733-013", "test@gmail.com"]
+      "links": [
+        "INSTAGRAM",
+        "+380-633-733-013",
+        "test@gmail.com"
+      ]
     },
     "copyright": "Copyright 2025@ JEWERLY - All Rights Reserved"
   },
