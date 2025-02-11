@@ -14,7 +14,7 @@ const GIA = () => {
           <Title text1={t('gia.title.text1')} text2={t('gia.title.text2')} />
         </div>
         <div className="max-w-3xl mx-auto mt-6">
-          <p className=" futura">{t('gia.intro')}</p>
+          <p className=" ubuntu">{t('gia.intro')}</p>
         </div>
       </div>
 
@@ -23,7 +23,7 @@ const GIA = () => {
         <div className="bg-gray-50 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-4">
             <FaQrcode className="text-2xl text-mainColor" />
-            <p className=" futura">{t('gia.certificate.value')}</p>
+            <p className=" ubuntu">{t('gia.certificate.value')}</p>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@ const GIA = () => {
           <FaCertificate className="text-2xl text-mainColor" />
           <h2 className="text-xl font-bold">{t('gia.what.title')}</h2>
         </div>
-        <div className="space-y-4  futura">
+        <div className="space-y-4  ubuntu">
           <p>{t('gia.what.description')}</p>
           <p>{t('gia.what.system')}</p>
         </div>
@@ -47,7 +47,7 @@ const GIA = () => {
             <FaBarcode className="text-2xl" />
             <h3 className="text-xl font-bold">{t('gia.laser.title')}</h3>
           </div>
-          <p className="text-center text-lg futura leading-relaxed">{t('gia.laser.description')}</p>
+          <p className="text-center text-lg ubuntu leading-relaxed">{t('gia.laser.description')}</p>
         </div>
       </div>
 
@@ -57,7 +57,7 @@ const GIA = () => {
           <FaGem className="text-2xl text-mainColor" />
           <h3 className="text-xl font-bold">{t('gia.conclusion.title')}</h3>
         </div>
-        <p className=" futura">{t('gia.conclusion.description')}</p>
+        <p className=" ubuntu">{t('gia.conclusion.description')}</p>
       </div>
     </div>
   );

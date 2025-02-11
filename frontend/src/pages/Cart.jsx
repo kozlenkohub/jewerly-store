@@ -58,7 +58,7 @@ const Cart = () => {
               return (
                 <div
                   key={index}
-                  className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 futura">
+                  className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ubuntu">
                   <div className="flex items-start gap-6">
                     <div className="relative w-36 sm:w-20">
                       <img className="object-cover " src={item.image[0]} alt="" />
@@ -76,7 +76,7 @@ const Cart = () => {
                             <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
                               {formatPrice(item.price)} {currency}
                             </span>
-                            <span className="tracking-[0.3px] futura-normal  sm:tracking-[1px] text-[16px] sm:text-[17px]">
+                            <span className="tracking-[0.3px] ubuntu-normal  sm:tracking-[1px] text-[16px] sm:text-[17px]">
                               {formatPrice(discountedPrice.toFixed(2))} {currency}
                             </span>
                           </>
@@ -119,7 +119,7 @@ const Cart = () => {
         <div className="flex justify-end ">
           <div className="w-full sm:w-[450px]">
             <CartTotal />
-            <div className="w-full text-center futura">
+            <div className="w-full text-center ubuntu">
               <button
                 onClick={() => navigate('/checkout')}
                 className="bg-mainColor text-white text-sm my-8 px-8 py-3">
