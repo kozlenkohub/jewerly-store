@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Tabs } from 'antd';
+import { UserOutlined, HeartOutlined } from '@ant-design/icons';
 import { fetchProfile, updateName, updateEmail, updatePassword } from '../redux/slices/userSlice';
 import Loader from '../components/Loader';
 import Title from '../components/Title';
+import WishList from '../components/WishList';
 import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
@@ -79,6 +82,34 @@ const Profile = () => {
     },
   ];
 
+  const renderProfileSettings = () => (
+    <div className="bg-white p-8 w-full">
+      {forms.map((form, index) => (
+        <form
+          key={index}
+          onSubmit={form.onSubmit}
+          className="flex flex-col items-center gap-4 mb-6">
+          {form.inputs.map((input, idx) => (
+            <input
+              key={idx}
+              type={input.type}
+              placeholder={input.placeholder}
+              className="w-full p-2 border border-gray-300 focus:outline-none focus:border-mainColor"
+              value={input.value}
+              onChange={input.onChange}
+              required
+            />
+          ))}
+          <button
+            className="w-full p-2 bg-mainColor text-white font-medium text-xl futura"
+            disabled={isUserLoading}>
+            {isUserLoading ? t('profile.forms.loading') : form.buttonText}
+          </button>
+        </form>
+      ))}
+    </div>
+  );
+
   if (isUserLoading) {
     return <Loader />;
   }
@@ -87,35 +118,36 @@ const Profile = () => {
     return <div>{t('profile.forms.noUserData')}</div>;
   }
 
+  const items = [
+    {
+      key: '1',
+      label: (
+        <span className="text-mainColor flex items-center gap-2">
+          <UserOutlined />
+          {t('profile.tabs.settings')}
+        </span>
+      ),
+      children: renderProfileSettings(),
+    },
+    {
+      key: '2',
+      label: (
+        <span className="text-mainColor flex items-center gap-2">
+          <HeartOutlined />
+          {t('profile.tabs.wishlist')}
+        </span>
+      ),
+      children: <WishList />,
+    },
+  ];
+
   return (
-    <div className="min-h-[95.5vh] flex justify-center ">
-      <div className="bg-white p-8  w-[90%] sm:max-w-[500px] ">
-        <div className="text-3xl mb-6 text-center">
-          <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
-        </div>
-        {forms.map((form, index) => (
-          <form
-            key={index}
-            onSubmit={form.onSubmit}
-            className="flex flex-col items-center gap-4 mb-6">
-            {form.inputs.map((input, idx) => (
-              <input
-                key={idx}
-                type={input.type}
-                placeholder={input.placeholder}
-                className="w-full p-2 border border-gray-300 focus:outline-none focus:border-mainColor"
-                value={input.value}
-                onChange={input.onChange}
-                required
-              />
-            ))}
-            <button
-              className="w-full p-2 bg-mainColor text-white font-medium text-xl  futura"
-              disabled={isUserLoading}>
-              {isUserLoading ? t('profile.forms.loading') : form.buttonText}
-            </button>
-          </form>
-        ))}
+    <div className="min-h-[95.5vh] flex flex-col items-center p-4 futura">
+      <div className="text-3xl mb-6 text-center">
+        <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
+      </div>
+      <div className="w-[90%] sm:max-w-[800px]">
+        <Tabs defaultActiveKey="1" items={items} className="bg-white p-4" />
       </div>
     </div>
   );

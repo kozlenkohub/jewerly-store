@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.5.0",
     "@stripe/react-stripe-js": "^2.0.0",
     "@stripe/stripe-js": "^2.0.0",
+    "antd": "^5.24.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "gsap": "^3.12.7",

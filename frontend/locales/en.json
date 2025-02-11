@@ -469,7 +469,17 @@
       },
       "noUserData": "User data unavailable",
       "loading": "Loading..."
+    },
+    "tabs": {
+      "settings": "Profile Settings",
+      "wishlist": "Wish list"
     }
+  },
+  "wishlist": {
+    "empty": "Your wishlist is empty",
+    "addToCart": "Add to Cart",
+    "remove": "Remove",
+    "title": "My Wishlist"
   },
   "toasts": {
     "auth": {
