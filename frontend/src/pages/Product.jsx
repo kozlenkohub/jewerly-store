@@ -133,7 +133,7 @@ const Product = () => {
         />
 
         <div className="flex-1 futura">
-          <h1 className="font-medium text-2xl mt-2 forum">{localizeField(product.name)}</h1>
+          <h1 className="font-medium text-2xl mt-2  forum">{localizeField(product.name)}</h1>
           <div className="flex items-center gap-1 mt-2">
             {renderStars(calculateAverageRating(product.reviews))}
             <p className="pl-2">({product.reviews?.length || 0})</p>
