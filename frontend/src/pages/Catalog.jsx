@@ -9,7 +9,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { setSelectedFilters, fetchFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import Breadcrumb from '../components/Breadcrumb';
-import Loader from '../components/Loader';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -97,7 +96,6 @@ const Catalog = () => {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 min-h-[95.5vh] ">
-      (
       <>
         <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-16' : ''}`}>
           <Breadcrumb categoryPath={categoryPath} />
@@ -146,7 +144,6 @@ const Catalog = () => {
           </div>
         </div>
       </>
-      )}
     </div>
   );
 };
