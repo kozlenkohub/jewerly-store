@@ -155,7 +155,7 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-black md:w-4/5 text-[13px] futura">
+          <p className="mt-5 text-black md:w-4/5 text-[13px] sm:text-md futura">
             {localizeField(product.description)}
           </p>
 
