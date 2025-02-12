@@ -197,12 +197,11 @@ const Product = () => {
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <ProductDetails />
           </div>
-          <hr className="mt-8 sm:w-4/5" />
-
-          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
         </div>
       </div>
       {/* Product Details */}
+      <p className="mt-5 text-black md:w-4/5 futura">{localizeField(product.description)}</p>
+
       <div className="mt-8">
         <div className="flex">
           <button
