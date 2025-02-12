@@ -97,57 +97,55 @@ const Catalog = () => {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 min-h-[95.5vh] ">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-16' : ''}`}>
-            <Breadcrumb categoryPath={categoryPath} />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-2 sm:pt-5 border-t  text-center relative">
-            <div className="min-w-60">
-              <p
+      (
+      <>
+        <div className={` sm:col-span-2 text-left ${!isOpenSearch ? 'mt-16' : ''}`}>
+          <Breadcrumb categoryPath={categoryPath} />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-2 sm:pt-5 border-t  text-center relative">
+          <div className="min-w-60">
+            <p
+              onClick={() => setShowFilter(!showFilter)}
+              className="my-2 text-xl flex items-center cursor-pointer gap-2">
+              {t('catalog.filters')}
+              <FaChevronDown
+                className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
                 onClick={() => setShowFilter(!showFilter)}
-                className="my-2 text-xl flex items-center cursor-pointer gap-2">
-                {t('catalog.filters')}
-                <FaChevronDown
-                  className={`h-3 sm:hidden ${showFilter ? 'transform rotate-180' : ''}`}
-                  onClick={() => setShowFilter(!showFilter)}
-                />
-              </p>
-              <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
-                <Filters categoryId={lastSegment} />
-              </div>
+              />
+            </p>
+            <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
+              <Filters categoryId={lastSegment} />
             </div>
+          </div>
 
-            <div className="flex-1">
-              <div className="flex flex-wrap justify-center sm:justify-between items-center  text-xl mb-4 relative sm:flex-row flex-col">
-                <Title text1={activeCategory} text2={t('catalog.title')} />
-                <div className="flex gap-2 flex-wrap sm:gap-4 mt-2 sm:mt-0">
-                  {sortOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      className={`border-2 p-2 w-10 h-10 flex items-center justify-center ${
-                        selectedSort === option.value ? 'border-gray-800' : 'border-gray-300'
-                      }`}
-                      onClick={() => setSelectedSort(option.value)}>
-                      {option.icon}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div
-                className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${
-                  isLoading ? 'px-4' : ''
-                }`}>
-                {products.map((item, index) => (
-                  <ProductItem key={index} {...item} />
+          <div className="flex-1">
+            <div className="flex flex-wrap justify-center sm:justify-between items-center  text-xl mb-4 relative sm:flex-row flex-col">
+              <Title text1={activeCategory} text2={t('catalog.title')} />
+              <div className="flex gap-2 flex-wrap sm:gap-4 mt-2 sm:mt-0">
+                {sortOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`border-2 p-2 w-10 h-10 flex items-center justify-center ${
+                      selectedSort === option.value ? 'border-gray-800' : 'border-gray-300'
+                    }`}
+                    onClick={() => setSelectedSort(option.value)}>
+                    {option.icon}
+                  </button>
                 ))}
               </div>
             </div>
+
+            <div
+              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${
+                isLoading ? 'px-4' : ''
+              }`}>
+              {products.map((item, index) => (
+                <ProductItem key={index} {...item} />
+              ))}
+            </div>
           </div>
-        </>
+        </div>
+      </>
       )}
     </div>
   );

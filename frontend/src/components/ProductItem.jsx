@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 const ProductItem = ({ _id, image, name, price, discount, bestseller, ...rest }) => {
   const { currency } = useSelector((state) => state.product);
+  const { token } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const isWishlisted = isInWishlist(_id);
@@ -45,15 +46,17 @@ const ProductItem = ({ _id, image, name, price, discount, bestseller, ...rest })
             {t('product.bestseller')}
           </div>
         )}
-        <button
-          onClick={handleWishlist}
-          className="absolute top-2 left-2 z-10 p-2 bg-white/80 rounded-full transition-transform duration-300 hover:scale-110">
-          {isWishlisted ? (
-            <AiFillHeart className="text-red-500 text-xl" />
-          ) : (
-            <AiOutlineHeart className="text-gray-600 text-xl" />
-          )}
-        </button>
+        {token && (
+          <button
+            onClick={handleWishlist}
+            className="absolute top-2 left-2 z-10 p-2 bg-white/80 rounded-full transition-transform duration-300 hover:scale-110">
+            {isWishlisted ? (
+              <AiFillHeart className="text-red-500 text-xl" />
+            ) : (
+              <AiOutlineHeart className="text-gray-600 text-xl" />
+            )}
+          </button>
+        )}
         <img
           className="hover:scale-110 transition ease-in-out w-32"
           src={image[0]}
