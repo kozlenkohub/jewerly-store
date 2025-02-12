@@ -60,7 +60,7 @@ const NavbarIcons = ({ iconColor, bgColor, textColor2 }) => {
         {token && (
           <div className="group-hover:block hidden absolute dropdown-menu z-50 right-0 pt-2">
             <div
-              className={`flex flex-col gap-2 w-40 items-center py-3 px-5 ${bgColor} ${textColor2} `}>
+              className={`flex flex-col gap-2 w-44 items-center py-3 px-5 ${bgColor} ${textColor2} `}>
               <Link to="/profile" className="cursor-pointer hover:text-gray-500">
                 <div className="navbar-item flex items-center">
                   <FaUser className="mr-1 inline-block" />
