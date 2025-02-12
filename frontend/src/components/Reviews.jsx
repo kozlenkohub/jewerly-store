@@ -125,7 +125,7 @@ const Reviews = ({ reviews = [], productId, onReviewAdded }) => {
                 <div className="flex">{renderStars(review.rating)}</div>
                 <span className="font-medium">{review.name}</span>
               </div>
-              <p className="text-gray-600 futura">{review.comment}</p>
+              <p className="text-gray-600 futura normal-case text-[15px]">{review.comment}</p>
             </div>
           ))
         )}
