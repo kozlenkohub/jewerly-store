@@ -519,6 +519,23 @@
     "order": "Place an order",
     "callInfo": "Call us from 11:00 to 22:45. Our hotline is open every day!"
   },
+  "repair": {
+    "title": {
+      "text1": "Professional",
+      "text2": "Repair"
+    },
+    "intro": "Jewelry is created to last for centuries, but even the most durable items can lose their perfect appearance. Over time, scratches appear, chain links weaken, locks fail, and precious stones need renewed setting. Instead of putting your favorite jewelry in a drawer, entrust its restoration to professionals.",
+    "description": "At Queen Diamond workshop, we carefully and thoroughly restore jewelry, regardless of the complexity of the repair. Our craftsmen can:",
+    "services": {
+      "locks": "Repair and replace clasps, links, and locks",
+      "polish": "Polish the surface, removing scratches and scuffs",
+      "stones": "Secure loose gemstones",
+      "chains": "Restore the integrity of chains, bracelets, and earrings",
+      "rhodium": "Refresh rhodium plating, restore shine to gold and silver"
+    },
+    "value": "We understand that each piece of jewelry has its own value, whether it is a gift, a family heirloom, or a symbol of important events. Therefore, at Queen Diamond, we approach each item with special care, guaranteeing the quality of work and the safety of your jewelry treasure.",
+    "conclusion": "Don't postpone jewelry repair – entrust its restoration to Queen Diamond professionals, and it will become perfect again!"
+  },
   "create": {
     "title": {
       "text1": "Creating",

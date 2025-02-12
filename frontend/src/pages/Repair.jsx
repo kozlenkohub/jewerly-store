@@ -15,9 +15,9 @@ const Repair = () => {
   ];
 
   return (
-    <div className="max-w-[1280px] min-h-screen mx-auto px-4 py-4 text-black ">
+    <div className="max-w-[1280px]  mx-auto px-4 py-4 text-black ">
       {/* Header Section */}
-      <div className="text-center py-12 border-b">
+      <div className="text-center py-2 border-b">
         <div className="text-xl sm:text-3xl">
           <Title text1={t('repair.title.text1')} text2={t('repair.title.text2')} />
         </div>
