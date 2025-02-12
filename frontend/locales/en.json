@@ -325,71 +325,71 @@
   },
   "delivery": {
     "title": {
-      "text1": "Доставка",
-      "text2": "и Оплата"
+      "text1": "Delivery",
+      "text2": "and Payment"
     },
-    "deliveryImage": "Изображение доставки",
+    "deliveryImage": "Delivery image",
     "description": {
-      "part1": "Мы стремимся обеспечить быструю и надежную доставку для всех наших клиентов.",
-      "part2": "Наши услуги охватывают как внутренние, так и международные заказы."
+      "part1": "We strive to provide fast and reliable delivery for all our customers.",
+      "part2": "Our services cover both domestic and international orders."
     },
     "generalInfo": {
-      "title": "Общая информация",
-      "description": "Мы сотрудничаем с ведущими логистическими компаниями для своевременной доставки."
+      "title": "General Information",
+      "description": "We partner with leading logistics companies for timely delivery."
     },
     "methods": {
       "title": {
-        "text1": "Методы",
-        "text2": "Доставки"
+        "text1": "Delivery",
+        "text2": "Methods"
       },
       "standard": {
-        "title": "Стандартная доставка",
-        "description": "Обычная доставка, подходящая для большинства заказов.",
-        "time": "Срок доставки: 3-7 рабочих дней",
-        "cost": "Стоимость: Бесплатно при заказе от 50$"
+        "title": "Standard Delivery",
+        "description": "Regular delivery suitable for most orders.",
+        "time": "Delivery time: 3-7 business days",
+        "cost": "Cost: Free for orders over $50"
       }
     },
     "areas": {
-      "title": "Зоны доставки",
+      "title": "Delivery Areas",
       "domestic": {
-        "title": "Внутренние заказы",
-        "description": "Мы доставляем заказы по всей стране через надежных партнеров."
+        "title": "Domestic Orders",
+        "description": "We deliver orders throughout the country through reliable partners."
       },
       "international": {
-        "title": "Международные заказы",
-        "description": "Международная доставка доступна в большинство стран мира."
+        "title": "International Orders",
+        "description": "International delivery is available to most countries worldwide."
       }
     },
     "payment": {
-      "title": "Способы оплаты",
+      "title": "Payment Methods",
       "methods": {
         "card": {
-          "title": "Оплата картой",
-          "description": "Мы принимаем все основные кредитные и дебетовые карты."
+          "title": "Card Payment",
+          "description": "We accept all major credit and debit cards."
         },
         "cash": {
-          "title": "Оплата наличными",
-          "description": "Вы можете оплатить заказ наличными при получении."
+          "title": "Cash on Delivery",
+          "description": "You can pay for your order in cash upon receipt."
         },
         "online": {
-          "title": "Онлайн-платежи",
-          "description": "Поддерживаются PayPal, Google Pay, Apple Pay и другие методы."
+          "title": "Online Payments",
+          "description": "PayPal, Google Pay, Apple Pay, and other methods are supported."
         }
       }
     },
     "times": {
-      "title": "Время доставки",
-      "description": "Время доставки зависит от вашего региона и метода доставки.",
-      "workdays": "Доставка в рабочие дни: с 9:00 до 18:00",
-      "weekend": "Доставка в выходные дни: с 10:00 до 16:00",
-      "holidays": "Доставка в праздничные дни может быть ограничена"
+      "title": "Delivery Time",
+      "description": "Delivery time depends on your region and delivery method.",
+      "workdays": "Delivery on weekdays: from 9:00 to 18:00",
+      "weekend": "Delivery on weekends: from 10:00 to 16:00",
+      "holidays": "Delivery on holidays may be limited"
     },
     "notes": {
-      "title": "Важные замечания",
-      "tracking": "Все заказы отслеживаются, и номер отслеживания отправляется по электронной почте.",
-      "insurance": "Мы рекомендуем застраховать заказы с высокой стоимостью.",
-      "signature": "Для получения заказа может потребоваться подпись.",
-      "reschedule": "Вы можете изменить дату и время доставки, связавшись с нашей поддержкой."
+      "title": "Important Notes",
+      "tracking": "All orders are tracked, and the tracking number is sent by email.",
+      "insurance": "We recommend insuring high-value orders.",
+      "signature": "A signature may be required to receive the order.",
+      "reschedule": "You can change the date and time of delivery by contacting our support."
     }
   },
   "privacy": {
