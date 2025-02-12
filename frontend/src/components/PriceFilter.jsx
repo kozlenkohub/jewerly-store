@@ -45,8 +45,8 @@ const PriceFilter = () => {
           className="w-full"
           trackStyle={{ backgroundColor: 'gray' }}
           handleStyle={[
-            { borderColor: '#320C30', backgroundColor: '#320C30', opacity: 1 },
-            { borderColor: '#320C30', backgroundColor: '#320C30', opacity: 1 },
+            { borderColor: '#621b59', backgroundColor: '#621b59', opacity: 1 },
+            { borderColor: '#621b59', backgroundColor: '#621b59', opacity: 1 },
           ]}
           railStyle={{ backgroundColor: 'rgba(128, 128, 128, 0.3)' }}
         />

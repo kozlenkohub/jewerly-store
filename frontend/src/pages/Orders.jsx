@@ -72,7 +72,7 @@ const Orders = () => {
                 </div>
                 <Sparkle
                   overflowPx={2}
-                  color="#320C30"
+                  color="#621b59"
                   count={8}
                   fadeOutSpeed={3}
                   flicker={false}
