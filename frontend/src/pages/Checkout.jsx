@@ -186,7 +186,7 @@ const Checkout = () => {
         <div className="mt-2 min-w-80">
           <CartTotal />
         </div>
-        <div className="mt-8">
+        <div className="mt-8 text-xl">
           <Title
             text1={t('checkout.payment.title.text1')}
             text2={t('checkout.payment.title.text2')}
