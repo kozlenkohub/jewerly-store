@@ -19,7 +19,6 @@ const GIA = () => {
       </div>
 
       {/* What is GIA */}
-
       <div className="my-8">
         <div className="flex items-center gap-3 mb-6">
           <FaCertificate className="text-2xl text-mainColor" />
