@@ -171,20 +171,18 @@ const Product = () => {
             )}
             <div className="flex items-center gap-2">
               <p>{t('product.selectSize')}</p>
-              <div className="flex items-center gap-1">
-                <Link
-                  to="/sizes"
-                  className="text-mainColor hover:text-mainColor/80 flex items-center gap-1">
-                  <FaInfoCircle size={14} />
-                  <span className="text-[9px] underline">{t('product.sizeGuide')}</span>
-                </Link>
-              </div>
             </div>
             <SelectSize
               sizes={product.size}
               activeSize={activeSize}
               setActiveSize={setActiveSize}
             />
+            <Link
+              to="/sizes"
+              className="text-mainColor hover:text-mainColor/80 flex items-center gap-1">
+              <FaInfoCircle size={14} />
+              <span className="text-[9px] underline">{t('product.sizeGuide')}</span>
+            </Link>
           </div>
           <button
             onClick={handleAddToCart}
