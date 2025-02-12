@@ -134,7 +134,9 @@ const Product = () => {
         />
 
         <div className="flex-1 futura">
-          <h1 className="font-medium text-2xl mt-2  forum">{localizeField(product.name)}</h1>
+          <h1 className="font-medium sm:text-2xl text-xl mt-2   forum">
+            {localizeField(product.name)}
+          </h1>
           <div className="flex items-center gap-1 mt-2">
             {renderStars(calculateAverageRating(product.reviews))}
             <p className="pl-2">({product.reviews?.length || 0})</p>
@@ -153,7 +155,9 @@ const Product = () => {
               </>
             )}
           </p>
-          <p className="mt-5 text-black md:w-4/5 futura">{localizeField(product.description)}</p>
+          <p className="mt-5 text-black md:w-4/5 text-[13px] futura">
+            {localizeField(product.description)}
+          </p>
 
           <div className="flex flex-col gap-4 my-8">
             {anotherVariantion.length > 0 && (
