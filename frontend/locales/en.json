@@ -325,34 +325,71 @@
   },
   "delivery": {
     "title": {
-      "text1": "Payment and Delivery:",
-      "text2": "Comfort and Safety at Every Stage"
+      "text1": "Доставка",
+      "text2": "и Оплата"
     },
+    "deliveryImage": "Изображение доставки",
     "description": {
-      "part1": "WE STRIVE TO PROVIDE THE BEST DELIVERY SERVICE FOR OUR VALUED CUSTOMERS.",
-      "part2": "At Queen Diamond, we've created a convenient purchasing process so you can receive your dream jewelry without unnecessary complications, no matter where you are."
+      "part1": "Мы стремимся обеспечить быструю и надежную доставку для всех наших клиентов.",
+      "part2": "Наши услуги охватывают как внутренние, так и международные заказы."
     },
     "generalInfo": {
-      "title": "How to Place an Order?",
-      "description": "Choose jewelry from our website or order unique pieces with custom design. If you need assistance, click 'Jeweler Consultation' or 'Request Call' — our expert will help you choose the diamond, cut shape, and design details.",
-      "custom": "Creating a custom piece? We can send photos of key production stages so you can be part of the process.",
-      "confirmation": "After order confirmation, we begin preparation, and after full payment, we organize fast and secure delivery."
+      "title": "Общая информация",
+      "description": "Мы сотрудничаем с ведущими логистическими компаниями для своевременной доставки."
     },
-    "shipping": {
-      "title": "Delivery and Timing",
-      "subtitle": "WE OFFER VARIOUS DELIVERY OPTIONS TO SUIT YOUR NEEDS: FROM STANDARD DELIVERY TO EXPRESS SHIPPING FOR URGENT CASES.",
-      "info": "Queen Diamond provides convenient and secure delivery. Compensation amount depends on the order value and delivery region.",
-      "options": {
-        "kyiv": "Free courier delivery in Kyiv — regardless of order amount",
-        "ukraine": "Free delivery across Ukraine — for orders over 150,000 UAH",
-        "europe": "Free delivery across Europe — for orders over 300,000 UAH"
+    "methods": {
+      "title": {
+        "text1": "Методы",
+        "text2": "Доставки"
       },
-      "international": "We ensure delivery of your order to any point in Europe. For international shipping, contact our manager — they will explain available options and select the optimal shipping method.",
-      "timing": "Order completion time — up to 14 days, including product manufacturing, documentation, and hallmarking at the State Assay Office of Ukraine."
+      "standard": {
+        "title": "Стандартная доставка",
+        "description": "Обычная доставка, подходящая для большинства заказов.",
+        "time": "Срок доставки: 3-7 рабочих дней",
+        "cost": "Стоимость: Бесплатно при заказе от 50$"
+      }
     },
-    "guarantee": {
-      "title": "Our Guarantee",
-      "description": "Each piece of jewelry is securely packaged and delivered with full insurance. We guarantee your order will arrive in perfect condition because luxury requires special attention."
+    "areas": {
+      "title": "Зоны доставки",
+      "domestic": {
+        "title": "Внутренние заказы",
+        "description": "Мы доставляем заказы по всей стране через надежных партнеров."
+      },
+      "international": {
+        "title": "Международные заказы",
+        "description": "Международная доставка доступна в большинство стран мира."
+      }
+    },
+    "payment": {
+      "title": "Способы оплаты",
+      "methods": {
+        "card": {
+          "title": "Оплата картой",
+          "description": "Мы принимаем все основные кредитные и дебетовые карты."
+        },
+        "cash": {
+          "title": "Оплата наличными",
+          "description": "Вы можете оплатить заказ наличными при получении."
+        },
+        "online": {
+          "title": "Онлайн-платежи",
+          "description": "Поддерживаются PayPal, Google Pay, Apple Pay и другие методы."
+        }
+      }
+    },
+    "times": {
+      "title": "Время доставки",
+      "description": "Время доставки зависит от вашего региона и метода доставки.",
+      "workdays": "Доставка в рабочие дни: с 9:00 до 18:00",
+      "weekend": "Доставка в выходные дни: с 10:00 до 16:00",
+      "holidays": "Доставка в праздничные дни может быть ограничена"
+    },
+    "notes": {
+      "title": "Важные замечания",
+      "tracking": "Все заказы отслеживаются, и номер отслеживания отправляется по электронной почте.",
+      "insurance": "Мы рекомендуем застраховать заказы с высокой стоимостью.",
+      "signature": "Для получения заказа может потребоваться подпись.",
+      "reschedule": "Вы можете изменить дату и время доставки, связавшись с нашей поддержкой."
     }
   },
   "privacy": {
