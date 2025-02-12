@@ -192,12 +192,14 @@ const Product = () => {
             className={`bg-mainColor text-white px-8 py-3 min-w-[145px] text-sm active:bg-mainColor/90`}>
             {t('product.addToCart')}
           </button>
-          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
 
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <ProductDetails />
           </div>
+          <hr className="mt-8 sm:w-4/5" />
+
+          <p className="mt-5 text-black md:w-4/5">{localizeField(product.description)}</p>
         </div>
       </div>
       {/* Product Details */}
