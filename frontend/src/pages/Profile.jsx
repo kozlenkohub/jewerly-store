@@ -123,21 +123,21 @@ const Profile = () => {
       key: '1',
       label: (
         <span className="text-mainColor flex items-center gap-2">
-          <UserOutlined />
-          {t('profile.tabs.settings')}
-        </span>
-      ),
-      children: renderProfileSettings(),
-    },
-    {
-      key: '2',
-      label: (
-        <span className="text-mainColor flex items-center gap-2">
           <HeartOutlined />
           {t('profile.tabs.wishlist')}
         </span>
       ),
       children: <WishList />,
+    },
+    {
+      key: '2',
+      label: (
+        <span className="text-mainColor flex items-center gap-2">
+          <UserOutlined />
+          {t('profile.tabs.settings')}
+        </span>
+      ),
+      children: renderProfileSettings(),
     },
   ];
 

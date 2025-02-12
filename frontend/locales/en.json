@@ -479,7 +479,9 @@
     "empty": "Your wishlist is empty",
     "addToCart": "Add to Cart",
     "remove": "Remove",
-    "title": "My Wishlist"
+    "title": "My Wishlist",
+    "added": "Added to wishlist",
+    "removed": "Removed from wishlist"
   },
   "toasts": {
     "auth": {
