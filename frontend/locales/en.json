@@ -346,7 +346,7 @@
         "title": "Standard Delivery",
         "description": "Regular delivery suitable for most orders.",
         "time": "Delivery time: 3-7 business days",
-        "cost": "Cost: Free for orders over $50"
+        "cost": "Cost: Free for orders over 150000 GRN"
       }
     },
     "areas": {

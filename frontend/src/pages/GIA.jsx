@@ -9,7 +9,7 @@ const GIA = () => {
   return (
     <div className="max-w-[1280px] min-h-screen mx-auto px-4 py-4 text-black">
       {/* Header Section */}
-      <div className="text-center py-12 border-b">
+      <div className="text-center py-8 border-b">
         <div className="text-xl sm:text-3xl">
           <Title text1={t('gia.title.text1')} text2={t('gia.title.text2')} />
         </div>
@@ -18,18 +18,9 @@ const GIA = () => {
         </div>
       </div>
 
-      {/* Certificate Value */}
-      <div className="my-12">
-        <div className="bg-gray-50 rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <FaQrcode className="text-2xl text-mainColor" />
-            <p className=" ubuntu">{t('gia.certificate.value')}</p>
-          </div>
-        </div>
-      </div>
-
       {/* What is GIA */}
-      <div className="my-12">
+
+      <div className="my-8">
         <div className="flex items-center gap-3 mb-6">
           <FaCertificate className="text-2xl text-mainColor" />
           <h2 className="text-xl font-bold">{t('gia.what.title')}</h2>
@@ -40,8 +31,18 @@ const GIA = () => {
         </div>
       </div>
 
+      {/* Certificate Value */}
+      <div className="my-8">
+        <div className="bg-gray-50 rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <FaQrcode className="text-2xl text-mainColor" />
+            <p className=" ubuntu">{t('gia.certificate.value')}</p>
+          </div>
+        </div>
+      </div>
+
       {/* Laser Marking */}
-      <div className="my-12">
+      <div className="my-8">
         <div className="bg-mainColor text-white rounded-lg p-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <FaBarcode className="text-2xl" />
