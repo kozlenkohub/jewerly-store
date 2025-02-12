@@ -142,11 +142,11 @@ const Profile = () => {
   ];
 
   return (
-    <div className="min-h-[95.5vh] flex flex-col items-center p-4 futura">
+    <div className="min-h-[95.5vh] flex flex-col items-center p-4">
       <div className="text-3xl mb-6 text-center">
         <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
       </div>
-      <div className="w-[90%] sm:max-w-[800px]">
+      <div className="w-[90%] sm:max-w-[800px] futura">
         <Tabs defaultActiveKey="1" items={items} className="bg-white p-4" />
       </div>
     </div>
