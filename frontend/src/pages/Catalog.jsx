@@ -43,6 +43,7 @@ const Catalog = () => {
   const [showFilter, setShowFilter] = React.useState(false);
   const [selectedSort, setSelectedSort] = React.useState('relevent');
   const { t } = useTranslation();
+  const [isInitialLoad, setIsInitialLoad] = React.useState(true);
 
   // Debounced fetch function
   const fetchWithDebounce = React.useMemo(
@@ -83,6 +84,9 @@ const Catalog = () => {
       top: 0,
       behavior: 'smooth',
     });
+    if (isInitialLoad) {
+      setIsInitialLoad(false);
+    }
   }, [products]);
 
   const sortOptions = [
@@ -93,7 +97,7 @@ const Catalog = () => {
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 min-h-[95.5vh] ">
-      {isLoading ? (
+      {isInitialLoad ? (
         <Loader />
       ) : (
         <>
