@@ -171,15 +171,12 @@ const Product = () => {
             )}
             <div className="flex items-center gap-2">
               <p>{t('product.selectSize')}</p>
-              <div className="relative inline-block">
-                <Link to="/sizes" className="text-mainColor hover:text-mainColor/80">
-                  <FaInfoCircle
-                    size={14}
-                    className="peer" // Добавляем peer класс для иконки
-                  />
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 peer-hover:opacity-100 pointer-events-none whitespace-nowrap transition-opacity duration-200">
-                    {t('product.sizeGuide')}
-                  </span>
+              <div className="flex items-center gap-1">
+                <Link
+                  to="/sizes"
+                  className="text-mainColor hover:text-mainColor/80 flex items-center gap-1">
+                  <FaInfoCircle size={14} />
+                  <span className="text-[9px] underline">{t('product.sizeGuide')}</span>
                 </Link>
               </div>
             </div>
