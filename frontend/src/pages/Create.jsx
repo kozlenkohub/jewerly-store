@@ -37,7 +37,7 @@ const Create = () => {
         {stages.map((stage) => (
           <div
             key={stage.id}
-            className={`${stage.color} rounded-lg p-6 transition-all hover:shadow-lg hover:scale-[1.02]`}>
+            className={`rounded-lg p-6 transition-all hover:shadow-lg border-gray-50 border-4 hover:scale-[1.02]`}>
             <div className="flex items-center gap-3 mb-4">
               <div className="text-2xl text-mainColor">{stage.icon}</div>
               <h3 className="text-xl font-bold">{t(`create.stages.${stage.id}.title`)}</h3>

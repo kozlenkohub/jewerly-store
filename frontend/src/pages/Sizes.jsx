@@ -24,7 +24,7 @@ const Sizes = () => {
         {/* General Sizing Info */}
         <div className="my-10 flex flex-col md:flex-row gap-16">
           <img
-            src="https://example.com/ring-sizing-image.jpg"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgXvo6blePJ_H53860w9iEX_ffwkX90jZMpA&s"
             className="w-full md:max-w-[450px] text-mainColor"
             alt={t('sizes.sizingImage')}
           />
