@@ -11,6 +11,7 @@ import qs from 'qs';
 import Breadcrumb from '../components/Breadcrumb';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
+import ProductItemSkeleton from '../components/ProductItemSkeleton';
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -137,9 +138,11 @@ const Catalog = () => {
               className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${
                 isLoading ? 'px-4' : ''
               }`}>
-              {products.map((item, index) => (
-                <ProductItem key={index} {...item} />
-              ))}
+              {isLoading
+                ? Array(8)
+                    .fill(0)
+                    .map((_, index) => <ProductItemSkeleton key={index} />)
+                : products.map((item, index) => <ProductItem key={index} {...item} />)}
             </div>
           </div>
         </div>

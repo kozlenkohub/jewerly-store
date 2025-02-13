@@ -5,6 +5,7 @@ import { localizeField } from '../../utils/localizeField';
 const initialState = {
   filters: [],
   selectedFilters: {},
+  isLoading: false,
 };
 
 export const fetchFilters = createAsyncThunk('filters/fetchFilters', async (categorySlug) => {
@@ -47,8 +48,15 @@ const filterSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchFilters.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(fetchFilters.fulfilled, (state, action) => {
       state.filters = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchFilters.rejected, (state) => {
+      state.isLoading = false;
     });
   },
 });
