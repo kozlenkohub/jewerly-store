@@ -79,16 +79,6 @@ const Catalog = () => {
     dispatch(fetchFilters(lastSegment));
   }, [lastSegment, dispatch]);
 
-  React.useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-    // if (isInitialLoad) {
-    //   setIsInitialLoad(false);
-    // }
-  }, [products]);
-
   const sortOptions = [
     { value: 'relevent', icon: <FaStar />, label: t('catalog.sort.relevant') },
     { value: 'low-high', icon: <FaSortAmountUp />, label: t('catalog.sort.lowToHigh') },
@@ -139,7 +129,7 @@ const Catalog = () => {
                 isLoading ? 'px-4' : ''
               }`}>
               {isLoading
-                ? Array(8)
+                ? Array(12)
                     .fill(0)
                     .map((_, index) => <ProductItemSkeleton key={index} />)
                 : products.map((item, index) => <ProductItem key={index} {...item} />)}
