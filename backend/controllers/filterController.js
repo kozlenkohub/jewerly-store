@@ -112,6 +112,7 @@ export const updateFilter = async (req, res) => {
           type: option.type,
           img: option.img || '',
           category: option.category || [],
+          name: option.name || {}, // Include the name field
         })),
       },
       { new: true, runValidators: true },

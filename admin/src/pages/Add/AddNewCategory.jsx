@@ -23,25 +23,37 @@ const AddNewCategory = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const formData = new FormData();
+      console.log('Form values:', values); // Debug log
 
-      // Append text fields
-      formData.append('name', String(values.name || ''));
-      formData.append('label', String(values.label || ''));
-      formData.append('parent', String(values.parent || ''));
-      formData.append('slug', String(values.slug || ''));
+      // Create regular JSON object instead of FormData
+      const categoryData = {
+        name: {
+          en: values.name.en || '',
+          ru: values.name.ru || '',
+          uk: values.name.uk || '',
+        },
+        label: values.label || '',
+        parent: values.parent || '',
+        slug: values.slug || '',
+      };
 
-      // Append files with correct field names
-      if (values.image) {
-        formData.append('image', values.image);
+      console.log('Sending data:', categoryData); // Debug log
+
+      // First, upload files if they exist
+      if (values.image || values.icon) {
+        const formData = new FormData();
+        if (values.image) formData.append('image', values.image);
+        if (values.icon) formData.append('icon', values.icon);
+
+        const fileResponse = await axios.post('/api/upload', formData);
+        categoryData.image = fileResponse.data.image;
+        categoryData.icon = fileResponse.data.icon;
       }
-      if (values.icon) {
-        formData.append('icon', values.icon);
-      }
 
-      const response = await axios.post('/api/category/add', formData, {
+      // Then send category data as JSON
+      const response = await axios.post('/api/category/add', categoryData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
 
@@ -49,9 +61,9 @@ const AddNewCategory = () => {
       toast.success('Category added successfully!');
       resetForm();
     } catch (error) {
-      console.error('Category creation error:', error);
+      console.error('Full error:', error);
       console.error('Error response:', error.response?.data);
-      toast.error(error.response?.data?.message || 'Error adding category');
+      toast.error(error.response?.data?.message || 'Failed to add category');
     } finally {
       setSubmitting(false);
     }
