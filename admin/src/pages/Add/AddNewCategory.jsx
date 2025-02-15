@@ -25,35 +25,26 @@ const AddNewCategory = () => {
     try {
       console.log('Form values:', values); // Debug log
 
-      // Create regular JSON object instead of FormData
-      const categoryData = {
-        name: {
-          en: values.name.en || '',
-          ru: values.name.ru || '',
-          uk: values.name.uk || '',
-        },
-        label: values.label || '',
-        parent: values.parent || '',
-        slug: values.slug || '',
-      };
+      const formData = new FormData();
+      formData.append('name[en]', values.name.en || '');
+      formData.append('name[ru]', values.name.ru || '');
+      formData.append('name[uk]', values.name.uk || '');
+      formData.append('label', values.label || '');
+      formData.append('parent', values.parent || '');
+      formData.append('slug', values.slug || '');
 
-      console.log('Sending data:', categoryData); // Debug log
-
-      // First, upload files if they exist
-      if (values.image || values.icon) {
-        const formData = new FormData();
-        if (values.image) formData.append('image', values.image);
-        if (values.icon) formData.append('icon', values.icon);
-
-        const fileResponse = await axios.post('/api/upload', formData);
-        categoryData.image = fileResponse.data.image;
-        categoryData.icon = fileResponse.data.icon;
+      if (values.image) {
+        formData.append('image', values.image);
+      }
+      if (values.icon) {
+        formData.append('icon', values.icon);
       }
 
-      // Then send category data as JSON
-      const response = await axios.post('/api/category/add', categoryData, {
+      console.log('Sending data:', Object.fromEntries(formData));
+
+      const response = await axios.post('/api/category/add', formData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
 
