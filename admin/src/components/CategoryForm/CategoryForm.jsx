@@ -1,27 +1,38 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import Select from 'react-select';
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Autocomplete,
+  Box,
+  IconButton,
+  Paper,
+} from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const validationSchema = Yup.object({
-  name: Yup.string().trim().required('Name is required'),
-  label: Yup.string().nullable(),
+  name: Yup.object().shape({
+    en: Yup.string().required('English name is required'),
+    ru: Yup.string(),
+    uk: Yup.string(),
+  }),
+  label: Yup.string(),
   parent: Yup.string().nullable(),
   image: Yup.mixed(),
   icon: Yup.mixed(),
 });
 
-const selectStyles = {
-  // ...existing styles object from AddNewCategory...
-};
-
 const CategoryForm = ({ onSubmit, parentCategories, initialValues = {} }) => {
-  const generateSlug = (name) => name.toLowerCase().replace(/\s+/g, '-');
+  const generateSlug = (name) => name?.en?.toLowerCase().replace(/\s+/g, '-') || '';
 
   return (
     <Formik
       initialValues={{
-        name: '',
+        name: { en: '', ru: '', uk: '' },
         image: null,
         icon: null,
         label: '',
@@ -32,107 +43,197 @@ const CategoryForm = ({ onSubmit, parentCategories, initialValues = {} }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}>
       {({ errors, touched, setFieldValue, values }) => (
-        <Form className="space-y-4">
-          {/* Name field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-            <Field
-              name="name"
-              className="shadow appearance-none border rounded w-full py-2 px-3"
-              onChange={(e) => {
-                setFieldValue('name', e.target.value);
-                setFieldValue('slug', generateSlug(e.target.value));
-              }}
-            />
-            {errors.name && touched.name && (
-              <div className="text-red-500 text-sm">{errors.name}</div>
-            )}
-          </div>
+        <Form>
+          <Grid container spacing={3}>
+            {/* Name fields */}
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Category Names
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={4}>
+                  <TextField
+                    fullWidth
+                    label="Name (English)*"
+                    name="name.en"
+                    value={values.name.en}
+                    onChange={(e) => {
+                      setFieldValue('name.en', e.target.value);
+                      setFieldValue('slug', generateSlug({ en: e.target.value }));
+                    }}
+                    error={errors.name?.en && touched.name?.en}
+                    helperText={touched.name?.en && errors.name?.en}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TextField
+                    fullWidth
+                    label="Name (Russian)"
+                    name="name.ru"
+                    value={values.name.ru}
+                    onChange={(e) => setFieldValue('name.ru', e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TextField
+                    fullWidth
+                    label="Name (Ukrainian)"
+                    name="name.uk"
+                    value={values.name.uk}
+                    onChange={(e) => setFieldValue('name.uk', e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
 
-          {/* Slug field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Slug</label>
-            <Field
-              name="slug"
-              disabled
-              className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-100"
-            />
-          </div>
-
-          {/* Label field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Label</label>
-            <Field
-              name="label"
-              className="shadow appearance-none border rounded w-full py-2 px-3"
-            />
-          </div>
-
-          {/* Image field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFieldValue('image', e.target.files[0])}
-              className="shadow appearance-none border rounded w-full py-2 px-3"
-            />
-            {values.image && (
-              <img
-                src={URL.createObjectURL(values.image)}
-                alt="Preview"
-                className="mt-2 h-20 object-contain"
+            {/* Slug field */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Slug"
+                name="slug"
+                value={values.slug}
+                disabled
+                variant="filled"
               />
-            )}
-          </div>
+            </Grid>
 
-          {/* Icon field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Icon</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFieldValue('icon', e.target.files[0])}
-              className="shadow appearance-none border rounded w-full py-2 px-3"
-            />
-            {values.icon && (
-              <img
-                src={URL.createObjectURL(values.icon)}
-                alt="Preview"
-                className="mt-2 h-20 object-contain"
+            {/* Label field */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Label"
+                name="label"
+                value={values.label}
+                onChange={(e) => setFieldValue('label', e.target.value)}
               />
-            )}
-          </div>
+            </Grid>
 
-          {/* Parent Category field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Parent Category</label>
-            <Select
-              isClearable
-              value={parentCategories.find((cat) => cat._id === values.parent)}
-              onChange={(option) => setFieldValue('parent', option?._id || '')}
-              options={parentCategories}
-              getOptionLabel={(option) => option.name}
-              getOptionValue={(option) => option._id}
-              className="basic-select"
-              classNamePrefix="select"
-              styles={selectStyles}
-              formatOptionLabel={(option) => (
-                <div className="flex items-center gap-2">
-                  {option.icon && (
-                    <img src={option.icon} alt={option.name} className="w-6 h-6 object-contain" />
+            {/* File upload fields */}
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle1" gutterBottom>
+                Category Image
+              </Typography>
+              <input
+                type="file"
+                accept="image/*"
+                id="image-upload"
+                hidden
+                onChange={(e) => setFieldValue('image', e.target.files[0])}
+              />
+              <label htmlFor="image-upload">
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    minHeight: 100,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {values.image ? (
+                    <Box sx={{ position: 'relative', width: '100%' }}>
+                      <img
+                        src={URL.createObjectURL(values.image)}
+                        alt="Preview"
+                        style={{ maxHeight: 100, maxWidth: '100%' }}
+                      />
+                      <IconButton
+                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFieldValue('image', null);
+                        }}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <CloudUploadIcon sx={{ fontSize: 40 }} />
                   )}
-                  <span>{option.name}</span>
-                </div>
-              )}
-            />
-          </div>
+                </Paper>
+              </label>
+            </Grid>
 
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Category
-          </button>
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle1" gutterBottom>
+                Category Icon
+              </Typography>
+              <input
+                type="file"
+                accept="image/*"
+                id="icon-upload"
+                hidden
+                onChange={(e) => setFieldValue('icon', e.target.files[0])}
+              />
+              <label htmlFor="icon-upload">
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    minHeight: 100,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {values.icon ? (
+                    <Box sx={{ position: 'relative', width: '100%' }}>
+                      <img
+                        src={URL.createObjectURL(values.icon)}
+                        alt="Preview"
+                        style={{ maxHeight: 100, maxWidth: '100%' }}
+                      />
+                      <IconButton
+                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFieldValue('icon', null);
+                        }}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <CloudUploadIcon sx={{ fontSize: 40 }} />
+                  )}
+                </Paper>
+              </label>
+            </Grid>
+
+            {/* Parent Category field */}
+            <Grid item xs={12}>
+              <Autocomplete
+                options={parentCategories}
+                getOptionLabel={(option) => option.name.en || ''}
+                value={parentCategories.find((cat) => cat._id === values.parent) || null}
+                onChange={(_, newValue) => setFieldValue('parent', newValue?._id || '')}
+                renderInput={(params) => (
+                  <TextField {...params} label="Parent Category" fullWidth />
+                )}
+                renderOption={(props, option) => (
+                  <Box component="li" {...props}>
+                    {option.icon && (
+                      <img
+                        src={option.icon}
+                        alt=""
+                        style={{ width: 20, height: 20, marginRight: 8 }}
+                      />
+                    )}
+                    {option.name.en}
+                  </Box>
+                )}
+              />
+            </Grid>
+
+            {/* Submit button */}
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
+                Save Category
+              </Button>
+            </Grid>
+          </Grid>
         </Form>
       )}
     </Formik>

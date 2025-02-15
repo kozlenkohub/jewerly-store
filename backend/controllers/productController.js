@@ -161,8 +161,16 @@ export const addProduct = async (req, res) => {
 
     // Формирование данных для нового продукта
     const newProductData = {
-      name,
-      description,
+      name: {
+        en: name?.en,
+        ru: name?.ru,
+        uk: name?.uk,
+      },
+      description: {
+        en: description?.en,
+        ru: description?.ru,
+        uk: description?.uk,
+      },
       price: Number(price) || 0,
       image: mediaUrls,
       category: categoryDoc._id,
@@ -170,8 +178,12 @@ export const addProduct = async (req, res) => {
       size: Array.isArray(size) ? size : size ? [size] : [],
       discount: Number(discount) || 0,
       bestseller: Boolean(bestseller),
-      metal,
-      cutForm,
+      metal: {
+        value: metal?.value,
+      },
+      cutForm: {
+        value: cutForm?.value,
+      },
       style,
       clarity,
       purity: purity ? Number(purity) : undefined,

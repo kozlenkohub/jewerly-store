@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import axios from '../../config/axiosInstance';
 import ProductForm from '../../components/ProductForm';
 import BackButton from '../../components/BackButton';
+import { Container, Typography, Button } from '@mui/material';
 
 const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -57,11 +58,6 @@ const AddNewProduct = () => {
         });
       }
 
-      // Log the FormData contents
-      for (let pair of formData.entries()) {
-        console.log('FormData entry:', pair[0], pair[1]);
-      }
-
       const response = await axios.post('/api/product/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -73,7 +69,6 @@ const AddNewProduct = () => {
         },
       });
 
-      console.log('Server response:', response.data);
       toast.success('Product added successfully!');
       resetForm();
     } catch (error) {
@@ -100,11 +95,13 @@ const AddNewProduct = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <Container maxWidth="md">
       <BackButton />
-      <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
+      <Typography variant="h4" gutterBottom>
+        Add New Product
+      </Typography>
       <ProductForm onSubmit={handleSubmit} categories={categories} />
-    </div>
+    </Container>
   );
 };
 

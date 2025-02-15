@@ -6,13 +6,24 @@ export const createCategory = async (req, res) => {
     const { name, parent, label, slug } = req.body;
     const files = req.files || {};
 
-    if (!name) {
-      return res.status(400).json({ message: 'Name is required' });
+    // Validate required name fields
+    if (!name || !name.en) {
+      return res.status(400).json({ message: 'English name is required' });
+    }
+
+    // Check if category with the same name exists
+    const existingCategory = await Category.findOne({ 'name.en': name.en });
+    if (existingCategory) {
+      return res.status(400).json({ message: 'Category with this name already exists' });
     }
 
     const categoryData = {
-      name,
-      slug: slug || generateSlug(name),
+      name: {
+        en: name.en,
+        ru: name.ru || '',
+        uk: name.uk || '',
+      },
+      slug: slug || generateSlug(name.en),
       label,
       parent: parent || null,
     };

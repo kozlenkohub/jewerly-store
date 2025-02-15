@@ -1,6 +1,20 @@
 import React, { useMemo } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+  Paper,
+  Box,
+  MenuItem,
+  Tabs,
+  Tab,
+} from '@mui/material';
 import Select from 'react-select';
 
 import {
@@ -15,12 +29,20 @@ import MediaUpload from './MediaUpload';
 import CategorySelect from './CategorySelect';
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
+  name: Yup.object({
+    en: Yup.string().required('Required'),
+    ru: Yup.string(),
+    uk: Yup.string(),
+  }).required(),
+  description: Yup.object({
+    en: Yup.string().required('Required'),
+    ru: Yup.string(),
+    uk: Yup.string(),
+  }).required(),
   price: Yup.number().required('Required').positive('Must be positive'),
   category: Yup.string().required('Required'),
   metal: Yup.string().required('Required'),
   cutForm: Yup.string().required('Required'),
-  description: Yup.string().required('Required'),
   weight: Yup.number().required('Required').positive('Must be positive'),
   collection: Yup.string().required('Required'),
   purity: Yup.number().transform((value) => (isNaN(value) ? undefined : value)),
@@ -47,6 +69,7 @@ const createNumericSelectOptions = (items) => {
 };
 
 const ProductForm = ({ onSubmit, categories }) => {
+  const [activeLanguage, setActiveLanguage] = React.useState('en');
   const metalOptions = useMemo(() => createSelectOptions(METAL_TYPES), []);
   const cutFormOptions = useMemo(() => createSelectOptions(CUT_FORMS), []);
   const styleOptions = useMemo(() => createSelectOptions(STYLES), []);
@@ -56,8 +79,8 @@ const ProductForm = ({ onSubmit, categories }) => {
   return (
     <Formik
       initialValues={{
-        name: '',
-        description: '',
+        name: { en: '', ru: '', uk: '' },
+        description: { en: '', ru: '', uk: '' },
         price: '',
         image: [],
         category: '',
@@ -76,177 +99,220 @@ const ProductForm = ({ onSubmit, categories }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}>
       {({ isSubmitting, setFieldValue, values, errors, touched }) => (
-        <Form className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {/* Name field */}
-            <div>
-              <label className="block mb-2">Name</label>
-              <Field type="text" name="name" className="w-full border p-2 rounded" />
-              {errors.name && touched.name && (
-                <div className="text-red-500 text-sm">{errors.name}</div>
-              )}
-            </div>
+        <Form>
+          <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
+            <Grid container spacing={3}>
+              {/* Localized fields with language tabs */}
+              <Grid item xs={12}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+                  <Tabs
+                    value={activeLanguage}
+                    onChange={(_, newValue) => setActiveLanguage(newValue)}
+                    sx={{ mb: 2 }}>
+                    <Tab label="English" value="en" />
+                    <Tab label="Русский" value="ru" />
+                    <Tab label="Українська" value="uk" />
+                  </Tabs>
+                </Box>
 
-            {/* Price field */}
-            <div>
-              <label className="block mb-2">Price</label>
-              <Field type="number" name="price" className="w-full border p-2 rounded" />
-              {errors.price && touched.price && (
-                <div className="text-red-500 text-sm">{errors.price}</div>
-              )}
-            </div>
+                {/* Name field for active language */}
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Product Name
+                  </Typography>
+                  <Field
+                    name={`name.${activeLanguage}`}
+                    as={TextField}
+                    label={`Name (${activeLanguage.toUpperCase()})`}
+                    fullWidth
+                    error={errors.name?.[activeLanguage] && touched.name?.[activeLanguage]}
+                    helperText={touched.name?.[activeLanguage] && errors.name?.[activeLanguage]}
+                  />
+                </Box>
 
-            {/* Discount field */}
-            <div>
-              <label className="block mb-2">Discount (%)</label>
-              <Field
-                type="number"
-                name="discount"
-                min="0"
-                max="100"
-                step="1"
-                className="w-full border p-2 rounded"
-              />
-              {errors.discount && touched.discount && (
-                <div className="text-red-500 text-sm">{errors.discount}</div>
-              )}
-            </div>
+                {/* Description field for active language */}
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    Description
+                  </Typography>
+                  <Field
+                    name={`description.${activeLanguage}`}
+                    as={TextField}
+                    label={`Description (${activeLanguage.toUpperCase()})`}
+                    multiline
+                    rows={4}
+                    fullWidth
+                    error={
+                      errors.description?.[activeLanguage] && touched.description?.[activeLanguage]
+                    }
+                    helperText={
+                      touched.description?.[activeLanguage] && errors.description?.[activeLanguage]
+                    }
+                  />
+                </Box>
+              </Grid>
 
-            {/* Category Select */}
-            <div>
-              <label className="block mb-2">Category</label>
-              <CategorySelect
-                categories={categories}
-                value={values.category}
-                onChange={(e) => setFieldValue('category', e.target.value)}
-              />
-              {errors.category && touched.category && (
-                <div className="text-red-500 text-sm">{errors.category}</div>
-              )}
-            </div>
+              {/* Preview of other languages */}
+              <Grid item xs={12}>
+                <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
+                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                    Other Languages Preview
+                  </Typography>
+                  <Grid container spacing={2}>
+                    {['en', 'ru', 'uk']
+                      .filter((lang) => lang !== activeLanguage)
+                      .map((lang) => (
+                        <Grid item xs={6} key={lang}>
+                          <Typography variant="caption" color="text.secondary">
+                            {lang.toUpperCase()}: {values.name[lang] || '(not set)'}
+                          </Typography>
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Box>
+              </Grid>
 
-            {/* All other select fields */}
-            {[
-              { label: 'Metal', name: 'metal', options: metalOptions },
-              { label: 'Cut Form', name: 'cutForm', options: cutFormOptions },
-              { label: 'Style', name: 'style', options: styleOptions },
-              { label: 'Clarity', name: 'clarity', options: clarityOptions },
-              { label: 'Purity', name: 'purity', options: purityOptions },
-            ].map(({ label, name, options }) => (
-              <div key={name}>
-                <label className="block mb-2">{label}</label>
-                <Select
-                  value={options.find((option) => option.value === values[name])}
-                  onChange={(option) => setFieldValue(name, option?.value || '')}
-                  options={options}
-                  isClearable
-                  placeholder={`Select ${label}`}
-                  className="react-select-container"
-                  classNamePrefix="react-select"
-                />
-                {errors[name] && touched[name] && (
-                  <div className="text-red-500 text-sm">{errors[name]}</div>
-                )}
-              </div>
-            ))}
-
-            {/* Numeric fields */}
-            {[
-              { label: 'Carats', name: 'carats' },
-              { label: 'Weight (g)', name: 'weight' },
-            ].map(({ label, name }) => (
-              <div key={name}>
-                <label className="block mb-2">{label}</label>
+              {/* Price and Discount */}
+              <Grid item xs={12} md={6}>
                 <Field
+                  name="price"
+                  as={TextField}
+                  label="Price"
                   type="number"
-                  step="0.01"
-                  name={name}
-                  className="w-full border p-2 rounded"
+                  fullWidth
+                  error={errors.price && touched.price}
+                  helperText={touched.price && errors.price}
                 />
-                {errors[name] && touched[name] && (
-                  <div className="text-red-500 text-sm">{errors[name]}</div>
-                )}
-              </div>
-            ))}
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="discount"
+                  as={TextField}
+                  label="Discount (%)"
+                  type="number"
+                  fullWidth
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                />
+              </Grid>
 
-            {/* Collection field */}
-            <div>
-              <label className="block mb-2">Collection</label>
-              <Field type="text" name="collection" className="w-full border p-2 rounded" />
-              {errors.collection && touched.collection && (
-                <div className="text-red-500 text-sm">{errors.collection}</div>
-              )}
-            </div>
+              {/* Category Select */}
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <CategorySelect
+                    categories={categories}
+                    value={values.category}
+                    onChange={(e) => setFieldValue('category', e.target.value)}
+                  />
+                </FormControl>
+              </Grid>
 
-            {/* Size field - add before the Media Upload section */}
-            <div className="col-span-2">
-              <label className="block mb-2">Sizes</label>
-              <div className="mb-2">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFieldValue('size', values.size.length === ringSizer.length ? [] : ringSizer)
-                  }
-                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-3 rounded text-sm">
-                  {values.size.length === ringSizer.length ? 'Unselect All' : 'Select All'}
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {ringSizer.map((size) => (
-                  <label key={size} className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={values.size.includes(size)}
-                      onChange={(e) => {
-                        const newSizes = e.target.checked
-                          ? [...values.size, size]
-                          : values.size.filter((s) => s !== size);
-                        setFieldValue('size', newSizes);
-                      }}
-                      className="form-checkbox h-4 w-4 text-blue-600"
+              {/* Metal, CutForm, etc selects */}
+              {[
+                { label: 'Metal', name: 'metal', options: metalOptions },
+                { label: 'Cut Form', name: 'cutForm', options: cutFormOptions },
+                { label: 'Style', name: 'style', options: styleOptions },
+                { label: 'Clarity', name: 'clarity', options: clarityOptions },
+                { label: 'Purity', name: 'purity', options: purityOptions },
+              ].map(({ label, name, options }) => (
+                <Grid item xs={12} md={6} key={name}>
+                  <FormControl fullWidth>
+                    <Select
+                      value={options.find((option) => option.value === values[name])}
+                      onChange={(option) => setFieldValue(name, option?.value || '')}
+                      options={options}
+                      isClearable
+                      placeholder={`Select ${label}`}
                     />
-                    <span className="ml-2">{size}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+                  </FormControl>
+                </Grid>
+              ))}
 
-            {/* Media Upload */}
-            <div className="col-span-2">
-              <label className="block mb-2">Media</label>
-              <MediaUpload
-                value={values.image}
-                onMediaChange={(files) => setFieldValue('image', files)}
-              />
-            </div>
+              {/* Numeric fields */}
+              {[
+                { label: 'Carats', name: 'carats' },
+                { label: 'Weight (g)', name: 'weight' },
+              ].map(({ label, name }) => (
+                <Grid item xs={12} md={6} key={name}>
+                  <Field
+                    name={name}
+                    as={TextField}
+                    label={label}
+                    type="number"
+                    fullWidth
+                    step="0.01"
+                  />
+                </Grid>
+              ))}
 
-            {/* Description */}
-            <div className="col-span-2">
-              <label className="block mb-2">Description</label>
-              <Field
-                as="textarea"
-                name="description"
-                className="w-full border p-2 rounded"
-                rows="4"
-              />
-              {errors.description && touched.description && (
-                <div className="text-red-500 text-sm">{errors.description}</div>
-              )}
-            </div>
+              {/* Collection field */}
+              <Grid item xs={12} md={6}>
+                <Field name="collection" as={TextField} label="Collection" fullWidth />
+              </Grid>
 
-            {/* Bestseller checkbox */}
-            <div className="flex items-center">
-              <Field type="checkbox" name="bestseller" className="mr-2" />
-              <label>Bestseller</label>
-            </div>
-          </div>
+              {/* Sizes */}
+              <Grid item xs={12}>
+                <Typography variant="h6" gutterBottom>
+                  Available Sizes
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      setFieldValue(
+                        'size',
+                        values.size.length === ringSizer.length ? [] : ringSizer,
+                      )
+                    }>
+                    {values.size.length === ringSizer.length ? 'Unselect All' : 'Select All'}
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                  {ringSizer.map((size) => (
+                    <FormControlLabel
+                      key={size}
+                      control={
+                        <Checkbox
+                          checked={values.size.includes(size)}
+                          onChange={(e) => {
+                            const newSizes = e.target.checked
+                              ? [...values.size, size]
+                              : values.size.filter((s) => s !== size);
+                            setFieldValue('size', newSizes);
+                          }}
+                        />
+                      }
+                      label={size}
+                    />
+                  ))}
+                </Box>
+              </Grid>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50">
-            {isSubmitting ? 'Adding...' : 'Add Product'}
-          </button>
+              {/* Media Upload */}
+              <Grid item xs={12}>
+                <Typography variant="h6" gutterBottom>
+                  Media Files
+                </Typography>
+                <MediaUpload
+                  value={values.image}
+                  onMediaChange={(files) => setFieldValue('image', files)}
+                />
+              </Grid>
+
+              {/* Bestseller checkbox */}
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Field name="bestseller" as={Checkbox} />}
+                  label="Bestseller"
+                />
+              </Grid>
+            </Grid>
+          </Paper>
+
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type="submit" variant="contained" disabled={isSubmitting} size="large">
+              {isSubmitting ? 'Adding...' : 'Add Product'}
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>
