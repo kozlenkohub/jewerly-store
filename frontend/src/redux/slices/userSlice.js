@@ -67,12 +67,9 @@ export const updateEmail = createAsyncThunk(
   'user/updateEmail',
   async (email, { rejectWithValue }) => {
     try {
-      console.log('Sending request to update email:', email);
       const { data } = await axios.put('/api/user/profile/email', { email });
-      console.log('Response from server:', data);
       return data;
     } catch (error) {
-      console.error('Error in updateEmail action:', error);
       return rejectWithValue(error.response.data);
     }
   },
@@ -85,9 +82,7 @@ export const updatePassword = createAsyncThunk(
       if (newPassword.length < 8) {
         return rejectWithValue({ message: 'New password must be at least 8 characters' });
       }
-      console.log('Sending request to update password:', { password, newPassword }); // Log the request data
       const { data } = await axios.put('/api/user/profile/password', { password, newPassword });
-      console.log('Response from server:', data); // Log the response from the server
       return data;
     } catch (error) {
       console.error('Error in updatePassword action:', error); // Log the error

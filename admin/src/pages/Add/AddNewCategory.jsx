@@ -11,7 +11,6 @@ const AddNewCategory = () => {
     const fetchData = async () => {
       try {
         const categoriesRes = await axios.get('/api/category/get');
-        console.log('Fetched categories:', categoriesRes.data);
         setParentCategories(categoriesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -23,8 +22,6 @@ const AddNewCategory = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      console.log('Form values:', values); // Debug log
-
       const formData = new FormData();
       formData.append('name[en]', values.name.en || '');
       formData.append('name[ru]', values.name.ru || '');
@@ -40,15 +37,12 @@ const AddNewCategory = () => {
         formData.append('icon', values.icon);
       }
 
-      console.log('Sending data:', Object.fromEntries(formData));
-
       const response = await axios.post('/api/category/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log('Server response:', response.data);
       toast.success('Category added successfully!');
       resetForm();
     } catch (error) {

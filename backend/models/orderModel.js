@@ -149,7 +149,6 @@ orderSchema.statics.removeExpiredProcessingOrders = async function () {
       status: 'Processing',
       processingStartedAt: { $lt: fiveMinutesAgo },
     });
-    console.log(`Removed ${result.deletedCount} expired processing orders`);
   } catch (error) {
     console.error('Error removing expired orders:', error);
   }

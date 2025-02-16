@@ -65,7 +65,6 @@ const AddNewProduct = () => {
         timeout: 60000,
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          console.log('Upload progress:', percentCompleted + '%');
         },
       });
 

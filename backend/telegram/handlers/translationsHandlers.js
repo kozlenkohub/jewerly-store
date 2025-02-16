@@ -15,7 +15,6 @@ export const setupTranslationHandlers = (bot) => {
   // Command to trigger the category selection UI
   bot.onText(/\/edit_translations/, async (msg) => {
     const chatId = msg.chat.id;
-    console.log('Received /edit_translations command'); // Add this line
     sendCategorySelection(bot, chatId, localesDir, lang, currentPage, categoryListMessageId);
   });
 

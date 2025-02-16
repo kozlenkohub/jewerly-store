@@ -43,7 +43,6 @@ const CategoryForm = ({ onSubmit, parentCategories, initialValues = {} }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}>
       {({ errors, touched, setFieldValue, values, isSubmitting }) => {
-        console.log('isSubmitting:', isSubmitting);
         return (
           <Form>
             <Grid container spacing={3}>

@@ -12,7 +12,6 @@ const ResetPassword = () => {
   const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  console.log(token);
 
   const onSubmit = (e) => {
     e.preventDefault();

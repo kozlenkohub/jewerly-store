@@ -160,7 +160,6 @@ export const paymentCallback = async (req, res) => {
     }
 
     const decodedData = Buffer.from(data, 'base64').toString('utf-8');
-    console.log('decodedData:', decodedData);
 
     const expectedSignature = generateLiqPaySignature(data);
 

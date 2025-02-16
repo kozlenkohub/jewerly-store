@@ -25,31 +25,42 @@ export const sendOrderNotification = async (bot, order) => {
   }
 };
 
+export async function handleOrders(bot, msg) {
+  const chatId = msg.chat.id;
+
+  // Prevent duplicate handling
+  if (msg._processed) {
+    return;
+  }
+  msg._processed = true;
+
+  const isAuthorized = await TelegramUser.checkAuthorization(chatId);
+
+  if (!isAuthorized) {
+    return bot.sendMessage(chatId, 'У вас нет доступа к этой команде.');
+  }
+
+  try {
+    const { keyboard, totalOrders } = await getOrdersKeyboard(1);
+
+    if (totalOrders === 0) {
+      return bot.sendMessage(chatId, 'Заказов пока нет.');
+    }
+
+    await bot.sendMessage(chatId, 'Список заказов:', {
+      reply_markup: {
+        inline_keyboard: keyboard,
+      },
+    });
+  } catch (error) {
+    console.error('Error in orders handler:', error);
+    bot.sendMessage(chatId, 'Произошла ошибка при получении заказов.');
+  }
+}
+
 export const setupOrderHandlers = (bot) => {
-  bot.onText(/\/orders/, async (msg) => {
-    const chatId = msg.chat.id;
-    const isAuthorized = await TelegramUser.checkAuthorization(chatId);
-
-    if (!isAuthorized) {
-      return bot.sendMessage(chatId, 'У вас нет доступа к этой команде.');
-    }
-
-    try {
-      const { keyboard, totalOrders } = await getOrdersKeyboard(1);
-
-      if (totalOrders === 0) {
-        return bot.sendMessage(chatId, 'Заказов пока нет.');
-      }
-
-      await bot.sendMessage(chatId, 'Список заказов:', {
-        reply_markup: {
-          inline_keyboard: keyboard,
-        },
-      });
-    } catch (error) {
-      bot.sendMessage(chatId, 'Произошла ошибка при получении заказов.');
-    }
-  });
+  // Register both handlers
+  bot.onText(/\/orders/, (msg) => handleOrders(bot, msg));
 
   bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
