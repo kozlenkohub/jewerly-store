@@ -17,7 +17,7 @@ async function getAllChildCategoryIds(catId, collected = []) {
 export const getProducts = async (req, res) => {
   try {
     // Извлекаем известные параметры запроса и все остальные помещаем в unknownFilters
-    const { metal, carats, price, cutForm, sort, search, ...unknownFilters } = req.query;
+    const { metal, carats, price, cutForm, style, sort, search, ...unknownFilters } = req.query;
     const { category: paramCategory } = req.params;
 
     // Если присутствуют неизвестные фильтры – возвращаем пустой массив
@@ -36,8 +36,14 @@ export const getProducts = async (req, res) => {
       };
     }
 
-    // Фильтр по диапазонам каратов
+    if (style) {
+      const styles = Array.isArray(style) ? style : [style];
+      filter.style = {
+        $in: styles,
+      };
+    }
     if (carats) {
+      // Фильтр по диапазонам каратов
       const caratsRanges = Array.isArray(carats) ? carats : [carats];
       filter.$or = caratsRanges.map((range) => {
         const [minCarats, maxCarats] = range.split('-').map(Number);
