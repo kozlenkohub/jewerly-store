@@ -161,7 +161,7 @@ const NavbarLinks = ({ textColor, categories }) => {
         className="relative group"
         onMouseEnter={handleInfoMouseEnter}
         onMouseLeave={handleInfoMouseLeave}>
-        <NavLink to="/about" className="flex flex-col items-center gap-1">
+        <NavLink to="/create" className="flex flex-col items-center gap-1">
           <p>{t('navbar.menu.service')}</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-mainColor hidden" />
         </NavLink>
