@@ -38,9 +38,7 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   if (filterKey === 'cutForm') {
     return <CutForm filterKey={filterKey} label={label} options={options} />;
   }
-  if (filterKey === 'style') {
-    return <CutForm filterKey={filterKey} label={label} options={options} />;
-  }
+
   return (
     <div className="border border-gray-300 pl-5 py-3 my-5 sm:block">
       <p className="mb-3 text-sm font-medium">{label}</p>
