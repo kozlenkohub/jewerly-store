@@ -23,7 +23,7 @@ const OurPolicy = () => {
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row justify-around gap-12 sm:gap-2 text-center py-20 text-xs sm:text-sm md:text-base max-w-[1280px] mx-auto">
+    <div className="flex flex-col sm:flex-row justify-around gap-12 sm:gap-2 text-center py-8 text-xs sm:text-sm md:text-base max-w-[1280px] mx-auto">
       {policies.map(({ Icon, translationKey }) => (
         <div key={translationKey} className="">
           <Icon className="m-auto mb-3 w-12 h-12" />
