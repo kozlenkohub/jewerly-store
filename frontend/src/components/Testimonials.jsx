@@ -73,7 +73,7 @@ const Testimonials = () => {
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="px-6">
                 <div className="bg-white rounded-xl shadow-lg p-8 relative transition-transform hover:scale-[1.02] duration-300">
-                  <FaQuoteRight className="absolute top-4 right-4 text-pink-100 text-4xl" />
+                  <FaQuoteRight className="absolute top-4 right-4 text-mainColor/50 text-4xl" />
                   <div className="flex items-center mb-6">
                     <div className="bg-gray-400 rounded-full p-1">
                       <FaUserCircle className="text-5xl text-white" />
