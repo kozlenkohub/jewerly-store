@@ -65,7 +65,8 @@ const productSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoading = true;
+
         state.status = 'succeeded';
         state.products = action.payload.products;
         state.activeCategory = action.payload.categoryName; // Set the active category name

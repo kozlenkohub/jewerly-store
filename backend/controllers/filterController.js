@@ -134,6 +134,57 @@ export const updateFilter = async (req, res) => {
 export const populateFilters = async (req, res) => {
   const filters = [
     {
+      key: 'style',
+      label: {
+        en: 'Ring Style',
+        ru: 'Стиль кольца',
+        uk: 'Стиль кільця',
+      },
+      type: 'checkbox',
+      options: [
+        {
+          name: {
+            en: 'Solitaire',
+            ru: 'Солитер',
+            uk: 'Солітер',
+          },
+          img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/Solitaire.png',
+          category: [],
+          type: 'solitaire',
+        },
+        {
+          name: {
+            en: 'Shoulder Set',
+            ru: 'С плечевыми камнями',
+            uk: 'З плечовими каменями',
+          },
+          img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/Shoulder-Set.png',
+          category: [],
+          type: 'shoulder-set',
+        },
+        {
+          name: {
+            en: 'Three-Stone',
+            ru: 'Три камня',
+            uk: 'Три камені',
+          },
+          img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/Three-Stone.png',
+          category: [],
+          type: 'three-stone',
+        },
+        {
+          name: {
+            en: 'Halo',
+            ru: 'Гало',
+            uk: 'Гало',
+          },
+          img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/Halo.png',
+          category: [],
+          type: 'halo',
+        },
+      ],
+    },
+    {
       key: 'carats',
       label: {
         en: 'Carats',
@@ -197,7 +248,7 @@ export const populateFilters = async (req, res) => {
           name: {
             en: 'White Gold',
             ru: 'Белое золото',
-            uk: 'Біле золото', // Added
+            uk: 'Біле золото',
           },
           img: 'https://apsen-diamond.com.ua/image/catalog/attribute-icons/beloe-zoloto.png',
           category: [],
