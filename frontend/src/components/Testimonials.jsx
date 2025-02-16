@@ -62,7 +62,7 @@ const Testimonials = () => {
     <div className="bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-[1280px] mx-auto px-4">
         <div className="text-4xl font-bold text-center mb-2 ">
-          <Title text1={t('testimonials.title1')} text2={testimonials.title2} />
+          <Title text1={t('testimonials.title1')} text2={t('testimonials.title2')} />
         </div>
         <p className="text-center futura text-gray-600 mb-12 max-w-2xl mx-auto">
           {t('testimonials.subtitle')}
