@@ -20,7 +20,7 @@ const WishList = () => {
     <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 futura max-w-[1280px]">
       <h2 className="text-xl sm:text-2xl font-medium mb-4 sm:mb-6">{t('wishlist.title')}</h2>
       <div
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-4 sm:mt-6 min-h-[44vh] w-full sm:w-auto max-w-[1000px] mx-auto ${
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-4 sm:mt-6  w-full sm:w-auto max-w-[1000px] mx-auto text-center ${
           wishlistItems.length === 0 ? 'px-2 sm:px-4' : ''
         }`}>
         {wishlistItems.map((item, index) => (

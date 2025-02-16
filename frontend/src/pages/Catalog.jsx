@@ -125,7 +125,7 @@ const Catalog = () => {
             </div>
 
             <div
-              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6 min-h-[44vh] ${
+              className={`grid py grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 gap-y-4 sm:gap-y-6 mt-6  ${
                 isLoading ? 'px-4' : ''
               }`}>
               {isLoading
