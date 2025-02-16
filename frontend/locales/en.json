@@ -745,5 +745,10 @@
       "title": "Important Note",
       "resizing": "If the ring doesn't fit perfectly, don't worry — we'll adjust the size free of charge to ensure the jewelry fits perfectly on your hand"
     }
+  },
+  "testimonials": {
+    "title1": "Customer",
+    "title2": "Reviews",
+    "subtitle": "Hear what our customers have to say about their experience"
   }
 }

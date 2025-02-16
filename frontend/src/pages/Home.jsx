@@ -4,6 +4,7 @@ import LatestCatalog from '../components/LatestCatalog';
 import OurPolicy from '../components/OurPolicy';
 import NewsletterBox from '../components/NewsletterBox';
 import Category from '../components/Category';
+import Testimonials from '../components/Testimonials';
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Category />
       <LatestCatalog />
       <OurPolicy />
+      <Testimonials />
       <NewsletterBox />
     </div>
   );
