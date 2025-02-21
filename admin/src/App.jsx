@@ -6,6 +6,9 @@ import Add from './pages/Add';
 import AddNewProduct from './pages/Add/AddNewProduct';
 import AddNewCategory from './pages/Add/AddNewCategory';
 import Edit from './pages/Edit';
+import EditFilters from './pages/Edit/EditFilters';
+import EditProducts from './pages/Edit/EditProducts';
+import EditCategories from './pages/Edit/EditCategories';
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -27,6 +30,9 @@ const App = () => {
               <Route path="/add-new-product" element={<AddNewProduct />} />
               <Route path="/add-new-category" element={<AddNewCategory />} />
               <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/filters" element={<EditFilters />} />
+              <Route path="/edit/products" element={<EditProducts />} />
+              <Route path="/edit/categories" element={<EditCategories />} />
             </Routes>
           </div>
         </div>
