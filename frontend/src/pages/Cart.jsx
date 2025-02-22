@@ -58,8 +58,8 @@ const Cart = () => {
               return (
                 <div
                   key={index}
-                  className="py-4 border-t border-b futura text-gray-700 grid grid-cols-[30fr_1fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ">
-                  <div className="flex items-start gap-6">
+                  className="py-4 border-t border-b futura text-gray-700 grid grid-cols-1 sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ">
+                  <div className="flex items-start gap-6 ">
                     <div className="relative w-40 sm:w-40">
                       <img className="object-cover  " src={item.image[0]} alt="" />
                       <div className="absolute bottom-0 min-w-[57px] text-center  left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-1 py-1 whitespace-nowrap text-[13px] ">
@@ -88,16 +88,24 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 ">
-                    <FaMinus
-                      className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
-                      onClick={() => handleDecrement(item)}
-                    />
-                    <span>{item.quantity}</span>
-                    <FaPlus
-                      className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
-                      onClick={() => handleIncrement(item)}
-                    />
+                  <div className="flex justify-end">
+                    <div className="flex items-center gap-3 ">
+                      <FaMinus
+                        className="w-3 h-3 sm:w-5 text-gray-600 cursor-pointer"
+                        onClick={() => handleDecrement(item)}
+                      />
+                      <span>{item.quantity}</span>
+                      <FaPlus
+                        className="w-3 h-3 sm:w-5 mr-3 sm:mr-0 text-gray-600 cursor-pointer"
+                        onClick={() => handleIncrement(item)}
+                      />
+                      <FaTrashAlt
+                        className="w-4 h-4 text-red-800 cursor-pointer block sm:hidden"
+                        onClick={() => {
+                          dispatch(removeFromCart({ itemId: item._id, size: item.size }));
+                        }}
+                      />
+                    </div>
                   </div>
                   <div className="text-red-800">
                     <FaTrashAlt
