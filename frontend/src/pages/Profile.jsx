@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Tabs } from 'antd';
+import { Tabs, ConfigProvider } from 'antd';
 import { UserOutlined, HeartOutlined } from '@ant-design/icons';
 import { fetchProfile, updateName, updateEmail, updatePassword } from '../redux/slices/userSlice';
 import Loader from '../components/Loader';
@@ -147,7 +147,16 @@ const Profile = () => {
         <Title text1={t('profile.title.text1')} text2={t('profile.title.text2')} />
       </div>
       <div className="w-[90%] sm:max-w-[1000px] futura">
-        <Tabs defaultActiveKey="1" items={items} className="bg-white p-4" />
+        <ConfigProvider
+          theme={{
+            components: {
+              Tabs: {
+                inkBarColor: '#A52A95', // Цвет линии под активным табом
+              },
+            },
+          }}>
+          <Tabs defaultActiveKey="1" items={items} className="bg-white p-4" />
+        </ConfigProvider>
       </div>
     </div>
   );
