@@ -77,7 +77,12 @@ export const getProducts = async (req, res) => {
 
     // Фильтр по поисковой строке (регулярное выражение, без учета регистра)
     if (search) {
-      filter.name = { $regex: search, $options: 'i' };
+      const searchRegex = new RegExp(search, 'i');
+      filter.$or = [
+        { 'name.en': searchRegex },
+        { 'name.ru': searchRegex },
+        { 'name.uk': searchRegex },
+      ];
     }
 
     // Подготовка запроса с использованием фильтра
