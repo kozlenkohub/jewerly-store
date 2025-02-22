@@ -58,10 +58,10 @@ const Cart = () => {
               return (
                 <div
                   key={index}
-                  className="py-4 border-t border-b futura text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ">
+                  className="py-4 border-t border-b futura text-gray-700 grid grid-cols-[30fr_1fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ">
                   <div className="flex items-start gap-6">
-                    <div className="relative w-36 sm:w-20">
-                      <img className="object-cover " src={item.image[0]} alt="" />
+                    <div className="relative max-w-40 sm:w-40">
+                      <img className="object-cover  " src={item.image[0]} alt="" />
                       <div className="absolute bottom-0 min-w-[57px] text-center  left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-1 py-1 whitespace-nowrap text-[13px] ">
                         <p>
                           {t('cart.size')}: {item.size}
@@ -70,19 +70,19 @@ const Cart = () => {
                     </div>
                     <div className="">
                       <p className="text-sm sm:text-lg font-medium">{item.name}</p>
-                      <div className="flex items-center mt-2">
+                      <div className="flex items-center mt-2 min-w-[120px]">
                         {item.discount ? (
-                          <>
-                            <span className="line-through text-[11px] sm:text-[13px] text-gray-500 mr-2 tracking-[0px] sm:tracking-[1px]">
-                              {formatPrice(item.price)} {currency}
+                          <div className="flex items-center gap-2">
+                            <span className="line-through text-[11px] sm:text-[13px] text-gray-500 tracking-[0px] sm:tracking-[1px] whitespace-nowrap">
+                              {formatPrice(item.price)}&nbsp;{currency}
                             </span>
-                            <span className="tracking-[0.3px] futura  sm:tracking-[1px] text-[16px] sm:text-[17px]">
-                              {formatPrice(discountedPrice.toFixed(2))} {currency}
+                            <span className="tracking-[0.3px] futura sm:tracking-[1px] text-[16px] sm:text-[17px] whitespace-nowrap">
+                              {formatPrice(discountedPrice.toFixed(2))}&nbsp;{currency}
                             </span>
-                          </>
+                          </div>
                         ) : (
-                          <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px]">
-                            {formatPrice(item.price)} {currency}
+                          <span className="tracking-[0.3px] sm:tracking-[1px] text-[16px] sm:text-[17px] whitespace-nowrap">
+                            {formatPrice(item.price)}&nbsp;{currency}
                           </span>
                         )}
                       </div>
