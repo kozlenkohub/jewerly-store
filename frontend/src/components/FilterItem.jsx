@@ -40,7 +40,7 @@ const FilterItem = React.memo(({ filterKey, label, type, options }) => {
   }
 
   return (
-    <div className="border border-gray-300 pl-5 py-3 my-5 sm:block">
+    <div className="border border-gray-300 px-5 py-3 my-5 sm:block">
       <p className="mb-3 text-sm font-medium">{label}</p>
       <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
         {/* main type */}
